@@ -1,0 +1,290 @@
+{
+  "version": 1,
+  "catalog_snapshot": "2026-08-13T11:25:36+00:00",
+  "test_cases": [
+    {
+      "query": "Et aperiam iste facilis placeat.",
+      "corpus": "catalog",
+      "relevant_docs": [
+        "paper-4"
+      ]
+    },
+    {
+      "query": "Fugit sit illum est.",
+      "corpus": "catalog",
+      "relevant_docs": [
+        "paper-9"
+      ]
+    },
+    {
+      "query": "CEIT-IT-23-01",
+      "corpus": "catalog",
+      "relevant_docs": [
+        "paper-4"
+      ]
+    },
+    {
+      "query": "CEIT-IT",
+      "corpus": "catalog",
+      "relevant_docs": [
+        "paper-4",
+        "paper-20",
+        "paper-23",
+        "paper-24",
+        "paper-26",
+        "paper-27",
+        "paper-28"
+      ]
+    },
+    {
+      "query": "information technology research paper",
+      "corpus": "catalog",
+      "relevant_docs": [
+        "paper-4",
+        "paper-26",
+        "paper-27",
+        "paper-28"
+      ]
+    },
+    {
+      "query": "electrical engineering feasibility study",
+      "corpus": "catalog",
+      "relevant_docs": [
+        "paper-14",
+        "paper-21",
+        "paper-30"
+      ]
+    },
+    {
+      "query": "civil engineering thesis",
+      "corpus": "catalog",
+      "relevant_docs": [
+        "paper-9",
+        "paper-25"
+      ]
+    },
+    {
+      "query": "papers by Kamren Adams",
+      "corpus": "catalog",
+      "relevant_docs": [
+        "paper-3",
+        "paper-19"
+      ]
+    },
+    {
+      "query": "theses advised by Engr. Chadd Legros",
+      "corpus": "catalog",
+      "relevant_docs": [
+        "paper-1",
+        "paper-12",
+        "paper-24"
+      ]
+    },
+    {
+      "query": "Bill Beier thesis",
+      "corpus": "catalog",
+      "relevant_docs": [
+        "paper-1",
+        "paper-19"
+      ]
+    },
+    {
+      "query": "papers under Dr. Felix Streich",
+      "corpus": "catalog",
+      "relevant_docs": [
+        "paper-1",
+        "paper-4",
+        "paper-8",
+        "paper-13",
+        "paper-14",
+        "paper-29",
+        "paper-30"
+      ]
+    },
+    {
+      "query": "may thesis ba kayo tungkol sa electrical?",
+      "corpus": "catalog",
+      "relevant_docs": [
+        "paper-2",
+        "paper-5",
+        "paper-6",
+        "paper-7",
+        "paper-10",
+        "paper-11",
+        "paper-12",
+        "paper-14",
+        "paper-15",
+        "paper-19",
+        "paper-21",
+        "paper-30"
+      ]
+    },
+    {
+      "query": "hanap ko yung project sa civil engineering",
+      "corpus": "catalog",
+      "relevant_docs": [
+        "paper-1",
+        "paper-3",
+        "paper-8",
+        "paper-9",
+        "paper-13",
+        "paper-16",
+        "paper-17",
+        "paper-18",
+        "paper-22",
+        "paper-25",
+        "paper-29"
+      ]
+    },
+    {
+      "query": "may papeles ba kayo sa information technology",
+      "corpus": "catalog",
+      "relevant_docs": [
+        "paper-4",
+        "paper-20",
+        "paper-23",
+        "paper-24",
+        "paper-26",
+        "paper-27",
+        "paper-28"
+      ]
+    },
+    {
+      "query": "research paper",
+      "corpus": "catalog",
+      "filters": {
+        "paper_type": "Research"
+      },
+      "relevant_docs": [
+        "paper-4",
+        "paper-19",
+        "paper-26",
+        "paper-27",
+        "paper-28"
+      ]
+    },
+    {
+      "query": "engineering",
+      "corpus": "catalog",
+      "filters": {
+        "department": "Information Technology"
+      },
+      "relevant_docs": [
+        "paper-4",
+        "paper-20",
+        "paper-23",
+        "paper-24",
+        "paper-26",
+        "paper-27",
+        "paper-28"
+      ]
+    },
+    {
+      "query": "thesis",
+      "corpus": "catalog",
+      "filters": {
+        "department": "Electrical Engineering",
+        "publication_year": 2025
+      },
+      "relevant_docs": [
+        "paper-10"
+      ]
+    },
+    {
+      "query": "feasi",
+      "corpus": "catalog",
+      "filters": {
+        "paper_type": "Feasib"
+      },
+      "relevant_docs": [
+        "paper-8",
+        "paper-14",
+        "paper-20",
+        "paper-21",
+        "paper-23",
+        "paper-30"
+      ]
+    },
+    {
+      "query": "What are the duties and responsibilities in the library?",
+      "corpus": "policy",
+      "relevant_docs": [
+        "policy-h2-r5",
+        "policy-h2-r6",
+        "policy-h2-r7"
+      ]
+    },
+    {
+      "query": "What are the study room rules and regulations?",
+      "corpus": "policy",
+      "relevant_docs": [
+        "policy-h3-r8",
+        "policy-h3-r9",
+        "policy-h3-r10"
+      ]
+    },
+    {
+      "query": "ano ba ang mga rules sa study room?",
+      "corpus": "policy",
+      "relevant_docs": [
+        "policy-h3-r8",
+        "policy-h3-r9",
+        "policy-h3-r10"
+      ]
+    },
+    {
+      "query": "Harry Potter novel",
+      "corpus": "catalog",
+      "relevant_docs": [],
+      "negative": true
+    },
+    {
+      "query": "recipes for adobo",
+      "corpus": null,
+      "relevant_docs": [],
+      "negative": true
+    },
+    {
+      "query": "how much is the tuition fee",
+      "corpus": "policy",
+      "relevant_docs": [],
+      "negative": true
+    },
+    {
+      "query": "CEIT",
+      "corpus": "catalog",
+      "relevant_docs": [
+        "paper-1",
+        "paper-2",
+        "paper-3",
+        "paper-4",
+        "paper-5",
+        "paper-6",
+        "paper-7",
+        "paper-8",
+        "paper-9",
+        "paper-10",
+        "paper-11",
+        "paper-12",
+        "paper-13",
+        "paper-14",
+        "paper-15",
+        "paper-16",
+        "paper-17",
+        "paper-18",
+        "paper-19",
+        "paper-20",
+        "paper-21",
+        "paper-22",
+        "paper-23",
+        "paper-24",
+        "paper-25",
+        "paper-26",
+        "paper-27",
+        "paper-28",
+        "paper-29",
+        "paper-30"
+      ]
+    }
+  ]
+}
