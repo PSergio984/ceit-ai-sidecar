@@ -8,10 +8,11 @@ import time
 from pathlib import Path
 
 from fastapi import FastAPI, Request
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, StreamingResponse
 
 from .config import settings
 from .health import assemble_health
+from .rag import RagService
 from .rebuild import rebuild
 from .search import HybridSearch
 
@@ -27,6 +28,7 @@ _metrics = {
 }
 
 _search_engine: HybridSearch | None = None
+_rag: RagService | None = None
 
 
 def _get_cache_dir() -> Path:
@@ -40,13 +42,25 @@ def _get_engine() -> HybridSearch:
     return _search_engine
 
 
+def _get_rag() -> RagService:
+    global _rag
+    if _rag is None:
+        _rag = RagService()
+    return _rag
+
+
 @app.middleware("http")
 async def require_token(request: Request, call_next):
     header = request.headers.get("X-Sidecar-Token", "")
     if not secrets.compare_digest(header, settings.sidecar_token):
         return JSONResponse(
             status_code=401,
-            content={"error": {"code": "invalid_request", "message": "missing or invalid X-Sidecar-Token"}},
+            content={
+                "error": {
+                    "code": "invalid_request",
+                    "message": "missing or invalid X-Sidecar-Token",
+                }
+            },
         )
     return await call_next(request)
 
@@ -79,6 +93,40 @@ def search(payload: dict):
         _metrics["search_times_ms"] = _metrics["search_times_ms"][-1000:]
 
     return {"query": query, "total": len(results), "took_ms": took_ms, "results": results}
+
+
+@app.post("/chat/stream")
+def chat_stream(payload: dict):
+    """SSE-streamed chat answer over hybrid-search results (ADR 0002).
+
+    Request: {"query": str, "mode": "citations"|"question"|"rag", "corpus"?, "top_k"?}
+    Response: text/event-stream — `data: <chunk>` lines, `[DONE]` terminator,
+    or an `event: error` line on provider failure.
+    """
+    query = payload.get("query")
+    if not isinstance(query, str) or not query.strip():
+        return JSONResponse(
+            status_code=422,
+            content={"error": {"code": "invalid_request", "message": "'query' is required"}},
+        )
+    mode = payload.get("mode", "citations")
+    if not isinstance(mode, str) or mode not in ("citations", "question", "rag"):
+        return JSONResponse(
+            status_code=422,
+            content={
+                "error": {
+                    "code": "invalid_request",
+                    "message": "'mode' must be citations, question or rag",
+                }
+            },
+        )
+    corpus = payload.get("corpus") or None
+    top_k = int(payload.get("top_k", 5))
+
+    results = _get_engine().rrf_search(query, k=60, limit=top_k, corpus=corpus)
+    events = _get_rag().stream_events(query, results, mode=mode)
+
+    return StreamingResponse(events, media_type="text/event-stream")
 
 
 @app.post("/index/rebuild")

@@ -38,10 +38,15 @@ network. The Laravel app talks to it over loopback with the shared
 |--------|------------------|-----------------------------------------------|
 | GET    | `/health`        | Index coverage + staleness (`documents == embedded`) |
 | POST   | `/search`        | Hybrid RRF search with optional filters       |
+| POST   | `/chat/stream`   | SSE-streamed RAG answer over search results (Phase 9, ADR 0002) |
 | POST   | `/index/rebuild` | Synchronous full rebuild (atomic swap, no downtime) |
 | GET    | `/metrics`       | Minimal hand-rolled counters (Prometheus in Phase 14) |
 
 All endpoints require `X-Sidecar-Token`; requests without it get `401`.
+
+`POST /chat/stream` request: `{"query": "...", "mode": "citations"|"question"|"rag", "corpus"?: "catalog"|"policy", "top_k"?: 5}`.
+Response is `text/event-stream`: `data: <chunk>` lines, terminated by `data: [DONE]`; provider failures surface as an `event: error` line before `[DONE]`.
+The LLM provider is OpenRouter via the openai SDK (`LLM_BASE_URL`/`LLM_API_KEY`/`LLM_MODEL`, default `meta-llama/llama-3.3-70b-instruct`).
 
 ## Corpus source
 

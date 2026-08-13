@@ -12,6 +12,7 @@ dependencies = [
     "pydantic>=2.13,<2.14",
     "pydantic-settings>=2.15,<2.16",
     "numpy>=2.0",
+    "openai>=2.45,<3",
 ]
 
 [dependency-groups]
