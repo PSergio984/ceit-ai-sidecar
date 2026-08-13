@@ -94,6 +94,7 @@ class HybridSearch:
         limit: int = 10,
         filters: dict | None = None,
         corpus: str | None = None,
+        include_text: bool = False,
     ) -> list[dict]:
         version, docs_by_id, vectors = _version_artifacts(self.cache_dir)
         if version == 0 or not docs_by_id:
@@ -153,19 +154,20 @@ class HybridSearch:
         for did in ranked[:limit]:
             doc = docs_by_id[did]
             meta = doc.get("metadata") or {}
-            results.append(
-                {
-                    "id": doc["id"],
-                    "corpus": doc.get("corpus"),
-                    "title": doc.get("title"),
-                    "score": round(rrf_scores[did], 4),
-                    "bm25_rank": bm25_ranks.get(did),
-                    "semantic_rank": (
-                        sum(1 for other in semantic_scores if semantic_scores[other] > semantic_scores[did]) + 1
-                        if did in semantic_scores
-                        else None
-                    ),
-                    "metadata": meta,
-                }
-            )
+            result = {
+                "id": doc["id"],
+                "corpus": doc.get("corpus"),
+                "title": doc.get("title"),
+                "score": round(rrf_scores[did], 4),
+                "bm25_rank": bm25_ranks.get(did),
+                "semantic_rank": (
+                    sum(1 for other in semantic_scores if semantic_scores[other] > semantic_scores[did]) + 1
+                    if did in semantic_scores
+                    else None
+                ),
+                "metadata": meta,
+            }
+            if include_text:
+                result["text"] = doc.get("text", "")
+            results.append(result)
         return results

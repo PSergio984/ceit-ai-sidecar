@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from conftest import build_test_index, embed_from
 from fastapi.testclient import TestClient
 
 import app.main as main_mod
@@ -61,8 +62,8 @@ class FakeEngine:
         self.results = results
         self.calls: list[dict] = []
 
-    def rrf_search(self, query, k=60, limit=10, filters=None, corpus=None):
-        self.calls.append({"query": query, "corpus": corpus, "limit": limit})
+    def rrf_search(self, query, k=60, limit=10, filters=None, corpus=None, include_text=False):
+        self.calls.append({"query": query, "corpus": corpus, "limit": limit, "include_text": include_text})
         return self.results
 
 
@@ -75,24 +76,8 @@ def make_client(
     fail=False,
 ):
     from app.config import Settings
-    from app.ingest import load_documents
-    from app.rebuild import build_index
 
-    cache = tmp_path / "cache"
-    load_documents(corpus_path)
-
-    def embed(docs_):
-        import numpy as np
-
-        vectors = []
-        for d in docs_:
-            rng = np.random.RandomState(sum(ord(c) for c in d["text"]))
-            v = rng.rand(16).astype(np.float32)
-            v = v / np.linalg.norm(v)
-            vectors.append(v)
-        return np.asarray(vectors, dtype=np.float32)
-
-    build_index(corpus_path, "test-model", cache, embed_fn=embed)
+    cache, docs = build_test_index(tmp_path, corpus_path)
 
     settings = Settings(
         sidecar_token="test-token",
@@ -113,7 +98,7 @@ def make_client(
 
     import app.rebuild as rebuild_mod
 
-    rebuild_mod._embed_override = embed
+    rebuild_mod._embed_override = embed_from(docs)
 
     return TestClient(main_mod.app)
 
@@ -155,7 +140,58 @@ def test_chat_stream_feeds_search_results_into_prompt(tmp_path, corpus_path):
     )
     assert client.app.state is not None  # keep fixture alive
     engine = main_mod._search_engine
-    assert engine.calls == [{"query": "school ID", "corpus": "policy", "limit": 3}]
+    assert engine.calls == [
+        {"query": "school ID", "corpus": "policy", "limit": 3, "include_text": True}
+    ]
+
+
+def test_chat_stream_rejects_non_numeric_top_k(tmp_path, corpus_path):
+    client = make_client(tmp_path, corpus_path, SSE_DOCS)
+    resp = client.post(
+        "/chat/stream",
+        json={"query": "school ID", "top_k": "many"},
+        headers={"X-Sidecar-Token": "test-token"},
+    )
+    assert resp.status_code == 422
+    assert resp.json()["error"]["code"] == "invalid_request"
+
+
+def test_rrf_search_can_include_document_text(tmp_path, corpus_path):
+    import numpy as np
+
+    import app.search as search_mod
+    from app.ingest import load_documents
+    from app.rebuild import build_index
+    from app.search import HybridSearch
+
+    cache = tmp_path / "cache"
+    docs = load_documents(corpus_path)
+
+    def embed(docs_):
+        vectors = []
+        for d in docs_:
+            rng = np.random.RandomState(sum(ord(c) for c in d["text"]))
+            v = rng.rand(16).astype(np.float32)
+            v = v / np.linalg.norm(v)
+            vectors.append(v)
+        return np.asarray(vectors, dtype=np.float32)
+
+    build_index(corpus_path, "test-model", cache, embed_fn=embed)
+    target = np.asarray(embed([docs[0]])[0])
+
+    class FakeQuery:
+        def encode(self, texts, normalize_embeddings=True):
+            return np.stack([target] * len(texts))
+
+    search_mod.embed_query = lambda q, m: FakeQuery().encode([q])[0]
+
+    engine = HybridSearch(cache, "test-model")
+    results = engine.rrf_search("groundwater", limit=2, include_text=True)
+
+    assert results, "expected results"
+    assert all("text" in r and len(r["text"]) > 0 for r in results)
+    assert results[0]["text"].startswith("Analysis of Groundwater Depletion")
+    engine.close()
 
 
 def test_chat_stream_emits_error_event_on_provider_failure(tmp_path, corpus_path):
@@ -167,4 +203,6 @@ def test_chat_stream_emits_error_event_on_provider_failure(tmp_path, corpus_path
     )
     assert resp.status_code == 200
     assert "event: error" in resp.text
+    assert "RuntimeError" in resp.text
+    assert "provider exploded" not in resp.text
     assert resp.text.endswith("data: [DONE]\n\n")

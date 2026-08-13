@@ -7,28 +7,15 @@ from concurrent.futures import ThreadPoolExecutor
 
 import numpy as np
 import pytest
+from conftest import build_test_index, embed_from
 from fastapi.testclient import TestClient
 
 from app.config import Settings
-from app.ingest import load_documents
-from app.rebuild import build_index
 
 
 @pytest.fixture
 def client(tmp_path, corpus_path):
-    cache = tmp_path / "cache"
-    docs = load_documents(corpus_path)
-
-    def embed(docs_):
-        vectors = []
-        for d in docs_:
-            rng = np.random.RandomState(sum(ord(c) for c in d["text"]))
-            v = rng.rand(16).astype(np.float32)
-            v = v / np.linalg.norm(v)
-            vectors.append(v)
-        return np.asarray(vectors, dtype=np.float32)
-
-    build_index(corpus_path, "test-model", cache, embed_fn=embed)
+    cache, docs = build_test_index(tmp_path, corpus_path)
 
     settings = Settings(
         sidecar_token="test-token",
@@ -51,9 +38,9 @@ def client(tmp_path, corpus_path):
         "search_times_ms": [],
         "index_documents": None,
     }
-    rebuild_mod._embed_override = embed
+    rebuild_mod._embed_override = embed_from(docs)
     # Deterministic query embedder.
-    target = np.asarray(embed([docs[0]])[0])
+    target = np.asarray(embed_from(docs)([docs[0]])[0])
 
     class FakeQuery:
         def encode(self, texts, normalize_embeddings=True):

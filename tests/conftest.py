@@ -145,3 +145,29 @@ def deterministic_embedder() -> DeterministicEmbedder:
 @pytest.fixture
 def settings_for(tmp_path, corpus_path) -> Settings:
     return Settings(sidecar_token="test-token", corpus_path=corpus_path, host="127.0.0.1", port=8310)
+
+
+def embed_from(docs: list[dict]):
+    """Deterministic per-document embedder for a known docs list."""
+
+    def embed(docs_):
+        vectors = []
+        for d in docs_:
+            rng = np.random.RandomState(sum(ord(c) for c in d["text"]))
+            v = rng.rand(16).astype(np.float32)
+            v = v / np.linalg.norm(v)
+            vectors.append(v)
+        return np.asarray(vectors, dtype=np.float32)
+
+    return embed
+
+
+def build_test_index(tmp_path: Path, corpus_path: Path, cache_name: str = "cache") -> tuple[Path, list[dict]]:
+    """Build a real versioned index with a deterministic embedder; returns (cache, docs)."""
+    from app.ingest import load_documents
+    from app.rebuild import build_index
+
+    cache = tmp_path / cache_name
+    docs = load_documents(corpus_path)
+    build_index(corpus_path, "test-model", cache, embed_fn=embed_from(docs))
+    return cache, docs

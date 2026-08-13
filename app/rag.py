@@ -154,5 +154,5 @@ class RagService:
             for delta in self.stream_answer(query, results, mode):
                 yield f"data: {delta}\n\n"
         except Exception as exc:  # noqa: BLE001 - provider errors become SSE error events
-            yield f"event: error\ndata: {type(exc).__name__}: {exc}\n\n"
+            yield f"event: error\ndata: {type(exc).__name__}\n\n"
         yield "data: [DONE]\n\n"

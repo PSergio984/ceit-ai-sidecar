@@ -49,6 +49,20 @@ def _get_rag() -> RagService:
     return _rag
 
 
+def _invalid(message: str) -> JSONResponse:
+    return JSONResponse(
+        status_code=422,
+        content={"error": {"code": "invalid_request", "message": message}},
+    )
+
+
+def _require_query(payload: dict) -> str | JSONResponse:
+    query = payload.get("query")
+    if not isinstance(query, str) or not query.strip():
+        return _invalid("'query' is required")
+    return query
+
+
 @app.middleware("http")
 async def require_token(request: Request, call_next):
     header = request.headers.get("X-Sidecar-Token", "")
@@ -72,12 +86,9 @@ def health():
 
 @app.post("/search")
 def search(payload: dict):
-    query = payload.get("query")
-    if not isinstance(query, str) or not query.strip():
-        return JSONResponse(
-            status_code=422,
-            content={"error": {"code": "invalid_request", "message": "'query' is required"}},
-        )
+    query = _require_query(payload)
+    if isinstance(query, JSONResponse):
+        return query
     filters = payload.get("filters") or {}
     corpus = payload.get("corpus")
     limit = int(payload.get("limit", 10))
@@ -103,27 +114,21 @@ def chat_stream(payload: dict):
     Response: text/event-stream — `data: <chunk>` lines, `[DONE]` terminator,
     or an `event: error` line on provider failure.
     """
-    query = payload.get("query")
-    if not isinstance(query, str) or not query.strip():
-        return JSONResponse(
-            status_code=422,
-            content={"error": {"code": "invalid_request", "message": "'query' is required"}},
-        )
+    query = _require_query(payload)
+    if isinstance(query, JSONResponse):
+        return query
     mode = payload.get("mode", "citations")
     if not isinstance(mode, str) or mode not in ("citations", "question", "rag"):
-        return JSONResponse(
-            status_code=422,
-            content={
-                "error": {
-                    "code": "invalid_request",
-                    "message": "'mode' must be citations, question or rag",
-                }
-            },
-        )
+        return _invalid("'mode' must be citations, question or rag")
     corpus = payload.get("corpus") or None
-    top_k = int(payload.get("top_k", 5))
+    try:
+        top_k = int(payload.get("top_k", 5))
+    except (TypeError, ValueError):
+        return _invalid("'top_k' must be an integer")
+    if top_k < 1 or top_k > 50:
+        return _invalid("'top_k' must be between 1 and 50")
 
-    results = _get_engine().rrf_search(query, k=60, limit=top_k, corpus=corpus)
+    results = _get_engine().rrf_search(query, k=60, limit=top_k, corpus=corpus, include_text=True)
     events = _get_rag().stream_events(query, results, mode=mode)
 
     return StreamingResponse(events, media_type="text/event-stream")
