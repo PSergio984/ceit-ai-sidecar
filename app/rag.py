@@ -153,14 +153,20 @@ class RagService:
         self, query: str, results: list[dict], mode: str = "citations"
     ) -> Iterator[str]:
         """SSE-framed events: `data: <chunk>` lines, `[DONE]` terminator, or
-        an `event: error` line on provider failure (ADR 0002 framing)."""
+        an `event: error` line on provider failure (ADR 0002 framing).
+
+        Chunk payloads are JSON-encoded (`{"c": "<delta>"}`) so provider
+        deltas containing newlines cannot break the SSE line framing —
+        text framing would silently lose paragraph breaks (review W-1).
+        """
         if not results:
             yield "data: I don't have enough information\n\n"
             yield "data: [DONE]\n\n"
             return
         try:
             for delta in self.stream_answer(query, results, mode):
-                yield f"data: {delta}\n\n"
+                payload = json.dumps({"c": delta}, ensure_ascii=False)
+                yield f"data: {payload}\n\n"
         except Exception as exc:  # noqa: BLE001 - provider errors become SSE error events
             logger.error(repr(exc))
             error_payload = {

@@ -151,7 +151,7 @@ def test_stream_events_frames_sse_with_done(fake_client):
     service = RagService(client=fake_client, model="test-model", max_tokens=64)
     events = list(service.stream_events("q", RESULTS, mode="citations"))
 
-    assert events[0] == "data: CEIT \n\n"
+    assert events[0] == 'data: {"c": "CEIT "}\n\n'
     assert events[-1] == "data: [DONE]\n\n"
     assert events[-2].startswith("data: ")
 

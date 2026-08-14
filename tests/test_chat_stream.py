@@ -143,7 +143,7 @@ def test_chat_stream_streams_chunks_and_done(tmp_path, corpus_path):
     assert resp.headers["cache-control"] == "no-cache"
     assert resp.headers["x-accel-buffering"] == "no"
     body = resp.text
-    assert "data: Students " in body
+    assert '"c": "Students ' in body
     assert body.endswith("data: [DONE]\n\n")
 
 
