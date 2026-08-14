@@ -64,6 +64,10 @@ PROMPTS: dict[str, str] = {
 
 MAX_DOC_CHARS = 600
 
+# Wire key for the JSON-encoded SSE chunk envelope — the Laravel parser's
+# counterpart constant lives in AiService::SSE_CHUNK_KEY.
+CHUNK_KEY = "c"
+
 SYSTEM_PROMPT = (
     "You are the CEIT Library assistant. Answer only from the provided documents; "
     'if the documents do not contain the answer, say "I don\'t have enough information".'
@@ -165,7 +169,7 @@ class RagService:
             return
         try:
             for delta in self.stream_answer(query, results, mode):
-                payload = json.dumps({"c": delta}, ensure_ascii=False)
+                payload = json.dumps({CHUNK_KEY: delta}, ensure_ascii=False)
                 yield f"data: {payload}\n\n"
         except Exception as exc:  # noqa: BLE001 - provider errors become SSE error events
             logger.error(repr(exc))
