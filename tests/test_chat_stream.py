@@ -203,6 +203,6 @@ def test_chat_stream_emits_error_event_on_provider_failure(tmp_path, corpus_path
     )
     assert resp.status_code == 200
     assert "event: error" in resp.text
-    assert "RuntimeError" in resp.text
+    assert '"code": "provider_error"' in resp.text
     assert "provider exploded" not in resp.text
     assert resp.text.endswith("data: [DONE]\n\n")

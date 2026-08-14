@@ -14,6 +14,8 @@ on the "Pin citation and grounding rules" wayfinder ticket.
 
 from __future__ import annotations
 
+import json
+import logging
 from collections.abc import Iterator
 from typing import TYPE_CHECKING
 
@@ -21,6 +23,8 @@ from .config import settings
 
 if TYPE_CHECKING:
     from openai import OpenAI
+
+logger = logging.getLogger(__name__)
 
 PROMPTS: dict[str, str] = {
     "rag": (
@@ -154,5 +158,10 @@ class RagService:
             for delta in self.stream_answer(query, results, mode):
                 yield f"data: {delta}\n\n"
         except Exception as exc:  # noqa: BLE001 - provider errors become SSE error events
-            yield f"event: error\ndata: {type(exc).__name__}\n\n"
+            logger.error(repr(exc))
+            error_payload = {
+                "code": "provider_error",
+                "message": "The AI provider is temporarily unavailable. Please try again.",
+            }
+            yield f"event: error\ndata: {json.dumps(error_payload)}\n\n"
         yield "data: [DONE]\n\n"

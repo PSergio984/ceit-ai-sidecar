@@ -3,6 +3,8 @@ one-shot answers and streaming chunks. Provider is injected/mocked — no networ
 
 from __future__ import annotations
 
+import json
+
 import pytest
 
 from app.rag import RagService, build_context, build_prompt
@@ -164,5 +166,11 @@ def test_stream_events_emits_error_event_on_provider_failure(fake_client):
 
     events = list(service.stream_events("q", RESULTS, mode="citations"))
 
-    assert any(e.startswith("event: error") for e in events)
+    error_events = [e for e in events if e.startswith("event: error")]
+    assert error_events, "expected an error event"
+    data_line = next(
+        line for line in error_events[0].splitlines() if line.startswith("data: ")
+    )
+    payload = json.loads(data_line[len("data: "):])
+    assert payload["code"] == "provider_error"
     assert events[-1] == "data: [DONE]\n\n"
