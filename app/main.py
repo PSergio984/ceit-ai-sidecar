@@ -56,6 +56,17 @@ def _invalid(message: str) -> JSONResponse:
     )
 
 
+SEARCH_ALLOWED_KEYS = {"query", "filters", "corpus", "limit", "k"}
+CHAT_ALLOWED_KEYS = {"query", "mode", "corpus", "top_k"}
+
+
+def _reject_unknown(payload: dict, allowed: set[str]) -> JSONResponse | None:
+    unknown = set(payload) - allowed
+    if unknown:
+        return _invalid(f"unknown field(s): {', '.join(sorted(unknown))}")
+    return None
+
+
 def _require_query(payload: dict) -> str | JSONResponse:
     query = payload.get("query")
     if not isinstance(query, str) or not query.strip():
