@@ -82,6 +82,29 @@ def test_search_returns_422_without_query(client):
     assert resp.status_code == 422
 
 
+def test_search_rejects_unknown_fields(client):
+    app, _, _ = client
+    resp = app.post(
+        "/search",
+        json={"query": "water pump", "availability": {"77": {"available": 1, "total": 2}}},
+        headers={"X-Sidecar-Token": "test-token"},
+    )
+    assert resp.status_code == 422
+    assert resp.json()["error"]["code"] == "invalid_request"
+    assert "unknown field(s)" in resp.json()["error"]["message"]
+
+
+def test_search_rejects_exclude_field(client):
+    app, _, _ = client
+    resp = app.post(
+        "/search",
+        json={"query": "water pump", "exclude": ["paper-77"]},
+        headers={"X-Sidecar-Token": "test-token"},
+    )
+    assert resp.status_code == 422
+    assert resp.json()["error"]["code"] == "invalid_request"
+
+
 def test_health_reports_coverage(client):
     app, _, _ = client
     resp = app.get("/health", headers={"X-Sidecar-Token": "test-token"})

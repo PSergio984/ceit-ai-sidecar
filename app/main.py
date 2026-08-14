@@ -97,6 +97,9 @@ def health():
 
 @app.post("/search")
 def search(payload: dict):
+    rejected = _reject_unknown(payload, SEARCH_ALLOWED_KEYS)
+    if rejected:
+        return rejected
     query = _require_query(payload)
     if isinstance(query, JSONResponse):
         return query
