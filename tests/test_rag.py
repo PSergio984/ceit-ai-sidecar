@@ -174,3 +174,24 @@ def test_stream_events_emits_error_event_on_provider_failure(fake_client):
     payload = json.loads(data_line[len("data: "):])
     assert payload["code"] == "provider_error"
     assert events[-1] == "data: [DONE]\n\n"
+
+
+def test_stream_events_refuses_on_empty_results_without_llm_call(fake_client):
+    service = RagService(client=fake_client, model="test-model", max_tokens=64)
+
+    events = list(service.stream_events("q", [], mode="citations"))
+
+    assert events == [
+        "data: I don't have enough information\n\n",
+        "data: [DONE]\n\n",
+    ]
+    assert fake_client.chat.completions.calls == []
+
+
+def test_answer_refuses_on_empty_results_without_llm_call(fake_client):
+    service = RagService(client=fake_client, model="test-model", max_tokens=64)
+
+    answer = service.answer("q", [])
+
+    assert answer == "I don't have enough information"
+    assert fake_client.chat.completions.calls == []

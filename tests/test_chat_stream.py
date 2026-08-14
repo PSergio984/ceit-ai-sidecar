@@ -24,8 +24,10 @@ class FakeCompletions:
     def __init__(self, content: str, fail: bool = False):
         self.content = content
         self.fail = fail
+        self.calls: list[dict] = []
 
     def create(self, **kwargs):
+        self.calls.append(kwargs)
         if self.fail:
             raise RuntimeError("provider exploded")
         if kwargs.get("stream"):
@@ -107,6 +109,18 @@ def test_chat_stream_requires_token(tmp_path, corpus_path):
     client = make_client(tmp_path, corpus_path, [])
     resp = client.post("/chat/stream", json={"query": "school ID"})
     assert resp.status_code == 401
+
+
+def test_chat_stream_refuses_on_empty_retrieval_without_llm_call(tmp_path, corpus_path):
+    client = make_client(tmp_path, corpus_path, [])
+    resp = client.post(
+        "/chat/stream",
+        json={"query": "school ID"},
+        headers={"X-Sidecar-Token": "test-token"},
+    )
+    assert resp.status_code == 200
+    assert resp.text == "data: I don't have enough information\n\n" + "data: [DONE]\n\n"
+    assert main_mod._rag._client.chat.completions.calls == []
 
 
 def test_chat_stream_rejects_missing_query(tmp_path, corpus_path):

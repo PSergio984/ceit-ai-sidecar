@@ -6,10 +6,8 @@ domain-parameterized for the CEIT Library (catalog + policy corpora).
 See ADR 0003 for mode selection; ADR 0001 for the provider (OpenRouter via
 the openai SDK); ADR 0002 for the SSE streaming contract.
 
-Refusal is prompt-only (source-faithful): each mode instructs the model to
-say "I don't have enough information" when the documents don't answer the
-query. A programmatic empty-retrieval branch is a separate decision tracked
-on the "Pin citation and grounding rules" wayfinder ticket.
+Refusal is programmatic on empty retrieval (no LLM call, canonical string)
+and prompt-only otherwise (source-faithful instructions per ADR 0006).
 """
 
 from __future__ import annotations
@@ -124,6 +122,8 @@ class RagService:
 
     def answer(self, query: str, results: list[dict], mode: str = "citations") -> str:
         """One-shot non-streamed answer (RAGBase `rag()` shape)."""
+        if not results:
+            return "I don't have enough information"
         client = self._ensure_client()
         response = client.chat.completions.create(
             model=self._model,
@@ -154,6 +154,10 @@ class RagService:
     ) -> Iterator[str]:
         """SSE-framed events: `data: <chunk>` lines, `[DONE]` terminator, or
         an `event: error` line on provider failure (ADR 0002 framing)."""
+        if not results:
+            yield "data: I don't have enough information\n\n"
+            yield "data: [DONE]\n\n"
+            return
         try:
             for delta in self.stream_answer(query, results, mode):
                 yield f"data: {delta}\n\n"
