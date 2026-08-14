@@ -121,6 +121,8 @@ def chat_stream(payload: dict):
     if not isinstance(mode, str) or mode not in ("citations", "question", "rag"):
         return _invalid("'mode' must be citations, question or rag")
     corpus = payload.get("corpus") or None
+    if corpus is not None and corpus not in ("catalog", "policy"):
+        return _invalid("'corpus' must be catalog, policy or omitted")
     try:
         top_k = int(payload.get("top_k", 5))
     except (TypeError, ValueError):
@@ -131,7 +133,11 @@ def chat_stream(payload: dict):
     results = _get_engine().rrf_search(query, k=60, limit=top_k, corpus=corpus, include_text=True)
     events = _get_rag().stream_events(query, results, mode=mode)
 
-    return StreamingResponse(events, media_type="text/event-stream")
+    return StreamingResponse(
+        events,
+        media_type="text/event-stream",
+        headers={"Cache-Control": "no-cache", "X-Accel-Buffering": "no"},
+    )
 
 
 @app.post("/index/rebuild")

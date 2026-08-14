@@ -126,6 +126,8 @@ def test_chat_stream_streams_chunks_and_done(tmp_path, corpus_path):
     )
     assert resp.status_code == 200
     assert resp.headers["content-type"].startswith("text/event-stream")
+    assert resp.headers["cache-control"] == "no-cache"
+    assert resp.headers["x-accel-buffering"] == "no"
     body = resp.text
     assert "data: Students " in body
     assert body.endswith("data: [DONE]\n\n")
@@ -150,6 +152,17 @@ def test_chat_stream_rejects_non_numeric_top_k(tmp_path, corpus_path):
     resp = client.post(
         "/chat/stream",
         json={"query": "school ID", "top_k": "many"},
+        headers={"X-Sidecar-Token": "test-token"},
+    )
+    assert resp.status_code == 422
+    assert resp.json()["error"]["code"] == "invalid_request"
+
+
+def test_chat_stream_rejects_unknown_corpus(tmp_path, corpus_path):
+    client = make_client(tmp_path, corpus_path, SSE_DOCS)
+    resp = client.post(
+        "/chat/stream",
+        json={"query": "school ID", "corpus": "bogus"},
         headers={"X-Sidecar-Token": "test-token"},
     )
     assert resp.status_code == 422
