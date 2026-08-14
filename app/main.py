@@ -128,6 +128,9 @@ def chat_stream(payload: dict):
     Response: text/event-stream — `data: <chunk>` lines, `[DONE]` terminator,
     or an `event: error` line on provider failure.
     """
+    rejected = _reject_unknown(payload, CHAT_ALLOWED_KEYS)
+    if rejected:
+        return rejected
     query = _require_query(payload)
     if isinstance(query, JSONResponse):
         return query

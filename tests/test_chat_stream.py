@@ -131,6 +131,19 @@ def test_chat_stream_rejects_missing_query(tmp_path, corpus_path):
     assert resp.status_code == 422
 
 
+def test_chat_stream_rejects_unknown_fields(tmp_path, corpus_path):
+    client = make_client(tmp_path, corpus_path, SSE_DOCS)
+    resp = client.post(
+        "/chat/stream",
+        json={"query": "school ID", "availability": "1/2"},
+        headers={"X-Sidecar-Token": "test-token"},
+    )
+    assert resp.status_code == 422
+    assert resp.json()["error"]["code"] == "invalid_request"
+    assert "unknown field(s)" in resp.json()["error"]["message"]
+    assert main_mod._rag._client.chat.completions.calls == []
+
+
 def test_chat_stream_streams_chunks_and_done(tmp_path, corpus_path):
     client = make_client(tmp_path, corpus_path, SSE_DOCS)
     resp = client.post(
