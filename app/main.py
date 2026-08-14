@@ -71,7 +71,7 @@ async def require_token(request: Request, call_next):
             status_code=401,
             content={
                 "error": {
-                    "code": "invalid_request",
+                    "code": "auth_failed",
                     "message": "missing or invalid X-Sidecar-Token",
                 }
             },

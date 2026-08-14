@@ -57,7 +57,7 @@ def test_search_without_token_is_401(client):
     app, _, _ = client
     resp = app.post("/search", json={"query": "water pump"})
     assert resp.status_code == 401
-    assert resp.json()["error"]["code"] == "invalid_request"
+    assert resp.json()["error"]["code"] == "auth_failed"
 
 
 def test_health_without_token_is_401(client):
