@@ -22,6 +22,20 @@ SSE_DOCS = [
     }
 ]
 
+AGENTIC_DOCS = [
+    {
+        "id": "paper-77",
+        "corpus": "catalog",
+        "title": "Analysis of Groundwater Depletion",
+        "text": "Analysis of Groundwater Depletion Caused By Excessive Use of Water Pumps.",
+        "score": 0.9,
+        "metadata": {
+            "url": "/academic-papers/77",
+            "catalog_code": "CEIT-CE-15-014",
+        },
+    }
+]
+
 
 class FakeCompletions:
     def __init__(self, content: str, fail: bool = False, tool_sequence: list | None = None):
@@ -142,7 +156,7 @@ def test_chat_stream_requires_token(tmp_path, corpus_path):
     assert resp.status_code == 401
 
 
-def test_chat_stream_refuses_on_empty_retrieval_without_llm_call(tmp_path, corpus_path):
+def test_empty_retrieval_refusal_is_zero_llm(tmp_path, corpus_path):
     tool_call = json.dumps({"query": "school ID"})
     client = make_client(tmp_path, corpus_path, [], tool_sequence=[tool_call])
     resp = client.post(
@@ -284,3 +298,54 @@ def test_chat_stream_emits_error_event_on_provider_failure(tmp_path, corpus_path
     assert '"code": "provider_error"' in resp.text
     assert "provider exploded" not in resp.text
     assert resp.text.endswith("data: [DONE]\n\n")
+
+
+def test_activity_and_citations_frames_emitted_on_endpoint(tmp_path, corpus_path):
+    tool_call = json.dumps({"query": "school ID"})
+    client = make_client(tmp_path, corpus_path, AGENTIC_DOCS, tool_sequence=[tool_call])
+    resp = client.post(
+        "/chat/stream",
+        json={"query": "school ID"},
+        headers={"X-Sidecar-Token": "test-token"},
+    )
+    assert resp.status_code == 200
+    body = resp.text
+    assert body.index("event: activity") < body.index("event: citations") < body.index("data: [DONE]")
+    assert '"c": ' in body
+    citations_line = next(line for line in body.splitlines() if line.startswith("data: ["))
+    payload = json.loads(citations_line[len("data: ") :])
+    assert list(payload[0].keys()) == ["n", "id", "corpus", "title", "url", "catalog_code"]
+    assert payload[0]["catalog_code"] == "CEIT-CE-15-014"
+    assert payload[0]["url"] == "/academic-papers/77"
+
+
+def test_direct_answer_streams_without_tool_usage_on_endpoint(tmp_path, corpus_path):
+    client = make_client(tmp_path, corpus_path, [])
+    resp = client.post(
+        "/chat/stream",
+        json={"query": "school ID"},
+        headers={"X-Sidecar-Token": "test-token"},
+    )
+    assert resp.status_code == 200
+    body = resp.text
+    assert '"c": ' in body
+    assert body.endswith("data: [DONE]\n\n")
+    assert "event: activity" not in body
+    assert "event: citations" not in body
+    assert main_mod._search_engine.calls == []
+
+
+def test_mid_loop_provider_error_single_event_error(tmp_path, corpus_path):
+    tool_call = json.dumps({"query": "school ID"})
+    client = make_client(tmp_path, corpus_path, SSE_DOCS, tool_sequence=[tool_call, "FAIL"])
+    resp = client.post(
+        "/chat/stream",
+        json={"query": "school ID"},
+        headers={"X-Sidecar-Token": "test-token"},
+    )
+    assert resp.status_code == 200
+    body = resp.text
+    assert body.count("event: error") == 1
+    assert '"code": "provider_error"' in body
+    assert "provider exploded" not in body
+    assert body.endswith("data: [DONE]\n\n")
