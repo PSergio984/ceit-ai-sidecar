@@ -20,6 +20,7 @@ from app.agent import (
     citation_payload,
     merge_dedup,
 )
+from app.rag import MAX_DOC_CHARS
 
 DOC1 = {
     "id": "paper-1",
@@ -59,11 +60,14 @@ def _chunks(content: str):
         yield _stream_chunk(word + " ")
 
 
-def _tool_call(arguments: str):
+def _tool_call(arguments: str, idx: int = 1):
     return type(
         "TC",
         (),
-        {"id": "call_1", "function": type("F", (), {"name": "search", "arguments": arguments})()},
+        {
+            "id": f"call_{idx}",
+            "function": type("F", (), {"name": "search", "arguments": arguments})(),
+        },
     )()
 
 
@@ -92,6 +96,11 @@ class FakeCompletions:
             item = self.tool_sequence.pop(0)
             if item == "FAIL":
                 raise RuntimeError("provider exploded")
+            if isinstance(item, list):
+                return _response(
+                    self.content,
+                    tool_calls=[_tool_call(arguments, i + 1) for i, arguments in enumerate(item)],
+                )
             return _response(self.content, tool_calls=[_tool_call(item)])
         if self.fail:
             raise RuntimeError("provider exploded")
@@ -236,6 +245,86 @@ def test_malformed_tool_args_correct_once_then_fail_closed():
     assert not any('"c": ' in event for event in events)
     assert client.chat.completions.calls[1]["messages"][-1]["role"] == "tool"
     assert "invalid arguments" in client.chat.completions.calls[1]["messages"][-1]["content"]
+
+
+def test_multiple_tool_calls_execute_all_with_no_unmatched_ids():
+    args_a = json.dumps({"query": "groundwater depletion"})
+    args_b = json.dumps({"query": "flood monitoring"})
+    client, engine, loop = make_loop(
+        content="Answer grounded in both searches. ",
+        tool_sequence=[[args_a, args_b], args_a],
+        results=[DOC1],
+    )
+    events = list(loop.stream_agentic_events("multi tool question"))
+
+    # Both calls of the parallel response were executed, plus the follow-up —
+    # the cap counts EXECUTED searches and is still enforced.
+    assert [c["query"] for c in engine.calls] == [
+        "groundwater depletion",
+        "flood monitoring",
+        "groundwater depletion",
+    ]
+    assert len(engine.calls) == MAX_TOOL_ROUNDS
+
+    # The last tool-eligible call's history carries a tool result for every
+    # assistant tool_call_id (no unmatched id → no provider 400 path) and
+    # content is null on assistant tool-call messages.
+    decision_messages = [c for c in client.chat.completions.calls if "tools" in c][-1]["messages"]
+    tool_result_ids = {m["tool_call_id"] for m in decision_messages if m["role"] == "tool"}
+    for message in decision_messages:
+        if message["role"] == "assistant":
+            assert message["content"] is None
+            for tool_call in message["tool_calls"]:
+                assert tool_call["id"] in tool_result_ids
+
+    assert _activity_lines(events) == [
+        "Searching papers…",
+        "Narrowing results…",
+        "Narrowing results…",
+    ]
+    assert any('"c": "Answer ' in event for event in events)
+    assert events[-1] == "data: [DONE]\n\n"
+
+
+def test_parallel_calls_beyond_cap_drop_remainder_without_unmatched_ids():
+    args = json.dumps({"query": "q"})
+    client, engine, loop = make_loop(
+        content="x ",
+        tool_sequence=[args, args, [args, args]],
+        results=[DOC1],
+    )
+    events = list(loop.stream_agentic_events("q"))
+
+    # Two rounds used, then a 2-call parallel response: only the remaining
+    # budget of 1 is executed; the dropped call must not enter messages.
+    assert [c["query"] for c in engine.calls] == ["q", "q", "q"]
+    assert len(engine.calls) == MAX_TOOL_ROUNDS
+
+    decision_messages = [c for c in client.chat.completions.calls if "tools" in c][-1]["messages"]
+    tool_result_ids = {m["tool_call_id"] for m in decision_messages if m["role"] == "tool"}
+    for message in decision_messages:
+        if message["role"] == "assistant":
+            for tool_call in message["tool_calls"]:
+                assert tool_call["id"] in tool_result_ids
+
+    assert events[-1] == "data: [DONE]\n\n"
+
+
+def test_tool_result_messages_truncate_long_doc_text():
+    long_doc = dict(DOC1, text="p" * 2000)
+    args = json.dumps({"query": "long doc"})
+    client, _engine, loop = make_loop(content="x ", tool_sequence=[args], results=[long_doc])
+    list(loop.stream_agentic_events("q"))
+
+    tool_messages = [
+        m
+        for m in [c for c in client.chat.completions.calls if "tools" in c][-1]["messages"]
+        if m["role"] == "tool"
+    ]
+    assert len(tool_messages) == 1
+    payload = json.loads(tool_messages[0]["content"])
+    assert payload[0]["text"] == "p" * MAX_DOC_CHARS + "…"
+    assert payload[0]["id"] == "paper-1"
 
 
 def test_activity_and_citations_frame_ordering():

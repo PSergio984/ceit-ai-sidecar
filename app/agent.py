@@ -23,7 +23,7 @@ from typing import TYPE_CHECKING, Literal
 from pydantic import BaseModel, ConfigDict, Field, ValidationError, field_validator
 
 from .config import settings
-from .rag import CHUNK_KEY, PROMPTS, SYSTEM_PROMPT, build_context
+from .rag import CHUNK_KEY, MAX_DOC_CHARS, PROMPTS, SYSTEM_PROMPT, build_context
 from .search import HybridSearch
 
 if TYPE_CHECKING:
@@ -153,10 +153,12 @@ def _chunk_frames(text: str) -> Iterator[str]:
         yield f"data: {json.dumps({CHUNK_KEY: word + ' '}, ensure_ascii=False)}\n\n"
 
 
-def _assistant_tool_message(msg, tool_calls) -> dict:
+def _assistant_tool_message(tool_calls) -> dict:
+    # WR-1: content and tool_calls are mutually exclusive per the OpenAI
+    # contract — null content alongside tool_calls avoids provider 400s.
     return {
         "role": "assistant",
-        "content": msg.content or "",
+        "content": None,
         "tool_calls": [
             {
                 "id": call.id,
@@ -166,6 +168,22 @@ def _assistant_tool_message(msg, tool_calls) -> dict:
             for call in tool_calls
         ],
     }
+
+
+def _truncate_docs_for_tool(results: list[dict]) -> list[dict]:
+    """Tool-result copy with doc text capped at MAX_DOC_CHARS (WR-2).
+
+    The final prompt still reads the full-text docs through build_context;
+    only what ships in the tool-result wire message is truncated.
+    """
+    truncated = []
+    for doc in results:
+        copy = dict(doc)
+        text = copy.get("text") or ""
+        if len(text) > MAX_DOC_CHARS:
+            copy["text"] = text[:MAX_DOC_CHARS].rstrip() + "…"
+        truncated.append(copy)
+    return truncated
 
 
 class AgenticLoop:
@@ -267,44 +285,55 @@ class AgenticLoop:
                     break
                 if rounds >= MAX_TOOL_ROUNDS:
                     break
-                call = tool_calls[0]
-                messages.append(_assistant_tool_message(msg, tool_calls))
-                try:
-                    args = ToolArgs.model_validate_json(call.function.arguments)
-                except ValidationError as exc:
-                    malformed_streak += 1
+                # WR-1: execute EVERY call of a parallel response (capped at
+                # the remaining round budget); calls beyond the cap never
+                # enter messages, so no unmatched tool_call_id can 400 the
+                # next provider call.
+                calls = tool_calls[: MAX_TOOL_ROUNDS - rounds]
+                messages.append(_assistant_tool_message(calls))
+                malformed_abort = False
+                for call in calls:
+                    try:
+                        args = ToolArgs.model_validate_json(call.function.arguments)
+                    except ValidationError as exc:
+                        malformed_streak += 1
+                        messages.append(
+                            {
+                                "role": "tool",
+                                "tool_call_id": call.id,
+                                "content": (
+                                    "Error: invalid arguments for the search tool "
+                                    f"({exc}). Correct the arguments and call search once."
+                                ),
+                            }
+                        )
+                        if malformed_streak >= 2:
+                            malformed_abort = True
+                            break
+                        continue
+                    malformed_streak = 0
+                    yield _activity_frame(activity_line(args, rounds))
+                    results = engine.rrf_search(
+                        query=args.query,
+                        k=60,
+                        limit=args.top_k or default_top_k,
+                        filters=args.filters.model_dump(exclude_none=True) if args.filters else {},
+                        corpus=args.corpus,
+                        include_text=True,
+                    )
+                    docs = merge_dedup(docs, results)
                     messages.append(
                         {
                             "role": "tool",
                             "tool_call_id": call.id,
-                            "content": (
-                                "Error: invalid arguments for the search tool "
-                                f"({exc}). Correct the arguments and call search once."
+                            "content": json.dumps(
+                                _truncate_docs_for_tool(results), ensure_ascii=False
                             ),
                         }
                     )
-                    if malformed_streak >= 2:
-                        break
-                    continue
-                malformed_streak = 0
-                yield _activity_frame(activity_line(args, rounds))
-                results = engine.rrf_search(
-                    query=args.query,
-                    k=60,
-                    limit=args.top_k or default_top_k,
-                    filters=args.filters.model_dump(exclude_none=True) if args.filters else {},
-                    corpus=args.corpus,
-                    include_text=True,
-                )
-                docs = merge_dedup(docs, results)
-                messages.append(
-                    {
-                        "role": "tool",
-                        "tool_call_id": call.id,
-                        "content": json.dumps(results, ensure_ascii=False),
-                    }
-                )
-                rounds += 1
+                    rounds += 1
+                if malformed_abort:
+                    break
 
             # Final answer after tool rounds: grounded in accumulated docs,
             # or the zero-token canonical refusal when nothing was retrieved.
