@@ -345,11 +345,46 @@ def test_activity_and_citations_frame_ordering():
     done_i = index_of(lambda e: e.startswith("data: [DONE]"))
     assert activity_i < chunk_i < citations_i < done_i
 
-    assert _activity_lines(events) == ["Searching papers by author…", "Narrowing results…"]
+    # Spec review S-3: a filtered refinement keeps its per-filter copy — the
+    # second round carries the author filter, so it must NOT degrade to the
+    # generic "Narrowing results…" line.
+    assert _activity_lines(events) == [
+        "Searching papers by author…",
+        "Searching papers by author…",
+    ]
 
     citations_event = next(e for e in events if e.startswith("event: citations\n"))
     payload = json.loads(citations_event.split("\ndata: ", 1)[1].strip())
     assert [c["n"] for c in payload] == [1, 2]
+
+
+def test_request_corpus_is_default_when_tool_omits_it():
+    # Spec review S-5: the /chat/stream request corpus (ADR 0004) scopes
+    # retrieval — a tool call that omits `corpus` inherits the request corpus.
+    args = json.dumps({"query": "school id"})
+    _client, engine, loop = make_loop(
+        content="Policy answer. ",
+        tool_sequence=[args],
+        results=[DOC1],
+    )
+    events = list(loop.stream_agentic_events("school id", corpus="policy"))
+
+    assert engine.calls[0]["corpus"] == "policy"
+    assert _activity_lines(events) == ["Searching policy documents…"]
+    assert events[-1] == "data: [DONE]\n\n"
+
+
+def test_request_corpus_does_not_override_explicit_tool_corpus():
+    args = json.dumps({"query": "flood", "corpus": "catalog"})
+    _client, engine, loop = make_loop(
+        content="Catalog answer. ",
+        tool_sequence=[args],
+        results=[DOC1],
+    )
+    list(loop.stream_agentic_events("flood", corpus="policy"))
+
+    assert engine.calls[0]["corpus"] == "catalog"
+    assert engine.calls[0]["query"] == "flood"
 
 
 def test_activity_copy_lines_for_corpus_and_year():

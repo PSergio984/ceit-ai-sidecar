@@ -23,7 +23,14 @@ from typing import TYPE_CHECKING, Literal
 from pydantic import BaseModel, ConfigDict, Field, ValidationError, field_validator
 
 from .config import settings
-from .rag import CHUNK_KEY, MAX_DOC_CHARS, PROMPTS, SYSTEM_PROMPT, build_context
+from .rag import (
+    CITATION_KEYS,
+    MAX_DOC_CHARS,
+    PROMPTS,
+    SYSTEM_PROMPT,
+    build_context,
+    chunk_frame,
+)
 from .search import HybridSearch
 
 if TYPE_CHECKING:
@@ -112,24 +119,36 @@ def merge_dedup(docs: list[dict], new_docs: list[dict]) -> list[dict]:
 
 
 def citation_payload(docs: list[dict]) -> list[dict]:
-    """ADR 0006 payload: the numbered set the final prompt worked from (1..N)."""
+    """ADR 0006 payload: the numbered set the final prompt worked from (1..N).
+
+    Key set comes from the shared rag.CITATION_KEYS literal so the payload
+    shape cannot drift from the Laravel-side checker (AiService::CITATION_KEYS).
+    """
     return [
-        {
-            "n": i + 1,
-            "id": doc["id"],
-            "corpus": doc["corpus"],
-            "title": doc["title"],
-            "url": (doc.get("metadata") or {}).get("url"),
-            "catalog_code": (doc.get("metadata") or {}).get("catalog_code"),
-        }
+        {key: value for key, value in zip(CITATION_KEYS, _citation_values(doc, i + 1))}
         for i, doc in enumerate(docs)
     ]
 
 
-def activity_line(args: ToolArgs, executed_rounds: int) -> str:
-    """Static copy per UI-SPEC — never args/results JSON (D-12, T-11-11)."""
-    if executed_rounds > 0:
-        return "Narrowing results…"
+def _citation_values(doc: dict, n: int) -> tuple:
+    return (
+        n,
+        doc["id"],
+        doc["corpus"],
+        doc["title"],
+        (doc.get("metadata") or {}).get("url"),
+        (doc.get("metadata") or {}).get("catalog_code"),
+    )
+
+
+def activity_line(args: ToolArgs, executed_rounds: int, corpus: str | None = None) -> str:
+    """Static copy per UI-SPEC — never args/results JSON (D-12, T-11-11).
+
+    Precedence: per-filter copy, then corpus copy, then refinement/generic
+    fallbacks — a filtered refinement still names its filter (UI-SPEC rows
+    are not round-scoped). `corpus` is the effective corpus (request corpus
+    when the tool call omitted it, Spec review S-5).
+    """
     filters = args.filters
     if filters and filters.author:
         return "Searching papers by author…"
@@ -137,10 +156,13 @@ def activity_line(args: ToolArgs, executed_rounds: int) -> str:
         return "Searching papers by adviser…"
     if filters and (filters.year_from is not None or filters.year_to is not None):
         return f"Searching papers from {filters.year_from}–{filters.year_to}…"
-    if args.corpus == "policy":
+    effective_corpus = args.corpus or corpus
+    if effective_corpus == "policy":
         return "Searching policy documents…"
-    if args.corpus == "catalog":
+    if effective_corpus == "catalog":
         return "Searching the catalog…"
+    if executed_rounds > 0:
+        return "Narrowing results…"
     return "Searching papers…"
 
 
@@ -150,7 +172,7 @@ def _activity_frame(line: str) -> str:
 
 def _chunk_frames(text: str) -> Iterator[str]:
     for word in text.split():
-        yield f"data: {json.dumps({CHUNK_KEY: word + ' '}, ensure_ascii=False)}\n\n"
+        yield chunk_frame(word + " ")
 
 
 def _assistant_tool_message(tool_calls) -> dict:
@@ -244,13 +266,17 @@ class AgenticLoop:
         for chunk in stream:
             delta = chunk.choices[0].delta.content
             if delta:
-                yield f"data: {json.dumps({CHUNK_KEY: delta}, ensure_ascii=False)}\n\n"
+                yield chunk_frame(delta)
 
     def stream_agentic_events(
-        self, query: str, mode: str = "citations", default_top_k: int = 5
+        self, query: str, mode: str = "citations", corpus: str | None = None, default_top_k: int = 5
     ) -> Iterator[str]:
         """Yield raw SSE event strings for one agentic turn (ADR 0002 framing).
 
+        `corpus` is the request-scoped corpus from the /chat/stream payload
+        (ADR 0004 — absent = both). It becomes the DEFAULT corpus for tool
+        calls that omit `corpus`; an explicit tool-call corpus still wins, so
+        the request scope is honored unless the model deliberately widens it.
         `default_top_k` is the endpoint's top_k contract value used when a tool
         call omits `top_k`; the loop itself never adds history over the wire.
         """
@@ -312,13 +338,14 @@ class AgenticLoop:
                             break
                         continue
                     malformed_streak = 0
-                    yield _activity_frame(activity_line(args, rounds))
+                    effective_corpus = args.corpus or corpus
+                    yield _activity_frame(activity_line(args, rounds, effective_corpus))
                     results = engine.rrf_search(
                         query=args.query,
                         k=60,
                         limit=args.top_k or default_top_k,
                         filters=args.filters.model_dump(exclude_none=True) if args.filters else {},
-                        corpus=args.corpus,
+                        corpus=effective_corpus,
                         include_text=True,
                     )
                     docs = merge_dedup(docs, results)

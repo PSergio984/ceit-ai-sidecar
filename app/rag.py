@@ -68,6 +68,20 @@ MAX_DOC_CHARS = 600
 # counterpart constant lives in AiService::SSE_CHUNK_KEY.
 CHUNK_KEY = "c"
 
+# ADR 0006 citation payload keys — the Laravel shape checker's counterpart
+# lives in AiService::CITATION_KEYS. One shared literal per side so the
+# contract cannot drift inside either codebase.
+CITATION_KEYS = ("n", "id", "corpus", "title", "url", "catalog_code")
+
+
+def chunk_frame(delta: str) -> str:
+    """One SSE `data:` line carrying a JSON-encoded chunk envelope (ADR 0002).
+
+    JSON encoding keeps provider deltas containing newlines from breaking the
+    SSE line framing (review W-1); the Laravel parser reads CHUNK_KEY.
+    """
+    return f"data: {json.dumps({CHUNK_KEY: delta}, ensure_ascii=False)}\n\n"
+
 SYSTEM_PROMPT = (
     "You are the CEIT Library assistant. Answer only from the provided documents; "
     'if the documents do not contain the answer, say "I don\'t have enough information".'
@@ -169,8 +183,7 @@ class RagService:
             return
         try:
             for delta in self.stream_answer(query, results, mode):
-                payload = json.dumps({CHUNK_KEY: delta}, ensure_ascii=False)
-                yield f"data: {payload}\n\n"
+                yield chunk_frame(delta)
         except Exception as exc:  # noqa: BLE001 - provider errors become SSE error events
             logger.error(repr(exc))
             error_payload = {

@@ -156,7 +156,9 @@ def chat_stream(payload: dict):
     if top_k < 1 or top_k > 50:
         return _invalid("'top_k' must be between 1 and 50")
 
-    events = _get_agent().stream_agentic_events(query, mode=mode, default_top_k=top_k)
+    events = _get_agent().stream_agentic_events(
+        query, mode=mode, corpus=corpus, default_top_k=top_k
+    )
 
     return StreamingResponse(
         events,
