@@ -24,7 +24,6 @@ from pydantic import BaseModel, ConfigDict, Field, ValidationError, field_valida
 
 from .config import settings
 from .rag import (
-    CITATION_KEYS,
     MAX_DOC_CHARS,
     PROMPTS,
     SYSTEM_PROMPT,
@@ -121,33 +120,33 @@ def merge_dedup(docs: list[dict], new_docs: list[dict]) -> list[dict]:
 def citation_payload(docs: list[dict]) -> list[dict]:
     """ADR 0006 payload: the numbered set the final prompt worked from (1..N).
 
-    Key set comes from the shared rag.CITATION_KEYS literal so the payload
-    shape cannot drift from the Laravel-side checker (AiService::CITATION_KEYS).
+    Entries are built as explicit key→value dicts (no positional tuple), so
+    reordering the shared rag.CITATION_KEYS literal can never silently
+    misalign a value (review nit 2). The key set still comes from
+    rag.CITATION_KEYS so the shape cannot drift from the Laravel-side
+    checker (AiService::CITATION_KEYS).
     """
     return [
-        {key: value for key, value in zip(CITATION_KEYS, _citation_values(doc, i + 1))}
+        {
+            "n": i + 1,
+            "id": doc["id"],
+            "corpus": doc["corpus"],
+            "title": doc["title"],
+            "url": (doc.get("metadata") or {}).get("url"),
+            "catalog_code": (doc.get("metadata") or {}).get("catalog_code"),
+        }
         for i, doc in enumerate(docs)
     ]
 
 
-def _citation_values(doc: dict, n: int) -> tuple:
-    return (
-        n,
-        doc["id"],
-        doc["corpus"],
-        doc["title"],
-        (doc.get("metadata") or {}).get("url"),
-        (doc.get("metadata") or {}).get("catalog_code"),
-    )
-
-
-def activity_line(args: ToolArgs, executed_rounds: int, corpus: str | None = None) -> str:
+def activity_line(args: ToolArgs, executed_rounds: int, effective_corpus: str | None = None) -> str:
     """Static copy per UI-SPEC — never args/results JSON (D-12, T-11-11).
 
     Precedence: per-filter copy, then corpus copy, then refinement/generic
     fallbacks — a filtered refinement still names its filter (UI-SPEC rows
-    are not round-scoped). `corpus` is the effective corpus (request corpus
-    when the tool call omitted it, Spec review S-5).
+    are not round-scoped). `effective_corpus` is ALREADY resolved by the
+    caller (request corpus when the tool call omitted it, Spec review S-5);
+    this function never re-derives it — one owner for the resolution.
     """
     filters = args.filters
     if filters and filters.author:
@@ -156,7 +155,6 @@ def activity_line(args: ToolArgs, executed_rounds: int, corpus: str | None = Non
         return "Searching papers by adviser…"
     if filters and (filters.year_from is not None or filters.year_to is not None):
         return f"Searching papers from {filters.year_from}–{filters.year_to}…"
-    effective_corpus = args.corpus or corpus
     if effective_corpus == "policy":
         return "Searching policy documents…"
     if effective_corpus == "catalog":

@@ -410,6 +410,39 @@ def test_merge_dedup_keeps_first_seen_order():
     assert [d["id"] for d in merged] == ["paper-1", "paper-2"]
 
 
+def test_citation_payload_keys_match_contract_and_values_are_attributed():
+    # Review nit 2: payload is keyed by the shared CITATION_KEYS literal —
+    # reordering the literal must not silently misalign values.
+    from app.rag import CITATION_KEYS
+
+    payload = citation_payload([DOC1, DOC2])
+
+    assert [list(entry) for entry in payload] == [list(CITATION_KEYS)] * 2
+    assert payload[0]["n"] == 1
+    assert payload[0]["id"] == "paper-1"
+    assert payload[0]["corpus"] == "catalog"
+    assert payload[0]["title"] == "Analysis of Groundwater Depletion"
+    assert payload[0]["url"] == "/academic-papers/1"
+    assert payload[0]["catalog_code"] == "CEIT-CE-15-014"
+    assert payload[1]["n"] == 2
+    assert payload[1]["id"] == "paper-2"
+    assert payload[1]["url"] is None or payload[1]["url"] == "/academic-papers/2"
+
+
+def test_activity_line_uses_the_effective_corpus_it_is_given():
+    # Review nit 1: the caller resolves the effective corpus once; the copy
+    # function must not re-derive it (a tool-omitted corpus that the caller
+    # defaulted must not fall back to "Searching papers…").
+    from app.agent import ToolArgs, activity_line
+
+    args = ToolArgs.model_validate_json(json.dumps({"query": "school id"}))
+    assert activity_line(args, 0, "policy") == "Searching policy documents…"
+    assert activity_line(args, 0, "catalog") == "Searching the catalog…"
+    assert activity_line(args, 0, None) == "Searching papers…"
+    # Tool-omitted corpus but caller defaulted it — the resolved value wins.
+    assert activity_line(args, 1, "policy") == "Searching policy documents…"
+
+
 def test_tool_args_rejects_unknown_keys():
     with pytest.raises(ValidationError):
         ToolArgs.model_validate_json(json.dumps({"query": "q", "mystery": 1}))
