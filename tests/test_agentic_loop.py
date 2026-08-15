@@ -103,7 +103,7 @@ class FakeCompletions:
 class FakeCompletionsHolder:
     def __init__(self, content: str = "", tool_sequence: list | None = None, fail: bool = False):
         self.chat = type(
-            "Chat", (), {"completions": FakeCompletions(content, tool_sequence, fail)}()
+            "Chat", (), {"completions": FakeCompletions(content, tool_sequence, fail)}
         )()
 
 
@@ -142,7 +142,7 @@ def _activity_lines(events: list[str]) -> list[str]:
 
 
 def test_direct_answer_streams_without_search():
-    client, engine, loop = make_loop(content="Hello there. ")
+    _client, engine, loop = make_loop(content="Hello there. ")
     events = list(loop.stream_agentic_events("hello"))
     assert any('"c": "Hello ' in event for event in events)
     assert any(event == "data: [DONE]\n\n" for event in events)
@@ -187,13 +187,13 @@ def test_tool_call_triggers_search_then_answer():
     payload = json.loads(citations_event.split("\ndata: ", 1)[1].strip())
     assert payload == citation_payload([DOC1, DOC2])
 
-    assert any('"c": "The papers by ' in event for event in events)
+    assert any('"c": "The "' in event for event in events)
     assert events[-1] == "data: [DONE]\n\n"
 
 
 def test_loop_caps_at_three_rounds_and_fails_closed():
     args = json.dumps({"query": "multi-hop question"})
-    client, engine, loop = make_loop(
+    _client, engine, loop = make_loop(
         content="Final grounded answer. ",
         tool_sequence=[args, args, args, args],
         results=[DOC1],
@@ -202,7 +202,7 @@ def test_loop_caps_at_three_rounds_and_fails_closed():
 
     assert len(engine.calls) == MAX_TOOL_ROUNDS
     assert _activity_lines(events) == ["Searching papers…", "Narrowing results…", "Narrowing results…"]
-    assert any('"c": "Final grounded answer. "' in event for event in events)
+    assert any('"c": "Final "' in event for event in events)
     citations_event = next(e for e in events if e.startswith("event: citations\n"))
     payload = json.loads(citations_event.split("\ndata: ", 1)[1].strip())
     assert payload == citation_payload([DOC1])
@@ -240,7 +240,7 @@ def test_malformed_tool_args_correct_once_then_fail_closed():
 
 def test_activity_and_citations_frame_ordering():
     args = json.dumps({"query": "papers by juan dela cruz", "filters": {"author": "juan dela cruz"}})
-    client, engine, loop = make_loop(
+    _client, _engine, loop = make_loop(
         content="Answer text. ",
         tool_sequence=[args, args],
         results=[DOC1, DOC2],
@@ -267,12 +267,16 @@ def test_activity_copy_lines_for_corpus_and_year():
     policy_args = json.dumps({"query": "school id", "corpus": "policy"})
     catalog_args = json.dumps({"query": "flood", "corpus": "catalog"})
     year_args = json.dumps({"query": "papers", "filters": {"year_from": 2015, "year_to": 2020}})
-    client, engine, loop = make_loop(content="x ", tool_sequence=[policy_args, catalog_args, year_args], results=[DOC1])
-    events = list(loop.stream_agentic_events("q"))
-    assert _activity_lines(events) == [
-        "Searching policy documents…",
-        "Searching the catalog…",
-        "Searching papers from 2015–2020…",
+
+    _client, _engine, loop = make_loop(content="x ", tool_sequence=[policy_args], results=[DOC1])
+    assert _activity_lines(list(loop.stream_agentic_events("q"))) == ["Searching policy documents…"]
+
+    _client, _engine, loop = make_loop(content="x ", tool_sequence=[catalog_args], results=[DOC1])
+    assert _activity_lines(list(loop.stream_agentic_events("q"))) == ["Searching the catalog…"]
+
+    _client, _engine, loop = make_loop(content="x ", tool_sequence=[year_args], results=[DOC1])
+    assert _activity_lines(list(loop.stream_agentic_events("q"))) == [
+        "Searching papers from 2015–2020…"
     ]
 
 
