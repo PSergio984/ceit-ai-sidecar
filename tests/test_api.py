@@ -94,6 +94,46 @@ def test_search_rejects_unknown_fields(client):
     assert "unknown field(s)" in resp.json()["error"]["message"]
 
 
+def test_search_endpoint_accepts_author_adviser_filters(client):
+    """author/adviser ride inside the permissive filters dict — 200 + filtered ids."""
+    app, _, _ = client
+    resp = app.post(
+        "/search",
+        json={
+            "query": "water",
+            "filters": {"author": "juan", "adviser": "engr. jose"},
+            "corpus": "catalog",
+            "limit": 10,
+            "k": 60,
+        },
+        headers={"X-Sidecar-Token": "test-token"},
+    )
+    assert resp.status_code == 200
+    body = resp.json()
+    ids = {r["id"] for r in body["results"]}
+    assert ids == {"paper-1", "paper-2"}
+    for r in body["results"]:
+        meta = r["metadata"]
+        assert any("juan" in name.lower() for name in meta["authors"])
+        assert any(
+            "engr. jose" in (meta.get(k) or "").lower()
+            for k in ("research_adviser", "technical_adviser")
+        )
+
+
+def test_search_rejects_author_at_top_level(client):
+    """Closed-schema posture unchanged: author is a filters-dict key, never top-level."""
+    app, _, _ = client
+    resp = app.post(
+        "/search",
+        json={"query": "water pump", "author": "juan"},
+        headers={"X-Sidecar-Token": "test-token"},
+    )
+    assert resp.status_code == 422
+    assert resp.json()["error"]["code"] == "invalid_request"
+    assert "unknown field(s): author" in resp.json()["error"]["message"]
+
+
 def test_search_rejects_exclude_field(client):
     app, _, _ = client
     resp = app.post(

@@ -62,6 +62,75 @@ def test_filter_paper_type_and_year_range(tmp_path, corpus_path):
         assert 2020 <= r["metadata"]["publication_year"] <= 2025
 
 
+def test_filter_author_any_of_multiple(tmp_path, corpus_path):
+    """author matches ANY element of metadata.authors, case-insensitive substring."""
+    cache = _build_index(tmp_path, corpus_path)
+    hs = HybridSearch(cache, "test-model")
+    results = hs.rrf_search(
+        "water",
+        k=60,
+        limit=10,
+        filters={"author": "juan"},
+    )
+    hs.close()
+
+    assert results, "expected results for author juan"
+    for r in results:
+        assert any("juan" in name.lower() for name in (r["metadata"].get("authors") or []))
+    # paper-2 carries "Juan Dela Cruz" as its SECOND author; paper-1 as its first.
+    assert {r["id"] for r in results} == {"paper-1", "paper-2"}
+
+
+def test_filter_author_combined_with_year_range(tmp_path, corpus_path):
+    cache = _build_index(tmp_path, corpus_path)
+    hs = HybridSearch(cache, "test-model")
+    results = hs.rrf_search(
+        "water",
+        k=60,
+        limit=10,
+        filters={"author": "juan", "year_from": 2020, "year_to": 2025},
+    )
+    hs.close()
+
+    # paper-1 (2015) is excluded by the year range; paper-2 (2025) remains.
+    assert [r["id"] for r in results] == ["paper-2"]
+
+
+def test_filter_adviser_research_or_technical(tmp_path, corpus_path):
+    """adviser matches research_adviser OR technical_adviser, case-insensitive substring."""
+    cache = _build_index(tmp_path, corpus_path)
+    hs = HybridSearch(cache, "test-model")
+    results = hs.rrf_search(
+        "water",
+        k=60,
+        limit=10,
+        filters={"adviser": "engr. jose"},
+    )
+    hs.close()
+
+    assert results, "expected results for adviser engr. jose"
+    for r in results:
+        meta = r["metadata"]
+        assert any(
+            "engr. jose" in (meta.get(k) or "").lower()
+            for k in ("research_adviser", "technical_adviser")
+        )
+    # paper-1 matches via research_adviser only; paper-2 via technical_adviser only.
+    assert {r["id"] for r in results} == {"paper-1", "paper-2"}
+
+
+def test_filter_author_non_string_junk_does_not_raise(tmp_path, corpus_path):
+    """Agent junk args must be str()-guarded — clean empty result, never a TypeError."""
+    cache = _build_index(tmp_path, corpus_path)
+    hs = HybridSearch(cache, "test-model")
+    list_results = hs.rrf_search("water", k=60, limit=10, filters={"author": ["x"]})
+    int_results = hs.rrf_search("water", k=60, limit=10, filters={"adviser": 42})
+    hs.close()
+
+    assert list_results == []
+    assert int_results == []
+
+
 def test_filtered_doc_never_outranks_unfiltered_relevant_one(tmp_path, corpus_path):
     """Filtering happens BEFORE fusion: an out-of-filter doc is not in the
     candidate set at all, so it can never appear above a relevant one."""
