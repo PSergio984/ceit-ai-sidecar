@@ -2,10 +2,13 @@
 
 from __future__ import annotations
 
+import json
+
 from conftest import build_test_index, embed_from
 from fastapi.testclient import TestClient
 
 import app.main as main_mod
+from app.agent import SEARCH_TOOL, AgenticLoop
 from app.rag import RagService
 
 SSE_DOCS = [
@@ -21,13 +24,19 @@ SSE_DOCS = [
 
 
 class FakeCompletions:
-    def __init__(self, content: str, fail: bool = False):
+    def __init__(self, content: str, fail: bool = False, tool_sequence: list | None = None):
         self.content = content
         self.fail = fail
+        self.tool_sequence = list(tool_sequence or [])
         self.calls: list[dict] = []
 
     def create(self, **kwargs):
         self.calls.append(kwargs)
+        if self.tool_sequence:
+            item = self.tool_sequence.pop(0)
+            if item == "FAIL":
+                raise RuntimeError("provider exploded")
+            return _response(self.content, tool_calls=[_tool_call("search", item)])
         if self.fail:
             raise RuntimeError("provider exploded")
         if kwargs.get("stream"):
@@ -46,17 +55,31 @@ def _stream_chunk(delta: str):
     )()
 
 
-def _response(content: str):
+def _tool_call(name: str, arguments: str):
+    return type(
+        "TC",
+        (),
+        {"id": "call_1", "function": type("F", (), {"name": name, "arguments": arguments})()},
+    )()
+
+
+def _response(content: str, tool_calls=None):
     return type(
         "Resp",
         (),
-        {"choices": [type("C", (), {"message": type("M", (), {"content": content})()})()]},
+        {
+            "choices": [
+                type("C", (), {"message": type("M", (), {"content": content, "tool_calls": tool_calls})()})()
+            ]
+        },
     )()
 
 
 class FakeCompletionsHolder:
-    def __init__(self, content: str, fail: bool = False):
-        self.chat = type("Chat", (), {"completions": FakeCompletions(content, fail)})()
+    def __init__(self, content: str, fail: bool = False, tool_sequence: list | None = None):
+        self.chat = type(
+            "Chat", (), {"completions": FakeCompletions(content, fail, tool_sequence)}
+        )()
 
 
 class FakeEngine:
@@ -76,6 +99,7 @@ def make_client(
     *,
     content="Students must present their school ID. ",
     fail=False,
+    tool_sequence=None,
 ):
     from app.config import Settings
 
@@ -91,15 +115,22 @@ def make_client(
     )
 
     main_mod.settings = settings
-    main_mod._search_engine = FakeEngine(engine_results)
+    engine = FakeEngine(engine_results)
+    main_mod._search_engine = engine
+    holder = FakeCompletionsHolder(content, fail, tool_sequence)
     main_mod._rag = RagService(
-        client=FakeCompletionsHolder(content, fail),
+        client=holder,
+        model="test-model",
+        max_tokens=64,
+    )
+    main_mod._agent = AgenticLoop(
+        client=holder,
+        engine=engine,
         model="test-model",
         max_tokens=64,
     )
 
     import app.rebuild as rebuild_mod
-
     rebuild_mod._embed_override = embed_from(docs)
 
     return TestClient(main_mod.app)
@@ -112,15 +143,18 @@ def test_chat_stream_requires_token(tmp_path, corpus_path):
 
 
 def test_chat_stream_refuses_on_empty_retrieval_without_llm_call(tmp_path, corpus_path):
-    client = make_client(tmp_path, corpus_path, [])
+    tool_call = json.dumps({"query": "school ID"})
+    client = make_client(tmp_path, corpus_path, [], tool_sequence=[tool_call])
     resp = client.post(
         "/chat/stream",
         json={"query": "school ID"},
         headers={"X-Sidecar-Token": "test-token"},
     )
     assert resp.status_code == 200
-    assert resp.text == "data: I don't have enough information\n\n" + "data: [DONE]\n\n"
-    assert main_mod._rag._client.chat.completions.calls == []
+    assert "event: activity" in resp.text
+    assert resp.text.endswith("data: I don't have enough information\n\n" + "data: [DONE]\n\n")
+    calls = main_mod._agent._client.chat.completions.calls
+    assert not any(c.get("stream") for c in calls)
 
 
 def test_chat_stream_rejects_missing_query(tmp_path, corpus_path):
@@ -161,13 +195,17 @@ def test_chat_stream_streams_chunks_and_done(tmp_path, corpus_path):
 
 
 def test_chat_stream_feeds_search_results_into_prompt(tmp_path, corpus_path):
-    client = make_client(tmp_path, corpus_path, SSE_DOCS)
+    tool_call = json.dumps({"query": "school ID", "corpus": "policy"})
+    client = make_client(tmp_path, corpus_path, SSE_DOCS, tool_sequence=[tool_call])
     client.post(
         "/chat/stream",
         json={"query": "school ID", "corpus": "policy", "top_k": 3},
         headers={"X-Sidecar-Token": "test-token"},
     )
     assert client.app.state is not None  # keep fixture alive
+    decision = main_mod._agent._client.chat.completions.calls[0]
+    assert decision["tools"] == [SEARCH_TOOL]
+    assert decision["tool_choice"] == "auto"
     engine = main_mod._search_engine
     assert engine.calls == [
         {"query": "school ID", "corpus": "policy", "limit": 3, "include_text": True}

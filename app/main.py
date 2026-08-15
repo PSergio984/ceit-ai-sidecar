@@ -10,6 +10,7 @@ from pathlib import Path
 from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse, StreamingResponse
 
+from .agent import AgenticLoop
 from .config import settings
 from .health import assemble_health
 from .rag import RagService
@@ -29,6 +30,7 @@ _metrics = {
 
 _search_engine: HybridSearch | None = None
 _rag: RagService | None = None
+_agent: AgenticLoop | None = None
 
 
 def _get_cache_dir() -> Path:
@@ -47,6 +49,13 @@ def _get_rag() -> RagService:
     if _rag is None:
         _rag = RagService()
     return _rag
+
+
+def _get_agent() -> AgenticLoop:
+    global _agent
+    if _agent is None:
+        _agent = AgenticLoop(engine=_get_engine())
+    return _agent
 
 
 def _invalid(message: str) -> JSONResponse:
@@ -147,8 +156,7 @@ def chat_stream(payload: dict):
     if top_k < 1 or top_k > 50:
         return _invalid("'top_k' must be between 1 and 50")
 
-    results = _get_engine().rrf_search(query, k=60, limit=top_k, corpus=corpus, include_text=True)
-    events = _get_rag().stream_events(query, results, mode=mode)
+    events = _get_agent().stream_agentic_events(query, mode=mode, default_top_k=top_k)
 
     return StreamingResponse(
         events,
