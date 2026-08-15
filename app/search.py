@@ -18,6 +18,8 @@ from .ingest import embed_query
 
 CODE_PIN_RE = re.compile(r"^CEIT-[A-Z]{2}-\d{2}(-\d+)?$", re.IGNORECASE)
 
+AUTHOR_KEYS = ("research_adviser", "technical_adviser")
+
 
 def _version_artifacts(cache_dir: Path) -> tuple[int, dict, np.ndarray]:
     """Return (version, docs_by_id, vectors) for the current index state."""
@@ -119,6 +121,14 @@ class HybridSearch:
                 return False
             if f.get("year_to") and int(meta.get("publication_year") or 0) > int(f["year_to"]):
                 return False
+            if f.get("author"):
+                needle = str(f["author"]).lower()
+                if not any(needle in str(name).lower() for name in (meta.get("authors") or [])):
+                    return False
+            if f.get("adviser"):
+                needle = str(f["adviser"]).lower()
+                if not any(needle in str(meta.get(k) or "").lower() for k in AUTHOR_KEYS):
+                    return False
             return not (corpus and doc.get("corpus") != corpus)
 
         candidate_ids = set(bm25_ranks) | set(semantic_scores)
