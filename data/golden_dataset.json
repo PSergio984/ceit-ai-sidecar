@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "catalog_snapshot": "2026-08-13T11:25:36+00:00",
+  "catalog_snapshot": "2026-08-15T09:54:16+00:00",
   "test_cases": [
     {
       "query": "Et aperiam iste facilis placeat.",
@@ -285,6 +285,104 @@
         "paper-29",
         "paper-30"
       ]
+    },
+    {
+      "query": "papers by Bill Beier",
+      "corpus": "catalog",
+      "filters": {
+        "author": "Bill Beier"
+      },
+      "relevant_docs": [
+        "paper-1",
+        "paper-19"
+      ]
+    },
+    {
+      "query": "papers by Georgette Swift",
+      "corpus": "catalog",
+      "filters": {
+        "author": "Georgette Swift"
+      },
+      "relevant_docs": [
+        "paper-9",
+        "paper-20",
+        "paper-25"
+      ]
+    },
+    {
+      "query": "papers advised by Chadd Legros",
+      "corpus": "catalog",
+      "filters": {
+        "adviser": "Chadd Legros"
+      },
+      "relevant_docs": [
+        "paper-1",
+        "paper-12",
+        "paper-24"
+      ]
+    },
+    {
+      "query": "thesis",
+      "corpus": "catalog",
+      "filters": {
+        "year_from": 2020,
+        "year_to": 2025
+      },
+      "relevant_docs": [
+        "paper-7",
+        "paper-9"
+      ]
+    },
+    {
+      "query": "report",
+      "corpus": "catalog",
+      "filters": {
+        "year_from": 2009,
+        "year_to": 2010
+      },
+      "relevant_docs": [
+        "paper-1",
+        "paper-3",
+        "paper-15"
+      ]
+    },
+    {
+      "query": "practicum",
+      "corpus": "catalog",
+      "relevant_docs": [
+        "paper-13",
+        "paper-16",
+        "paper-18",
+        "paper-24",
+        "paper-29"
+      ]
+    },
+    {
+      "query": "capstone project",
+      "corpus": "catalog",
+      "relevant_docs": [
+        "paper-10",
+        "paper-17"
+      ]
+    },
+    {
+      "query": "practicum in information technology",
+      "corpus": "catalog",
+      "relevant_docs": [
+        "paper-24"
+      ]
+    },
+    {
+      "query": "interstellar space travel propulsion systems",
+      "corpus": "catalog",
+      "relevant_docs": [],
+      "negative": true
+    },
+    {
+      "query": "medieval european castle architecture",
+      "corpus": "catalog",
+      "relevant_docs": [],
+      "negative": true
     }
   ]
 }
