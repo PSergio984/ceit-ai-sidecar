@@ -6,8 +6,9 @@ import secrets
 import threading
 import time
 from pathlib import Path
+from typing import Annotated
 
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, File, Request, UploadFile
 from fastapi.responses import JSONResponse, StreamingResponse
 
 from .agent import AgenticLoop
@@ -192,6 +193,72 @@ def index_rebuild():
         "took_ms": took_ms,
         "source_generated_at": state.get("source_generated_at"),
     }
+
+
+MAX_UPLOAD_BYTES = 50 * 1024 * 1024
+
+
+@app.post("/corpus/upload")
+def corpus_upload(
+    catalog: Annotated[UploadFile | None, File()] = None,
+    policies: Annotated[UploadFile | None, File()] = None,
+):
+    """Replace corpus files in CORPUS_PATH and rebuild the index.
+
+    Cloud-deployment hand-off (FastAPI Cloud has no Laravel beside it):
+    the Laravel `ai:push-corpus` command exports and uploads the corpus
+    here. At least one of `catalog`/`policies` must be present; files are
+    written under settings.corpus_path and the index is rebuilt atomically.
+    On validation failure the uploaded files are removed so the previous
+    corpus stays intact.
+    """
+    if catalog is None and policies is None:
+        return _invalid("provide at least one of 'catalog' or 'policies'")
+
+    corpus_dir = Path(settings.corpus_path)
+    corpus_dir.mkdir(parents=True, exist_ok=True)
+
+    uploaded: list[str] = []
+    try:
+        for field, filename in ((catalog, "catalog.json"), (policies, "policies.json")):
+            if field is not None:
+                content = field.file.read()
+                if len(content) > MAX_UPLOAD_BYTES:
+                    return _invalid(f"{filename} exceeds the {MAX_UPLOAD_BYTES}-byte upload cap")
+                (corpus_dir / filename).write_bytes(content)
+                uploaded.append(filename)
+
+        started = time.perf_counter()
+        try:
+            state = rebuild(settings)
+        except Exception as exc:  # noqa: BLE001 - invalid corpus, fail closed
+            for filename in uploaded:
+                (corpus_dir / filename).unlink(missing_ok=True)
+            return JSONResponse(
+                status_code=500,
+                content={"error": {"code": "upload_failed", "message": str(exc)}},
+            )
+        took_ms = int((time.perf_counter() - started) * 1000)
+
+        with _metrics_lock:
+            _metrics["rebuilds_total"] += 1
+            _metrics["last_rebuild_at"] = state.get("built_at")
+            _metrics["index_documents"] = state.get("documents")
+
+        return {
+            "status": "uploaded_and_rebuilt",
+            "files": uploaded,
+            "contract_version": state.get("contract_version", "v1"),
+            "documents": state.get("documents"),
+            "by_corpus": state.get("by_corpus"),
+            "took_ms": took_ms,
+            "source_generated_at": state.get("source_generated_at"),
+        }
+    finally:
+        if catalog is not None:
+            catalog.file.close()
+        if policies is not None:
+            policies.file.close()
 
 
 @app.get("/metrics")

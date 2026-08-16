@@ -192,3 +192,56 @@ def test_concurrent_rebuilds_serialize(client):
     assert statuses == [200, 200]
     state = json.loads((cache / "state.json").read_text(encoding="utf-8"))
     assert state["documents"] == 6
+
+
+def test_corpus_upload_without_token_is_401(client):
+    app, _, _ = client
+    resp = app.post("/corpus/upload", files={"catalog": ("catalog.json", b"{}")})
+    assert resp.status_code == 401
+
+
+def test_corpus_upload_with_no_files_is_422(client):
+    app, _, _ = client
+    resp = app.post("/corpus/upload", headers={"X-Sidecar-Token": "test-token"})
+    assert resp.status_code == 422
+    assert resp.json()["error"]["code"] == "invalid_request"
+
+
+def test_corpus_upload_catalog_rebuilds(client):
+    app, cache, corpus_path = client
+    content = (corpus_path / "catalog.json").read_bytes()
+
+    resp = app.post(
+        "/corpus/upload",
+        headers={"X-Sidecar-Token": "test-token"},
+        files={"catalog": ("catalog.json", content, "application/json")},
+    )
+    assert resp.status_code == 200
+    body = resp.json()
+    assert body["status"] == "uploaded_and_rebuilt"
+    assert body["files"] == ["catalog.json"]
+    assert body["documents"] == 6  # catalog 4 + existing policies 2
+    assert body["by_corpus"] == {"catalog": 4, "policy": 2}
+
+    state = json.loads((cache / "state.json").read_text(encoding="utf-8"))
+    assert state["documents"] == 6
+
+
+def test_corpus_upload_invalid_json_fails_closed(client):
+    app, cache, corpus_path = client
+    resp = app.post(
+        "/corpus/upload",
+        headers={"X-Sidecar-Token": "test-token"},
+        files={"catalog": ("catalog.json", b"{not json", "application/json")},
+    )
+    assert resp.status_code == 500
+    assert resp.json()["error"]["code"] == "upload_failed"
+    # Fail-closed: the bad file was removed, previous corpus + index intact.
+    assert not (corpus_path / "catalog.json").exists()
+    assert (corpus_path / "policies.json").exists()
+
+    health = app.get("/health", headers={"X-Sidecar-Token": "test-token"})
+    assert health.status_code == 200
+    assert health.json()["status"] == "ok"
+    state = json.loads((cache / "state.json").read_text(encoding="utf-8"))
+    assert state["documents"] == 6

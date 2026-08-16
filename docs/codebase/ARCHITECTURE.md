@@ -15,6 +15,7 @@
 
 ```text
 export:   Laravel ai:export-corpus -> storage/app/ai-corpus/{catalog,policies}.json
+          (cloud: Laravel ai:push-corpus hourly -> POST /corpus/upload -> files land in CORPUS_PATH)
 rebuild:  /index/rebuild -> load_documents (validate) -> embed (SentenceTransformer)
           -> build FTS5 index -> write versioned artifacts (docs-N.json, vectors-N.npy, index-N.db)
           -> atomic state.json swap -> prune old versions (keep 2)

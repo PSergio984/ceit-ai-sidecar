@@ -34,7 +34,7 @@
 | `app/search.py` | Ranking + fusion + filters (one seam for search) | LLM calls, prompt text |
 | `app/rag.py` / `app/agent.py` | LLM orchestration, SSE framing, prompts | Index format/versioning details |
 | `app/ingest.py` / `app/rebuild.py` | Corpus reading, embedding, cache artifact writes, atomic swaps | HTTP/API concerns |
-| `app/main.py` | HTTP surface, token gate, request validation | Ranking logic |
+| `app/main.py` | HTTP surface, token gate, request validation, `/corpus/upload` (multipart → CORPUS_PATH → rebuild) | Ranking logic |
 | `app/eval.py` | Golden-set scoring | Production serving paths |
 
 ### 4) Naming and Organization Rules

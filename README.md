@@ -42,6 +42,7 @@ there.
 | POST   | `/search`        | Hybrid RRF search with optional filters       |
 | POST   | `/chat/stream`   | SSE-streamed RAG answer over search results (Phase 9, ADR 0002) |
 | POST   | `/index/rebuild` | Synchronous full rebuild (atomic swap, no downtime) |
+| POST   | `/corpus/upload` | Replace `catalog.json`/`policies.json` in `CORPUS_PATH` and rebuild (multipart: `catalog`, `policies`, at least one; fail-closed on invalid JSON) |
 | GET    | `/metrics`       | Minimal hand-rolled counters (Prometheus in Phase 14) |
 
 All endpoints require `X-Sidecar-Token`; requests without it get `401`.
@@ -55,6 +56,13 @@ The LLM provider is OpenRouter via the openai SDK (`LLM_BASE_URL`/`LLM_API_KEY`/
 `CORPUS_PATH` points at the directory containing `catalog.json` + `policies.json`
 (exported by the Laravel app's `ai:export-corpus`). Default:
 `../ceit-library/storage/app/ai-corpus`.
+
+On FastAPI Cloud there is no Laravel beside the container: the Laravel
+`ai:push-corpus` command (scheduled hourly at :07 after the :05 export)
+uploads the files to `POST /corpus/upload`, which writes them under
+`CORPUS_PATH` and rebuilds the index atomically. Set `CORPUS_PATH` in the
+cloud dashboard to the container path you want the uploads to land in (e.g.
+`corpus`).
 
 ## Tests
 

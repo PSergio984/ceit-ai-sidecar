@@ -10,7 +10,7 @@
 | High | `SIDECAR_TOKEN=smoke-test-token` placeholder | `.env`, `.env.example` | Any local process can call the sidecar | Set a real token (shared with Laravel) before production |
 | Med | No rate limits or cost guards on the LLM path | `.planning/ROADMAP.md` Phase 14 (OPS-02) | Runaway token spend | Phase 14: rate limits + cost guards |
 | Med | Corpus staleness if Laravel scheduler/queue isn't running (exports never land) | Laravel `routes/console.php` schedule | `/health` reports stale index; search serves old data | Health alerting on `source_generated_at` (Phase 14) |
-| Med | Corpus must exist inside the FastAPI Cloud container | `CORPUS_PATH` (default `../ceit-library/storage/app/ai-corpus` — Laravel-relative, meaningless in the cloud) | Cloud index empty/degraded until a corpus is provided | Upload/seed corpus files into the container or a persistent volume; set `CORPUS_PATH` in the dashboard; do NOT commit the corpus (contains author names) |
+| Med | Corpus must exist inside the FastAPI Cloud container | `CORPUS_PATH` (default `../ceit-library/storage/app/ai-corpus` — Laravel-relative, meaningless in the cloud) | Cloud index empty/degraded until a corpus is provided | **Resolved 2026-08-16**: Laravel `ai:push-corpus` (hourly :07) uploads to `POST /corpus/upload`; set `CORPUS_PATH` in the dashboard to the container path (e.g. `corpus`). Corpus still never committed to git (contains author names) |
 
 ### 2) Technical Debt
 
