@@ -5,7 +5,7 @@ description = "Hybrid search sidecar for CEIT-Library AI assistant (FTS5 BM25 + 
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
-    "fastapi>=0.141,<0.142",
+    "fastapi[standard]>=0.141,<0.142",
     "uvicorn[standard]>=0.52,<0.53",
     "sentence-transformers>=5.7,<5.8",
     "sqlitesearch>=0.3,<0.4",

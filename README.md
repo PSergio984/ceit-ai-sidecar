@@ -28,9 +28,11 @@ Pre-warm it on first ingest; subsequent builds use the local cache.
 uv run uvicorn app.main:app --port 8310
 ```
 
-The server binds **loopback only** (`127.0.0.1`) — it is never exposed to the
-network. The Laravel app talks to it over loopback with the shared
-`X-Sidecar-Token` header.
+The server binds **loopback only** (`127.0.0.1`) when run locally — it is never
+exposed to the network from a dev machine. Production runs on **FastAPI Cloud**
+via `fastapi run` (requires `fastapi[standard]`), bound to the platform's public
+endpoint behind HTTPS; the shared `X-Sidecar-Token` header is the auth boundary
+there.
 
 ## Endpoints
 
