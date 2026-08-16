@@ -128,7 +128,11 @@ def make_corpus(tmp_path: Path) -> Path:
                 "corpus": "policy",
                 "title": "General Information",
                 "text": "Section: General Information",
-                "metadata": {"policy_type": "header", "header_id": 1, "header_title": "General Information"},
+                "metadata": {
+                    "policy_type": "header",
+                    "header_id": 1,
+                    "header_title": "General Information",
+                },
             },
             {
                 "id": "policy-h1-r1",
@@ -156,7 +160,9 @@ def deterministic_embedder() -> DeterministicEmbedder:
 
 @pytest.fixture
 def settings_for(tmp_path, corpus_path) -> Settings:
-    return Settings(sidecar_token="test-token", corpus_path=corpus_path, host="127.0.0.1", port=8310)
+    return Settings(
+        sidecar_token="test-token", corpus_path=corpus_path, host="127.0.0.1", port=8310
+    )
 
 
 def embed_from(docs: list[dict]):
@@ -174,7 +180,9 @@ def embed_from(docs: list[dict]):
     return embed
 
 
-def build_test_index(tmp_path: Path, corpus_path: Path, cache_name: str = "cache") -> tuple[Path, list[dict]]:
+def build_test_index(
+    tmp_path: Path, corpus_path: Path, cache_name: str = "cache"
+) -> tuple[Path, list[dict]]:
     """Build a real versioned index with a deterministic embedder; returns (cache, docs)."""
     from app.ingest import load_documents
     from app.rebuild import build_index

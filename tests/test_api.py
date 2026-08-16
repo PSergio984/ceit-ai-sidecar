@@ -67,13 +67,23 @@ def test_health_without_token_is_401(client):
 
 def test_search_with_token_returns_locked_shape(client):
     app, _, _ = client
-    resp = app.post("/search", json={"query": "water pump"}, headers={"X-Sidecar-Token": "test-token"})
+    resp = app.post(
+        "/search", json={"query": "water pump"}, headers={"X-Sidecar-Token": "test-token"}
+    )
     assert resp.status_code == 200
     body = resp.json()
     assert set(body) >= {"query", "total", "took_ms", "results"}
     assert body["results"], "expected results"
     first = body["results"][0]
-    assert set(first) >= {"id", "corpus", "title", "score", "bm25_rank", "semantic_rank", "metadata"}
+    assert set(first) >= {
+        "id",
+        "corpus",
+        "title",
+        "score",
+        "bm25_rank",
+        "semantic_rank",
+        "metadata",
+    }
 
 
 def test_search_returns_422_without_query(client):

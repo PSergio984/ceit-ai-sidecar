@@ -168,10 +168,8 @@ def test_stream_events_emits_error_event_on_provider_failure(fake_client):
 
     error_events = [e for e in events if e.startswith("event: error")]
     assert error_events, "expected an error event"
-    data_line = next(
-        line for line in error_events[0].splitlines() if line.startswith("data: ")
-    )
-    payload = json.loads(data_line[len("data: "):])
+    data_line = next(line for line in error_events[0].splitlines() if line.startswith("data: "))
+    payload = json.loads(data_line[len("data: ") :])
     assert payload["code"] == "provider_error"
     assert events[-1] == "data: [DONE]\n\n"
 

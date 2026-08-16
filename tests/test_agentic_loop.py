@@ -77,7 +77,11 @@ def _response(content: str, tool_calls=None):
         (),
         {
             "choices": [
-                type("C", (), {"message": type("M", (), {"content": content, "tool_calls": tool_calls})()})()
+                type(
+                    "C",
+                    (),
+                    {"message": type("M", (), {"content": content, "tool_calls": tool_calls})()},
+                )()
             ]
         },
     )()
@@ -210,7 +214,11 @@ def test_loop_caps_at_three_rounds_and_fails_closed():
     events = list(loop.stream_agentic_events("multi-hop question"))
 
     assert len(engine.calls) == MAX_TOOL_ROUNDS
-    assert _activity_lines(events) == ["Searching papers…", "Narrowing results…", "Narrowing results…"]
+    assert _activity_lines(events) == [
+        "Searching papers…",
+        "Narrowing results…",
+        "Narrowing results…",
+    ]
     assert any('"c": "Final "' in event for event in events)
     citations_event = next(e for e in events if e.startswith("event: citations\n"))
     payload = json.loads(citations_event.split("\ndata: ", 1)[1].strip())
@@ -236,7 +244,9 @@ def test_loop_caps_at_three_rounds_with_zero_docs_fails_closed_refusal():
 
 def test_malformed_tool_args_correct_once_then_fail_closed():
     bad = json.dumps({"query": "papers", "bogus_filter": "x"})
-    client, engine, loop = make_loop(content="never streams", tool_sequence=[bad, bad], results=[DOC1])
+    client, engine, loop = make_loop(
+        content="never streams", tool_sequence=[bad, bad], results=[DOC1]
+    )
     events = list(loop.stream_agentic_events("papers"))
 
     assert engine.calls == []
@@ -328,7 +338,9 @@ def test_tool_result_messages_truncate_long_doc_text():
 
 
 def test_activity_and_citations_frame_ordering():
-    args = json.dumps({"query": "papers by juan dela cruz", "filters": {"author": "juan dela cruz"}})
+    args = json.dumps(
+        {"query": "papers by juan dela cruz", "filters": {"author": "juan dela cruz"}}
+    )
     _client, _engine, loop = make_loop(
         content="Answer text. ",
         tool_sequence=[args, args],

@@ -81,7 +81,9 @@ class HybridSearch:
                 ranks[str(doc_id)] = rank
         return ranks
 
-    def _semantic_scores(self, docs_by_id: dict, vectors: np.ndarray, query: str) -> dict[str, float]:
+    def _semantic_scores(
+        self, docs_by_id: dict, vectors: np.ndarray, query: str
+    ) -> dict[str, float]:
         if vectors.shape[0] == 0:
             return {}
         q = embed_query(query, self.model_name)
@@ -115,7 +117,9 @@ class HybridSearch:
                 return False
             if f.get("department") and meta.get("department") != f["department"]:
                 return False
-            if f.get("publication_year") and meta.get("publication_year") != int(f["publication_year"]):
+            if f.get("publication_year") and meta.get("publication_year") != int(
+                f["publication_year"]
+            ):
                 return False
             if f.get("year_from") and int(meta.get("publication_year") or 0) < int(f["year_from"]):
                 return False
@@ -144,7 +148,14 @@ class HybridSearch:
             if did in bm25_ranks:
                 score += 1.0 / (k + bm25_ranks[did])
             if did in semantic_scores:
-                sem_rank = sum(1 for other in semantic_scores if semantic_scores[other] > semantic_scores[did]) + 1
+                sem_rank = (
+                    sum(
+                        1
+                        for other in semantic_scores
+                        if semantic_scores[other] > semantic_scores[did]
+                    )
+                    + 1
+                )
                 score += 1.0 / (k + sem_rank)
             rrf_scores[did] = score
 
@@ -171,7 +182,12 @@ class HybridSearch:
                 "score": round(rrf_scores[did], 4),
                 "bm25_rank": bm25_ranks.get(did),
                 "semantic_rank": (
-                    sum(1 for other in semantic_scores if semantic_scores[other] > semantic_scores[did]) + 1
+                    sum(
+                        1
+                        for other in semantic_scores
+                        if semantic_scores[other] > semantic_scores[did]
+                    )
+                    + 1
                     if did in semantic_scores
                     else None
                 ),

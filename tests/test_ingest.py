@@ -68,6 +68,9 @@ def test_embedding_produces_one_vector_per_document():
     except (OSError, ValueError):  # pragma: no cover - no model cache / no network
         pytest.skip("model not cached and network unavailable")
 
-    texts = ["may thesis ba kayo tungkol sa water pump?", "Design of a Smart Flood Monitoring System"]
+    texts = [
+        "may thesis ba kayo tungkol sa water pump?",
+        "Design of a Smart Flood Monitoring System",
+    ]
     vectors = model.encode(texts, normalize_embeddings=True)
     assert vectors.shape == (2, 384)

@@ -82,6 +82,7 @@ def chunk_frame(delta: str) -> str:
     """
     return f"data: {json.dumps({CHUNK_KEY: delta}, ensure_ascii=False)}\n\n"
 
+
 SYSTEM_PROMPT = (
     "You are the CEIT Library assistant. Answer only from the provided documents; "
     'if the documents do not contain the answer, say "I don\'t have enough information".'

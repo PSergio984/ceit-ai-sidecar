@@ -83,7 +83,11 @@ def _response(content: str, tool_calls=None):
         (),
         {
             "choices": [
-                type("C", (), {"message": type("M", (), {"content": content, "tool_calls": tool_calls})()})()
+                type(
+                    "C",
+                    (),
+                    {"message": type("M", (), {"content": content, "tool_calls": tool_calls})()},
+                )()
             ]
         },
     )()
@@ -102,7 +106,9 @@ class FakeEngine:
         self.calls: list[dict] = []
 
     def rrf_search(self, query, k=60, limit=10, filters=None, corpus=None, include_text=False):
-        self.calls.append({"query": query, "corpus": corpus, "limit": limit, "include_text": include_text})
+        self.calls.append(
+            {"query": query, "corpus": corpus, "limit": limit, "include_text": include_text}
+        )
         return self.results
 
 
@@ -145,6 +151,7 @@ def make_client(
     )
 
     import app.rebuild as rebuild_mod
+
     rebuild_mod._embed_override = embed_from(docs)
 
     return TestClient(main_mod.app)
@@ -310,7 +317,9 @@ def test_activity_and_citations_frames_emitted_on_endpoint(tmp_path, corpus_path
     )
     assert resp.status_code == 200
     body = resp.text
-    assert body.index("event: activity") < body.index("event: citations") < body.index("data: [DONE]")
+    assert (
+        body.index("event: activity") < body.index("event: citations") < body.index("data: [DONE]")
+    )
     assert '"c": ' in body
     citations_line = next(line for line in body.splitlines() if line.startswith("data: ["))
     payload = json.loads(citations_line[len("data: ") :])

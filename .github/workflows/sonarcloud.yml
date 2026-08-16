@@ -1,0 +1,41 @@
+name: SonarCloud quality gate
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+permissions:
+  contents: read
+
+jobs:
+  sonarcloud:
+    name: SonarCloud Scan
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v10.0.1
+      - name: Install dependencies
+        run: uv sync --frozen
+      - name: Test with coverage
+        env:
+          SIDECAR_TOKEN: ci-test-token
+        run: |
+          uv run pytest --cov=app --cov-report=xml
+      - name: SonarCloud Scan
+        # sonarcloud-github-action is archived; the maintained replacement is
+        # sonarqube-scan-action (pinned to the v8.2.1 commit).
+        uses: SonarSource/sonarqube-scan-action@22918119ff8e1ca75a623e15c8296b6ea4fbe28f # v8.2.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # Reuses the org-level token from the secrets-scan workflow. If this
+          # token lacks SonarCloud quality-scan scope, add a dedicated
+          # SONAR_TOKEN secret and reference it here instead.
+          SONAR_TOKEN: ${{ secrets.SONARQUBE_TOKEN }}

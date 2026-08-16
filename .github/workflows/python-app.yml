@@ -1,0 +1,80 @@
+name: Python application
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+permissions:
+  contents: read
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v10.0.1
+      - name: Install dependencies
+        run: uv sync --frozen
+      - name: Lint with ruff
+        run: |
+          uv run ruff check .
+      - name: Check formatting with ruff
+        run: |
+          uv run ruff format --check .
+
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      SIDECAR_TOKEN: ci-test-token
+      CORPUS_PATH: cache
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v10.0.1
+      - name: Install dependencies
+        run: uv sync --frozen
+      - name: Test with pytest
+        run: |
+          uv run pytest
+
+  smoke:
+    name: App Boot & Auth Smoke
+    runs-on: ubuntu-latest
+    needs: [lint, test]
+    timeout-minutes: 10
+    env:
+      SIDECAR_TOKEN: ci-smoke-token
+      CORPUS_PATH: /tmp/corpus
+      CACHE_DIR: /tmp/cache
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v10.0.1
+      - name: Install dependencies
+        run: uv sync --frozen
+      - name: Boot app and verify /health + auth gate
+        run: |
+          mkdir -p "$CORPUS_PATH" "$CACHE_DIR"
+          nohup uv run uvicorn app.main:app --host 127.0.0.1 --port 8310 > /tmp/uvicorn.log 2>&1 &
+          SERVER_PID=$!
+          trap 'kill $SERVER_PID 2>/dev/null || true' EXIT
+          for i in $(seq 1 30); do
+            if curl -fsS -H "X-Sidecar-Token: $SIDECAR_TOKEN" http://127.0.0.1:8310/health > /tmp/health.json 2>/dev/null; then
+              break
+            fi
+            sleep 1
+          done
+          cat /tmp/health.json
+          echo
+          code=$(curl -s -o /dev/null -w '%{http_code}' http://127.0.0.1:8310/health || true)
+          if [ "$code" != "401" ]; then
+            echo "expected 401 without token, got $code"
+            cat /tmp/uvicorn.log
+            exit 1
+          fi
+          echo "auth gate OK"

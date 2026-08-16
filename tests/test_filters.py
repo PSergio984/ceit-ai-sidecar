@@ -39,7 +39,9 @@ def _build_index(tmp_path, corpus_path):
 def test_filter_department_excludes_other_departments(tmp_path, corpus_path):
     cache = _build_index(tmp_path, corpus_path)
     hs = HybridSearch(cache, "test-model")
-    results = hs.rrf_search("water pump", k=60, limit=10, filters={"department": "Civil Engineering"})
+    results = hs.rrf_search(
+        "water pump", k=60, limit=10, filters={"department": "Civil Engineering"}
+    )
     hs.close()
 
     assert results
@@ -136,7 +138,9 @@ def test_filtered_doc_never_outranks_unfiltered_relevant_one(tmp_path, corpus_pa
     candidate set at all, so it can never appear above a relevant one."""
     cache = _build_index(tmp_path, corpus_path)
     hs = HybridSearch(cache, "test-model")
-    results = hs.rrf_search("water pump", k=60, limit=10, filters={"department": "Electrical Engineering"})
+    results = hs.rrf_search(
+        "water pump", k=60, limit=10, filters={"department": "Electrical Engineering"}
+    )
     hs.close()
 
     assert all(r["metadata"]["department"] == "Electrical Engineering" for r in results)
