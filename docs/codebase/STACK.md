@@ -17,7 +17,7 @@
 |------------|---------|----------------|----------|
 | fastapi | >=0.141,<0.142 | HTTP API (search, chat, health, metrics) | `pyproject.toml` |
 | uvicorn[standard] | >=0.52,<0.53 | ASGI server | `pyproject.toml` |
-| sentence-transformers | >=5.7,<5.8 | Multilingual embedding model `paraphrase-multilingual-MiniLM-L12-v2` (~470 MB) | `pyproject.toml`, `app/ingest.py` |
+| sentence-transformers | >=5.7,<5.8 | English embedding model `all-MiniLM-L6-v2` | `pyproject.toml`, `app/ingest.py` |
 | torch | CPU index (`pytorch-cpu`) | Embedding backend | `pyproject.toml` `[tool.uv.index]` / `[tool.uv.sources]` |
 | sqlitesearch | >=0.3,<0.4 | SQLite FTS5 text index — **BM25 keyword retrieval** | `pyproject.toml`, `app/search.py` |
 | pydantic | >=2.13,<2.14 | Request/response models, strict tool-args validation (`extra="forbid"`) | `pyproject.toml`, `app/agent.py` |
@@ -48,8 +48,8 @@ uv run python -m app.eval --corpus policy # eval a single corpus
 ### 5) Environment and Config
 
 - Config sources: `.env` (pydantic-settings, `SettingsConfigDict(env_file=".env")`)
-- Required env vars: `SIDECAR_TOKEN` (shared with Laravel), `CORPUS_PATH` (default `../ceit-library/storage/app/ai-corpus`), `MODEL_NAME` (default `paraphrase-multilingual-MiniLM-L12-v2`); LLM: `LLM_BASE_URL` (OpenRouter), `LLM_API_KEY`, `LLM_MODEL` (default `meta-llama/llama-3.3-70b-instruct`), `LLM_MAX_TOKENS` (512)
-- Deployment/runtime constraints: local dev binds loopback only; **production deploys to FastAPI Cloud** (`fastapi run` — requires the `fastapi[standard]` extra, added 2026-08-16); first run downloads the ~470 MB model; index cache in `cache/` (versioned artifacts); `CORPUS_PATH` must point at a corpus available in the cloud container (see INTEGRATIONS)
+- Required env vars: `SIDECAR_TOKEN` (shared with Laravel), `CORPUS_PATH` (default `../ceit-library/storage/app/ai-corpus`), `MODEL_NAME` (default `all-MiniLM-L6-v2`); LLM: `LLM_BASE_URL` (OpenRouter), `LLM_API_KEY`, `LLM_MODEL` (default `meta-llama/llama-3.3-70b-instruct`), `LLM_MAX_TOKENS` (512)
+- Deployment/runtime constraints: local dev binds loopback only; **production deploys to FastAPI Cloud** (`fastapi run` — requires the `fastapi[standard]` extra, added 2026-08-16); the compact English model keeps the default deployment memory footprint lower; index cache in `cache/` (versioned artifacts); `CORPUS_PATH` must point at a corpus available in the cloud container (see INTEGRATIONS)
 
 ### 6) Evidence
 

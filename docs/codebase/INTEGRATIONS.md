@@ -8,7 +8,7 @@
 |--------|---------------------------|---------|------------|-------------|----------|
 | CEIT-Library (Laravel) | HTTP consumer (POST /search, /chat/stream, /index/rebuild, GET /health, /metrics) | Serves the Laravel app's AI surfaces | Shared `X-Sidecar-Token` header (both `.env` files). Locally over loopback; **in production the Laravel app calls the FastAPI Cloud HTTPS URL** (`SIDECAR_URL` in Laravel `.env`) | High | `app/main.py` token middleware |
 | OpenRouter | LLM API via openai SDK | Chat/generation | `LLM_API_KEY` (sidecar `.env` only, gitignored) | High | `app/config.py`, `app/rag.py` |
-| HuggingFace (model hub) | Model download (first run, ~470 MB) | Embedding model `paraphrase-multilingual-MiniLM-L12-v2` | none | Medium (cold start) | `app/ingest.py` `get_embedder` |
+| HuggingFace (model hub) | Model download (first run) | Embedding model `all-MiniLM-L6-v2` | none | Medium (cold start) | `app/ingest.py` `get_embedder` |
 | Corpus files | Filesystem hand-off + HTTP upload | Reads `catalog.json` + `policies.json` from `CORPUS_PATH`; cloud deployments receive them via `POST /corpus/upload` from Laravel `ai:push-corpus` | Shared token header; files only (D-17) | High | `app/ingest.py`, `app/main.py` (`corpus_upload`) |
 | SonarCloud | CI quality gate | Static analysis (Python 3.13, coverage) | `SONARQUBE_TOKEN` repo secret | Med (CI only) | `.github/workflows/sonarcloud.yml`, `sonar-project.properties` |
 | SonarQube CLI | CI secrets scan | Secrets detection (offline) | `SONARQUBE_TOKEN` repo secret | Med (CI only) | `.github/workflows/sonar-secrets.yml` |

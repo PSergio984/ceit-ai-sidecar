@@ -6,8 +6,8 @@
 
 The hybrid search and RAG engine behind the [CEIT Library AI
 assistant](https://github.com/PSergio984/CEIT-Library). A FastAPI
-service that combines FTS5 BM25 keyword search with multilingual
-semantic embeddings (`paraphrase-multilingual-MiniLM-L12-v2`), fused
+service that combines FTS5 BM25 keyword search with English semantic
+embeddings (`all-MiniLM-L6-v2`), fused
 with Reciprocal Rank Fusion (k=60) and post-retrieval metadata filters —
 plus a bounded agentic search loop and streamed, citation-grounded chat
 answers.
@@ -52,7 +52,7 @@ cp .env.example .env   # fill SIDECAR_TOKEN (must match Laravel's SIDECAR_TOKEN)
 uv run uvicorn app.main:app --port 8310
 ```
 
-First run downloads the ~470 MB embedding model. The server binds
+First run downloads the compact English embedding model. The server binds
 loopback only when run locally.
 
 The corpus must exist at `CORPUS_PATH` (`catalog.json` + `policies.json`,
@@ -157,7 +157,7 @@ flowchart TD
     Agent["AgenticLoop<br/>max 3 tool rounds"]
     Hybrid["HybridSearch"]
     BM25["FTS5 BM25<br/>sqlitesearch"]
-    Semantic["Semantic cosine<br/>MiniLM-L12-v2 embeddings"]
+    Semantic["Semantic cosine<br/>all-MiniLM-L6-v2 embeddings"]
     RRF["RRF k=60 fusion<br/>1/(60+rank) per list"]
     LLM["OpenRouter LLM<br/>meta-llama/llama-3.3-70b-instruct"]
     Cache[("Versioned index cache<br/>docs-N.json / vectors-N.npy / index-N.db")]

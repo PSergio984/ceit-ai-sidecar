@@ -51,7 +51,7 @@ chat:     /chat/stream -> AgenticLoop:
 |---------|-------------|---------------|
 | Versioned cache artifacts + atomic swap | `rebuild.py` (`os.replace` on `state.json`), `ingest.py` `write_cache` | Readers never observe a half-built index; rollback = keep previous version |
 | Global lock around rebuild | `rebuild.py` `_lock` | Idempotent per-flight rebuilds |
-| Lazy singleton embedder (thread-safe) | `ingest.py` `get_embedder` | 470 MB model loaded once |
+| Lazy singleton embedder (thread-safe) | `ingest.py` `get_embedder` | Compact English model loaded once |
 | Injectable collaborators for tests | `rebuild._embed_override`, `AgenticLoop`/`RagService` constructor injection | Deterministic fast tests without HuggingFace/OpenRouter |
 | Injectable client pattern (Laravel-style) | `AgenticLoop`, `RagService` (`client`, `base_url`, `api_key` args) | Testability; same shape as Laravel DI |
 | Mirror constants across repos | `rag.CHUNK_KEY`/`CITATION_KEYS` ↔ `AiService::SSE_CHUNK_KEY`/`CITATION_KEYS` | Contract drift prevention |
@@ -75,6 +75,6 @@ chat:     /chat/stream -> AgenticLoop:
 ### Search internals — direct answers (BM25 vs TF-IDF vs vector)
 
 - **BM25 is used; TF-IDF is not used anywhere.** Keyword retrieval is SQLite FTS5 via `sqlitesearch.TextSearchIndex` (`text_fields=["text"]`, keyword fields `corpus`/`department`/`paper_type`); FTS5's default ranking is BM25. Source: `app/search.py` `_bm25_ranks` → `db.search(query, ...)`.
-- **Vector search IS used**: whole-document embeddings from `sentence-transformers` (`paraphrase-multilingual-MiniLM-L12-v2`), normalized, cosine similarity via matmul (`vectors @ q`). Source: `app/search.py` `_semantic_scores`, `app/ingest.py` `embed_documents`.
+- **Vector search IS used**: whole-document embeddings from `sentence-transformers` (`all-MiniLM-L6-v2`), normalized, cosine similarity via matmul (`vectors @ q`). Source: `app/search.py` `_semantic_scores`, `app/ingest.py` `embed_documents`.
 - **Fusion is RRF (Reciprocal Rank Fusion) with k=60**: each document scores `1/(60+rank)` per list (semantic rank derived from score ordering). Post-retrieval metadata filters (paper_type, department, publication_year, year_from/to, author, adviser) are applied to the merged candidate set BEFORE fusion, so filtered docs cannot outrank relevant ones (D-03). Exact `CEIT-XX-NN[-N]` catalog codes pin the matching doc to rank 1 (D-02).
 - **Evals**: `app/eval.py` scores the golden set (`data/golden_dataset.json`, 35 cases) with precision@k/recall@k/F1 (k default 5), top-1 rate, negative pass rate, and per-category breakdowns (catalog_code, taglish, people, policy, exact_title, paraphrase). Run via `uv run python -m app.eval [--json] [--corpus catalog|policy|all] [--limit N]`.

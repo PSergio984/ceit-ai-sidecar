@@ -64,12 +64,12 @@ def test_embedding_produces_one_vector_per_document():
         pytest.skip("sentence-transformers not installed")
 
     try:
-        model = SentenceTransformer("paraphrase-multilingual-MiniLM-L12-v2")
+        model = SentenceTransformer("all-MiniLM-L6-v2")
     except (OSError, ValueError):  # pragma: no cover - no model cache / no network
         pytest.skip("model not cached and network unavailable")
 
     texts = [
-        "may thesis ba kayo tungkol sa water pump?",
+        "find a thesis about water pumps",
         "Design of a Smart Flood Monitoring System",
     ]
     vectors = model.encode(texts, normalize_embeddings=True)

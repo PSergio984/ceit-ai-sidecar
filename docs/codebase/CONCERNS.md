@@ -35,7 +35,7 @@
 
 | Concern | Evidence | Current symptom | Scaling risk | Suggested improvement |
 |---------|----------|-----------------|-------------|-----------------------|
-| 470 MB model load + lazy singleton | `app/ingest.py` `get_embedder` | First query after boot pays model load; memory ~1-2 GB | Multiple instances multiply RAM | Keep single instance; Phase 14 deploy as one service |
+| Embedding model load + lazy singleton | `app/ingest.py` `get_embedder` | First query after boot pays model load; memory still depends on runtime | Multiple instances multiply RAM | Keep single instance; use the compact English model; Phase 14 deploy as one service |
 | Cosine scan over all vectors per query | `app/search.py` `_semantic_scores` (full matmul) | Fast at ~100s of docs | O(n) per query | FAISS/ANN index when corpus grows (Phase 14) |
 | Rebuild blocks other rebuilds (global lock) | `app/rebuild.py` `_lock` | Sequential rebuilds | Multiple rebuild triggers queue | Keep; debounce via Laravel `ShouldBeUnique` jobs |
 | In-process state (`main.py` globals) | `app/main.py` | None at scale | No multi-worker warmup; each worker duplicates model | Phase 14 deployment decision |

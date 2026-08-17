@@ -1,7 +1,7 @@
 [project]
 name = "ceit-ai-sidecar"
 version = "0.1.0"
-description = "Hybrid search sidecar for CEIT-Library AI assistant (FTS5 BM25 + multilingual semantic + RRF fusion)"
+description = "Hybrid search sidecar for CEIT-Library AI assistant (FTS5 BM25 + English semantic + RRF fusion)"
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
