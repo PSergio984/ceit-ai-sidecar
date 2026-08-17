@@ -1,6 +1,9 @@
-def main():
-    print("Hello from ceit-ai-sidecar!")
+"""FastAPI Cloud entrypoint.
 
+FastAPI Cloud's default ``fastapi run`` command discovers the repository-root
+``main.py`` module, so re-export the real ASGI application from the package.
+"""
 
-if __name__ == "__main__":
-    main()
+from app.main import app
+
+__all__ = ["app"]

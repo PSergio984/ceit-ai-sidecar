@@ -60,7 +60,7 @@ jobs:
       - name: Boot app and verify /health + auth gate
         run: |
           mkdir -p "$CORPUS_PATH" "$CACHE_DIR"
-          nohup uv run uvicorn app.main:app --host 127.0.0.1 --port 8310 > /tmp/uvicorn.log 2>&1 &
+          nohup uv run fastapi run --host 127.0.0.1 --port 8310 > /tmp/uvicorn.log 2>&1 &
           SERVER_PID=$!
           trap 'kill $SERVER_PID 2>/dev/null || true' EXIT
           for i in $(seq 1 30); do

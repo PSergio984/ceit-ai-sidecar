@@ -6,7 +6,7 @@
 
 | Path | Purpose | Evidence |
 |------|---------|----------|
-| `main.py` | Entry point (FastAPI app, endpoints, token middleware) | `main.py` |
+| `main.py` | FastAPI Cloud entrypoint shim re-exporting `app.main:app` | `main.py`, `app/main.py` |
 | `app/` | Package: search, ingest, rebuild, rag, agent, eval, health, config | `app/` |
 | `app/search.py` | `HybridSearch` — BM25 + semantic + RRF fusion, filters, code-pin | `app/search.py` |
 | `app/ingest.py` | Corpus loading/validation, embedding (whole-document), versioned cache writes, model singleton | `app/ingest.py` |
@@ -23,7 +23,7 @@
 
 ### 2) Entry Points
 
-- Main runtime entry: `main.py` — `app = FastAPI(...)`; run via `uv run uvicorn app.main:app`
+- Main runtime entry: `main.py` re-exports `app.main:app` for FastAPI Cloud's default `fastapi run`; local development can run `uv run uvicorn app.main:app`
 - Secondary entry: `python -m app.eval` (evaluation CLI)
 - Entry selection: uvicorn command line; eval via `__main__` guard in `app/eval.py`
 
