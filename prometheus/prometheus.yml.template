@@ -1,0 +1,28 @@
+# Prometheus scrape config template for the CEIT AI Sidecar.
+#
+# The compose entrypoint renders this file at container start, replacing the
+# __SIDECAR_TOKEN__ placeholder with the container's SIDECAR_TOKEN env var
+# (injected by docker-compose from the repo's .env). The rendered config is
+# ephemeral inside the container — no secret is committed.
+#
+# Why not ${SIDECAR_TOKEN} in the config? Prometheus v2.53 does not perform
+# env-var substitution inside the `authorization` block, so the token is
+# injected by the entrypoint instead.
+
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+scrape_configs:
+  - job_name: ceit-sidecar
+    metrics_path: /metrics
+    scheme: http
+    # The sidecar accepts Authorization: Bearer <token> (same token as the
+    # X-Sidecar-Token header), so a standard Prometheus bearer scrape works.
+    authorization:
+      type: Bearer
+      credentials: "__SIDECAR_TOKEN__"
+    static_configs:
+      - targets: ["sidecar:8310"]
+        labels:
+          service: ceit-sidecar

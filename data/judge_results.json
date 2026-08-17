@@ -1,0 +1,156 @@
+{
+  "generated_at": "2026-08-17T18:17:43.074296+00:00",
+  "model": "meta-llama/llama-3.3-70b-instruct",
+  "top_k": 5,
+  "questions_answered": 10,
+  "counts": {
+    "RELEVANT": 5,
+    "PARTLY_RELEVANT": 3,
+    "NON_RELEVANT": 2
+  },
+  "total": 10,
+  "relevant_rate": 0.5,
+  "partly_or_better_rate": 0.8,
+  "questions": [
+    {
+      "id": "q08",
+      "question": "CEIT-CE-04-02 is what paper?",
+      "corpus": "catalog",
+      "retrieved": [
+        "paper-6",
+        "paper-5",
+        "paper-27",
+        "paper-21",
+        "paper-43"
+      ],
+      "answer": "I don't have enough information to determine what paper CEIT-CE-04-02 refers to, as the provided documents do not contain a catalog code matching CEIT-CE-04-02. However, a similar catalog code, CEIT-CE-04-01, is found in document [3], which refers to the paper \"Web-Based Alumni Information and Engagement Portal\".",
+      "label": "PARTLY_RELEVANT"
+    },
+    {
+      "id": "q02",
+      "question": "Find the paper with catalog code CEIT-IT-09-01",
+      "corpus": "catalog",
+      "retrieved": [
+        "paper-11",
+        "paper-8",
+        "paper-2",
+        "paper-5",
+        "paper-17"
+      ],
+      "answer": "The paper with the catalog code CEIT-IT-09-01 is the \"Web-Based Academic Resource Tracking and Borrowing System\" [3]. According to the document, this paper is a thesis published in 2009, advised by Georgianna Huels and Engr. Miss Rebeca Nicolas, with Dr. Arianna Gibson as the dean of the Information Technology department. \n\nThere is only one document [3] that matches the catalog code CEIT-IT-09-01, so there are no disagreements or conflicting viewpoints among the sources. \n\nReference: \n[3] Web-Based Academic Resource Tracking and Borrowing System. authors:  research_adviser: Georgianna Huels technical_adviser: Engr. Miss Rebeca Nicolas dean: Dr. Arianna Gibson department: Information Technology publication_year: 2009 paper_type: Thesis catalog_code: CEIT-IT-09-01",
+      "label": "RELEVANT"
+    },
+    {
+      "id": "q18",
+      "question": "Something about smart parking slot detection",
+      "corpus": "catalog",
+      "retrieved": [
+        "paper-31",
+        "paper-12",
+        "paper-39",
+        "paper-1",
+        "paper-34"
+      ],
+      "answer": "The query about smart parking slot detection can be addressed by referencing a specific document in our catalog. According to [1], there is a capstone project titled \"Smart Parking Slot Detection and Guidance System\" authored by Golden Lowe Jr. and Paul Labadie, with Prof. Garth Stark as the research adviser. This project was completed in 2009 under the Information Technology department and has the catalog code CEIT-IT-09-02. \n\nUnfortunately, the provided documents do not offer detailed information about the content or findings of this project. Therefore, for specific details about smart parking slot detection, such as the methodology, technologies used, or outcomes, I don't have enough information. However, [1] is the most relevant resource available in our catalog related to the query.",
+      "label": "PARTLY_RELEVANT"
+    },
+    {
+      "id": "q16",
+      "question": "Looking for the voice-assisted campus information system",
+      "corpus": "catalog",
+      "retrieved": [
+        "paper-28",
+        "paper-3",
+        "paper-13",
+        "paper-8",
+        "paper-33"
+      ],
+      "answer": "The voice-assisted campus information system can be found in the paper titled \"Development of a Voice-Assisted Campus Information System\" [1]. This paper, published in 2011, is a practicum under the Electrical Engineering department with the catalog code CEIT-EE-11-01. It was authored by Ahmed Wyman, advised by Oral Barton and Engr. Arielle Emard, and supervised by Dr. Mr. Quincy Rodriguez. \n\nUnfortunately, I don't have enough information on the specifics of the system, such as its features or implementation, as the provided documents only include the title, author, and publication details of the paper. For more information, it would be necessary to consult the full text of the paper [1].",
+      "label": "RELEVANT"
+    },
+    {
+      "id": "q15",
+      "question": "Paper about a cybersecurity awareness platform for college students",
+      "corpus": "catalog",
+      "retrieved": [
+        "paper-17",
+        "paper-35",
+        "paper-21",
+        "paper-46",
+        "paper-11"
+      ],
+      "answer": "The query is about a paper on a cybersecurity awareness platform for college students. Based on the provided documents, there is one relevant paper titled \"Cybersecurity Awareness Platform for College Students\" [1]. This paper is a Practicum published in 2018 by the Information Technology department, with catalog code CEIT-IT-18-01. The research adviser is Alexane Sanford, and the technical adviser is Engr. Myron Wisoky. The dean of the department is Dr. Mrs. Brandy Feeney DDS.\n\nThe other documents do not mention cybersecurity awareness platforms for college students. They cover different topics such as student organization management [2], e-learning platforms [3], web-based engineering project collaboration [4], and web-based thesis catalog and search [5]. \n\nTherefore, the only relevant paper to the query is [1], which is specifically focused on a cybersecurity awareness platform for college students. I don't have enough information about the content or findings of the paper, but I can confirm its existence in the catalog.",
+      "label": "RELEVANT"
+    },
+    {
+      "id": "q09",
+      "question": "Tell me about the Web-Based Thesis Catalog and Search Platform",
+      "corpus": "catalog",
+      "retrieved": [
+        "paper-11",
+        "paper-46",
+        "paper-2",
+        "paper-27",
+        "paper-21"
+      ],
+      "answer": "The Web-Based Thesis Catalog and Search Platform is a research project conducted by the Information Technology department, as indicated in document [1]. The project was published in 2013 with the catalog code CEIT-IT-13-02. The research advisers and technical advisers involved in the project were Taryn Farrell and Engr. Tina Stark, respectively, under the supervision of Dean Dr. Mrs. Brandy Feeney DDS [1]. \n\nUnfortunately, the provided documents do not contain detailed information about the platform's features, functionalities, or implementation. Therefore, I don't have enough information to provide a comprehensive description of the Web-Based Thesis Catalog and Search Platform beyond its publication details and the individuals involved in the project.",
+      "label": "PARTLY_RELEVANT"
+    },
+    {
+      "id": "q07",
+      "question": "Which paper is CEIT-IT-21-01?",
+      "corpus": "catalog",
+      "retrieved": [
+        "paper-8",
+        "paper-6",
+        "paper-17",
+        "paper-5",
+        "paper-4"
+      ],
+      "answer": "I don't have enough information. The provided documents [1], [2], [3], [4], and [5] do not contain any information about a paper with the catalog code CEIT-IT-21-01. The available documents only provide information about papers with catalog codes from 2010 to 2018, but none of them match the query.",
+      "label": "NON_RELEVANT"
+    },
+    {
+      "id": "q06",
+      "question": "Catalog code for the Wireless Sensor Network for Indoor Air Quality Monitoring",
+      "corpus": "catalog",
+      "retrieved": [
+        "paper-36",
+        "paper-23",
+        "paper-41",
+        "paper-4",
+        "paper-29"
+      ],
+      "answer": "The catalog code for the \"Wireless Sensor Network for Indoor Air Quality Monitoring\" is CEIT-EE-24-01, as stated in document [1]. This document provides the necessary information about the paper, including its authors, research adviser, technical adviser, dean, department, publication year, paper type, and catalog code. \n\nThere is no conflicting information regarding the catalog code for this specific paper in the other documents [2], [3], [4], and [5], as they refer to different research papers. Therefore, the catalog code CEIT-EE-24-01 is the correct code for the \"Wireless Sensor Network for Indoor Air Quality Monitoring\" paper.",
+      "label": "RELEVANT"
+    },
+    {
+      "id": "q28",
+      "question": "Recent engineering research from 2020 onwards",
+      "corpus": "catalog",
+      "retrieved": [
+        "paper-5",
+        "paper-4",
+        "paper-18",
+        "paper-46",
+        "paper-9"
+      ],
+      "answer": "I don't have enough information to provide recent engineering research from 2020 onwards as the documents provided only contain information on research and publications up to 2017 [1], [2], [3], [4], [5]. None of the documents mention research conducted in 2020 or later.",
+      "label": "NON_RELEVANT"
+    },
+    {
+      "id": "q39",
+      "question": "Anong year ginawa yung web-based thesis catalog?",
+      "corpus": "catalog",
+      "retrieved": [
+        "paper-11",
+        "paper-2",
+        "paper-46",
+        "paper-27",
+        "paper-40"
+      ],
+      "answer": "Ang Web-Based Thesis Catalog ay ginawa noong 2013, ayon sa [1]. Ito ay isang Research paper na may catalog code na CEIT-IT-13-02 at nakalista sa departamento ng Information Technology. Walang ibang impormasyon na nakalista sa ibang mga dokumento tungkol sa petsa ng paggawa ng Web-Based Thesis Catalog. \n\nSa ibang mga dokumento, mayroong mga kaugnay na proyekto tulad ng Web-Based Academic Resource Tracking and Borrowing System [2] noong 2009, Web-Based Engineering Project Collaboration Platform [3] noong 2012, Web-Based Alumni Information and Engagement Portal [4] noong 2004, at Development of a Digital Document Archiving System [5] noong 2021, ngunit wala sa mga ito ang direktang nauugnay sa Web-Based Thesis Catalog. \n\nKaya, ayon sa [1], ang Web-Based Thesis Catalog ay ginawa noong 2013.",
+      "label": "RELEVANT"
+    }
+  ]
+}

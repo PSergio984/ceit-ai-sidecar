@@ -91,6 +91,14 @@ class HybridSearch:
         ids = list(docs_by_id.keys())
         return {doc_id: float(score) for doc_id, score in zip(ids, scores)}
 
+    @staticmethod
+    def _semantic_rank(semantic_scores: dict[str, float], did: str) -> int | None:
+        return (
+            sum(1 for other in semantic_scores if semantic_scores[other] > semantic_scores[did]) + 1
+            if did in semantic_scores
+            else None
+        )
+
     def rrf_search(
         self,
         query: str,
@@ -99,7 +107,20 @@ class HybridSearch:
         filters: dict | None = None,
         corpus: str | None = None,
         include_text: bool = False,
+        method: str = "hybrid",
     ) -> list[dict]:
+        """Rank the corpus by one of three retrieval approaches (D2 eval).
+
+        `method` selects the ranking source so the same seam scores every
+        approach in the multi-approach comparison:
+        - "bm25": FTS5 BM25 ranks only (semantic never consulted).
+        - "semantic": cosine similarity only (BM25 never consulted).
+        - "hybrid": RRF k=60 fusion + exact-code pin (production default).
+
+        Unknown methods fall back to hybrid. Filters apply BEFORE ranking in
+        every method (D-03); the code pin is a hybrid-only enhancement.
+        """
+        method = method if method in ("bm25", "semantic") else "hybrid"
         version, docs_by_id, vectors = _version_artifacts(self.cache_dir)
         if version == 0 or not docs_by_id:
             return []
@@ -135,41 +156,43 @@ class HybridSearch:
                     return False
             return not (corpus and doc.get("corpus") != corpus)
 
-        candidate_ids = set(bm25_ranks) | set(semantic_scores)
-        candidate_ids = {did for did in candidate_ids if passes(docs_by_id[did])}
+        if method == "bm25":
+            candidate_ids = set(bm25_ranks)
+            ranked = sorted(candidate_ids, key=lambda did: bm25_ranks[did])
+            scores: dict[str, float] = {did: 1.0 / (k + bm25_ranks[did]) for did in ranked}
+        elif method == "semantic":
+            candidate_ids = set(semantic_scores)
+            ranked = sorted(candidate_ids, key=lambda did: semantic_scores[did], reverse=True)
+            scores = {did: semantic_scores[did] for did in ranked}
+        else:  # hybrid — RRF k=60 fusion.
+            candidate_ids = set(bm25_ranks) | set(semantic_scores)
+            scores = {}
+            for did in candidate_ids:
+                score = 0.0
+                if did in bm25_ranks:
+                    score += 1.0 / (k + bm25_ranks[did])
+                if did in semantic_scores:
+                    score += 1.0 / (k + self._semantic_rank(semantic_scores, did))
+                scores[did] = score
+            ranked = sorted(scores, key=lambda did: scores[did], reverse=True)
 
-        if not candidate_ids:
+        candidate_ids = {did for did in candidate_ids if passes(docs_by_id[did])}
+        ranked = [did for did in ranked if did in candidate_ids]
+
+        if not ranked:
             return []
 
-        # RRF k=60 fusion.
-        rrf_scores: dict[str, float] = {}
-        for did in candidate_ids:
-            score = 0.0
-            if did in bm25_ranks:
-                score += 1.0 / (k + bm25_ranks[did])
-            if did in semantic_scores:
-                sem_rank = (
-                    sum(
-                        1
-                        for other in semantic_scores
-                        if semantic_scores[other] > semantic_scores[did]
-                    )
-                    + 1
-                )
-                score += 1.0 / (k + sem_rank)
-            rrf_scores[did] = score
-
-        ranked = sorted(rrf_scores, key=lambda did: rrf_scores[did], reverse=True)
-
         # Code-exact pin (D-02 exact-match): matching catalog_code -> rank 1.
-        upper_query = query.upper()
-        if CODE_PIN_RE.match(upper_query):
-            for did in ranked:
-                meta = docs_by_id[did].get("metadata") or {}
-                if (meta.get("catalog_code") or "").upper() == upper_query:
-                    ranked.remove(did)
-                    ranked.insert(0, did)
-                    break
+        # Hybrid-only: the enhancement that justifies hybrid over pure rankers.
+        if method == "hybrid":
+            upper_query = query.upper()
+            if CODE_PIN_RE.match(upper_query):
+                for did in ranked:
+                    meta = docs_by_id[did].get("metadata") or {}
+                    if (meta.get("catalog_code") or "").upper() == upper_query:
+                        ranked.remove(did)
+                        ranked.insert(0, did)
+                        break
 
         results = []
         for did in ranked[:limit]:
@@ -179,16 +202,11 @@ class HybridSearch:
                 "id": doc["id"],
                 "corpus": doc.get("corpus"),
                 "title": doc.get("title"),
-                "score": round(rrf_scores[did], 4),
-                "bm25_rank": bm25_ranks.get(did),
+                "score": round(scores[did], 4),
+                "bm25_rank": bm25_ranks.get(did) if method in ("bm25", "hybrid") else None,
                 "semantic_rank": (
-                    sum(
-                        1
-                        for other in semantic_scores
-                        if semantic_scores[other] > semantic_scores[did]
-                    )
-                    + 1
-                    if did in semantic_scores
+                    self._semantic_rank(semantic_scores, did)
+                    if method in ("semantic", "hybrid")
                     else None
                 ),
                 "metadata": meta,

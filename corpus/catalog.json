@@ -1,0 +1,912 @@
+{
+    "source": "academic_papers",
+    "schema_version": 1,
+    "generated_at": "2026-08-17T17:02:53+00:00",
+    "count": 48,
+    "documents": [
+        {
+            "id": "paper-1",
+            "corpus": "catalog",
+            "title": "Design and Development of a Smart Library Management System",
+            "text": "Design and Development of a Smart Library Management System. authors:  research_adviser: Amir Ruecker PhD technical_adviser: Engr. Rosanna Veum PhD dean: Dr. Arianna Gibson department: Electrical Engineering publication_year: 2004 paper_type: Capstone catalog_code: CEIT-EE-04-01",
+            "metadata": {
+                "catalog_code": "CEIT-EE-04-01",
+                "department": "Electrical Engineering",
+                "publication_year": 2004,
+                "paper_type": "Capstone",
+                "authors": [],
+                "research_adviser": "Amir Ruecker PhD",
+                "technical_adviser": "Engr. Rosanna Veum PhD",
+                "dean": "Dr. Arianna Gibson",
+                "url": "/academic-papers/1"
+            }
+        },
+        {
+            "id": "paper-2",
+            "corpus": "catalog",
+            "title": "Web-Based Academic Resource Tracking and Borrowing System",
+            "text": "Web-Based Academic Resource Tracking and Borrowing System. authors:  research_adviser: Georgianna Huels technical_adviser: Engr. Miss Rebeca Nicolas dean: Dr. Arianna Gibson department: Information Technology publication_year: 2009 paper_type: Thesis catalog_code: CEIT-IT-09-01",
+            "metadata": {
+                "catalog_code": "CEIT-IT-09-01",
+                "department": "Information Technology",
+                "publication_year": 2009,
+                "paper_type": "Thesis",
+                "authors": [],
+                "research_adviser": "Georgianna Huels",
+                "technical_adviser": "Engr. Miss Rebeca Nicolas",
+                "dean": "Dr. Arianna Gibson",
+                "url": "/academic-papers/2"
+            }
+        },
+        {
+            "id": "paper-3",
+            "corpus": "catalog",
+            "title": "Mobile Application for Campus Facility Reservation",
+            "text": "Mobile Application for Campus Facility Reservation. authors:  research_adviser: Valentina Wyman technical_adviser: Engr. Jamie West dean: Dr. Arianna Gibson department: Information Technology publication_year: 2013 paper_type: Thesis catalog_code: CEIT-IT-13-01",
+            "metadata": {
+                "catalog_code": "CEIT-IT-13-01",
+                "department": "Information Technology",
+                "publication_year": 2013,
+                "paper_type": "Thesis",
+                "authors": [],
+                "research_adviser": "Valentina Wyman",
+                "technical_adviser": "Engr. Jamie West",
+                "dean": "Dr. Arianna Gibson",
+                "url": "/academic-papers/3"
+            }
+        },
+        {
+            "id": "paper-4",
+            "corpus": "catalog",
+            "title": "IoT-Based Environmental Monitoring for Academic Buildings",
+            "text": "IoT-Based Environmental Monitoring for Academic Buildings. authors:  research_adviser: Valentina Wyman technical_adviser: Engr. Tina Stark dean: Dr. Kaelyn Ernser department: Electrical Engineering publication_year: 2010 paper_type: Research catalog_code: CEIT-EE-10-01",
+            "metadata": {
+                "catalog_code": "CEIT-EE-10-01",
+                "department": "Electrical Engineering",
+                "publication_year": 2010,
+                "paper_type": "Research",
+                "authors": [],
+                "research_adviser": "Valentina Wyman",
+                "technical_adviser": "Engr. Tina Stark",
+                "dean": "Dr. Kaelyn Ernser",
+                "url": "/academic-papers/4"
+            }
+        },
+        {
+            "id": "paper-5",
+            "corpus": "catalog",
+            "title": "Development of an Online Student Document Request Portal",
+            "text": "Development of an Online Student Document Request Portal. authors:  research_adviser: Issac Cartwright technical_adviser: Engr. Tillman Hartmann dean: Dr. Prof. Maxwell Corkery Sr. department: Civil Engineering publication_year: 2017 paper_type: Research catalog_code: CEIT-CE-17-01",
+            "metadata": {
+                "catalog_code": "CEIT-CE-17-01",
+                "department": "Civil Engineering",
+                "publication_year": 2017,
+                "paper_type": "Research",
+                "authors": [],
+                "research_adviser": "Issac Cartwright",
+                "technical_adviser": "Engr. Tillman Hartmann",
+                "dean": "Dr. Prof. Maxwell Corkery Sr.",
+                "url": "/academic-papers/5"
+            }
+        },
+        {
+            "id": "paper-6",
+            "corpus": "catalog",
+            "title": "Solar-Powered Charging Station for Campus Devices",
+            "text": "Solar-Powered Charging Station for Campus Devices. authors:  research_adviser: Miss Larissa Fay technical_adviser: Engr. Reta Cartwright dean: Dr. Kaelyn Ernser department: Civil Engineering publication_year: 2011 paper_type: Feasib catalog_code: CEIT-CE-11-01",
+            "metadata": {
+                "catalog_code": "CEIT-CE-11-01",
+                "department": "Civil Engineering",
+                "publication_year": 2011,
+                "paper_type": "Feasib",
+                "authors": [],
+                "research_adviser": "Miss Larissa Fay",
+                "technical_adviser": "Engr. Reta Cartwright",
+                "dean": "Dr. Kaelyn Ernser",
+                "url": "/academic-papers/6"
+            }
+        },
+        {
+            "id": "paper-7",
+            "corpus": "catalog",
+            "title": "Machine Learning Model for Student Performance Prediction",
+            "text": "Machine Learning Model for Student Performance Prediction. authors:  research_adviser: Jamarcus Erdman II technical_adviser: Engr. Kailyn Okuneva Sr. dean: Dr. Lou Hill department: Electrical Engineering publication_year: 2019 paper_type: Report catalog_code: CEIT-EE-19-01",
+            "metadata": {
+                "catalog_code": "CEIT-EE-19-01",
+                "department": "Electrical Engineering",
+                "publication_year": 2019,
+                "paper_type": "Report",
+                "authors": [],
+                "research_adviser": "Jamarcus Erdman II",
+                "technical_adviser": "Engr. Kailyn Okuneva Sr.",
+                "dean": "Dr. Lou Hill",
+                "url": "/academic-papers/7"
+            }
+        },
+        {
+            "id": "paper-8",
+            "corpus": "catalog",
+            "title": "Secure QR Code Attendance Monitoring System",
+            "text": "Secure QR Code Attendance Monitoring System. authors:  research_adviser: Mrs. Althea Jacobi technical_adviser: Engr. Dr. Daniela Lueilwitz dean: Dr. Arianna Gibson department: Information Technology publication_year: 2017 paper_type: Research catalog_code: CEIT-IT-17-01",
+            "metadata": {
+                "catalog_code": "CEIT-IT-17-01",
+                "department": "Information Technology",
+                "publication_year": 2017,
+                "paper_type": "Research",
+                "authors": [],
+                "research_adviser": "Mrs. Althea Jacobi",
+                "technical_adviser": "Engr. Dr. Daniela Lueilwitz",
+                "dean": "Dr. Arianna Gibson",
+                "url": "/academic-papers/8"
+            }
+        },
+        {
+            "id": "paper-9",
+            "corpus": "catalog",
+            "title": "Cloud-Based Inventory Management for Engineering Laboratories",
+            "text": "Cloud-Based Inventory Management for Engineering Laboratories. authors:  research_adviser: Dr. Jaylin Torphy technical_adviser: Engr. Kailyn Okuneva Sr. dean: Dr. Kaelyn Ernser department: Civil Engineering publication_year: 2010 paper_type: Practicum catalog_code: CEIT-CE-10-01",
+            "metadata": {
+                "catalog_code": "CEIT-CE-10-01",
+                "department": "Civil Engineering",
+                "publication_year": 2010,
+                "paper_type": "Practicum",
+                "authors": [],
+                "research_adviser": "Dr. Jaylin Torphy",
+                "technical_adviser": "Engr. Kailyn Okuneva Sr.",
+                "dean": "Dr. Kaelyn Ernser",
+                "url": "/academic-papers/9"
+            }
+        },
+        {
+            "id": "paper-10",
+            "corpus": "catalog",
+            "title": "Flood Monitoring and Early Warning System Using IoT Sensors",
+            "text": "Flood Monitoring and Early Warning System Using IoT Sensors. authors:  research_adviser: Prof. Wade Hyatt Jr. technical_adviser: Engr. Jamie West dean: Dr. Arianna Gibson department: Information Technology publication_year: 2007 paper_type: Capstone catalog_code: CEIT-IT-07-01",
+            "metadata": {
+                "catalog_code": "CEIT-IT-07-01",
+                "department": "Information Technology",
+                "publication_year": 2007,
+                "paper_type": "Capstone",
+                "authors": [],
+                "research_adviser": "Prof. Wade Hyatt Jr.",
+                "technical_adviser": "Engr. Jamie West",
+                "dean": "Dr. Arianna Gibson",
+                "url": "/academic-papers/10"
+            }
+        },
+        {
+            "id": "paper-11",
+            "corpus": "catalog",
+            "title": "Web-Based Thesis Catalog and Search Platform",
+            "text": "Web-Based Thesis Catalog and Search Platform. authors:  research_adviser: Taryn Farrell technical_adviser: Engr. Tina Stark dean: Dr. Mrs. Brandy Feeney DDS department: Information Technology publication_year: 2013 paper_type: Research catalog_code: CEIT-IT-13-02",
+            "metadata": {
+                "catalog_code": "CEIT-IT-13-02",
+                "department": "Information Technology",
+                "publication_year": 2013,
+                "paper_type": "Research",
+                "authors": [],
+                "research_adviser": "Taryn Farrell",
+                "technical_adviser": "Engr. Tina Stark",
+                "dean": "Dr. Mrs. Brandy Feeney DDS",
+                "url": "/academic-papers/11"
+            }
+        },
+        {
+            "id": "paper-12",
+            "corpus": "catalog",
+            "title": "Smart Waste Segregation System Using Computer Vision",
+            "text": "Smart Waste Segregation System Using Computer Vision. authors:  research_adviser: Valentina Wyman technical_adviser: Engr. Miss Alysa Volkman Sr. dean: Dr. Kaelyn Ernser department: Civil Engineering publication_year: 2008 paper_type: Report catalog_code: CEIT-CE-08-01",
+            "metadata": {
+                "catalog_code": "CEIT-CE-08-01",
+                "department": "Civil Engineering",
+                "publication_year": 2008,
+                "paper_type": "Report",
+                "authors": [],
+                "research_adviser": "Valentina Wyman",
+                "technical_adviser": "Engr. Miss Alysa Volkman Sr.",
+                "dean": "Dr. Kaelyn Ernser",
+                "url": "/academic-papers/12"
+            }
+        },
+        {
+            "id": "paper-13",
+            "corpus": "catalog",
+            "title": "Development of a Campus Navigation Mobile Application",
+            "text": "Development of a Campus Navigation Mobile Application. authors:  research_adviser: Amir Ruecker PhD technical_adviser: Engr. Jamie West dean: Dr. Prof. Maxwell Corkery Sr. department: Information Technology publication_year: 2017 paper_type: Thesis catalog_code: CEIT-IT-17-02",
+            "metadata": {
+                "catalog_code": "CEIT-IT-17-02",
+                "department": "Information Technology",
+                "publication_year": 2017,
+                "paper_type": "Thesis",
+                "authors": [],
+                "research_adviser": "Amir Ruecker PhD",
+                "technical_adviser": "Engr. Jamie West",
+                "dean": "Dr. Prof. Maxwell Corkery Sr.",
+                "url": "/academic-papers/13"
+            }
+        },
+        {
+            "id": "paper-14",
+            "corpus": "catalog",
+            "title": "Renewable Energy Monitoring System for University Facilities",
+            "text": "Renewable Energy Monitoring System for University Facilities. authors:  research_adviser: Jamarcus Erdman II technical_adviser: Engr. Kailyn Okuneva Sr. dean: Dr. Mrs. Brandy Feeney DDS department: Electrical Engineering publication_year: 2014 paper_type: Practicum catalog_code: CEIT-EE-14-01",
+            "metadata": {
+                "catalog_code": "CEIT-EE-14-01",
+                "department": "Electrical Engineering",
+                "publication_year": 2014,
+                "paper_type": "Practicum",
+                "authors": [],
+                "research_adviser": "Jamarcus Erdman II",
+                "technical_adviser": "Engr. Kailyn Okuneva Sr.",
+                "dean": "Dr. Mrs. Brandy Feeney DDS",
+                "url": "/academic-papers/14"
+            }
+        },
+        {
+            "id": "paper-15",
+            "corpus": "catalog",
+            "title": "Design of a Low-Cost Automated Irrigation Controller",
+            "text": "Design of a Low-Cost Automated Irrigation Controller. authors:  research_adviser: Georgianna Huels technical_adviser: Engr. Dr. Daniela Lueilwitz dean: Dr. Mrs. Brandy Feeney DDS department: Civil Engineering publication_year: 2002 paper_type: Practicum catalog_code: CEIT-CE-02-01",
+            "metadata": {
+                "catalog_code": "CEIT-CE-02-01",
+                "department": "Civil Engineering",
+                "publication_year": 2002,
+                "paper_type": "Practicum",
+                "authors": [],
+                "research_adviser": "Georgianna Huels",
+                "technical_adviser": "Engr. Dr. Daniela Lueilwitz",
+                "dean": "Dr. Mrs. Brandy Feeney DDS",
+                "url": "/academic-papers/15"
+            }
+        },
+        {
+            "id": "paper-16",
+            "corpus": "catalog",
+            "title": "Network Performance Monitoring for Academic Computer Laboratories",
+            "text": "Network Performance Monitoring for Academic Computer Laboratories. authors:  research_adviser: Prof. Jennifer Von technical_adviser: Engr. Kailyn Okuneva Sr. dean: Dr. Prof. Maxwell Corkery Sr. department: Information Technology publication_year: 2006 paper_type: Practicum catalog_code: CEIT-IT-06-01",
+            "metadata": {
+                "catalog_code": "CEIT-IT-06-01",
+                "department": "Information Technology",
+                "publication_year": 2006,
+                "paper_type": "Practicum",
+                "authors": [],
+                "research_adviser": "Prof. Jennifer Von",
+                "technical_adviser": "Engr. Kailyn Okuneva Sr.",
+                "dean": "Dr. Prof. Maxwell Corkery Sr.",
+                "url": "/academic-papers/16"
+            }
+        },
+        {
+            "id": "paper-17",
+            "corpus": "catalog",
+            "title": "Cybersecurity Awareness Platform for College Students",
+            "text": "Cybersecurity Awareness Platform for College Students. authors:  research_adviser: Alexane Sanford technical_adviser: Engr. Myron Wisoky dean: Dr. Mrs. Brandy Feeney DDS department: Information Technology publication_year: 2018 paper_type: Practicum catalog_code: CEIT-IT-18-01",
+            "metadata": {
+                "catalog_code": "CEIT-IT-18-01",
+                "department": "Information Technology",
+                "publication_year": 2018,
+                "paper_type": "Practicum",
+                "authors": [],
+                "research_adviser": "Alexane Sanford",
+                "technical_adviser": "Engr. Myron Wisoky",
+                "dean": "Dr. Mrs. Brandy Feeney DDS",
+                "url": "/academic-papers/17"
+            }
+        },
+        {
+            "id": "paper-18",
+            "corpus": "catalog",
+            "title": "Development of an Online Laboratory Equipment Reservation System",
+            "text": "Development of an Online Laboratory Equipment Reservation System. authors:  research_adviser: Georgianna Huels technical_adviser: Engr. Tina Stark dean: Dr. Arianna Gibson department: Civil Engineering publication_year: 2016 paper_type: Research catalog_code: CEIT-CE-16-01",
+            "metadata": {
+                "catalog_code": "CEIT-CE-16-01",
+                "department": "Civil Engineering",
+                "publication_year": 2016,
+                "paper_type": "Research",
+                "authors": [],
+                "research_adviser": "Georgianna Huels",
+                "technical_adviser": "Engr. Tina Stark",
+                "dean": "Dr. Arianna Gibson",
+                "url": "/academic-papers/18"
+            }
+        },
+        {
+            "id": "paper-19",
+            "corpus": "catalog",
+            "title": "Intelligent Traffic Monitoring for Campus Roadways",
+            "text": "Intelligent Traffic Monitoring for Campus Roadways. authors: Lisandro Grimes research_adviser: Ms. Cindy Mosciski MD technical_adviser: Engr. Cindy Williamson MD dean: Dr. Bradford Bins department: Electrical Engineering publication_year: 2013 paper_type: Practicum catalog_code: CEIT-EE-13-01",
+            "metadata": {
+                "catalog_code": "CEIT-EE-13-01",
+                "department": "Electrical Engineering",
+                "publication_year": 2013,
+                "paper_type": "Practicum",
+                "authors": [
+                    "Lisandro Grimes"
+                ],
+                "research_adviser": "Ms. Cindy Mosciski MD",
+                "technical_adviser": "Engr. Cindy Williamson MD",
+                "dean": "Dr. Bradford Bins",
+                "url": "/academic-papers/19"
+            }
+        },
+        {
+            "id": "paper-20",
+            "corpus": "catalog",
+            "title": "Automated Room Temperature and Lighting Control System",
+            "text": "Automated Room Temperature and Lighting Control System. authors: Mrs. Cathrine Reichert; Braden Fritsch; Nels Reynolds research_adviser: Tressie McGlynn technical_adviser: Engr. Raphaelle Keeling dean: Dr. Mr. Quincy Rodriguez department: Information Technology publication_year: 2015 paper_type: Thesis catalog_code: CEIT-IT-15-01",
+            "metadata": {
+                "catalog_code": "CEIT-IT-15-01",
+                "department": "Information Technology",
+                "publication_year": 2015,
+                "paper_type": "Thesis",
+                "authors": [
+                    "Mrs. Cathrine Reichert",
+                    "Braden Fritsch",
+                    "Nels Reynolds"
+                ],
+                "research_adviser": "Tressie McGlynn",
+                "technical_adviser": "Engr. Raphaelle Keeling",
+                "dean": "Dr. Mr. Quincy Rodriguez",
+                "url": "/academic-papers/20"
+            }
+        },
+        {
+            "id": "paper-21",
+            "corpus": "catalog",
+            "title": "E-Learning Platform with Offline Course Material Access",
+            "text": "E-Learning Platform with Offline Course Material Access. authors: Alysson Von research_adviser: Miss Katheryn Green II technical_adviser: Engr. Cindy Williamson MD dean: Dr. Pamela Thiel department: Civil Engineering publication_year: 2015 paper_type: Capstone catalog_code: CEIT-CE-15-01",
+            "metadata": {
+                "catalog_code": "CEIT-CE-15-01",
+                "department": "Civil Engineering",
+                "publication_year": 2015,
+                "paper_type": "Capstone",
+                "authors": [
+                    "Alysson Von"
+                ],
+                "research_adviser": "Miss Katheryn Green II",
+                "technical_adviser": "Engr. Cindy Williamson MD",
+                "dean": "Dr. Pamela Thiel",
+                "url": "/academic-papers/21"
+            }
+        },
+        {
+            "id": "paper-22",
+            "corpus": "catalog",
+            "title": "Computer-Aided Design of a Modular Emergency Shelter",
+            "text": "Computer-Aided Design of a Modular Emergency Shelter. authors: Moshe Stracke; Mr. Orin Cremin I; Prof. Garth Stark research_adviser: Tressie McGlynn technical_adviser: Engr. Dr. Marshall Fadel dean: Dr. Mr. Quincy Rodriguez department: Information Technology publication_year: 2008 paper_type: Practicum catalog_code: CEIT-IT-08-01",
+            "metadata": {
+                "catalog_code": "CEIT-IT-08-01",
+                "department": "Information Technology",
+                "publication_year": 2008,
+                "paper_type": "Practicum",
+                "authors": [
+                    "Moshe Stracke",
+                    "Mr. Orin Cremin I",
+                    "Prof. Garth Stark"
+                ],
+                "research_adviser": "Tressie McGlynn",
+                "technical_adviser": "Engr. Dr. Marshall Fadel",
+                "dean": "Dr. Mr. Quincy Rodriguez",
+                "url": "/academic-papers/22"
+            }
+        },
+        {
+            "id": "paper-23",
+            "corpus": "catalog",
+            "title": "Structural Health Monitoring Using Wireless Sensor Networks",
+            "text": "Structural Health Monitoring Using Wireless Sensor Networks. authors: Alysson Von; Eldred Mills V research_adviser: Meta Kreiger technical_adviser: Engr. Wyatt Conroy dean: Dr. Caitlyn Hand department: Information Technology publication_year: 2011 paper_type: Feasib catalog_code: CEIT-IT-11-01",
+            "metadata": {
+                "catalog_code": "CEIT-IT-11-01",
+                "department": "Information Technology",
+                "publication_year": 2011,
+                "paper_type": "Feasib",
+                "authors": [
+                    "Alysson Von",
+                    "Eldred Mills V"
+                ],
+                "research_adviser": "Meta Kreiger",
+                "technical_adviser": "Engr. Wyatt Conroy",
+                "dean": "Dr. Caitlyn Hand",
+                "url": "/academic-papers/23"
+            }
+        },
+        {
+            "id": "paper-24",
+            "corpus": "catalog",
+            "title": "Development of a School Clinic Appointment Management System",
+            "text": "Development of a School Clinic Appointment Management System. authors: Jaren Gutmann research_adviser: Heloise Gaylord technical_adviser: Engr. Selina Stokes DVM dean: Dr. Caitlyn Hand department: Electrical Engineering publication_year: 2018 paper_type: Research catalog_code: CEIT-EE-18-01",
+            "metadata": {
+                "catalog_code": "CEIT-EE-18-01",
+                "department": "Electrical Engineering",
+                "publication_year": 2018,
+                "paper_type": "Research",
+                "authors": [
+                    "Jaren Gutmann"
+                ],
+                "research_adviser": "Heloise Gaylord",
+                "technical_adviser": "Engr. Selina Stokes DVM",
+                "dean": "Dr. Caitlyn Hand",
+                "url": "/academic-papers/24"
+            }
+        },
+        {
+            "id": "paper-25",
+            "corpus": "catalog",
+            "title": "Energy-Efficient Street Lighting Control Using Microcontrollers",
+            "text": "Energy-Efficient Street Lighting Control Using Microcontrollers. authors: Braden Fritsch; Alysson Von; Mr. Orin Cremin I research_adviser: Ericka Christiansen technical_adviser: Engr. Ignatius Maggio dean: Dr. Bradford Bins department: Electrical Engineering publication_year: 2019 paper_type: Capstone catalog_code: CEIT-EE-19-02",
+            "metadata": {
+                "catalog_code": "CEIT-EE-19-02",
+                "department": "Electrical Engineering",
+                "publication_year": 2019,
+                "paper_type": "Capstone",
+                "authors": [
+                    "Braden Fritsch",
+                    "Alysson Von",
+                    "Mr. Orin Cremin I"
+                ],
+                "research_adviser": "Ericka Christiansen",
+                "technical_adviser": "Engr. Ignatius Maggio",
+                "dean": "Dr. Bradford Bins",
+                "url": "/academic-papers/25"
+            }
+        },
+        {
+            "id": "paper-26",
+            "corpus": "catalog",
+            "title": "Data Visualization Dashboard for Academic Performance Analytics",
+            "text": "Data Visualization Dashboard for Academic Performance Analytics. authors: Braden Fritsch; Mrs. Natasha Lehner; Carole Corkery research_adviser: Pete Bradtke technical_adviser: Engr. Dr. Marshall Fadel dean: Dr. Mr. Quincy Rodriguez department: Information Technology publication_year: 2021 paper_type: Thesis catalog_code: CEIT-IT-21-01",
+            "metadata": {
+                "catalog_code": "CEIT-IT-21-01",
+                "department": "Information Technology",
+                "publication_year": 2021,
+                "paper_type": "Thesis",
+                "authors": [
+                    "Braden Fritsch",
+                    "Mrs. Natasha Lehner",
+                    "Carole Corkery"
+                ],
+                "research_adviser": "Pete Bradtke",
+                "technical_adviser": "Engr. Dr. Marshall Fadel",
+                "dean": "Dr. Mr. Quincy Rodriguez",
+                "url": "/academic-papers/26"
+            }
+        },
+        {
+            "id": "paper-27",
+            "corpus": "catalog",
+            "title": "Web-Based Alumni Information and Engagement Portal",
+            "text": "Web-Based Alumni Information and Engagement Portal. authors: Lisandro Grimes; Mr. Orin Cremin I research_adviser: Pete Bradtke technical_adviser: Engr. Arielle Emard dean: Dr. Bradford Bins department: Civil Engineering publication_year: 2004 paper_type: Capstone catalog_code: CEIT-CE-04-01",
+            "metadata": {
+                "catalog_code": "CEIT-CE-04-01",
+                "department": "Civil Engineering",
+                "publication_year": 2004,
+                "paper_type": "Capstone",
+                "authors": [
+                    "Lisandro Grimes",
+                    "Mr. Orin Cremin I"
+                ],
+                "research_adviser": "Pete Bradtke",
+                "technical_adviser": "Engr. Arielle Emard",
+                "dean": "Dr. Bradford Bins",
+                "url": "/academic-papers/27"
+            }
+        },
+        {
+            "id": "paper-28",
+            "corpus": "catalog",
+            "title": "Development of a Voice-Assisted Campus Information System",
+            "text": "Development of a Voice-Assisted Campus Information System. authors: Ahmed Wyman research_adviser: Oral Barton technical_adviser: Engr. Arielle Emard dean: Dr. Mr. Quincy Rodriguez department: Electrical Engineering publication_year: 2011 paper_type: Practicum catalog_code: CEIT-EE-11-01",
+            "metadata": {
+                "catalog_code": "CEIT-EE-11-01",
+                "department": "Electrical Engineering",
+                "publication_year": 2011,
+                "paper_type": "Practicum",
+                "authors": [
+                    "Ahmed Wyman"
+                ],
+                "research_adviser": "Oral Barton",
+                "technical_adviser": "Engr. Arielle Emard",
+                "dean": "Dr. Mr. Quincy Rodriguez",
+                "url": "/academic-papers/28"
+            }
+        },
+        {
+            "id": "paper-29",
+            "corpus": "catalog",
+            "title": "Design of a Portable Water Quality Testing Device",
+            "text": "Design of a Portable Water Quality Testing Device. authors: Paul Labadie research_adviser: Meta Kreiger technical_adviser: Engr. Raphaelle Keeling dean: Dr. Mr. Joey Heidenreich II department: Electrical Engineering publication_year: 2011 paper_type: Feasib catalog_code: CEIT-EE-11-02",
+            "metadata": {
+                "catalog_code": "CEIT-EE-11-02",
+                "department": "Electrical Engineering",
+                "publication_year": 2011,
+                "paper_type": "Feasib",
+                "authors": [
+                    "Paul Labadie"
+                ],
+                "research_adviser": "Meta Kreiger",
+                "technical_adviser": "Engr. Raphaelle Keeling",
+                "dean": "Dr. Mr. Joey Heidenreich II",
+                "url": "/academic-papers/29"
+            }
+        },
+        {
+            "id": "paper-30",
+            "corpus": "catalog",
+            "title": "Predictive Maintenance System for Laboratory Equipment",
+            "text": "Predictive Maintenance System for Laboratory Equipment. authors: Mrs. Cathrine Reichert; Jaren Gutmann research_adviser: Ericka Christiansen technical_adviser: Engr. Ignatius Maggio dean: Dr. Mr. Quincy Rodriguez department: Civil Engineering publication_year: 2024 paper_type: Thesis catalog_code: CEIT-CE-24-01",
+            "metadata": {
+                "catalog_code": "CEIT-CE-24-01",
+                "department": "Civil Engineering",
+                "publication_year": 2024,
+                "paper_type": "Thesis",
+                "authors": [
+                    "Mrs. Cathrine Reichert",
+                    "Jaren Gutmann"
+                ],
+                "research_adviser": "Ericka Christiansen",
+                "technical_adviser": "Engr. Ignatius Maggio",
+                "dean": "Dr. Mr. Quincy Rodriguez",
+                "url": "/academic-papers/30"
+            }
+        },
+        {
+            "id": "paper-31",
+            "corpus": "catalog",
+            "title": "Smart Parking Slot Detection and Guidance System",
+            "text": "Smart Parking Slot Detection and Guidance System. authors: Golden Lowe Jr.; Paul Labadie; Prof. Garth Stark research_adviser: Prof. Annie Von technical_adviser: Engr. Dr. Marshall Fadel dean: Dr. Mr. Joey Heidenreich II department: Information Technology publication_year: 2009 paper_type: Capstone catalog_code: CEIT-IT-09-02",
+            "metadata": {
+                "catalog_code": "CEIT-IT-09-02",
+                "department": "Information Technology",
+                "publication_year": 2009,
+                "paper_type": "Capstone",
+                "authors": [
+                    "Golden Lowe Jr.",
+                    "Paul Labadie",
+                    "Prof. Garth Stark"
+                ],
+                "research_adviser": "Prof. Annie Von",
+                "technical_adviser": "Engr. Dr. Marshall Fadel",
+                "dean": "Dr. Mr. Joey Heidenreich II",
+                "url": "/academic-papers/31"
+            }
+        },
+        {
+            "id": "paper-32",
+            "corpus": "catalog",
+            "title": "Development of a Digital Queue Management Application",
+            "text": "Development of a Digital Queue Management Application. authors: Giovanna Goyette; Nels Reynolds research_adviser: Pete Bradtke technical_adviser: Engr. Prof. Wilber Weimann Jr. dean: Dr. Mr. Joey Heidenreich II department: Civil Engineering publication_year: 2020 paper_type: Practicum catalog_code: CEIT-CE-20-01",
+            "metadata": {
+                "catalog_code": "CEIT-CE-20-01",
+                "department": "Civil Engineering",
+                "publication_year": 2020,
+                "paper_type": "Practicum",
+                "authors": [
+                    "Giovanna Goyette",
+                    "Nels Reynolds"
+                ],
+                "research_adviser": "Pete Bradtke",
+                "technical_adviser": "Engr. Prof. Wilber Weimann Jr.",
+                "dean": "Dr. Mr. Joey Heidenreich II",
+                "url": "/academic-papers/32"
+            }
+        },
+        {
+            "id": "paper-33",
+            "corpus": "catalog",
+            "title": "Geographic Information System for Campus Asset Mapping",
+            "text": "Geographic Information System for Campus Asset Mapping. authors: Kurt Hartmann; Prof. Garth Stark research_adviser: Prof. Annie Von technical_adviser: Engr. Dr. Marshall Fadel dean: Dr. Caitlyn Hand department: Civil Engineering publication_year: 2004 paper_type: Research catalog_code: CEIT-CE-04-02",
+            "metadata": {
+                "catalog_code": "CEIT-CE-04-02",
+                "department": "Civil Engineering",
+                "publication_year": 2004,
+                "paper_type": "Research",
+                "authors": [
+                    "Kurt Hartmann",
+                    "Prof. Garth Stark"
+                ],
+                "research_adviser": "Prof. Annie Von",
+                "technical_adviser": "Engr. Dr. Marshall Fadel",
+                "dean": "Dr. Caitlyn Hand",
+                "url": "/academic-papers/33"
+            }
+        },
+        {
+            "id": "paper-34",
+            "corpus": "catalog",
+            "title": "Automated Fire Detection and Notification System",
+            "text": "Automated Fire Detection and Notification System. authors: Prof. Garth Stark research_adviser: Gust Klein IV technical_adviser: Engr. Raphaelle Keeling dean: Dr. Bradford Bins department: Information Technology publication_year: 2004 paper_type: Research catalog_code: CEIT-IT-04-01",
+            "metadata": {
+                "catalog_code": "CEIT-IT-04-01",
+                "department": "Information Technology",
+                "publication_year": 2004,
+                "paper_type": "Research",
+                "authors": [
+                    "Prof. Garth Stark"
+                ],
+                "research_adviser": "Gust Klein IV",
+                "technical_adviser": "Engr. Raphaelle Keeling",
+                "dean": "Dr. Bradford Bins",
+                "url": "/academic-papers/34"
+            }
+        },
+        {
+            "id": "paper-35",
+            "corpus": "catalog",
+            "title": "Development of a Student Organization Management Platform",
+            "text": "Development of a Student Organization Management Platform. authors: Jaren Gutmann research_adviser: Prof. Jovani Heller technical_adviser: Engr. Arielle Emard dean: Dr. Mr. Joey Heidenreich II department: Civil Engineering publication_year: 2011 paper_type: Feasib catalog_code: CEIT-CE-11-02",
+            "metadata": {
+                "catalog_code": "CEIT-CE-11-02",
+                "department": "Civil Engineering",
+                "publication_year": 2011,
+                "paper_type": "Feasib",
+                "authors": [
+                    "Jaren Gutmann"
+                ],
+                "research_adviser": "Prof. Jovani Heller",
+                "technical_adviser": "Engr. Arielle Emard",
+                "dean": "Dr. Mr. Joey Heidenreich II",
+                "url": "/academic-papers/35"
+            }
+        },
+        {
+            "id": "paper-36",
+            "corpus": "catalog",
+            "title": "Wireless Sensor Network for Indoor Air Quality Monitoring",
+            "text": "Wireless Sensor Network for Indoor Air Quality Monitoring. authors: Lisandro Grimes; Mrs. Cathrine Reichert; Nels Reynolds research_adviser: Oral Barton technical_adviser: Engr. Arielle Emard dean: Dr. Bradford Bins department: Electrical Engineering publication_year: 2024 paper_type: Thesis catalog_code: CEIT-EE-24-01",
+            "metadata": {
+                "catalog_code": "CEIT-EE-24-01",
+                "department": "Electrical Engineering",
+                "publication_year": 2024,
+                "paper_type": "Thesis",
+                "authors": [
+                    "Lisandro Grimes",
+                    "Mrs. Cathrine Reichert",
+                    "Nels Reynolds"
+                ],
+                "research_adviser": "Oral Barton",
+                "technical_adviser": "Engr. Arielle Emard",
+                "dean": "Dr. Bradford Bins",
+                "url": "/academic-papers/36"
+            }
+        },
+        {
+            "id": "paper-37",
+            "corpus": "catalog",
+            "title": "Design of a Microcontroller-Based Solar Tracking System",
+            "text": "Design of a Microcontroller-Based Solar Tracking System. authors: Golden Lowe Jr.; Nels Reynolds research_adviser: Meta Kreiger technical_adviser: Engr. Prof. Wilber Weimann Jr. dean: Dr. Mr. Joey Heidenreich II department: Electrical Engineering publication_year: 2004 paper_type: Report catalog_code: CEIT-EE-04-02",
+            "metadata": {
+                "catalog_code": "CEIT-EE-04-02",
+                "department": "Electrical Engineering",
+                "publication_year": 2004,
+                "paper_type": "Report",
+                "authors": [
+                    "Golden Lowe Jr.",
+                    "Nels Reynolds"
+                ],
+                "research_adviser": "Meta Kreiger",
+                "technical_adviser": "Engr. Prof. Wilber Weimann Jr.",
+                "dean": "Dr. Mr. Joey Heidenreich II",
+                "url": "/academic-papers/37"
+            }
+        },
+        {
+            "id": "paper-38",
+            "corpus": "catalog",
+            "title": "Online Academic Advising and Appointment Scheduling System",
+            "text": "Online Academic Advising and Appointment Scheduling System. authors: Alysson Von research_adviser: Ericka Christiansen technical_adviser: Engr. Prof. Simone Grimes dean: Dr. Pamela Thiel department: Information Technology publication_year: 2015 paper_type: Practicum catalog_code: CEIT-IT-15-02",
+            "metadata": {
+                "catalog_code": "CEIT-IT-15-02",
+                "department": "Information Technology",
+                "publication_year": 2015,
+                "paper_type": "Practicum",
+                "authors": [
+                    "Alysson Von"
+                ],
+                "research_adviser": "Ericka Christiansen",
+                "technical_adviser": "Engr. Prof. Simone Grimes",
+                "dean": "Dr. Pamela Thiel",
+                "url": "/academic-papers/38"
+            }
+        },
+        {
+            "id": "paper-39",
+            "corpus": "catalog",
+            "title": "Computer Vision-Based Personal Protective Equipment Detection",
+            "text": "Computer Vision-Based Personal Protective Equipment Detection. authors: Ahmed Wyman; Moshe Stracke research_adviser: Meta Kreiger technical_adviser: Engr. Bobbie Haag dean: Dr. Mr. Joey Heidenreich II department: Information Technology publication_year: 2008 paper_type: Thesis catalog_code: CEIT-IT-08-02",
+            "metadata": {
+                "catalog_code": "CEIT-IT-08-02",
+                "department": "Information Technology",
+                "publication_year": 2008,
+                "paper_type": "Thesis",
+                "authors": [
+                    "Ahmed Wyman",
+                    "Moshe Stracke"
+                ],
+                "research_adviser": "Meta Kreiger",
+                "technical_adviser": "Engr. Bobbie Haag",
+                "dean": "Dr. Mr. Joey Heidenreich II",
+                "url": "/academic-papers/39"
+            }
+        },
+        {
+            "id": "paper-40",
+            "corpus": "catalog",
+            "title": "Development of a Digital Document Archiving System",
+            "text": "Development of a Digital Document Archiving System. authors: Eldred Mills V research_adviser: Gust Klein IV technical_adviser: Engr. Raphaelle Keeling dean: Dr. Caitlyn Hand department: Information Technology publication_year: 2021 paper_type: Thesis catalog_code: CEIT-IT-21-02",
+            "metadata": {
+                "catalog_code": "CEIT-IT-21-02",
+                "department": "Information Technology",
+                "publication_year": 2021,
+                "paper_type": "Thesis",
+                "authors": [
+                    "Eldred Mills V"
+                ],
+                "research_adviser": "Gust Klein IV",
+                "technical_adviser": "Engr. Raphaelle Keeling",
+                "dean": "Dr. Caitlyn Hand",
+                "url": "/academic-papers/40"
+            }
+        },
+        {
+            "id": "paper-41",
+            "corpus": "catalog",
+            "title": "Smart Classroom Occupancy Monitoring Using Sensor Networks",
+            "text": "Smart Classroom Occupancy Monitoring Using Sensor Networks. authors: Lisandro Grimes; Noemy Cruickshank research_adviser: Meta Kreiger technical_adviser: Engr. Stefan Schaefer dean: Dr. Mr. Joey Heidenreich II department: Information Technology publication_year: 2015 paper_type: Report catalog_code: CEIT-IT-15-03",
+            "metadata": {
+                "catalog_code": "CEIT-IT-15-03",
+                "department": "Information Technology",
+                "publication_year": 2015,
+                "paper_type": "Report",
+                "authors": [
+                    "Lisandro Grimes",
+                    "Noemy Cruickshank"
+                ],
+                "research_adviser": "Meta Kreiger",
+                "technical_adviser": "Engr. Stefan Schaefer",
+                "dean": "Dr. Mr. Joey Heidenreich II",
+                "url": "/academic-papers/41"
+            }
+        },
+        {
+            "id": "paper-42",
+            "corpus": "catalog",
+            "title": "Analysis of Network Security Risks in Educational Institutions",
+            "text": "Analysis of Network Security Risks in Educational Institutions. authors: Nels Reynolds; Mrs. Natasha Lehner; Carole Corkery research_adviser: Pete Bradtke technical_adviser: Engr. Dr. Marshall Fadel dean: Dr. Mr. Joey Heidenreich II department: Civil Engineering publication_year: 2011 paper_type: Practicum catalog_code: CEIT-CE-11-03",
+            "metadata": {
+                "catalog_code": "CEIT-CE-11-03",
+                "department": "Civil Engineering",
+                "publication_year": 2011,
+                "paper_type": "Practicum",
+                "authors": [
+                    "Nels Reynolds",
+                    "Mrs. Natasha Lehner",
+                    "Carole Corkery"
+                ],
+                "research_adviser": "Pete Bradtke",
+                "technical_adviser": "Engr. Dr. Marshall Fadel",
+                "dean": "Dr. Mr. Joey Heidenreich II",
+                "url": "/academic-papers/42"
+            }
+        },
+        {
+            "id": "paper-43",
+            "corpus": "catalog",
+            "title": "Development of a Disaster Preparedness Information Application",
+            "text": "Development of a Disaster Preparedness Information Application. authors: Moshe Stracke research_adviser: Brayan Funk technical_adviser: Engr. Arielle Emard dean: Dr. Mr. Joey Heidenreich II department: Civil Engineering publication_year: 2016 paper_type: Thesis catalog_code: CEIT-CE-16-02",
+            "metadata": {
+                "catalog_code": "CEIT-CE-16-02",
+                "department": "Civil Engineering",
+                "publication_year": 2016,
+                "paper_type": "Thesis",
+                "authors": [
+                    "Moshe Stracke"
+                ],
+                "research_adviser": "Brayan Funk",
+                "technical_adviser": "Engr. Arielle Emard",
+                "dean": "Dr. Mr. Joey Heidenreich II",
+                "url": "/academic-papers/43"
+            }
+        },
+        {
+            "id": "paper-44",
+            "corpus": "catalog",
+            "title": "Automated Feedback Collection System for Student Services",
+            "text": "Automated Feedback Collection System for Student Services. authors: Prof. Garth Stark research_adviser: Meta Kreiger technical_adviser: Engr. Molly Emard dean: Dr. Mr. Joey Heidenreich II department: Electrical Engineering publication_year: 2008 paper_type: Capstone catalog_code: CEIT-EE-08-01",
+            "metadata": {
+                "catalog_code": "CEIT-EE-08-01",
+                "department": "Electrical Engineering",
+                "publication_year": 2008,
+                "paper_type": "Capstone",
+                "authors": [
+                    "Prof. Garth Stark"
+                ],
+                "research_adviser": "Meta Kreiger",
+                "technical_adviser": "Engr. Molly Emard",
+                "dean": "Dr. Mr. Joey Heidenreich II",
+                "url": "/academic-papers/44"
+            }
+        },
+        {
+            "id": "paper-45",
+            "corpus": "catalog",
+            "title": "Design of a Low-Power Weather Monitoring Station",
+            "text": "Design of a Low-Power Weather Monitoring Station. authors: Osvaldo Schaefer; Nels Reynolds; Eldred Mills V research_adviser: Pete Bradtke technical_adviser: Engr. Kameron Gleichner V dean: Dr. Pamela Thiel department: Electrical Engineering publication_year: 2009 paper_type: Report catalog_code: CEIT-EE-09-01",
+            "metadata": {
+                "catalog_code": "CEIT-EE-09-01",
+                "department": "Electrical Engineering",
+                "publication_year": 2009,
+                "paper_type": "Report",
+                "authors": [
+                    "Osvaldo Schaefer",
+                    "Nels Reynolds",
+                    "Eldred Mills V"
+                ],
+                "research_adviser": "Pete Bradtke",
+                "technical_adviser": "Engr. Kameron Gleichner V",
+                "dean": "Dr. Pamela Thiel",
+                "url": "/academic-papers/45"
+            }
+        },
+        {
+            "id": "paper-46",
+            "corpus": "catalog",
+            "title": "Web-Based Engineering Project Collaboration Platform",
+            "text": "Web-Based Engineering Project Collaboration Platform. authors: Jaren Gutmann research_adviser: Prof. Jovani Heller technical_adviser: Engr. Selina Stokes DVM dean: Dr. Bradford Bins department: Information Technology publication_year: 2012 paper_type: Capstone catalog_code: CEIT-IT-12-01",
+            "metadata": {
+                "catalog_code": "CEIT-IT-12-01",
+                "department": "Information Technology",
+                "publication_year": 2012,
+                "paper_type": "Capstone",
+                "authors": [
+                    "Jaren Gutmann"
+                ],
+                "research_adviser": "Prof. Jovani Heller",
+                "technical_adviser": "Engr. Selina Stokes DVM",
+                "dean": "Dr. Bradford Bins",
+                "url": "/academic-papers/46"
+            }
+        },
+        {
+            "id": "paper-47",
+            "corpus": "catalog",
+            "title": "Development of an RFID-Based Equipment Lending System",
+            "text": "Development of an RFID-Based Equipment Lending System. authors: Mrs. Cathrine Reichert; Noemy Cruickshank; Mrs. Natasha Lehner research_adviser: Gust Klein IV technical_adviser: Engr. Dr. Marshall Fadel dean: Dr. Pamela Thiel department: Information Technology publication_year: 2011 paper_type: Capstone catalog_code: CEIT-IT-11-02",
+            "metadata": {
+                "catalog_code": "CEIT-IT-11-02",
+                "department": "Information Technology",
+                "publication_year": 2011,
+                "paper_type": "Capstone",
+                "authors": [
+                    "Mrs. Cathrine Reichert",
+                    "Noemy Cruickshank",
+                    "Mrs. Natasha Lehner"
+                ],
+                "research_adviser": "Gust Klein IV",
+                "technical_adviser": "Engr. Dr. Marshall Fadel",
+                "dean": "Dr. Pamela Thiel",
+                "url": "/academic-papers/47"
+            }
+        },
+        {
+            "id": "paper-48",
+            "corpus": "catalog",
+            "title": "Intelligent Energy Consumption Forecasting for Campus Buildings",
+            "text": "Intelligent Energy Consumption Forecasting for Campus Buildings. authors: Moshe Stracke; Kurt Hartmann; Prof. Garth Stark research_adviser: Prof. Annie Von technical_adviser: Engr. Wyatt Conroy dean: Dr. Bradford Bins department: Information Technology publication_year: 2004 paper_type: Thesis catalog_code: CEIT-IT-04-02",
+            "metadata": {
+                "catalog_code": "CEIT-IT-04-02",
+                "department": "Information Technology",
+                "publication_year": 2004,
+                "paper_type": "Thesis",
+                "authors": [
+                    "Moshe Stracke",
+                    "Kurt Hartmann",
+                    "Prof. Garth Stark"
+                ],
+                "research_adviser": "Prof. Annie Von",
+                "technical_adviser": "Engr. Wyatt Conroy",
+                "dean": "Dr. Bradford Bins",
+                "url": "/academic-papers/48"
+            }
+        }
+    ]
+}

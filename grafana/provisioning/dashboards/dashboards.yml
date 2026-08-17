@@ -1,0 +1,11 @@
+apiVersion: 1
+
+providers:
+  - name: CEIT Sidecar
+    orgId: 1
+    folder: CEIT
+    type: file
+    disableDeletion: false
+    updateIntervalSeconds: 30
+    options:
+      path: /var/lib/grafana/dashboards

@@ -14,6 +14,12 @@ class Settings(BaseSettings):
     llm_api_key: str = ""
     llm_model: str = "meta-llama/llama-3.3-70b-instruct"
     llm_max_tokens: int = 512
+    # Query rewriting (LLM) and re-ranking (blend|llm) in the /search flow.
+    # Both degrade safely: no API key / provider failure -> original behavior.
+    query_rewrite: bool = True
+    rerank_mode: str = "blend"
+    # Durable thumbs-up/down feedback log (JSONL).
+    feedback_path: Path = Path("var/feedback.jsonl")
 
     model_config = SettingsConfigDict(env_file=".env")
 

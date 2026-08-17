@@ -1,0 +1,16 @@
+.git
+.gitignore
+.venv
+__pycache__
+.pytest_cache
+.ruff_cache
+.sonar
+cache
+var
+graphify-out
+.env
+data/judge_results.json
+tests
+docs
+.github
+sonar-project.properties

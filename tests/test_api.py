@@ -31,13 +31,7 @@ def client(tmp_path, corpus_path):
 
     main_mod.settings = settings
     main_mod._search_engine = None
-    main_mod._metrics = {
-        "searches_total": 0,
-        "rebuilds_total": 0,
-        "last_rebuild_at": None,
-        "search_times_ms": [],
-        "index_documents": None,
-    }
+    main_mod._metrics = main_mod._fresh_metrics()
     rebuild_mod._embed_override = embed_from(docs)
     # Deterministic query embedder.
     target = np.asarray(embed_from(docs)([docs[0]])[0])

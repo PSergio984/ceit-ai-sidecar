@@ -3,6 +3,7 @@
 __pycache__/
 cache/
 smoke-corpus/
+var/
 
 # graphify knowledge graph output
 /graphify-out/

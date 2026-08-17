@@ -1,0 +1,80 @@
+# CEIT AI Sidecar + monitoring stack (deliverables D4 + D5).
+#
+# Usage:
+#   cp .env.example .env   # set SIDECAR_TOKEN (and optionally LLM_API_KEY)
+#   docker compose up --build
+#
+# Endpoints:
+#   sidecar    http://localhost:8310  (token-gated API)
+#   prometheus http://localhost:9090  (scrapes sidecar /metrics with the token)
+#   grafana    http://localhost:3000  (admin/admin, dashboard "CEIT AI Sidecar")
+#
+# The compose file substitutes ${SIDECAR_TOKEN} from the repo's .env, so the
+# monitoring stack authenticates with the SAME token the API enforces.
+
+services:
+  sidecar:
+    build: .
+    container_name: ceit-sidecar
+    environment:
+      SIDECAR_TOKEN: ${SIDECAR_TOKEN:?set SIDECAR_TOKEN in .env}
+      CORPUS_PATH: /app/corpus
+      MODEL_NAME: all-MiniLM-L6-v2
+      HOST: 0.0.0.0
+      PORT: 8310
+      LLM_BASE_URL: ${LLM_BASE_URL:-https://openrouter.ai/api/v1}
+      LLM_API_KEY: ${LLM_API_KEY:-}
+      LLM_MODEL: ${LLM_MODEL:-meta-llama/llama-3.3-70b-instruct}
+      QUERY_REWRITE: ${QUERY_REWRITE:-true}
+      RERANK_MODE: ${RERANK_MODE:-blend}
+      FEEDBACK_PATH: /app/var/feedback.jsonl
+    ports:
+      - "8310:8310"
+    volumes:
+      - sidecar_cache:/app/cache
+      - sidecar_var:/app/var
+
+  prometheus:
+    image: prom/prometheus:v2.53.0
+    container_name: ceit-prometheus
+    # Render the scrape config from the template (injecting SIDECAR_TOKEN) at
+    # start, then run Prometheus — Prometheus itself does not env-substitute
+    # inside the authorization block.
+    entrypoint:
+      - /bin/sh
+      - -ec
+      - |
+        sed "s|__SIDECAR_TOKEN__|$$SIDECAR_TOKEN|g" /etc/prometheus/prometheus.yml.template > /etc/prometheus/prometheus.yml
+        exec prometheus --config.file=/etc/prometheus/prometheus.yml --storage.tsdb.path=/prometheus
+    environment:
+      SIDECAR_TOKEN: ${SIDECAR_TOKEN:?set SIDECAR_TOKEN in .env}
+    volumes:
+      - ./prometheus/prometheus.yml.template:/etc/prometheus/prometheus.yml.template:ro
+      - prometheus_data:/prometheus
+    ports:
+      - "9090:9090"
+    depends_on:
+      - sidecar
+
+  grafana:
+    image: grafana/grafana:11.1.0
+    container_name: ceit-grafana
+    environment:
+      GF_SECURITY_ADMIN_USER: admin
+      GF_SECURITY_ADMIN_PASSWORD: admin
+      GF_USERS_ALLOW_SIGN_UP: "false"
+      GF_AUTH_ANONYMOUS_ENABLED: "true"
+    volumes:
+      - ./grafana/provisioning:/etc/grafana/provisioning:ro
+      - ./grafana/dashboards:/var/lib/grafana/dashboards:ro
+      - grafana_data:/var/lib/grafana
+    ports:
+      - "3000:3000"
+    depends_on:
+      - prometheus
+
+volumes:
+  sidecar_cache:
+  sidecar_var:
+  prometheus_data:
+  grafana_data:

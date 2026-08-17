@@ -4,6 +4,10 @@ Ported from rag-search-engine's evaluation_cli.py, matching on doc ids instead
 of titles (ids are stable; titles collide). Negatives are scored separately as
 negative_pass_rate — a negative case passes when ZERO relevant ids are
 retrieved.
+
+The multi-approach comparison (deliverable D2) scores every retrieval approach
+("hybrid", "bm25", "semantic") on the same golden set through the same seam
+(``HybridSearch.rrf_search(method=...)``) and reports which approach wins.
 """
 
 from __future__ import annotations
@@ -14,9 +18,13 @@ import sys
 from collections import defaultdict
 from pathlib import Path
 
+from .config import settings
 from .search import HybridSearch
 
 GOLDEN_PATH = Path(__file__).resolve().parent.parent / "data" / "golden_dataset.json"
+
+# Approaches compared by the multi-approach evaluation, best first.
+METHODS = ("hybrid", "bm25", "semantic")
 
 
 def load_golden(path: Path = GOLDEN_PATH) -> dict:
@@ -24,7 +32,7 @@ def load_golden(path: Path = GOLDEN_PATH) -> dict:
         return json.load(f)
 
 
-def evaluate_case(engine: HybridSearch, case: dict, limit: int) -> dict:
+def evaluate_case(engine: HybridSearch, case: dict, limit: int, method: str = "hybrid") -> dict:
     relevant = set(case.get("relevant_docs", []))
     filters = case.get("filters") or {}
     corpus = case.get("corpus")
@@ -35,6 +43,7 @@ def evaluate_case(engine: HybridSearch, case: dict, limit: int) -> dict:
         limit=limit,
         filters=filters,
         corpus=corpus,
+        method=method,
     )
     retrieved_ids = {r["id"] for r in retrieved}
     top1_id = retrieved[0]["id"] if retrieved else None
@@ -87,12 +96,72 @@ def category_of(case: dict) -> str:
     return "exact_title" if len(case.get("relevant_docs", [])) == 1 else "paraphrase"
 
 
+def aggregate(results: list[dict]) -> dict:
+    """Per-method aggregates over `evaluate_case` results (hand-testable pure fn).
+
+    Negatives pass when they retrieved zero relevant ids; positives contribute
+    precision/recall/F1 and a top-1 hit flag. Averages are over positives only.
+    """
+    negatives = [r for r in results if r.get("negative")]
+    positives = [r for r in results if not r.get("negative")]
+
+    neg_pass = (
+        round(sum(1 for r in negatives if r["passed"]) / len(negatives), 4) if negatives else None
+    )
+    top1 = (
+        round(sum(1 for r in positives if r["top1_hit"]) / len(positives), 4) if positives else None
+    )
+
+    def _avg(key: str):
+        return round(sum(r[key] for r in positives) / len(positives), 4) if positives else None
+
+    return {
+        "count": len(results),
+        "negative_pass_rate": neg_pass,
+        "top1_rate": top1,
+        "avg_precision": _avg("precision"),
+        "avg_recall": _avg("recall"),
+        "avg_f1": _avg("f1"),
+    }
+
+
+def compare_methods(results_by_method: dict[str, list[dict]]) -> dict:
+    """Build the multi-approach report and pick the winner.
+
+    Winner rule (documented, stable): for a library assistant the primary
+    quality gates are (1) top-1 rate — the right document surfaces first — and
+    (2) negative-pass rate — no irrelevant results for "nothing here"
+    queries; positive-case F1@k breaks ties. This surfaces hybrid's
+    exact-match advantage (code pin + fusion) while still exposing F1@k for
+    every approach in the report. Methods are reported in METHODS order
+    regardless of dict insertion order.
+    """
+    methods = {m: aggregate(results_by_method.get(m, [])) for m in METHODS}
+
+    def _key(m: str) -> tuple:
+        a = methods[m]
+        return (
+            a["top1_rate"] if a["top1_rate"] is not None else -1.0,
+            a["negative_pass_rate"] if a["negative_pass_rate"] is not None else -1.0,
+            a["avg_f1"] if a["avg_f1"] is not None else -1.0,
+        )
+
+    return {"methods": methods, "winner": max(METHODS, key=_key)}
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(
         description="Golden-set evaluation for the CEIT hybrid search sidecar"
     )
     parser.add_argument("--limit", type=int, default=5, help="k for precision@k/recall@k")
     parser.add_argument("--corpus", choices=["catalog", "policy", "all"], default="all")
+    parser.add_argument(
+        "--methods",
+        nargs="+",
+        choices=list(METHODS),
+        default=list(METHODS),
+        help="retrieval approaches to compare (default: all)",
+    )
     parser.add_argument("--json", action="store_true", help="Emit machine-readable JSON report")
     args = parser.parse_args()
 
@@ -101,14 +170,21 @@ def main() -> int:
     if args.corpus != "all":
         cases = [c for c in cases if (c.get("corpus") or "all") == args.corpus]
 
-    engine = HybridSearch(Path("cache"), engine_model())
+    engine = HybridSearch(Path(settings.cache_dir), engine_model())
 
-    results = [evaluate_case(engine, c, args.limit) for c in cases]
+    # Evaluate every case once per requested approach through the same seam.
+    results_by_method = {
+        method: [evaluate_case(engine, c, args.limit, method) for c in cases]
+        for method in args.methods
+    }
 
-    negatives = [r for r in results if r["negative"]]
-    positives = [r for r in results if not r["negative"]]
+    comparison = compare_methods(results_by_method)
 
-    neg_pass_rate = sum(1 for r in negatives if r["passed"]) / len(negatives) if negatives else None
+    # Detailed report from the production (hybrid) run — or the winner when
+    # --methods excluded hybrid (no KeyError on partial method sets).
+    report_method = "hybrid" if "hybrid" in results_by_method else comparison["winner"]
+    results = results_by_method[report_method]
+    agg = aggregate(results)
 
     by_cat: dict[str, list[dict]] = defaultdict(list)
     for case, result in zip(cases, results):
@@ -119,20 +195,12 @@ def main() -> int:
         "catalog_snapshot": golden.get("catalog_snapshot"),
         "limit": args.limit,
         "total_cases": len(results),
-        "negative_pass_rate": neg_pass_rate,
-        "top1_rate": round(sum(1 for r in positives if r["top1_hit"]) / len(positives), 4)
-        if positives
-        else None,
+        "negative_pass_rate": agg["negative_pass_rate"],
+        "top1_rate": agg["top1_rate"],
         "overall": {
-            "avg_precision": round(sum(r["precision"] for r in positives) / len(positives), 4)
-            if positives
-            else None,
-            "avg_recall": round(sum(r["recall"] for r in positives) / len(positives), 4)
-            if positives
-            else None,
-            "avg_f1": round(sum(r["f1"] for r in positives) / len(positives), 4)
-            if positives
-            else None,
+            "avg_precision": agg["avg_precision"],
+            "avg_recall": agg["avg_recall"],
+            "avg_f1": agg["avg_f1"],
         },
         "by_category": {
             cat: {
@@ -145,6 +213,7 @@ def main() -> int:
             for cat, items in sorted(by_cat.items())
         },
         "cases": results,
+        "approach_comparison": comparison,
     }
 
     if args.json:
@@ -173,6 +242,23 @@ def main() -> int:
             f"  {cat}: n={stats['count']} P@{args.limit}={stats['avg_precision']} "
             f"top1={stats['top1_rate']} F1={stats['avg_f1']}"
         )
+
+    # Multi-approach comparison table.
+    print("\nApproach comparison (same golden set, same seam):")
+    print(f"  {'approach':<10} {'P@k':>6} {'R@k':>6} {'F1':>6} {'top-1':>6} {'neg-pass':>9}")
+    for method in METHODS:
+        agg = comparison["methods"][method]
+        marker = "  <= best" if method == comparison["winner"] else ""
+        print(
+            f"  {method:<10} "
+            f"{agg['avg_precision'] if agg['avg_precision'] is not None else '-':>6} "
+            f"{agg['avg_recall'] if agg['avg_recall'] is not None else '-':>6} "
+            f"{agg['avg_f1'] if agg['avg_f1'] is not None else '-':>6} "
+            f"{agg['top1_rate'] if agg['top1_rate'] is not None else '-':>6} "
+            f"{agg['negative_pass_rate'] if agg['negative_pass_rate'] is not None else '-':>9}"
+            f"{marker}"
+        )
+    print(f"Winner: {comparison['winner']}")
 
     return 0
 
