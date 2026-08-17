@@ -62,6 +62,16 @@ PROMPTS: dict[str, str] = {
     ),
 }
 
+RECOMMENDATION_INSTRUCTIONS = (
+    "Recommendation requirements:\n"
+    "- Treat requests for a book as requests for an academic paper in the catalog.\n"
+    "- Recommend 3 to 5 of the most relevant retrieved papers when enough matches exist.\n"
+    "- Give one brief reason per recommendation using only its title, metadata, and provided text.\n"
+    "- Cite every recommendation with its document number, such as [1].\n"
+    "- Do not invent abstracts, findings, quality claims, availability, or topics not present in the documents.\n"
+    '- If the documents do not support a useful recommendation, say "I don\'t have enough information".'
+)
+
 MAX_DOC_CHARS = 600
 
 # Wire key for the JSON-encoded SSE chunk envelope — the Laravel parser's
@@ -85,7 +95,9 @@ def chunk_frame(delta: str) -> str:
 
 SYSTEM_PROMPT = (
     "You are the CEIT Library assistant. Answer only from the provided documents; "
-    'if the documents do not contain the answer, say "I don\'t have enough information".'
+    'if the documents do not contain the answer, say "I don\'t have enough information". '
+    "Treat requests for a book or recommendation as requests for academic papers in the catalog. "
+    "For recommendations, use only retrieved documents and do not invent paper details."
 )
 
 
@@ -100,10 +112,13 @@ def build_context(results: list[dict]) -> str:
     return "\n".join(blocks)
 
 
-def build_prompt(mode: str, query: str, docs: str) -> str:
+def build_prompt(mode: str, query: str, docs: str, recommendation: bool = False) -> str:
     """Build the mode prompt; defaults to the citations prompt on unknown modes."""
     template = PROMPTS.get(mode, PROMPTS["citations"])
-    return template.format(query=query, question=query, docs=docs, context=docs)
+    prompt = template.format(query=query, question=query, docs=docs, context=docs)
+    if recommendation:
+        prompt += f"\n\n{RECOMMENDATION_INSTRUCTIONS}"
+    return prompt
 
 
 class RagService:

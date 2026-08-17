@@ -16,6 +16,7 @@ from __future__ import annotations
 
 import json
 import logging
+import re
 from collections.abc import Iterator
 from pathlib import Path
 from typing import TYPE_CHECKING, Literal
@@ -39,6 +40,17 @@ logger = logging.getLogger(__name__)
 
 # Counts EXECUTED searches (D-11: initial retrieval + 2 refinements).
 MAX_TOOL_ROUNDS = 3
+
+RECOMMENDATION_RE = re.compile(
+    r"\b(?:recommend(?:ation)?|suggest(?:ion)?|book|what should i read|papers? like)\b",
+    re.IGNORECASE,
+)
+
+
+def is_recommendation_query(query: str) -> bool:
+    """Recognize catalog recommendation language before the model chooses tools."""
+    return bool(RECOMMENDATION_RE.search(query))
+
 
 SEARCH_TOOL: dict = {
     "type": "function",
@@ -245,13 +257,29 @@ class AgenticLoop:
             self._engine = HybridSearch(Path(settings.cache_dir), settings.model_name)
         return self._engine
 
-    def _final_prompt(self, mode: str, query: str, docs_context: str) -> str:
+    def _final_prompt(
+        self, mode: str, query: str, docs_context: str, recommendation: bool = False
+    ) -> str:
         template = self._prompts.get(mode, self._prompts["citations"])
-        return template.format(query=query, question=query, docs=docs_context, context=docs_context)
+        prompt = template.format(
+            query=query, question=query, docs=docs_context, context=docs_context
+        )
+        if recommendation:
+            from .rag import RECOMMENDATION_INSTRUCTIONS
 
-    def _stream_final_answer(self, query: str, docs: list[dict], mode: str) -> Iterator[str]:
+            prompt += f"\n\n{RECOMMENDATION_INSTRUCTIONS}"
+        return prompt
+
+    def _stream_final_answer(
+        self,
+        query: str,
+        docs: list[dict],
+        mode: str,
+        recommendation: bool = False,
+        emitted: list[bool] | None = None,
+    ) -> Iterator[str]:
         client = self._ensure_client()
-        prompt = self._final_prompt(mode, query, build_context(docs))
+        prompt = self._final_prompt(mode, query, build_context(docs), recommendation)
         stream = client.chat.completions.create(
             model=self._model,
             messages=[
@@ -264,6 +292,8 @@ class AgenticLoop:
         for chunk in stream:
             delta = chunk.choices[0].delta.content
             if delta:
+                if emitted is not None:
+                    emitted[0] = True
                 yield chunk_frame(delta)
 
     def stream_agentic_events(
@@ -287,6 +317,7 @@ class AgenticLoop:
         docs: list[dict] = []
         rounds = 0
         malformed_streak = 0
+        recommendation = is_recommendation_query(query)
         try:
             while True:
                 resp = client.chat.completions.create(
@@ -303,7 +334,10 @@ class AgenticLoop:
                     if rounds == 0:
                         # Direct answer (D-07): no search happened, no frames —
                         # Laravel falls back to companionCitations (ADR 0014).
-                        yield from _chunk_frames(msg.content or "")
+                        if msg.content:
+                            yield from _chunk_frames(msg.content)
+                        elif recommendation:
+                            yield "data: I don't have enough information\n\n"
                         yield "data: [DONE]\n\n"
                         return
                     break
@@ -337,11 +371,16 @@ class AgenticLoop:
                         continue
                     malformed_streak = 0
                     effective_corpus = args.corpus or corpus
+                    if recommendation and corpus is None:
+                        effective_corpus = "catalog"
+                    limit = args.top_k or default_top_k
+                    if recommendation:
+                        limit = max(limit, 5)
                     yield _activity_frame(activity_line(args, rounds, effective_corpus))
                     results = engine.rrf_search(
                         query=args.query,
                         k=60,
-                        limit=args.top_k or default_top_k,
+                        limit=limit,
                         filters=args.filters.model_dump(exclude_none=True) if args.filters else {},
                         corpus=effective_corpus,
                         include_text=True,
@@ -366,7 +405,12 @@ class AgenticLoop:
                 yield "data: I don't have enough information\n\n"
                 yield "data: [DONE]\n\n"
                 return
-            yield from self._stream_final_answer(query, docs, mode)
+            emitted = [False]
+            yield from self._stream_final_answer(query, docs, mode, recommendation, emitted)
+            if not emitted[0]:
+                yield "data: I don't have enough information\n\n"
+                yield "data: [DONE]\n\n"
+                return
             yield f"event: citations\ndata: {json.dumps(citation_payload(docs), ensure_ascii=False)}\n\n"
             yield "data: [DONE]\n\n"
         except Exception as exc:  # noqa: BLE001 - provider errors become SSE error events

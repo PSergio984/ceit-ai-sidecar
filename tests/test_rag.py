@@ -96,6 +96,15 @@ def test_build_prompt_citations_has_domain_and_refusal_language():
     assert "Analysis of Groundwater Depletion" in prompt
 
 
+def test_build_prompt_recommendation_requires_grounded_reasons():
+    prompt = build_prompt(
+        "citations", "recommend me a book", build_context(RESULTS), recommendation=True
+    )
+    assert "academic paper in the catalog" in prompt
+    assert "one brief reason per recommendation" in prompt
+    assert "Do not invent abstracts" in prompt
+
+
 def test_build_prompt_question_is_conversational():
     prompt = build_prompt("question", "hi what's the borrowing limit?", build_context(RESULTS))
     assert "casual and conversational" in prompt

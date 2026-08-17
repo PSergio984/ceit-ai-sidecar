@@ -18,6 +18,7 @@ from app.agent import (
     AgenticLoop,
     ToolArgs,
     citation_payload,
+    is_recommendation_query,
     merge_dedup,
 )
 from app.rag import MAX_DOC_CHARS
@@ -162,6 +163,42 @@ def test_direct_answer_streams_without_search():
     assert engine.calls == []
     assert all("event: activity" not in event for event in events)
     assert all("event: citations" not in event for event in events)
+
+
+@pytest.mark.parametrize(
+    ("query", "expected"),
+    [
+        ("recommend me a book", True),
+        ("suggest a paper about flood monitoring", True),
+        ("what should I read about databases?", True),
+        ("what are the borrowing rules?", False),
+    ],
+)
+def test_recommendation_intent_detection(query, expected):
+    assert is_recommendation_query(query) is expected
+
+
+def test_recommendation_forces_catalog_and_minimum_candidate_count():
+    args = json.dumps({"query": "book recommendation", "corpus": "policy", "top_k": 1})
+    _client, engine, loop = make_loop(
+        content="Recommended papers. ", tool_sequence=[args], results=[DOC1, DOC2]
+    )
+
+    list(loop.stream_agentic_events("recommend me a book"))
+
+    assert engine.calls[0]["corpus"] == "catalog"
+    assert engine.calls[0]["limit"] == 5
+
+
+def test_empty_recommendation_answer_fails_closed_without_citations():
+    args = json.dumps({"query": "rem veniam exercitationem", "top_k": 1})
+    _client, _engine, loop = make_loop(content="", tool_sequence=[args], results=[DOC1])
+
+    events = list(loop.stream_agentic_events("recommend me a book"))
+
+    assert events[-2] == "data: I don't have enough information\n\n"
+    assert events[-1] == "data: [DONE]\n\n"
+    assert not any(event.startswith("event: citations") for event in events)
 
 
 def test_tool_call_triggers_search_then_answer():
