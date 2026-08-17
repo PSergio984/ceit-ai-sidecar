@@ -23,7 +23,7 @@ class DeterministicEmbedder:
     """Hash-based embedder: same text -> same vector; different texts differ.
 
     Produces 8-dim normalized vectors — enough to exercise cosine math
-    without loading the SentenceTransformer model.
+    without loading the real embedding model.
     """
 
     def encode(self, texts, normalize_embeddings=True):

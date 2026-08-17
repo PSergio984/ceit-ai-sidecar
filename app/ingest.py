@@ -70,28 +70,40 @@ def load_documents(corpus_path: Path) -> list[dict]:
     return docs
 
 
+def _fastembed_name(model_name: str) -> str:
+    """Map short config names (e.g. `all-MiniLM-L6-v2`) to fastembed's
+    supported identifiers (`sentence-transformers/all-MiniLM-L6-v2`)."""
+    return model_name if "/" in model_name else f"sentence-transformers/{model_name}"
+
+
 def get_embedder(model_name: str):
-    """Lazy singleton SentenceTransformer embedder (thread-safe)."""
+    """Lazy singleton ONNX embedder (thread-safe)."""
     with _model_lock:
         if model_name not in _model_cache:
-            from sentence_transformers import SentenceTransformer
+            from fastembed import TextEmbedding
 
-            _model_cache[model_name] = SentenceTransformer(model_name)
+            _model_cache[model_name] = TextEmbedding(model_name=_fastembed_name(model_name))
         return _model_cache[model_name]
+
+
+def _normalize(matrix: np.ndarray) -> np.ndarray:
+    norms = np.linalg.norm(matrix, axis=1, keepdims=True)
+    norms[norms == 0] = 1.0
+    return matrix / norms
 
 
 def embed_documents(docs: list[dict], model_name: str) -> np.ndarray:
     """One normalized vector per document (whole-document, no chunking)."""
     embedder = get_embedder(model_name)
-    vectors = embedder.encode([d["text"] for d in docs], normalize_embeddings=True)
-    return np.asarray(vectors, dtype=np.float32)
+    vectors = np.asarray(list(embedder.embed([d["text"] for d in docs])), dtype=np.float32)
+    return _normalize(vectors)
 
 
 def embed_query(query: str, model_name: str) -> np.ndarray:
     """Normalized query embedding for cosine similarity."""
     embedder = get_embedder(model_name)
-    vector = embedder.encode([query], normalize_embeddings=True)
-    return np.asarray(vector, dtype=np.float32)[0]
+    vector = np.asarray(list(embedder.embed([query])), dtype=np.float32)
+    return _normalize(vector)[0]
 
 
 def write_cache(

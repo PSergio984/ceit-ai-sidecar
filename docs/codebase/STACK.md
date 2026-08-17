@@ -17,8 +17,7 @@
 |------------|---------|----------------|----------|
 | fastapi | >=0.141,<0.142 | HTTP API (search, chat, health, metrics) | `pyproject.toml` |
 | uvicorn[standard] | >=0.52,<0.53 | ASGI server | `pyproject.toml` |
-| sentence-transformers | >=5.7,<5.8 | English embedding model `all-MiniLM-L6-v2` | `pyproject.toml`, `app/ingest.py` |
-| torch | CPU index (`pytorch-cpu`) | Embedding backend | `pyproject.toml` `[tool.uv.index]` / `[tool.uv.sources]` |
+| fastembed | >=0.8 | ONNX embedding backend — `all-MiniLM-L6-v2` (384-dim, low memory, no PyTorch) | `pyproject.toml`, `app/ingest.py` |
 | sqlitesearch | >=0.3,<0.4 | SQLite FTS5 text index — **BM25 keyword retrieval** | `pyproject.toml`, `app/search.py` |
 | pydantic | >=2.13,<2.14 | Request/response models, strict tool-args validation (`extra="forbid"`) | `pyproject.toml`, `app/agent.py` |
 | pydantic-settings | >=2.15,<2.16 | `Settings` from env/.env | `pyproject.toml`, `app/config.py` |

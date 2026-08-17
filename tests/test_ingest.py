@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import json
 
+import numpy as np
 import pytest
 
 from app.ingest import load_documents
@@ -59,12 +60,12 @@ def test_missing_corpus_files_raises(tmp_path):
 def test_embedding_produces_one_vector_per_document():
     """Whole-document embedding: one vector per doc, no chunking (R6)."""
     try:
-        from sentence_transformers import SentenceTransformer
+        from fastembed import TextEmbedding
     except (ImportError, OSError):  # pragma: no cover - offline env
-        pytest.skip("sentence-transformers not installed")
+        pytest.skip("fastembed not installed")
 
     try:
-        model = SentenceTransformer("all-MiniLM-L6-v2")
+        model = TextEmbedding(model_name="sentence-transformers/all-MiniLM-L6-v2")
     except (OSError, ValueError):  # pragma: no cover - no model cache / no network
         pytest.skip("model not cached and network unavailable")
 
@@ -72,5 +73,5 @@ def test_embedding_produces_one_vector_per_document():
         "find a thesis about water pumps",
         "Design of a Smart Flood Monitoring System",
     ]
-    vectors = model.encode(texts, normalize_embeddings=True)
+    vectors = np.asarray(list(model.embed(texts)), dtype=np.float32)
     assert vectors.shape == (2, 384)

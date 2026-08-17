@@ -23,7 +23,7 @@ CONTRACT_VERSION = "v1"
 _lock = threading.Lock()
 
 # Test hook: tests inject a deterministic embedder here so API tests never
-# hit HuggingFace. None = use the real SentenceTransformer model.
+# hit HuggingFace. None = use the real ONNX embedder.
 _embed_override = None
 
 
@@ -46,7 +46,7 @@ def build_index(
     """Build a fresh index into versioned cache artifacts; return index_state.
 
     embed_fn is injectable for tests (fast deterministic embedder); the
-    default embeds with the real SentenceTransformer model.
+    default embeds with the real ONNX embedder.
     """
     docs = load_documents(corpus_path)
 
