@@ -1,9 +1,5 @@
 # CEIT AI Sidecar
 
-<p align="center">
-  <img src="images/architecture.png" width="500" alt="Hybrid search pipeline">
-</p>
-
 The hybrid search and RAG engine behind the [CEIT Library AI
 assistant](https://github.com/PSergio984/CEIT-Library). A FastAPI
 service that combines FTS5 BM25 keyword search with English semantic
@@ -74,7 +70,7 @@ installs):
 2. Corpus freshness is automatic: the Laravel `ai:push-corpus` command
    (scheduled hourly) uploads the export to `POST /corpus/upload`, which
    writes the files under `CORPUS_PATH` and rebuilds atomically.
-3. Point the Laravel app at `SIDECAR_URL=https://<your-sidecar>.fastapi.app`.
+3. Point the Laravel app at `SIDECAR_URL=https://ceit-ai-sidecar.fastapicloud.dev`.
 
 ## Endpoints
 
@@ -118,25 +114,24 @@ SonarCloud, and a secrets scan on every push.
 ## Evaluation
 
 Golden-set retrieval evaluation against
-[`data/golden_dataset.json`](data/golden_dataset.json) — 35 cases
-(catalog + policy, including negative "should return nothing" cases).
+[`data/golden_dataset.json`](data/golden_dataset.json) — 27 cases
+(catalog-only, including negative "should return nothing" cases).
 Current results (k=5):
 
-- Precision@5: **0.60**
-- Recall@5: **0.86**
-- F1@5: **0.63**
-- Top-1 rate: **83%**
+- Precision@5: **0.46**
+- Recall@5: **0.80**
+- F1@5: **0.45**
+- Top-1 rate: **95%**
 - Negative pass rate: **100%**
 
 By category:
 
 | Category | n | P@5 | Top-1 |
 |----------|---|-----|-------|
-| taglish (Taglish queries) | 6 | 0.80 | 0.50 |
-| paraphrase | 14 | 0.70 | 1.00 |
-| people (paper by author/adviser) | 4 | 0.50 | 1.00 |
-| catalog_code (exact CEIT codes) | 2 | 0.30 | 0.50 |
-| exact_title | 4 | 0.20 | 0.75 |
+| catalog_code (exact CEIT codes) | 4 | 0.20 | 1.00 |
+| exact_title | 8 | 0.20 | 1.00 |
+| paraphrase | 6 | 0.93 | 1.00 |
+| people (paper by author) | 4 | 0.55 | 0.75 |
 
 Run it yourself:
 
@@ -259,7 +254,7 @@ app/
   config.py     # pydantic-settings (env / .env)
   health.py     # /health assembly
 data/
-  golden_dataset.json   # 35 evaluation cases
+  golden_dataset.json   # 27 evaluation cases
 tests/
   test_api.py           # endpoint behavior + auth
   test_rrf.py           # RRF fusion math
@@ -289,6 +284,6 @@ and are never committed to git.
 - Prompt context per document is capped at 600 characters.
 - No rate limits or cost guards on the LLM path (Phase 14).
 - No chunking; long documents lose detail in the final prompt.
-- Golden set is 35 cases — metrics improve as Phase 13 grows it.
+- Golden set is 27 cases — metrics improve as Phase 13 grows it.
 - Single-instance, in-process state; no horizontal scaling.
 - Provider failures surface as a user-safe error event, not a retry.

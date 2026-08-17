@@ -19,7 +19,7 @@
 | Whole-document embeddings, no chunking (R6) | Phase 8 decision for simplicity + scale | `app/ingest.py` `embed_documents` | Long papers lose detail; `MAX_DOC_CHARS=600` prompt truncation compounds it | Evaluate chunking when corpus grows (ADR 0013 paper shape is the trigger point) |
 | BM25 retrieve-all (`num_results=1_000_000`) | Deliberate, documented ("no magic limit*500 pool") | `app/search.py` `_bm25_ranks` | O(corpus) per query; degrades at scale | Reintroduce a bounded, tuned candidate pool |
 | Hand-rolled `/metrics` counters | Prometheus is Phase 14 | `app/main.py` | No standard exporter, no dashboards | Phase 14: Prometheus format + Grafana |
-| Golden set is small (35 cases) | Bootstrap golden set from Phase 8 | `data/golden_dataset.json` | Metrics have wide confidence intervals | Phase 13: grow golden sets + LLM-as-judge + user feedback loop |
+| Golden set is small (27 cases) | Bootstrap golden set from Phase 8 | `data/golden_dataset.json` | Metrics have wide confidence intervals | Phase 13: grow golden sets + LLM-as-judge + user feedback loop |
 | `test_chat_stream_live.py` gated behind env | Needs real key + running server | `tests/test_chat_stream_live.py` | Live provider behavior untested in CI | Manual smoke per release (documented in phase research) |
 
 ### 3) Security Concerns
@@ -60,4 +60,4 @@
 - `.codebase-scan.txt` (CODE METRICS section)
 - `app/search.py`, `app/ingest.py`, `app/rebuild.py`, `app/main.py`, `app/agent.py`
 - `.env` (gitignored), `.env.example`, `.github/workflows/*.yml`
-- `data/golden_dataset.json` (35 cases)
+- `data/golden_dataset.json` (27 cases)

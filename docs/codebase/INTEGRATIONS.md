@@ -19,7 +19,7 @@
 |-------|------|--------------|----------|----------|
 | Versioned index cache (`cache/`) | Search index: `index-N.db` (FTS5), `docs-N.json`, `vectors-N.npy`, `state.json` | `HybridSearch._ensure_db` / `_version_artifacts` | Stale/corrupt artifacts if a swap fails; version GC keeps 2 | `app/search.py`, `app/rebuild.py` |
 | Corpus JSON (external, read-only) | Source of truth for index | `load_documents` | Schema drift vs exporter (`schema_version: 1` validation) | `app/ingest.py` |
-| `data/golden_dataset.json` | Eval gold set | `app/eval.py` | Small set (35 cases) limits metric confidence | `app/eval.py`, `data/golden_dataset.json` |
+| `data/golden_dataset.json` | Eval gold set | `app/eval.py` | Small set (27 cases) limits metric confidence | `app/eval.py`, `data/golden_dataset.json` |
 
 ### 3) Secrets and Credentials Handling
 

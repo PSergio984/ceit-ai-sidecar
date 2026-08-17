@@ -1,385 +1,283 @@
 {
-  "version": 1,
-  "catalog_snapshot": "2026-08-15T09:54:16+00:00",
+  "version": 2,
+  "catalog_snapshot": "2026-08-17T15:10:13+00:00",
   "test_cases": [
     {
-      "query": "Et aperiam iste facilis placeat.",
+      "query": "CEIT-EE-04-01",
+      "corpus": "catalog",
+      "relevant_docs": [
+        "paper-1"
+      ]
+    },
+    {
+      "query": "CEIT-IT-09-01",
+      "corpus": "catalog",
+      "relevant_docs": [
+        "paper-2"
+      ]
+    },
+    {
+      "query": "CEIT-IT-13-01",
+      "corpus": "catalog",
+      "relevant_docs": [
+        "paper-3"
+      ]
+    },
+    {
+      "query": "CEIT-EE-10-01",
       "corpus": "catalog",
       "relevant_docs": [
         "paper-4"
       ]
     },
     {
-      "query": "Fugit sit illum est.",
+      "query": "Development of an Online Student Document Request Portal",
+      "corpus": "catalog",
+      "relevant_docs": [
+        "paper-5"
+      ]
+    },
+    {
+      "query": "Solar-Powered Charging Station for Campus Devices",
+      "corpus": "catalog",
+      "relevant_docs": [
+        "paper-6"
+      ]
+    },
+    {
+      "query": "Machine Learning Model for Student Performance Prediction",
+      "corpus": "catalog",
+      "relevant_docs": [
+        "paper-7"
+      ]
+    },
+    {
+      "query": "Secure QR Code Attendance Monitoring System",
+      "corpus": "catalog",
+      "relevant_docs": [
+        "paper-8"
+      ]
+    },
+    {
+      "query": "Cloud-Based Inventory Administration for Engineering Laboratories",
       "corpus": "catalog",
       "relevant_docs": [
         "paper-9"
       ]
     },
     {
-      "query": "CEIT-IT-23-01",
+      "query": "Flood Monitoring and Early Warning Platform Using IoT Sensors",
       "corpus": "catalog",
-      "relevant_docs": [
-        "paper-4"
-      ]
-    },
-    {
-      "query": "CEIT-IT",
-      "corpus": "catalog",
-      "relevant_docs": [
-        "paper-4",
-        "paper-20",
-        "paper-23",
-        "paper-24",
-        "paper-26",
-        "paper-27",
-        "paper-28"
-      ]
-    },
-    {
-      "query": "information technology research paper",
-      "corpus": "catalog",
-      "relevant_docs": [
-        "paper-4",
-        "paper-26",
-        "paper-27",
-        "paper-28"
-      ]
-    },
-    {
-      "query": "electrical engineering feasibility study",
-      "corpus": "catalog",
-      "relevant_docs": [
-        "paper-14",
-        "paper-21",
-        "paper-30"
-      ]
-    },
-    {
-      "query": "civil engineering thesis",
-      "corpus": "catalog",
-      "relevant_docs": [
-        "paper-9",
-        "paper-25"
-      ]
-    },
-    {
-      "query": "papers by Kamren Adams",
-      "corpus": "catalog",
-      "relevant_docs": [
-        "paper-3",
-        "paper-19"
-      ]
-    },
-    {
-      "query": "theses advised by Engr. Chadd Legros",
-      "corpus": "catalog",
-      "relevant_docs": [
-        "paper-1",
-        "paper-12",
-        "paper-24"
-      ]
-    },
-    {
-      "query": "Bill Beier thesis",
-      "corpus": "catalog",
-      "relevant_docs": [
-        "paper-1",
-        "paper-19"
-      ]
-    },
-    {
-      "query": "papers under Dr. Felix Streich",
-      "corpus": "catalog",
-      "relevant_docs": [
-        "paper-1",
-        "paper-4",
-        "paper-8",
-        "paper-13",
-        "paper-14",
-        "paper-29",
-        "paper-30"
-      ]
-    },
-    {
-      "query": "may thesis ba kayo tungkol sa electrical?",
-      "corpus": "catalog",
-      "relevant_docs": [
-        "paper-2",
-        "paper-5",
-        "paper-6",
-        "paper-7",
-        "paper-10",
-        "paper-11",
-        "paper-12",
-        "paper-14",
-        "paper-15",
-        "paper-19",
-        "paper-21",
-        "paper-30"
-      ]
-    },
-    {
-      "query": "hanap ko yung project sa civil engineering",
-      "corpus": "catalog",
-      "relevant_docs": [
-        "paper-1",
-        "paper-3",
-        "paper-8",
-        "paper-9",
-        "paper-13",
-        "paper-16",
-        "paper-17",
-        "paper-18",
-        "paper-22",
-        "paper-25",
-        "paper-29"
-      ]
-    },
-    {
-      "query": "may papeles ba kayo sa information technology",
-      "corpus": "catalog",
-      "relevant_docs": [
-        "paper-4",
-        "paper-20",
-        "paper-23",
-        "paper-24",
-        "paper-26",
-        "paper-27",
-        "paper-28"
-      ]
-    },
-    {
-      "query": "research paper",
-      "corpus": "catalog",
-      "filters": {
-        "paper_type": "Research"
-      },
-      "relevant_docs": [
-        "paper-4",
-        "paper-19",
-        "paper-26",
-        "paper-27",
-        "paper-28"
-      ]
-    },
-    {
-      "query": "engineering",
-      "corpus": "catalog",
-      "filters": {
-        "department": "Information Technology"
-      },
-      "relevant_docs": [
-        "paper-4",
-        "paper-20",
-        "paper-23",
-        "paper-24",
-        "paper-26",
-        "paper-27",
-        "paper-28"
-      ]
-    },
-    {
-      "query": "thesis",
-      "corpus": "catalog",
-      "filters": {
-        "department": "Electrical Engineering",
-        "publication_year": 2025
-      },
       "relevant_docs": [
         "paper-10"
       ]
     },
     {
-      "query": "feasi",
-      "corpus": "catalog",
-      "filters": {
-        "paper_type": "Feasib"
-      },
-      "relevant_docs": [
-        "paper-8",
-        "paper-14",
-        "paper-20",
-        "paper-21",
-        "paper-23",
-        "paper-30"
-      ]
-    },
-    {
-      "query": "What are the duties and responsibilities in the library?",
-      "corpus": "policy",
-      "relevant_docs": [
-        "policy-h2-r5",
-        "policy-h2-r6",
-        "policy-h2-r7"
-      ]
-    },
-    {
-      "query": "What are the study room rules and regulations?",
-      "corpus": "policy",
-      "relevant_docs": [
-        "policy-h3-r8",
-        "policy-h3-r9",
-        "policy-h3-r10"
-      ]
-    },
-    {
-      "query": "ano ba ang mga rules sa study room?",
-      "corpus": "policy",
-      "relevant_docs": [
-        "policy-h3-r8",
-        "policy-h3-r9",
-        "policy-h3-r10"
-      ]
-    },
-    {
-      "query": "Harry Potter novel",
-      "corpus": "catalog",
-      "relevant_docs": [],
-      "negative": true
-    },
-    {
-      "query": "recipes for adobo",
-      "corpus": null,
-      "relevant_docs": [],
-      "negative": true
-    },
-    {
-      "query": "how much is the tuition fee",
-      "corpus": "policy",
-      "relevant_docs": [],
-      "negative": true
-    },
-    {
-      "query": "CEIT",
+      "query": "Web-Based Thesis Catalog and Search Platform",
       "corpus": "catalog",
       "relevant_docs": [
-        "paper-1",
+        "paper-11"
+      ]
+    },
+    {
+      "query": "Smart Waste Segregation Platform Using Computer Vision",
+      "corpus": "catalog",
+      "relevant_docs": [
+        "paper-12"
+      ]
+    },
+    {
+      "query": "papers from the Information Technology department",
+      "corpus": "catalog",
+      "relevant_docs": [
         "paper-2",
         "paper-3",
-        "paper-4",
-        "paper-5",
-        "paper-6",
-        "paper-7",
         "paper-8",
-        "paper-9",
         "paper-10",
         "paper-11",
-        "paper-12",
         "paper-13",
-        "paper-14",
-        "paper-15",
         "paper-16",
         "paper-17",
-        "paper-18",
-        "paper-19",
         "paper-20",
-        "paper-21",
         "paper-22",
         "paper-23",
+        "paper-26",
+        "paper-31",
+        "paper-34",
+        "paper-38",
+        "paper-39",
+        "paper-40",
+        "paper-41",
+        "paper-46",
+        "paper-47",
+        "paper-48"
+      ]
+    },
+    {
+      "query": "papers from the Civil Engineering department",
+      "corpus": "catalog",
+      "relevant_docs": [
+        "paper-5",
+        "paper-6",
+        "paper-9",
+        "paper-12",
+        "paper-15",
+        "paper-18",
+        "paper-21",
+        "paper-27",
+        "paper-30",
+        "paper-32",
+        "paper-33",
+        "paper-35",
+        "paper-42",
+        "paper-43"
+      ]
+    },
+    {
+      "query": "papers from the Electrical Engineering department",
+      "corpus": "catalog",
+      "relevant_docs": [
+        "paper-1",
+        "paper-4",
+        "paper-7",
+        "paper-14",
+        "paper-19",
         "paper-24",
         "paper-25",
-        "paper-26",
-        "paper-27",
         "paper-28",
         "paper-29",
-        "paper-30"
+        "paper-36",
+        "paper-37",
+        "paper-44",
+        "paper-45"
       ]
     },
     {
-      "query": "papers by Bill Beier",
+      "query": "papers by Lisandro Grimes",
       "corpus": "catalog",
-      "filters": {
-        "author": "Bill Beier"
-      },
       "relevant_docs": [
-        "paper-1",
-        "paper-19"
+        "paper-19",
+        "paper-27",
+        "paper-36",
+        "paper-41"
       ]
     },
     {
-      "query": "papers by Georgette Swift",
+      "query": "papers by Mrs. Cathrine Reichert",
       "corpus": "catalog",
-      "filters": {
-        "author": "Georgette Swift"
-      },
       "relevant_docs": [
-        "paper-9",
         "paper-20",
-        "paper-25"
+        "paper-30",
+        "paper-36",
+        "paper-47"
       ]
     },
     {
-      "query": "papers advised by Chadd Legros",
+      "query": "papers by Braden Fritsch",
       "corpus": "catalog",
-      "filters": {
-        "adviser": "Chadd Legros"
-      },
       "relevant_docs": [
-        "paper-1",
-        "paper-12",
-        "paper-24"
+        "paper-20",
+        "paper-25",
+        "paper-26"
       ]
     },
     {
-      "query": "thesis",
+      "query": "papers by Nels Reynolds",
       "corpus": "catalog",
-      "filters": {
-        "year_from": 2020,
-        "year_to": 2025
-      },
       "relevant_docs": [
-        "paper-7",
-        "paper-9"
+        "paper-20",
+        "paper-32",
+        "paper-36",
+        "paper-37"
       ]
     },
     {
-      "query": "report",
+      "query": "academic papers",
       "corpus": "catalog",
-      "filters": {
-        "year_from": 2009,
-        "year_to": 2010
-      },
       "relevant_docs": [
-        "paper-1",
+        "paper-2",
         "paper-3",
-        "paper-15"
-      ]
+        "paper-13",
+        "paper-20",
+        "paper-26",
+        "paper-30",
+        "paper-36",
+        "paper-39"
+      ],
+      "filters": {
+        "paper_type": "Thesis"
+      }
     },
     {
-      "query": "practicum",
+      "query": "recent engineering research",
       "corpus": "catalog",
       "relevant_docs": [
+        "paper-26",
+        "paper-30",
+        "paper-32",
+        "paper-36",
+        "paper-40"
+      ],
+      "filters": {
+        "year_from": 2020
+      }
+    },
+    {
+      "query": "information technology papers",
+      "corpus": "catalog",
+      "relevant_docs": [
+        "paper-2",
+        "paper-3",
+        "paper-8",
+        "paper-10",
+        "paper-11",
         "paper-13",
         "paper-16",
-        "paper-18",
-        "paper-24",
-        "paper-29"
-      ]
+        "paper-17",
+        "paper-20",
+        "paper-22",
+        "paper-23",
+        "paper-26",
+        "paper-31",
+        "paper-34",
+        "paper-38",
+        "paper-39",
+        "paper-40",
+        "paper-41",
+        "paper-46",
+        "paper-47",
+        "paper-48"
+      ],
+      "filters": {
+        "department": "Information Technology"
+      }
     },
     {
-      "query": "capstone project",
-      "corpus": "catalog",
-      "relevant_docs": [
-        "paper-10",
-        "paper-17"
-      ]
-    },
-    {
-      "query": "practicum in information technology",
-      "corpus": "catalog",
-      "relevant_docs": [
-        "paper-24"
-      ]
-    },
-    {
-      "query": "interstellar space travel propulsion systems",
+      "query": "recipes for a birthday cake",
       "corpus": "catalog",
       "relevant_docs": [],
       "negative": true
     },
     {
-      "query": "medieval european castle architecture",
+      "query": "how to fix a car engine",
+      "corpus": "catalog",
+      "relevant_docs": [],
+      "negative": true
+    },
+    {
+      "query": "quantum computing theory textbooks",
+      "corpus": "catalog",
+      "relevant_docs": [],
+      "negative": true
+    },
+    {
+      "query": "best travel destinations in japan",
+      "corpus": "catalog",
+      "relevant_docs": [],
+      "negative": true
+    },
+    {
+      "query": "mathematical proofs about prime numbers",
       "corpus": "catalog",
       "relevant_docs": [],
       "negative": true

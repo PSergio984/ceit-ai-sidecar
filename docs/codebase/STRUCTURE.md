@@ -17,7 +17,7 @@
 | `app/health.py` | `/health` assembly (index coverage + staleness) | `app/health.py` |
 | `app/config.py` | pydantic-settings `Settings` | `app/config.py` |
 | `tests/` | pytest suite (9 files incl. `conftest.py`; `test_chat_stream_live.py` env-gated) | `tests/` |
-| `data/golden_dataset.json` | Golden eval set: 35 cases (30 catalog, 4 policy, 1 all; 5 negatives) | `data/` |
+| `data/golden_dataset.json` | Golden eval set: 27 cases (catalog-only; 5 negatives) | `data/` |
 | `cache/` | Runtime index artifacts (versioned; gitignored) | `cache/` |
 | `.github/workflows/` | `python-app.yml` (lint/test/smoke), `sonar-secrets.yml`, `sonarcloud.yml` | `.github/workflows/` |
 
