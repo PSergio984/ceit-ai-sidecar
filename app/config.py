@@ -27,6 +27,13 @@ class Settings(BaseSettings):
     # never holds every text and vector in memory at once — small cloud
     # instances OOM'd rebuilding the full production corpus in one shot.
     embed_batch_size: int = 64
+    # Build the index in a background thread on startup instead of inside a
+    # blocking HTTP request. Cloud platforms (FastAPI Cloud) restart
+    # instances whose request handlers run too long, so a cold rebuild of a
+    # large corpus inside /index/rebuild gets killed mid-build. With this
+    # enabled, the instance boots healthy and /health flips to ok when the
+    # background build completes.
+    rebuild_on_startup: bool = False
     # Durable thumbs-up/down feedback log (JSONL).
     feedback_path: Path = Path("var/feedback.jsonl")
 

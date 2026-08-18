@@ -556,6 +556,34 @@ else:
         _state.get("source_generated_at"),
     )
 
+# REBUILD_ON_STARTUP: run the full index build in a background thread so a
+# cold start on a small cloud instance doesn't block/outlive an HTTP request
+# (FastAPI Cloud restarts instances whose request handlers run too long).
+# /health stays degraded until the build completes, then flips to ok.
+if settings.rebuild_on_startup:
+    def _background_rebuild() -> None:
+        try:
+            state = rebuild(settings)
+        except Exception as exc:  # noqa: BLE001 - never let the thread die silently
+            logger.error("startup background rebuild FAILED: %r", exc)
+            return
+        with _metrics_lock:
+            _metrics["rebuilds_total"] += 1
+            _metrics["last_rebuild_at"] = state.get("built_at")
+            _metrics["index_documents"] = state.get("documents")
+        logger.info(
+            "startup background rebuild done: %s documents by_corpus=%s source_generated_at=%s",
+            state.get("documents"),
+            state.get("by_corpus"),
+            state.get("source_generated_at"),
+        )
+
+    import threading as _threading
+
+    _bg = _threading.Thread(target=_background_rebuild, name="startup-rebuild", daemon=True)
+    _bg.start()
+    logger.info("startup: background index rebuild started (REBUILD_ON_STARTUP=true)")
+
 
 if __name__ == "__main__":
     import uvicorn
