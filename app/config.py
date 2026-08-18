@@ -23,6 +23,10 @@ class Settings(BaseSettings):
     # match" (off-corpus queries return nothing instead of nearest-neighbour
     # noise). Tunable; see the golden-set cosine separation in README.
     min_semantic_similarity: float = 0.25
+    # Embed the corpus in bounded batches so a large corpus (1000+ docs)
+    # never holds every text and vector in memory at once — small cloud
+    # instances OOM'd rebuilding the full production corpus in one shot.
+    embed_batch_size: int = 64
     # Durable thumbs-up/down feedback log (JSONL).
     feedback_path: Path = Path("var/feedback.jsonl")
 

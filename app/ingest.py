@@ -93,10 +93,24 @@ def _normalize(matrix: np.ndarray) -> np.ndarray:
 
 
 def embed_documents(docs: list[dict], model_name: str) -> np.ndarray:
-    """One normalized vector per document (whole-document, no chunking)."""
+    """One normalized vector per document (whole-document, no chunking).
+
+    Embeds in bounded batches (EMBED_BATCH_SIZE) so a large corpus never
+    holds every text and intermediate vector in memory at once — the
+    production 1338-doc corpus OOM'd small cloud instances in one shot.
+    """
+    from .config import settings
+
+    batch_size = settings.embed_batch_size
     embedder = get_embedder(model_name)
-    vectors = np.asarray(list(embedder.embed([d["text"] for d in docs])), dtype=np.float32)
-    return _normalize(vectors)
+    chunks: list[np.ndarray] = []
+    for start in range(0, len(docs), batch_size):
+        batch_docs = docs[start : start + batch_size]
+        vectors = np.asarray(
+            list(embedder.embed([d["text"] for d in batch_docs])), dtype=np.float32
+        )
+        chunks.append(_normalize(vectors))
+    return np.concatenate(chunks, axis=0) if chunks else np.empty((0, 0), dtype=np.float32)
 
 
 def embed_query(query: str, model_name: str) -> np.ndarray:
