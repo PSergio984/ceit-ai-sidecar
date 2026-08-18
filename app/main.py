@@ -559,8 +559,10 @@ else:
 # REBUILD_ON_STARTUP: run the full index build in a background thread so a
 # cold start on a small cloud instance doesn't block/outlive an HTTP request
 # (FastAPI Cloud restarts instances whose request handlers run too long).
-# /health stays degraded until the build completes, then flips to ok.
-if settings.rebuild_on_startup:
+# /health stays degraded until the build completes, then flips to ok. This is
+# a no-op when a valid index already exists — a prebuilt index committed
+# under `index/` is loaded as-is and never re-embedded.
+if settings.rebuild_on_startup and _state is None:
     def _background_rebuild() -> None:
         try:
             state = rebuild(settings)
@@ -583,6 +585,8 @@ if settings.rebuild_on_startup:
     _bg = _threading.Thread(target=_background_rebuild, name="startup-rebuild", daemon=True)
     _bg.start()
     logger.info("startup: background index rebuild started (REBUILD_ON_STARTUP=true)")
+elif settings.rebuild_on_startup and _state is not None:
+    logger.info("startup: valid index already present — skipping background rebuild")
 
 
 if __name__ == "__main__":

@@ -6,11 +6,11 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 
 class Settings(BaseSettings):
     sidecar_token: str
-    corpus_path: Path
+    corpus_path: Path = Path("corpus")
     model_name: str = "all-MiniLM-L6-v2"
     host: str = "127.0.0.1"
     port: int = 8310
-    cache_dir: str = "cache"
+    cache_dir: str = "index"
     llm_base_url: str = "https://openrouter.ai/api/v1"
     llm_api_key: str = ""
     llm_model: str = "meta-llama/llama-3.3-70b-instruct"
@@ -32,7 +32,8 @@ class Settings(BaseSettings):
     # instances whose request handlers run too long, so a cold rebuild of a
     # large corpus inside /index/rebuild gets killed mid-build. With this
     # enabled, the instance boots healthy and /health flips to ok when the
-    # background build completes.
+    # background build completes. No-op when a valid index already exists
+    # (e.g. a prebuilt index committed under `index/`).
     rebuild_on_startup: bool = False
     # Durable thumbs-up/down feedback log (JSONL).
     feedback_path: Path = Path("var/feedback.jsonl")
