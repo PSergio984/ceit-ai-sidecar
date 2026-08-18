@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import logging
 import secrets
 import threading
 import time
@@ -17,10 +18,18 @@ from .agent import AgenticLoop
 from .config import settings
 from .health import assemble_health
 from .rag import RagService
-from .rebuild import rebuild
+from .rebuild import load_state, rebuild
 from .rerank import Reranker
 from .rewrite import QueryRewriter
 from .search import RRF_K, HybridSearch
+
+logger = logging.getLogger("ceit.sidecar")
+logger.setLevel(logging.INFO)
+if not logger.handlers:
+    _log_handler = logging.StreamHandler()
+    _log_handler.setFormatter(logging.Formatter("%(asctime)s %(levelname)s %(name)s: %(message)s"))
+    logger.addHandler(_log_handler)
+logger.propagate = False
 
 app = FastAPI(title="ceit-ai-sidecar", version="0.1.0")
 
@@ -89,6 +98,7 @@ def _count_chat_search() -> None:
     """Record one executed retrieval inside /chat/stream (tool-call hook, D-11)."""
     with _metrics_lock:
         _metrics["chat_searches_total"] += 1
+    logger.info("chat retrieval executed (tool call)")
 
 
 def _get_agent() -> AgenticLoop:
@@ -146,6 +156,28 @@ async def require_token(request: Request, call_next):
     return await call_next(request)
 
 
+@app.middleware("http")
+async def log_requests(request: Request, call_next):
+    """Runtime request log: method, path, status, duration — every request."""
+    started = time.perf_counter()
+    response = await call_next(request)
+    took_ms = int((time.perf_counter() - started) * 1000)
+    logger.info(
+        "req %s %s -> %s (%dms)",
+        request.method,
+        request.url.path,
+        response.status_code,
+        took_ms,
+    )
+    return response
+
+
+def _index_doc_count() -> int:
+    """Total documents in the current index state (0 = no index built)."""
+    state = load_state(Path(settings.cache_dir))
+    return int((state or {}).get("documents", 0))
+
+
 @app.get("/health")
 def health():
     return assemble_health(_get_cache_dir())
@@ -194,6 +226,19 @@ def search(payload: dict):
     search_query = _get_rewriter().rewrite(query) if settings.query_rewrite else query
     include_text = settings.rerank_mode == "llm"
 
+    index_docs = _index_doc_count()
+    logger.info(
+        "search query=%r rewritten=%r corpus=%s filters=%s k=%d limit=%d index_docs=%d rerank=%s",
+        query,
+        search_query if search_query != query else "(same)",
+        corpus or "both",
+        filters or None,
+        k,
+        limit,
+        index_docs,
+        settings.rerank_mode,
+    )
+
     results = _get_engine().rrf_search(
         search_query,
         k=k,
@@ -205,6 +250,15 @@ def search(payload: dict):
     if settings.rerank_mode != "none":
         results = _get_reranker().rerank(search_query, results)
     took_ms = int((time.perf_counter() - started) * 1000)
+
+    logger.info(
+        "search done query=%r results=%d/%d took_ms=%d %s",
+        query,
+        len(results),
+        index_docs,
+        took_ms,
+        "(EMPTY — no index built? run /index/rebuild or /corpus/upload)" if index_docs == 0 else "",
+    )
 
     with _metrics_lock:
         _metrics["searches_total"] += 1
@@ -253,6 +307,15 @@ def chat_stream(payload: dict):
         query, mode=mode, corpus=corpus, default_top_k=top_k
     )
 
+    logger.info(
+        "chat query=%r mode=%s corpus=%s top_k=%d index_docs=%d",
+        query,
+        mode,
+        corpus or "both",
+        top_k,
+        _index_doc_count(),
+    )
+
     return StreamingResponse(
         events,
         media_type="text/event-stream",
@@ -266,6 +329,7 @@ def index_rebuild():
     try:
         state = rebuild(settings)
     except Exception as exc:  # noqa: BLE001 - envelope for client
+        logger.error("index rebuild FAILED: %r", exc)
         return JSONResponse(
             status_code=500,
             content={"error": {"code": "rebuild_failed", "message": str(exc)}},
@@ -276,6 +340,14 @@ def index_rebuild():
         _metrics["rebuilds_total"] += 1
         _metrics["last_rebuild_at"] = state.get("built_at")
         _metrics["index_documents"] = state.get("documents")
+
+    logger.info(
+        "index rebuilt: %s documents by_corpus=%s took_ms=%d source_generated_at=%s",
+        state.get("documents"),
+        state.get("by_corpus"),
+        took_ms,
+        state.get("source_generated_at"),
+    )
 
     return {
         "status": "rebuilt",
@@ -326,6 +398,7 @@ def corpus_upload(
         except Exception as exc:  # noqa: BLE001 - invalid corpus, fail closed
             for filename in uploaded:
                 (corpus_dir / filename).unlink(missing_ok=True)
+            logger.error("corpus upload FAILED (files removed): %r", exc)
             return JSONResponse(
                 status_code=500,
                 content={"error": {"code": "upload_failed", "message": str(exc)}},
@@ -336,6 +409,15 @@ def corpus_upload(
             _metrics["rebuilds_total"] += 1
             _metrics["last_rebuild_at"] = state.get("built_at")
             _metrics["index_documents"] = state.get("documents")
+
+        logger.info(
+            "corpus uploaded: files=%s documents=%s by_corpus=%s took_ms=%d source_generated_at=%s",
+            uploaded,
+            state.get("documents"),
+            state.get("by_corpus"),
+            took_ms,
+            state.get("source_generated_at"),
+        )
 
         return {
             "status": "uploaded_and_rebuilt",
@@ -453,6 +535,26 @@ def feedback(payload: dict):
             _metrics["feedback_down"] += 1
 
     return {"status": "recorded", "rating": rating}
+
+
+# Startup diagnostics: log the current index state so a fresh deploy with an
+# empty cache is immediately visible in the runtime logs (searches would
+# return empty results until a rebuild completes).
+_state = load_state(Path(settings.cache_dir))
+if _state is None:
+    logger.warning(
+        "startup: NO INDEX BUILT — /search and /chat/stream return empty until "
+        "a rebuild completes (/index/rebuild or /corpus/upload)"
+    )
+else:
+    logger.info(
+        "startup: index built at %s — %s documents by_corpus=%s model=%s source_generated_at=%s",
+        _state.get("built_at"),
+        _state.get("documents"),
+        _state.get("by_corpus"),
+        _state.get("model_name"),
+        _state.get("source_generated_at"),
+    )
 
 
 if __name__ == "__main__":
