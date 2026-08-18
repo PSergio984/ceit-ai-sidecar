@@ -12,7 +12,7 @@ import re
 from pathlib import Path
 
 import numpy as np
-from sqlitesearch import TextSearchIndex
+from sqlitesearch import TextSearchIndex, Tokenizer
 
 from .config import settings
 from .ingest import embed_query
@@ -69,6 +69,13 @@ class HybridSearch:
                 keyword_fields=["corpus", "department", "paper_type"],
                 id_field="doc_id",
                 db_path=str(db_path),
+                # Query tokenizer mirrors the FTS5 unicode61 index (split on
+                # non-alphanumerics, KEEP digits — years, catalog codes) but
+                # drops English stop words on the query side only: function
+                # words match real titles (e.g. "for", "a") and make
+                # out-of-domain queries false-positive. sqlitesearch's default
+                # ALSO splits on `\d`, which silently drops year/code terms.
+                tokenizer=Tokenizer(pattern=r"[\s\W]+", stop_words="english"),
             )
             self._db_key = version
         return self._db
@@ -79,9 +86,18 @@ class HybridSearch:
             self._db = None
 
     def _bm25_ranks(self, db: TextSearchIndex, query: str, corpus: str | None) -> dict[str, int]:
+        # A query with no alphanumeric tokens (e.g. an LLM rewrite degraded to
+        # punctuation) cannot form an FTS5 MATCH — FTS5 raises a syntax error.
+        # Treat it as "no lexical match" so search degrades to the semantic
+        # channel instead of 500ing.
+        if not re.search(r"[A-Za-z0-9]", query):
+            return {}
         filter_dict = {"corpus": corpus} if corpus else None
         # Retrieve-all at corpus scale (no magic limit*500 pool, documented).
-        results = db.search(query, filter_dict=filter_dict, num_results=1_000_000)
+        try:
+            results = db.search(query, filter_dict=filter_dict, num_results=1_000_000)
+        except Exception:  # noqa: BLE001 — any FTS5 edge falls back cleanly
+            return {}
         ranks: dict[str, int] = {}
         for rank, doc in enumerate(results, start=1):
             doc_id = doc.get("id") or doc.get("doc_id") or doc.get("rowid")

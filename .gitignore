@@ -14,3 +14,7 @@ skills-lock.json
 
 # graphify knowledge graph output
 /graphify-out/
+
+# SQLite WAL sidecar files from local runs (index is committed, journals are not)
+index/*.db-shm
+index/*.db-wal

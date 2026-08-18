@@ -21,8 +21,12 @@ class Settings(BaseSettings):
     rerank_mode: Literal["blend", "llm", "none"] = "blend"
     # Below this top-cosine, the semantic channel is treated as "no relevant
     # match" (off-corpus queries return nothing instead of nearest-neighbour
-    # noise). Tunable; see the golden-set cosine separation in README.
-    min_semantic_similarity: float = 0.25
+    # noise). Tuned on the production corpus: real English queries score
+    # ~0.9, dept/year phrasings ~0.55-0.70, Faker-Latin and name queries
+    # ~0.35-0.62 (nearest neighbour is often a POLICY doc — pure noise),
+    # out-of-domain negatives ~0.12-0.22. 0.5 keeps the channel alive only
+    # where embeddings actually discriminate.
+    min_semantic_similarity: float = 0.5
     # Embed the corpus in bounded batches so a large corpus (1000+ docs)
     # never holds every text and vector in memory at once — small cloud
     # instances OOM'd rebuilding the full production corpus in one shot.

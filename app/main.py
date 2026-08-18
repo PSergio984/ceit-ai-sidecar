@@ -563,6 +563,7 @@ else:
 # a no-op when a valid index already exists — a prebuilt index committed
 # under `index/` is loaded as-is and never re-embedded.
 if settings.rebuild_on_startup and _state is None:
+
     def _background_rebuild() -> None:
         try:
             state = rebuild(settings)
