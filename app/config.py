@@ -1,4 +1,5 @@
 from pathlib import Path
+from typing import Literal
 
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
@@ -17,7 +18,11 @@ class Settings(BaseSettings):
     # Query rewriting (LLM) and re-ranking (blend|llm) in the /search flow.
     # Both degrade safely: no API key / provider failure -> original behavior.
     query_rewrite: bool = True
-    rerank_mode: str = "blend"
+    rerank_mode: Literal["blend", "llm", "none"] = "blend"
+    # Below this top-cosine, the semantic channel is treated as "no relevant
+    # match" (off-corpus queries return nothing instead of nearest-neighbour
+    # noise). Tunable; see the golden-set cosine separation in README.
+    min_semantic_similarity: float = 0.25
     # Durable thumbs-up/down feedback log (JSONL).
     feedback_path: Path = Path("var/feedback.jsonl")
 

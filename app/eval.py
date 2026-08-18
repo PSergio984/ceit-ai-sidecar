@@ -55,7 +55,10 @@ def evaluate_case(
     top1_id = retrieved[0]["id"] if retrieved else None
 
     if case.get("negative"):
-        passed = len(relevant & retrieved_ids) == 0
+        # A negative case ("nothing relevant exists") passes only when retrieval
+        # returns NO document at all. Checking overlap with the (empty) relevant
+        # set would be vacuous — it could never fail.
+        passed = not retrieved_ids
         return {
             "query": case["query"],
             "negative": True,
@@ -142,7 +145,8 @@ def compare_methods(results_by_method: dict[str, list[dict]]) -> dict:
     every approach in the report. The canonical trio (METHODS) is reported
     first, then any variant methods (e.g. "hybrid+rerank") in insertion order.
     """
-    order = list(METHODS) + [m for m in results_by_method if m not in METHODS]
+    order = [m for m in METHODS if m in results_by_method]
+    order += [m for m in results_by_method if m not in METHODS]
     methods = {m: aggregate(results_by_method.get(m, [])) for m in order}
 
     def _key(m: str) -> tuple:

@@ -14,6 +14,7 @@ from pathlib import Path
 import numpy as np
 from sqlitesearch import TextSearchIndex
 
+from .config import settings
 from .ingest import embed_query
 
 CODE_PIN_RE = re.compile(r"^CEIT-[A-Z]{2}-\d{2}(-\d+)?$", re.IGNORECASE)
@@ -99,12 +100,10 @@ class HybridSearch:
         return {doc_id: float(score) for doc_id, score in zip(ids, scores)}
 
     @staticmethod
-    def _semantic_rank(semantic_scores: dict[str, float], did: str) -> int | None:
-        return (
-            sum(1 for other in semantic_scores if semantic_scores[other] > semantic_scores[did]) + 1
-            if did in semantic_scores
-            else None
-        )
+    def _semantic_rank_map(semantic_scores: dict[str, float]) -> dict[str, int]:
+        """1-based rank per doc id by descending cosine (precomputed once)."""
+        order = sorted(semantic_scores, key=semantic_scores.get, reverse=True)
+        return {did: i + 1 for i, did in enumerate(order)}
 
     def rrf_search(
         self,
@@ -134,8 +133,24 @@ class HybridSearch:
 
         db = self._ensure_db(version)
 
-        bm25_ranks = self._bm25_ranks(db, query, corpus) if db else {}
-        semantic_scores = self._semantic_scores(docs_by_id, vectors, query)
+        # Only the selected backend is invoked (D-11): bm25-only never embeds,
+        # semantic-only never runs the BM25 query.
+        bm25_ranks = (
+            self._bm25_ranks(db, query, corpus) if method in ("bm25", "hybrid") and db else {}
+        )
+        semantic_scores = (
+            self._semantic_scores(docs_by_id, vectors, query)
+            if method in ("semantic", "hybrid")
+            else {}
+        )
+
+        # Relevance gate (MIN_SEMANTIC_SIMILARITY): when even the nearest
+        # document is below the cosine threshold, the query has no relevant
+        # semantic match — drop the channel so off-corpus queries return
+        # nothing instead of nearest-neighbour noise. Exact codes and titles
+        # keep working through BM25 + the code pin.
+        if semantic_scores and max(semantic_scores.values()) < settings.min_semantic_similarity:
+            semantic_scores = {}
 
         # Post-retrieval filtering on expanded candidate lists (D-03).
         def passes(doc: dict) -> bool:
@@ -163,6 +178,17 @@ class HybridSearch:
                     return False
             return not (corpus and doc.get("corpus") != corpus)
 
+        # Filters apply to each retrieval source BEFORE ranking (D-03): an
+        # excluded document must not consume a rank position or distort the RRF
+        # score of surviving documents. BM25 ranks are re-indexed to contiguous
+        # 1-based ranks; semantic ranks are precomputed once (O(n log n)).
+        surviving_bm25 = [
+            did for did in sorted(bm25_ranks, key=bm25_ranks.get) if passes(docs_by_id[did])
+        ]
+        bm25_ranks = {did: rank for rank, did in enumerate(surviving_bm25, start=1)}
+        semantic_scores = {did: s for did, s in semantic_scores.items() if passes(docs_by_id[did])}
+        sem_rank_map = self._semantic_rank_map(semantic_scores)
+
         if method == "bm25":
             candidate_ids = set(bm25_ranks)
             ranked = sorted(candidate_ids, key=lambda did: bm25_ranks[did])
@@ -179,12 +205,9 @@ class HybridSearch:
                 if did in bm25_ranks:
                     score += _rrf_score(k, bm25_ranks[did])
                 if did in semantic_scores:
-                    score += _rrf_score(k, self._semantic_rank(semantic_scores, did))
+                    score += _rrf_score(k, sem_rank_map[did])
                 scores[did] = score
             ranked = sorted(scores, key=lambda did: scores[did], reverse=True)
-
-        candidate_ids = {did for did in candidate_ids if passes(docs_by_id[did])}
-        ranked = [did for did in ranked if did in candidate_ids]
 
         if not ranked:
             return []
@@ -216,9 +239,7 @@ class HybridSearch:
                 "score": round(scores[did], 4),
                 "bm25_rank": bm25_ranks.get(did) if method in ("bm25", "hybrid") else None,
                 "semantic_rank": (
-                    self._semantic_rank(semantic_scores, did)
-                    if method in ("semantic", "hybrid")
-                    else None
+                    sem_rank_map.get(did) if method in ("semantic", "hybrid") else None
                 ),
                 "pinned": pinned_id == did,
                 "metadata": meta,

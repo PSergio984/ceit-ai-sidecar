@@ -39,12 +39,14 @@ services:
     container_name: ceit-prometheus
     # Render the scrape config from the template (injecting SIDECAR_TOKEN) at
     # start, then run Prometheus — Prometheus itself does not env-substitute
-    # inside the authorization block.
+    # inside the authorization block. The token is escaped for sed so values
+    # containing &, | or \ render unchanged.
     entrypoint:
       - /bin/sh
       - -ec
       - |
-        sed "s|__SIDECAR_TOKEN__|$$SIDECAR_TOKEN|g" /etc/prometheus/prometheus.yml.template > /etc/prometheus/prometheus.yml
+        escaped=$(printf '%s' "$$SIDECAR_TOKEN" | sed 's/[&|\\]/\\&/g')
+        sed "s|__SIDECAR_TOKEN__|$$escaped|g" /etc/prometheus/prometheus.yml.template > /etc/prometheus/prometheus.yml
         exec prometheus --config.file=/etc/prometheus/prometheus.yml --storage.tsdb.path=/prometheus
     environment:
       SIDECAR_TOKEN: ${SIDECAR_TOKEN:?set SIDECAR_TOKEN in .env}
@@ -52,7 +54,7 @@ services:
       - ./prometheus/prometheus.yml.template:/etc/prometheus/prometheus.yml.template:ro
       - prometheus_data:/prometheus
     ports:
-      - "9090:9090"
+      - "127.0.0.1:9090:9090"
     depends_on:
       - sidecar
 
@@ -60,16 +62,18 @@ services:
     image: grafana/grafana:11.1.0
     container_name: ceit-grafana
     environment:
+      # Local-only stack: bound to loopback, no anonymous access. The admin
+      # password is REQUIRED — set GRAFANA_ADMIN_PASSWORD in your .env.
       GF_SECURITY_ADMIN_USER: admin
-      GF_SECURITY_ADMIN_PASSWORD: admin
+      GF_SECURITY_ADMIN_PASSWORD: ${GRAFANA_ADMIN_PASSWORD:?set GRAFANA_ADMIN_PASSWORD in .env}
       GF_USERS_ALLOW_SIGN_UP: "false"
-      GF_AUTH_ANONYMOUS_ENABLED: "true"
+      GF_AUTH_ANONYMOUS_ENABLED: "false"
     volumes:
       - ./grafana/provisioning:/etc/grafana/provisioning:ro
       - ./grafana/dashboards:/var/lib/grafana/dashboards:ro
       - grafana_data:/var/lib/grafana
     ports:
-      - "3000:3000"
+      - "127.0.0.1:3000:3000"
     depends_on:
       - prometheus
 

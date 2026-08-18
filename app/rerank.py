@@ -54,7 +54,9 @@ def _blend_key(doc: dict) -> tuple:
 
 def _parse_reorder(payload: str) -> list[int]:
     """Extract the first run of integers from the LLM reorder payload."""
-    match = re.search(r"[\d,\s]+", payload or "")
+    # Must start with a digit so leading whitespace can never produce an
+    # empty-but-matching span.
+    match = re.search(r"\d+(?:\s*,\s*\d+)*", payload or "")
     if not match:
         return []
     return [int(n) for n in re.findall(r"\d+", match.group(0)) if int(n) >= 1]

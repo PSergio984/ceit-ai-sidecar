@@ -117,6 +117,53 @@ def test_search_keeps_code_pin_first_after_rerank(client):
     assert first["pinned"] is True
 
 
+def test_search_rejects_non_integer_limit(client):
+    app, _, _ = client
+    resp = app.post(
+        "/search",
+        json={"query": "water pump", "limit": "many"},
+        headers={"X-Sidecar-Token": "test-token"},
+    )
+    assert resp.status_code == 422
+    assert resp.json()["error"]["code"] == "invalid_request"
+
+
+def test_search_rejects_non_positive_limit_and_k(client):
+    app, _, _ = client
+    for bad in ({"limit": 0}, {"limit": -3}, {"k": 0}, {"k": -5}):
+        resp = app.post(
+            "/search",
+            json={"query": "water pump", **bad},
+            headers={"X-Sidecar-Token": "test-token"},
+        )
+        assert resp.status_code == 422
+        assert resp.json()["error"]["code"] == "invalid_request"
+
+
+def test_search_rejects_non_object_filters(client):
+    app, _, _ = client
+    for bad in ("x", ["a"], 5):
+        resp = app.post(
+            "/search",
+            json={"query": "water pump", "filters": bad},
+            headers={"X-Sidecar-Token": "test-token"},
+        )
+        assert resp.status_code == 422
+        assert resp.json()["error"]["code"] == "invalid_request"
+
+
+def test_search_rejects_non_numeric_year_filters(client):
+    app, _, _ = client
+    for bad in ({"publication_year": "abc"}, {"year_from": "later"}, {"year_to": []}):
+        resp = app.post(
+            "/search",
+            json={"query": "water pump", "filters": bad},
+            headers={"X-Sidecar-Token": "test-token"},
+        )
+        assert resp.status_code == 422
+        assert resp.json()["error"]["code"] == "invalid_request"
+
+
 def test_search_endpoint_accepts_author_adviser_filters(client):
     """author/adviser ride inside the permissive filters dict — 200 + filtered ids."""
     app, _, _ = client

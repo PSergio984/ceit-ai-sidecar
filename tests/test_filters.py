@@ -59,6 +59,7 @@ def test_filter_paper_type_and_year_range(tmp_path, corpus_path):
     )
     hs.close()
 
+    assert results, "expected Thesis results in 2020-2025"
     for r in results:
         assert r["metadata"]["paper_type"] == "Thesis"
         assert 2020 <= r["metadata"]["publication_year"] <= 2025
@@ -146,6 +147,23 @@ def test_filtered_doc_never_outranks_unfiltered_relevant_one(tmp_path, corpus_pa
     assert all(r["metadata"]["department"] == "Electrical Engineering" for r in results)
     # paper-2 (EE) is the only EE doc; it must be the sole result.
     assert [r["id"] for r in results] == ["paper-2"]
+
+
+def test_excluded_top_bm25_doc_does_not_consume_rank_one(tmp_path, corpus_path):
+    """D-03 filter-before-rank: an excluded document must not consume a rank
+    position — surviving BM25 docs are re-indexed to contiguous ranks."""
+    cache = _build_index(tmp_path, corpus_path)
+    hs = HybridSearch(cache, "test-model")
+    results = hs.rrf_search(
+        "system", k=60, limit=10, filters={"department": "Electrical Engineering"}
+    )
+    hs.close()
+
+    # "system" matches paper-2 (EE) and paper-4 (CE) in BM25; paper-4 is
+    # excluded by the filter, so paper-2 must hold the re-indexed rank 1.
+    assert results, "expected an EE doc for 'system'"
+    assert results[0]["id"] == "paper-2"
+    assert results[0]["bm25_rank"] == 1
 
 
 def test_corpus_filter_separates_policy(tmp_path, corpus_path):

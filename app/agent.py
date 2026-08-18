@@ -395,7 +395,10 @@ class AgenticLoop:
                         include_text=True,
                     )
                     if self._on_search is not None:
-                        self._on_search()
+                        try:
+                            self._on_search()
+                        except Exception:
+                            logger.exception("search metrics callback failed")
                     docs = merge_dedup(docs, results)
                     messages.append(
                         {

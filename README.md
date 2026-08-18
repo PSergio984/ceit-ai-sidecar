@@ -124,7 +124,11 @@ flowchart TD
    to the original query on any failure.
 2. **Keyword**: SQLite FTS5 via `sqlitesearch` — BM25 ranks over the full
    corpus (no candidate pooling).
-3. **Semantic**: whole-document embeddings, normalized, cosine via matmul.
+3. **Semantic**: whole-document embeddings, normalized, cosine via matmul,
+   gated by `MIN_SEMANTIC_SIMILARITY` (default 0.25) — when even the nearest
+   document falls below the cosine threshold, the query has no relevant
+   semantic match, so off-corpus queries return nothing instead of
+   nearest-neighbour noise.
 4. **Filters**: paper type, department, publication year, year range, author,
    adviser — applied to the merged candidate set **before** fusion.
 5. **Fusion**: RRF with k=60 (`1/(60 + rank)` per list).
@@ -181,11 +185,11 @@ cp .env.example .env   # set SIDECAR_TOKEN (Prometheus scrapes with the same tok
 docker compose up --build
 ```
 
-| Service    | URL                        | Credentials               |
-|------------|----------------------------|---------------------------|
-| Sidecar    | http://localhost:8310      | `X-Sidecar-Token` header  |
-| Prometheus | http://localhost:9090      | —                         |
-| Grafana    | http://localhost:3000      | `admin` / `admin`         |
+| Service    | URL                        | Credentials                     |
+|------------|----------------------------|---------------------------------|
+| Sidecar    | http://localhost:8310      | `X-Sidecar-Token` header        |
+| Prometheus | http://localhost:9090      | loopback-only                   |
+| Grafana    | http://localhost:3000      | `admin` + `GRAFANA_ADMIN_PASSWORD` (required, loopback-only) |
 
 Build the index once (the bundled corpus makes this standalone) so the
 dashboard's "Indexed documents" panel shows real coverage:
@@ -307,7 +311,11 @@ quality gates are **top-1 rate** (the right document surfaces first — critical
 for code/title lookups) and **negative-pass rate** (no irrelevant results);
 F1@k breaks ties. Under that rule **hybrid wins**: it nails top-1 on all four
 catalog-code cases via the code pin (BM25 misses two), and never fails a
-negative.
+negative. The negative-pass result is **meaningful**: a negative case passes
+only when retrieval returns *no document at all* — guaranteed by the
+`MIN_SEMANTIC_SIMILARITY` gate (off-corpus queries max out at ≈0.21 cosine vs
+≥0.26 for every non-code positive), so "nothing here" queries genuinely return
+nothing rather than nearest-neighbour noise.
 
 **Conversational code caveat:** the code pin anchors exact `CEIT-XX-NN` query
 strings only. Conversational code lookups ("what is CEIT-CE-04-02?") don't

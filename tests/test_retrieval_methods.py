@@ -15,24 +15,25 @@ from conftest import build_test_index, embed_from
 from app.search import HybridSearch
 
 
-def _build_index(tmp_path, corpus_path):
+def _build_index(tmp_path, corpus_path, monkeypatch):
     cache, docs = build_test_index(tmp_path, corpus_path)
 
     import app.search as search_mod
 
     # Pin the query embedding to doc 1 so semantic ranking is deterministic.
+    # monkeypatch restores the module-global embedder after each test.
     target = np.asarray(embed_from(docs)([docs[0]])[0])
 
     class FakeQuery:
         def encode(self, texts, normalize_embeddings=True):
             return np.stack([target] * len(texts))
 
-    search_mod.embed_query = lambda q, m: FakeQuery().encode([q])[0]
+    monkeypatch.setattr(search_mod, "embed_query", lambda q, m: FakeQuery().encode([q])[0])
     return cache
 
 
-def test_bm25_only_method_excludes_semantic_only_docs(tmp_path, corpus_path):
-    cache = _build_index(tmp_path, corpus_path)
+def test_bm25_only_method_excludes_semantic_only_docs(tmp_path, corpus_path, monkeypatch):
+    cache = _build_index(tmp_path, corpus_path, monkeypatch)
     hs = HybridSearch(cache, "test-model")
     # "water pump" matches paper-1 and paper-2 text exactly in FTS5.
     results = hs.rrf_search("water pump", k=60, limit=10, method="bm25")
@@ -45,8 +46,8 @@ def test_bm25_only_method_excludes_semantic_only_docs(tmp_path, corpus_path):
         assert r["semantic_rank"] is None
 
 
-def test_semantic_only_method_ranks_by_cosine(tmp_path, corpus_path):
-    cache = _build_index(tmp_path, corpus_path)
+def test_semantic_only_method_ranks_by_cosine(tmp_path, corpus_path, monkeypatch):
+    cache = _build_index(tmp_path, corpus_path, monkeypatch)
     hs = HybridSearch(cache, "test-model")
     results = hs.rrf_search("water pump", k=60, limit=10, method="semantic")
     hs.close()
@@ -58,8 +59,8 @@ def test_semantic_only_method_ranks_by_cosine(tmp_path, corpus_path):
         assert r["bm25_rank"] is None
 
 
-def test_hybrid_method_keeps_both_ranks_and_rrf_score(tmp_path, corpus_path):
-    cache = _build_index(tmp_path, corpus_path)
+def test_hybrid_method_keeps_both_ranks_and_rrf_score(tmp_path, corpus_path, monkeypatch):
+    cache = _build_index(tmp_path, corpus_path, monkeypatch)
     hs = HybridSearch(cache, "test-model")
     results = hs.rrf_search("water pump", k=60, limit=10, method="hybrid")
     hs.close()
@@ -73,8 +74,8 @@ def test_hybrid_method_keeps_both_ranks_and_rrf_score(tmp_path, corpus_path):
     assert top["score"] == round(2 / 61, 4)
 
 
-def test_code_pin_is_hybrid_only(tmp_path, corpus_path):
-    cache = _build_index(tmp_path, corpus_path)
+def test_code_pin_is_hybrid_only(tmp_path, corpus_path, monkeypatch):
+    cache = _build_index(tmp_path, corpus_path, monkeypatch)
     hs = HybridSearch(cache, "test-model")
 
     hybrid = hs.rrf_search("ceit-ee-25-01", k=60, limit=10, method="hybrid")
@@ -90,8 +91,8 @@ def test_code_pin_is_hybrid_only(tmp_path, corpus_path):
     assert semantic[0]["id"] != "paper-2"
 
 
-def test_unknown_method_falls_back_to_hybrid(tmp_path, corpus_path):
-    cache = _build_index(tmp_path, corpus_path)
+def test_unknown_method_falls_back_to_hybrid(tmp_path, corpus_path, monkeypatch):
+    cache = _build_index(tmp_path, corpus_path, monkeypatch)
     hs = HybridSearch(cache, "test-model")
     results = hs.rrf_search("water pump", k=60, limit=10, method="bogus")
     hs.close()

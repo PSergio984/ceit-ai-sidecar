@@ -218,6 +218,13 @@ def main() -> int:
     parser.add_argument("--json", action="store_true", help="emit only the JSON summary")
     args = parser.parse_args()
 
+    if args.limit < 0 or args.sample < 0:
+        print("--limit and --sample must be non-negative", file=sys.stderr)
+        return 2
+    if args.top_k < 1:
+        print("--top-k must be at least 1", file=sys.stderr)
+        return 2
+
     questions = load_questions(args.questions)
     if args.sample:
         questions = random.Random(args.seed).sample(questions, min(args.sample, len(questions)))

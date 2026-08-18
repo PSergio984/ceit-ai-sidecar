@@ -84,6 +84,24 @@ def test_empty_union_returns_empty(tmp_path, corpus_path):
     hs.close()
 
 
+def test_semantic_similarity_gate_drops_off_corpus_queries(tmp_path, corpus_path, monkeypatch):
+    """MIN_SEMANTIC_SIMILARITY: below the threshold the semantic channel is
+    dropped, so an off-corpus query with no BM25 match returns nothing."""
+    import app.search as search_mod
+
+    cache, _docs = _build_index(tmp_path, corpus_path, None)
+    hs = HybridSearch(cache, "test-model")
+
+    # Default gate (0.25): query pinned to doc1 has max cosine 1.0, so the
+    # semantic channel is kept and even "zzzz" returns doc1.
+    assert hs.rrf_search("zzzz", k=60, limit=10)
+
+    # A gate above any possible cosine drops the semantic channel -> empty.
+    monkeypatch.setattr(search_mod.settings, "min_semantic_similarity", 1.5)
+    assert hs.rrf_search("zzzz", k=60, limit=10) == []
+    hs.close()
+
+
 def test_monotonic_ordering_by_score(tmp_path, corpus_path):
     cache, _docs = _build_index(tmp_path, corpus_path, None)
     hs = HybridSearch(cache, "test-model")

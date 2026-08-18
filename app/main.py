@@ -161,18 +161,38 @@ def search(payload: dict):
         return query
     filters = payload.get("filters") or {}
     corpus = payload.get("corpus")
+
+    # Validate at the request boundary so malformed values fail with 422
+    # instead of crashing inside retrieval (review R-*).
+    if not isinstance(filters, dict):
+        return _invalid("'filters' must be an object")
+    for key in ("publication_year", "year_from", "year_to"):
+        value = filters.get(key)
+        if value is None:
+            continue
+        if isinstance(value, bool):
+            return _invalid(f"'filters.{key}' must be an integer")
+        try:
+            int(value)
+        except (TypeError, ValueError):
+            return _invalid(f"'filters.{key}' must be an integer")
+
     try:
         limit = int(payload.get("limit", 10))
         k = int(payload.get("k", RRF_K))
     except (TypeError, ValueError):
         return _invalid("'limit' and 'k' must be integers")
+    if limit < 1:
+        return _invalid("'limit' must be positive")
+    if k < 1:
+        return _invalid("'k' must be positive")
 
     # Best-practice extras (D6): query rewriting then re-ranking around the
     # hybrid retrieval. Both degrade safely when disabled / no LLM key.
+    started = time.perf_counter()
     search_query = _get_rewriter().rewrite(query) if settings.query_rewrite else query
     include_text = settings.rerank_mode == "llm"
 
-    started = time.perf_counter()
     results = _get_engine().rrf_search(
         search_query,
         k=k,
@@ -415,6 +435,11 @@ def feedback(payload: dict):
         "answer": payload.get("answer"),
         "result_ids": payload.get("result_ids") or [],
     }
+    # The feedback log deliberately keeps the raw query/answer so the library
+    # team can inspect what got thumbs up/down. It is runtime-only data:
+    # written under FEEDBACK_PATH (var/, gitignored), never exposed through an
+    # endpoint, and reachable only by an authenticated client. Rotate/delete
+    # var/feedback.jsonl as part of normal data hygiene.
     path = Path(settings.feedback_path)
     path.parent.mkdir(parents=True, exist_ok=True)
     with path.open("a", encoding="utf-8") as fh:
