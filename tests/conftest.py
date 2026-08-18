@@ -74,6 +74,7 @@ def reset_main_singletons(main_mod) -> None:
     main_mod._search_engine = None
     main_mod._reranker = None
     main_mod._rewriter = None
+    main_mod._agent = None
 
 
 def make_corpus(tmp_path: Path) -> Path:

@@ -86,7 +86,7 @@ def _get_rag() -> RagService:
 
 
 def _count_chat_search() -> None:
-    """Record one executed retrieval inside /chat/stream (tool-call hook)."""
+    """Record one executed retrieval inside /chat/stream (tool-call hook, D-11)."""
     with _metrics_lock:
         _metrics["chat_searches_total"] += 1
 

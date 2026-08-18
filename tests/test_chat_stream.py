@@ -167,12 +167,14 @@ def test_chat_stream_requires_token(tmp_path, corpus_path):
 
 def test_get_agent_wires_the_real_search_counter(tmp_path, corpus_path):
     """The production wiring line (_get_agent on_search=_count_chat_search) is
-    exercised directly so a regression in it cannot pass CI."""
+    exercised directly so a regression in it cannot pass CI. `make_client`
+    pre-sets _agent, so we must clear it to force the wiring line to run."""
     import app.main as main_mod
 
     main_mod._metrics = main_mod._fresh_metrics()
     reset_main_singletons(main_mod)
     make_client(tmp_path, corpus_path, [])  # sets settings + fake engine
+    main_mod._agent = None  # force _get_agent() to run its own construction
     agent = main_mod._get_agent()
     assert agent._on_search is main_mod._count_chat_search
 
