@@ -12,7 +12,7 @@ from pathlib import Path
 
 import numpy as np
 import pytest
-from conftest import build_test_index, embed_from
+from conftest import build_test_index, embed_from, reset_main_singletons
 from fastapi.testclient import TestClient
 
 from app.config import Settings
@@ -38,7 +38,7 @@ def client(tmp_path, corpus_path):
     import app.rebuild as rebuild_mod
 
     main_mod.settings = settings
-    main_mod._search_engine = None
+    reset_main_singletons(main_mod)
     main_mod._metrics = main_mod._fresh_metrics()
     rebuild_mod._embed_override = embed_from(docs)
 

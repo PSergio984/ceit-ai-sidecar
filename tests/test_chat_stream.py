@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import json
 
-from conftest import build_test_index, embed_from
+from conftest import build_test_index, embed_from, reset_main_singletons
 from fastapi.testclient import TestClient
 
 import app.main as main_mod
@@ -135,6 +135,7 @@ def make_client(
     )
 
     main_mod.settings = settings
+    reset_main_singletons(main_mod)
     engine = FakeEngine(engine_results)
     main_mod._search_engine = engine
     holder = FakeCompletionsHolder(content, fail, tool_sequence)
@@ -148,6 +149,7 @@ def make_client(
         engine=engine,
         model="test-model",
         max_tokens=64,
+        on_search=main_mod._count_chat_search,
     )
 
     import app.rebuild as rebuild_mod
@@ -163,11 +165,23 @@ def test_chat_stream_requires_token(tmp_path, corpus_path):
     assert resp.status_code == 401
 
 
+def test_get_agent_wires_the_real_search_counter(tmp_path, corpus_path):
+    """The production wiring line (_get_agent on_search=_count_chat_search) is
+    exercised directly so a regression in it cannot pass CI."""
+    import app.main as main_mod
+
+    main_mod._metrics = main_mod._fresh_metrics()
+    reset_main_singletons(main_mod)
+    make_client(tmp_path, corpus_path, [])  # sets settings + fake engine
+    agent = main_mod._get_agent()
+    assert agent._on_search is main_mod._count_chat_search
+
+
 def test_chat_stream_executed_searches_count_in_metrics(tmp_path, corpus_path):
     """Executed retrievals inside /chat/stream feed ceit_chat_searches_total.
 
-    An `event: activity` frame is emitted per executed tool search, so the
-    counter must be 1 after a search round and 0 for a direct answer.
+    The counter increments at the tool-call site (per executed rrf_search
+    round), so it must be 1 after a search round and 0 for a direct answer.
     """
     import app.main as main_mod
 

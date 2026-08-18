@@ -7,7 +7,7 @@ from concurrent.futures import ThreadPoolExecutor
 
 import numpy as np
 import pytest
-from conftest import build_test_index, embed_from
+from conftest import build_test_index, embed_from, reset_main_singletons
 from fastapi.testclient import TestClient
 
 from app.config import Settings
@@ -24,13 +24,14 @@ def client(tmp_path, corpus_path):
         host="127.0.0.1",
         port=8310,
         cache_dir=str(cache),
+        rerank_mode="blend",
     )
 
     import app.main as main_mod
     import app.rebuild as rebuild_mod
 
     main_mod.settings = settings
-    main_mod._search_engine = None
+    reset_main_singletons(main_mod)
     main_mod._metrics = main_mod._fresh_metrics()
     rebuild_mod._embed_override = embed_from(docs)
     # Deterministic query embedder.
@@ -96,6 +97,24 @@ def test_search_rejects_unknown_fields(client):
     assert resp.status_code == 422
     assert resp.json()["error"]["code"] == "invalid_request"
     assert "unknown field(s)" in resp.json()["error"]["message"]
+
+
+def test_search_keeps_code_pin_first_after_rerank(client):
+    """End-to-end /search regression (D-02): the composed pipeline
+    (rewrite -> hybrid retrieval -> blend re-rank) must keep the exact-code
+    pinned document at rank 1. This is the failure site from the review that
+    previously dropped hybrid top-1 0.95 -> 0.82."""
+    app, _, _ = client
+    resp = app.post(
+        "/search",
+        json={"query": "ceit-ee-25-01"},
+        headers={"X-Sidecar-Token": "test-token"},
+    )
+    assert resp.status_code == 200
+    first = resp.json()["results"][0]
+    assert first["id"] == "paper-2"
+    assert first["metadata"]["catalog_code"] == "CEIT-EE-25-01"
+    assert first["pinned"] is True
 
 
 def test_search_endpoint_accepts_author_adviser_filters(client):

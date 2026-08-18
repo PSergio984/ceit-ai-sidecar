@@ -251,7 +251,9 @@ All endpoints require `X-Sidecar-Token`; requests without it get `401`.
 `POST /search` body:
 `{"query": "...", "filters"?: {...}, "corpus"?: "catalog"|"policy", "limit"?: 10, "k"?: 60}`.
 When query rewriting changes the query, the response includes a
-`rewritten_query` field.
+`rewritten_query` field. Each result carries `bm25_rank`, `semantic_rank`, and
+`pinned` — `pinned: true` marks the document pinned to rank 1 by an exact
+catalog-code query (a hard rule that survives re-ranking).
 
 `POST /chat/stream` body:
 `{"query": "...", "mode": "citations"|"question"|"rag", "corpus"?: "...", "top_k"?: 5}`.

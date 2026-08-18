@@ -17,7 +17,7 @@ from __future__ import annotations
 import json
 import logging
 import re
-from collections.abc import Iterator
+from collections.abc import Callable, Iterator
 from pathlib import Path
 from typing import TYPE_CHECKING, Literal
 
@@ -241,6 +241,7 @@ class AgenticLoop:
         max_tokens: int | None = None,
         engine: HybridSearch | None = None,
         prompts: dict[str, str] | None = None,
+        on_search: Callable[[], None] | None = None,
     ):
         self._client = client
         self._base_url = base_url or settings.llm_base_url
@@ -249,6 +250,9 @@ class AgenticLoop:
         self._max_tokens = max_tokens or settings.llm_max_tokens
         self._engine = engine
         self._prompts = prompts or PROMPTS
+        # Called once per EXECUTED rrf_search round (after it returns) — the
+        # metrics hook counts real retrievals, independent of SSE consumption.
+        self._on_search = on_search
 
     def _ensure_client(self) -> OpenAI:
         if self._client is None:
@@ -390,6 +394,8 @@ class AgenticLoop:
                         corpus=effective_corpus,
                         include_text=True,
                     )
+                    if self._on_search is not None:
+                        self._on_search()
                     docs = merge_dedup(docs, results)
                     messages.append(
                         {

@@ -13,7 +13,7 @@ from typing import Annotated
 from fastapi import FastAPI, File, Request, UploadFile
 from fastapi.responses import JSONResponse, Response, StreamingResponse
 
-from .agent import ACTIVITY_EVENT_PREFIX, AgenticLoop
+from .agent import AgenticLoop
 from .config import settings
 from .health import assemble_health
 from .rag import RagService
@@ -85,10 +85,16 @@ def _get_rag() -> RagService:
     return _rag
 
 
+def _count_chat_search() -> None:
+    """Record one executed retrieval inside /chat/stream (tool-call hook)."""
+    with _metrics_lock:
+        _metrics["chat_searches_total"] += 1
+
+
 def _get_agent() -> AgenticLoop:
     global _agent
     if _agent is None:
-        _agent = AgenticLoop(engine=_get_engine())
+        _agent = AgenticLoop(engine=_get_engine(), on_search=_count_chat_search)
     return _agent
 
 
@@ -227,26 +233,10 @@ def chat_stream(payload: dict):
     )
 
     return StreamingResponse(
-        _count_chat_searches(events),
+        events,
         media_type="text/event-stream",
         headers={"Cache-Control": "no-cache", "X-Accel-Buffering": "no"},
     )
-
-
-def _count_chat_searches(events):
-    """Count executed retrievals inside the /chat/stream SSE stream.
-
-    The agent emits exactly one ACTIVITY_EVENT_PREFIX frame per executed
-    search round, so each such frame increments `chat_searches_total` — the
-    dashboard then reflects ALL retrieval traffic (API searches + chat
-    searches), not just POST /search. Direct answers (no tool round) emit no
-    activity frame and count nothing.
-    """
-    for event in events:
-        if event.startswith(ACTIVITY_EVENT_PREFIX):
-            with _metrics_lock:
-                _metrics["chat_searches_total"] += 1
-        yield event
 
 
 @app.post("/index/rebuild")

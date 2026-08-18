@@ -68,6 +68,14 @@ class FakeClient:
         self.chat = type("Chat", (), {"completions": FakeCompletions(content, fail)})()
 
 
+def reset_main_singletons(main_mod) -> None:
+    """Clear module-level lazy singletons so each fixture rebuilds them from
+    its own Settings (constructed at first use from settings at that time)."""
+    main_mod._search_engine = None
+    main_mod._reranker = None
+    main_mod._rewriter = None
+
+
 def make_corpus(tmp_path: Path) -> Path:
     """Write a small catalog + policies corpus with realistic doc shapes."""
     corpus = tmp_path / "corpus"

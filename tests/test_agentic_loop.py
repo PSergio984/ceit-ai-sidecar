@@ -140,10 +140,16 @@ class FakeEngine:
         return self.results
 
 
-def make_loop(content="", tool_sequence=None, results=(), fail=False):
+def make_loop(content="", tool_sequence=None, results=(), fail=False, on_search=None):
     client = FakeCompletionsHolder(content=content, tool_sequence=tool_sequence, fail=fail)
     engine = FakeEngine(list(results))
-    loop = AgenticLoop(client=client, engine=engine, model="test-model", max_tokens=64)
+    loop = AgenticLoop(
+        client=client,
+        engine=engine,
+        model="test-model",
+        max_tokens=64,
+        on_search=on_search,
+    )
     return client, engine, loop
 
 
@@ -163,6 +169,28 @@ def test_direct_answer_streams_without_search():
     assert engine.calls == []
     assert all("event: activity" not in event for event in events)
     assert all("event: citations" not in event for event in events)
+
+
+def test_on_search_callback_counts_executed_tool_rounds():
+    calls: list[int] = []
+    args = json.dumps({"query": "multi-hop"})
+    _client, _engine, loop = make_loop(
+        content="A. ",
+        tool_sequence=[args, args],
+        results=[DOC1],
+        on_search=lambda: calls.append(1),
+    )
+    list(loop.stream_agentic_events("multi-hop"))
+
+    assert len(calls) == 2  # one callback per executed rrf_search round
+
+
+def test_on_search_callback_not_called_for_direct_answer():
+    calls: list[int] = []
+    _client, _engine, loop = make_loop(content="Direct answer. ", on_search=lambda: calls.append(1))
+    list(loop.stream_agentic_events("hello"))
+
+    assert calls == []
 
 
 @pytest.mark.parametrize(
