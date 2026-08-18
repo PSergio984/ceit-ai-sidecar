@@ -142,7 +142,7 @@ def test_search_rejects_non_positive_limit_and_k(client):
 
 def test_search_rejects_non_object_filters(client):
     app, _, _ = client
-    for bad in ("x", ["a"], 5):
+    for bad in ("x", ["a"], 5, [], 0, ""):
         resp = app.post(
             "/search",
             json={"query": "water pump", "filters": bad},
@@ -154,7 +154,12 @@ def test_search_rejects_non_object_filters(client):
 
 def test_search_rejects_non_numeric_year_filters(client):
     app, _, _ = client
-    for bad in ({"publication_year": "abc"}, {"year_from": "later"}, {"year_to": []}):
+    for bad in (
+        {"publication_year": "abc"},
+        {"year_from": "later"},
+        {"year_to": []},
+        {"year_from": 2020.5},
+    ):
         resp = app.post(
             "/search",
             json={"query": "water pump", "filters": bad},

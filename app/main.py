@@ -159,18 +159,19 @@ def search(payload: dict):
     query = _require_query(payload)
     if isinstance(query, JSONResponse):
         return query
-    filters = payload.get("filters") or {}
+    raw_filters = payload.get("filters")
+    if raw_filters is not None and not isinstance(raw_filters, dict):
+        return _invalid("'filters' must be an object")
+    filters = raw_filters or {}
     corpus = payload.get("corpus")
 
     # Validate at the request boundary so malformed values fail with 422
-    # instead of crashing inside retrieval (review R-*).
-    if not isinstance(filters, dict):
-        return _invalid("'filters' must be an object")
+    # instead of crashing inside retrieval.
     for key in ("publication_year", "year_from", "year_to"):
         value = filters.get(key)
         if value is None:
             continue
-        if isinstance(value, bool):
+        if isinstance(value, (bool, float)):
             return _invalid(f"'filters.{key}' must be an integer")
         try:
             int(value)
