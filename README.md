@@ -65,15 +65,19 @@ wants hybrid search over the library corpora.
 ## Dataset
 
 The corpus is bundled in the repo (self-contained — no external export
-required): `corpus/catalog.json` (48 synthetic academic papers) and
-`corpus/policies.json` (empty rulebook envelope). Each catalog document
-carries title, text, department, publication year, paper type, catalog code,
-authors, and advisers.
+required): `corpus/catalog.json` (**959** academic papers) and
+`corpus/policies.json` (**379** rulebook regulations) — 1,338 documents
+total. Each catalog document carries title, text, department, publication
+year, paper type, catalog code, authors, and advisers.
 
 The data is **synthetic** (Faker-generated authors and titles over real CEIT
 catalog shapes), so committing it is safe. In production the corpus is
 exported from the Laravel database and either read from disk or pushed via
-`POST /corpus/upload`; the export/upload contract is unchanged.
+`POST /corpus/upload`; the export/upload contract is unchanged. The
+evaluation data is built FROM the bundled corpus by reproducible scripts
+(`scripts/build_golden.py`, `scripts/build_judge_questions.py`) — regenerate
+them whenever the corpus changes so the numbers always describe the shipped
+data.
 
 ## Architecture and flow
 
@@ -123,9 +127,11 @@ flowchart TD
    conversational/Taglish query into a keyword-style search query; falls back
    to the original query on any failure.
 2. **Keyword**: SQLite FTS5 via `sqlitesearch` — BM25 ranks over the full
-   corpus (no candidate pooling).
+   corpus (no candidate pooling). Query tokens keep digits (years, catalog
+   codes) and drop English stop words — matching the unicode61 index on
+   everything that discriminates while staying noise-free on function words.
 3. **Semantic**: whole-document embeddings, normalized, cosine via matmul,
-   gated by `MIN_SEMANTIC_SIMILARITY` (default 0.25) — when even the nearest
+   gated by `MIN_SEMANTIC_SIMILARITY` (default 0.5) — when even the nearest
    document falls below the cosine threshold, the query has no relevant
    semantic match, so off-corpus queries return nothing instead of
    nearest-neighbour noise.
@@ -185,6 +191,12 @@ cp .env.example .env   # set SIDECAR_TOKEN (Prometheus scrapes with the same tok
 docker compose up --build
 ```
 
+The Laravel front door has its own compose (app + PostgreSQL) in the
+[CEIT-Library repo](https://github.com/PSergio984/CEIT-Library) —
+`docker compose up --build` there, and it reaches this sidecar via
+`http://host.docker.internal:8310` (set `SIDECAR_URL`/`SIDECAR_TOKEN` to
+override). Its login page has a one-click **demo student login**.
+
 | Service    | URL                        | Credentials                     |
 |------------|----------------------------|---------------------------------|
 | Sidecar    | http://localhost:8310      | `X-Sidecar-Token` header        |
@@ -218,14 +230,14 @@ The sidecar also runs on [FastAPI Cloud](https://fastapi.cloud) via
 A 5-minute end-to-end tour (local run):
 
 1. **Start and build the index** — `uv run uvicorn app.main:app --port 8310`, then
-   `POST /index/rebuild` with the token. `/health` flips to `ok` with 48
-   documents embedded.
+   `POST /index/rebuild` with the token. `/health` flips to `ok` with 1,338
+   documents embedded (959 catalog + 379 policy).
 2. **Hybrid search** — `POST /search {"query": "flood monitoring using iot sensors"}`
-   returns paper-10 first (ranked by both BM25 and semantic, fused by RRF).
-   Try an exact code: `{"query": "CEIT-IT-21-01"}` — the matching document is
-   pinned to rank 1 (`"pinned": true`).
-3. **Grounded chat** — `POST /chat/stream {"query": "what papers did Lisandro
-   Grimes write?"}` streams an SSE answer with `event: activity` frames, chunk
+   returns flood-monitoring papers first (ranked by both BM25 and semantic,
+   fused by RRF). Try an exact code: `{"query": "CEIT-IT-21-01"}` — the
+   matching document is pinned to rank 1 (`"pinned": true`).
+3. **Grounded chat** — `POST /chat/stream {"query": "what papers did Jolie
+   Hahn write?"}` streams an SSE answer with `event: activity` frames, chunk
    deltas, and a final `event: citations` frame listing the numbered documents.
    Ask something off-corpus ("recipes for a birthday cake") and it refuses with
    zero LLM calls.
@@ -286,22 +298,24 @@ uv run python -m app.eval --with-rerank  # also score the shipped pipeline
 ```
 
 Current results (k=5, 27 cases — catalog codes, exact/paraphrase titles,
-authors, departments, years, plus 5 negative "should return nothing" cases):
+authors, departments, years, plus 5 negative "should return nothing" cases;
+set regenerated from the bundled 1,338-doc corpus by
+`scripts/build_golden.py`):
 
 | Approach | P@5   | R@5   | F1@5  | Top-1 | Neg-pass |
 |----------|-------|-------|-------|-------|----------|
-| **hybrid** (production retrieval) | 0.4636 | 0.8019 | 0.4492 | **0.9545** | **1.0** |
-| bm25     | 0.4818 | 0.7940 | 0.4655 | 0.9091 | 1.0 |
-| semantic | 0.2909 | 0.4816 | 0.2632 | 0.5909 | 1.0 |
-| hybrid + blend re-rank | 0.4636 | 0.8019 | 0.4492 | 0.9545 | 1.0 |
+| **hybrid** (production retrieval) | 0.4545 | 0.7239 | 0.3913 | **0.8182** | **1.0** |
+| bm25     | 0.5455 | 0.7517 | 0.4321 | 0.7273 | 1.0 |
+| semantic | 0.1091 | 0.3780 | 0.1414 | 0.2727 | 1.0 |
+| hybrid + blend re-rank (shipped /search) | 0.4545 | 0.7239 | 0.3913 | **0.8636** | 1.0 |
 
 This evaluation measures the **raw retrieval layer** (deterministic — no LLM,
 no rewrite), which is exactly what the rubric's retrieval evaluation asks for.
 Query rewriting and re-ranking run on top at request time (see
 [Best-practice extras](#best-practice-extras)); they only change the top-k
 ordering of what this table ranks. The `--with-rerank` row shows the
-deterministic half of that pipeline is **measured, not assumed**: it preserves
-every hybrid outcome (the exact-code pin now survives re-ranking — see below).
+deterministic half of that pipeline is **measured, not assumed**: the blend
+re-ranker lifts top-1 from 0.82 to 0.86 without ever dropping a document.
 Caveat: the eval re-ranks the same k=5 window it scored, while `/search`
 defaults to a 10-document window — re-ranking a wider window can surface
 documents that rank 6–10 at retrieval.
@@ -309,45 +323,38 @@ documents that rank 6–10 at retrieval.
 **Winner rule (documented, stable):** for a library assistant the primary
 quality gates are **top-1 rate** (the right document surfaces first — critical
 for code/title lookups) and **negative-pass rate** (no irrelevant results);
-F1@k breaks ties. Under that rule **hybrid wins**: it nails top-1 on all four
-catalog-code cases via the code pin (BM25 misses two), and never fails a
-negative. The negative-pass result is **meaningful**: a negative case passes
-only when retrieval returns *no document at all* — guaranteed by the
-`MIN_SEMANTIC_SIMILARITY` gate (off-corpus queries max out at ≈0.21 cosine vs
-≥0.26 for every non-code positive), so "nothing here" queries genuinely return
-nothing rather than nearest-neighbour noise.
+F1@k breaks ties. Under that rule **hybrid wins**: the code pin nails top-1 on
+all four catalog-code cases, and no negative ever leaks. The negative-pass
+result is **meaningful**: a negative case passes only when retrieval returns
+*no document at all* — guaranteed by the `MIN_SEMANTIC_SIMILARITY` gate
+(out-of-domain queries max out at ≈0.12–0.22 cosine vs ≥0.30 for every
+positive), so "nothing here" queries genuinely return nothing rather than
+nearest-neighbour noise.
 
-**Conversational code caveat:** the code pin anchors exact `CEIT-XX-NN` query
-strings only. Conversational code lookups ("what is CEIT-CE-04-02?") don't
-anchor the pin and rely on plain hybrid retrieval — the
-[LLM-as-judge](#2-llm-as-judge-answer-evaluation) run below surfaces those as
-the harder cases (q07/q08).
+**What made the numbers real (and why bm25 beats hybrid on F1):** this corpus
+is mostly Faker-Latin text whose embeddings are undiscriminating — semantic
+neighbours of gibberish queries are often *policy* documents. Two fixes make
+the shipped pipeline honest on the 1,338-doc corpus: (1) the query tokenizer
+now keeps digits, so years and catalog codes actually reach FTS5 (previously
+`2007` in a query silently matched nothing), and (2) `MIN_SEMANTIC_SIMILARITY`
+was raised 0.25 → 0.5 so the semantic channel only fires where embeddings
+discriminate (real English titles score ≈0.9; gibberish/name queries score
+≈0.35–0.62 and are handled lexically). The residual gap: pure BM25 still
+edges hybrid on F1@5 (0.4321 vs 0.3913) — a handful of paraphrase cases
+("engineering papers published in 2014") where the semantic channel's noise
+dilutes the fusion, and 3 of 8 exact-title gibberish lookups that BM25 itself
+cannot disambiguate (Faker reuses a tiny Latin vocabulary). Hybrid's win on
+top-1 — the primary gate — comes from the code pin plus the gated semantic
+boost on real-English titles.
 
-**Honest caveat — measured, not claimed:** pure BM25 edges hybrid on F1@5
-(0.4655 vs 0.4492) — driven by a single `papers by <author>` case where the
-semantic channel's noise pushes the author's papers down (BM25 F1 0.89 vs
-hybrid 0.22). Measuring the shipped pipeline showed two things: (1) the blend
-re-ranker **does not** recover that case — all five top-k candidates are
-both-retriever docs, so its consensus tie-break keeps the hybrid order — and
-(2) it previously *broke* the code pin (top-1 0.82), which is now fixed: the
-pin is a hard exact-match rule that re-ranking must preserve (regression-tested,
-`"pinned": true` in the search response). The author-case gap is a
-**retrieval-pool** problem (the relevant papers rank 1–4 by BM25 but are
-diluted by fusion), which is what the **query rewriting** extra targets — it
-strips the "papers by" framing into the bare name so BM25 dominates. The
-rewrite path is LLM-dependent (needs a live key), so it is not part of the
-deterministic retrieval eval; the LLM-as-judge run below measures grounded
-answer quality over raw hybrid retrieval (rewrite and re-ranking are not
-applied inside it either).
-
-By category (hybrid):
+By category (shipped pipeline: hybrid + blend re-rank):
 
 | Category | n | P@5 | Top-1 |
 |----------|---|-----|-------|
 | catalog_code (exact CEIT codes) | 4 | 0.20 | 1.00 |
-| exact_title | 8 | 0.20 | 1.00 |
-| paraphrase | 6 | 0.93 | 1.00 |
-| people (papers by author) | 4 | 0.55 | 0.75 |
+| exact_title | 8 | 0.20 | 0.75 |
+| paraphrase | 6 | 0.67 | 0.83 |
+| people (papers by author) | 4 | 0.90 | 1.00 |
 
 ### 2. LLM-as-judge answer evaluation
 
@@ -363,10 +370,17 @@ uv run python -m app.judge --json --no-write   # summary only, no results file
 ```
 
 Results are recorded to `data/judge_results.json`. Current recorded run
-(10-question sample, `meta-llama/llama-3.3-70b-instruct`, top_k=5):
+(10-question sample from the 40 regenerated for the bundled corpus,
+`meta-llama/llama-3.3-70b-instruct`, top_k=5, shipped retrieval pipeline):
 
-- **RELEVANT** 5 · **PARTLY_RELEVANT** 3 · **NON_RELEVANT** 2
-- Relevant rate: **0.50** · Partly-or-better rate: **0.80**
+- **RELEVANT** 9 · **PARTLY_RELEVANT** 1 · **NON_RELEVANT** 0
+- Relevant rate: **0.90** · Partly-or-better rate: **1.00**
+
+The question set (`scripts/build_judge_questions.py`) is catalog-only: the
+bundled policy corpus is a synthetic placeholder (Faker-Latin regulation
+text), so policy Q&A cannot be answered from it — judging it would only
+manufacture NON_RELEVANT verdicts. This is documented in
+[Limitations](#limitations).
 
 ## Monitoring and feedback
 
@@ -414,7 +428,7 @@ framework at `/docs`:
 | Rubric item | Where |
 |-------------|-------|
 | Problem description | [Problem statement](#problem-statement) |
-| Dataset (own / prepared) | [Dataset](#dataset) — bundled 48-doc synthetic CEIT catalog |
+| Dataset (own / prepared) | [Dataset](#dataset) — bundled 1,338-doc synthetic CEIT catalog (959 papers + 379 policies) |
 | Retrieval flow: search index + LLM | [Architecture and flow](#architecture-and-flow) + `/search` + `/chat/stream` |
 | Interface: RAG API | FastAPI endpoints (token-gated), SSE streaming contract |
 | Retrieval evaluation — multiple approaches evaluated, best used | [Multi-approach comparison](#1-multi-approach-retrieval-comparison) — hybrid vs BM25 vs semantic, documented winner rule |
@@ -444,9 +458,12 @@ app/
   health.py     # /health assembly
 corpus/         # bundled self-contained corpus (catalog.json + policies.json)
 data/
-  golden_dataset.json   # 27 retrieval evaluation cases
-  judge_questions.json  # 40 LLM-as-judge questions
+  golden_dataset.json   # 27 retrieval evaluation cases (built from the corpus)
+  judge_questions.json  # 40 LLM-as-judge questions (built from the corpus)
   judge_results.json    # recorded LLM-as-judge results (10-question sample)
+scripts/
+  build_golden.py           # regenerate data/golden_dataset.json from the corpus
+  build_judge_questions.py  # regenerate data/judge_questions.json from the corpus
 prometheus/     # prometheus.yml scrape config (token-authenticated)
 grafana/        # provisioned datasource + dashboard provider + 6-panel dashboard
 Dockerfile      # multi-stage uv build
@@ -469,6 +486,19 @@ no model download, no provider calls. A live smoke test
 (`test_chat_stream_live.py`) is gated behind `SIDECAR_LIVE_CHAT_TEST=1` and
 never runs in CI. CI (GitHub Actions) runs lint, tests, an app-boot + auth
 smoke, SonarCloud, and a secrets scan on every push.
+
+## Limitations
+
+- **Synthetic corpus, two concrete consequences.** (1) Policy Q&A cannot be
+  evaluated: the bundled `policies.json` regulation text is Faker-Latin
+  placeholder, so the LLM-as-judge set is catalog-only. (2) ~95% of catalog
+  titles are Faker-Latin gibberish sharing a tiny vocabulary — 3 of 8
+  exact-title lookups in the golden set are not disambiguable by BM25, and
+  the semantic channel cannot help (embeddings of Latin gibberish are
+  undiscriminating; that is why `MIN_SEMANTIC_SIMILARITY` sits at 0.5).
+- **LLM availability.** Answer quality depends on OpenRouter; provider
+  failures surface as a user-safe `event: error` frame in the chat stream.
+- **No rate limits or cost guards** on the LLM path yet.
 
 ## Security notes
 
