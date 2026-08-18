@@ -15,9 +15,29 @@ Docker-based deployment — see the [Rubric mapping](#rubric-mapping) table.
 
 ---
 
+## Live demo
+
+The Laravel front door is deployed on Laravel Cloud and wired to the
+sidecar on FastAPI Cloud:
+
+- **App:** <https://ceit-library-main-cru0ty.laravel.cloud> — use the
+  **"Log in with demo student"** button on the login page (seeded account,
+  no registration needed). The chat widget is on every authenticated page.
+- **Sidecar (API):** <https://ceit-ai-sidecar.fastapicloud.dev> — token-gated
+  (`X-Sidecar-Token`); interactive docs at `/docs`.
+
+![AI assistant chat widget — grounded answer with numbered citations](docs/screenshots/chat-widget.png)
+
+![Hybrid search with live copy availability](docs/screenshots/search.png)
+
+![Student dashboard](docs/screenshots/dashboard.png)
+
+---
+
 ## Table of contents
 
 - [Problem statement](#problem-statement)
+- [Live demo](#live-demo)
 - [Dataset](#dataset)
 - [Architecture and flow](#architecture-and-flow)
 - [Run it](#run-it)
@@ -195,7 +215,9 @@ The Laravel front door has its own compose (app + PostgreSQL) in the
 [CEIT-Library repo](https://github.com/PSergio984/CEIT-Library) —
 `docker compose up --build` there, and it reaches this sidecar via
 `http://host.docker.internal:8310` (set `SIDECAR_URL`/`SIDECAR_TOKEN` to
-override). Its login page has a one-click **demo student login**.
+override). Its login page has a one-click **demo student login**. The same
+app is deployed live at <https://ceit-library-main-cru0ty.laravel.cloud>
+(see [Live demo](#live-demo)).
 
 | Service    | URL                        | Credentials                     |
 |------------|----------------------------|---------------------------------|
