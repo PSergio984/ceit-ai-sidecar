@@ -1,156 +1,156 @@
 {
-  "generated_at": "2026-08-17T18:17:43.074296+00:00",
+  "generated_at": "2026-08-18T18:03:19.942826+00:00",
   "model": "meta-llama/llama-3.3-70b-instruct",
   "top_k": 5,
   "questions_answered": 10,
   "counts": {
-    "RELEVANT": 5,
-    "PARTLY_RELEVANT": 3,
-    "NON_RELEVANT": 2
+    "RELEVANT": 9,
+    "PARTLY_RELEVANT": 1,
+    "NON_RELEVANT": 0
   },
   "total": 10,
-  "relevant_rate": 0.5,
-  "partly_or_better_rate": 0.8,
+  "relevant_rate": 0.9,
+  "partly_or_better_rate": 1.0,
   "questions": [
     {
       "id": "q08",
-      "question": "CEIT-CE-04-02 is what paper?",
+      "question": "What is the catalog code for Intelligent Traffic Monitoring for Campus Roadways?",
       "corpus": "catalog",
       "retrieved": [
-        "paper-6",
-        "paper-5",
-        "paper-27",
-        "paper-21",
-        "paper-43"
+        "paper-872",
+        "paper-847",
+        "paper-908",
+        "paper-878",
+        "paper-891"
       ],
-      "answer": "I don't have enough information to determine what paper CEIT-CE-04-02 refers to, as the provided documents do not contain a catalog code matching CEIT-CE-04-02. However, a similar catalog code, CEIT-CE-04-01, is found in document [3], which refers to the paper \"Web-Based Alumni Information and Engagement Portal\".",
-      "label": "PARTLY_RELEVANT"
+      "answer": "The catalog code for \"Intelligent Traffic Monitoring for Campus Roadways\" varies depending on the publication year and department. \n\nAccording to the documents, there are three different catalog codes for this title: \n- CEIT-IT-17-17 from the Information Technology department in 2017 [1], \n- CEIT-EE-13-12 from the Electrical Engineering department in 2013 [2], and \n- CEIT-EE-06-17 from the Electrical Engineering department in 2006 [3].\n\nThese different catalog codes reflect the various research projects and publications on the topic of Intelligent Traffic Monitoring for Campus Roadways across different years and departments.",
+      "label": "RELEVANT"
     },
     {
       "id": "q02",
-      "question": "Find the paper with catalog code CEIT-IT-09-01",
+      "question": "What is the catalog code for Energy-Efficient Street Lighting Control Using Microcontrollers?",
       "corpus": "catalog",
       "retrieved": [
-        "paper-11",
-        "paper-8",
-        "paper-2",
-        "paper-5",
-        "paper-17"
+        "paper-914",
+        "paper-943",
+        "paper-874",
+        "paper-946",
+        "paper-894"
       ],
-      "answer": "The paper with the catalog code CEIT-IT-09-01 is the \"Web-Based Academic Resource Tracking and Borrowing System\" [3]. According to the document, this paper is a thesis published in 2009, advised by Georgianna Huels and Engr. Miss Rebeca Nicolas, with Dr. Arianna Gibson as the dean of the Information Technology department. \n\nThere is only one document [3] that matches the catalog code CEIT-IT-09-01, so there are no disagreements or conflicting viewpoints among the sources. \n\nReference: \n[3] Web-Based Academic Resource Tracking and Borrowing System. authors:  research_adviser: Georgianna Huels technical_adviser: Engr. Miss Rebeca Nicolas dean: Dr. Arianna Gibson department: Information Technology publication_year: 2009 paper_type: Thesis catalog_code: CEIT-IT-09-01",
+      "answer": "The catalog code for \"Energy-Efficient Street Lighting Control Using Microcontrollers\" is not unique and has two different codes due to multiple publications. According to [1], the catalog code is CEIT-EE-06-18 for the 2006 publication, and [2] states the catalog code is CEIT-EE-24-16 for the 2024 publication. These two documents provide different catalog codes due to the difference in publication years and possibly different versions or updates of the research.",
       "label": "RELEVANT"
     },
     {
       "id": "q18",
-      "question": "Something about smart parking slot detection",
+      "question": "CEIT-EE-03-08 is what paper?",
       "corpus": "catalog",
       "retrieved": [
-        "paper-31",
-        "paper-12",
-        "paper-39",
-        "paper-1",
-        "paper-34"
+        "paper-47",
+        "paper-877",
+        "paper-542",
+        "paper-330",
+        "paper-824"
       ],
-      "answer": "The query about smart parking slot detection can be addressed by referencing a specific document in our catalog. According to [1], there is a capstone project titled \"Smart Parking Slot Detection and Guidance System\" authored by Golden Lowe Jr. and Paul Labadie, with Prof. Garth Stark as the research adviser. This project was completed in 2009 under the Information Technology department and has the catalog code CEIT-IT-09-02. \n\nUnfortunately, the provided documents do not offer detailed information about the content or findings of this project. Therefore, for specific details about smart parking slot detection, such as the methodology, technologies used, or outcomes, I don't have enough information. However, [1] is the most relevant resource available in our catalog related to the query.",
-      "label": "PARTLY_RELEVANT"
+      "answer": "The paper CEIT-EE-03-08 is titled \"Machine Learning Model for Student Performance Prediction\" [2]. It is a research paper from the Electrical Engineering department, published in 2003, and was written by Dr. Willa Price, Madie Mayert II, and Deangelo Schmeler, with Stevie Mante as the research adviser and Engr. Ms. Lelah Wyman as the technical adviser [2]. \n\nNote that there is another paper with a similar catalog code, CEIT-CE-03-08, but it belongs to the Civil Engineering department and has a different title, \"Omnis eos non suscipit aspernatur\" [3], and another one from Information Technology department with the same ending catalog code, \"Doloremque est totam rerum ipsum voluptas fugit aliquid\" [5]. However, the query specifically asks for CEIT-EE-03-08, which refers to the \"Machine Learning Model for Student Performance Prediction\" paper [2].",
+      "label": "RELEVANT"
     },
     {
       "id": "q16",
-      "question": "Looking for the voice-assisted campus information system",
+      "question": "CEIT-IT-07-11 is what paper?",
       "corpus": "catalog",
       "retrieved": [
-        "paper-28",
-        "paper-3",
-        "paper-13",
-        "paper-8",
-        "paper-33"
+        "paper-407",
+        "paper-367",
+        "paper-583",
+        "paper-844",
+        "paper-551"
       ],
-      "answer": "The voice-assisted campus information system can be found in the paper titled \"Development of a Voice-Assisted Campus Information System\" [1]. This paper, published in 2011, is a practicum under the Electrical Engineering department with the catalog code CEIT-EE-11-01. It was authored by Ahmed Wyman, advised by Oral Barton and Engr. Arielle Emard, and supervised by Dr. Mr. Quincy Rodriguez. \n\nUnfortunately, I don't have enough information on the specifics of the system, such as its features or implementation, as the provided documents only include the title, author, and publication details of the paper. For more information, it would be necessary to consult the full text of the paper [1].",
+      "answer": "The paper CEIT-IT-07-11 is titled \"Machine Learning Model for Student Performance Prediction\" [4]. It is a thesis paper from the Information Technology department, published in 2007. The authors of this paper are Sallie Beer, Dr. Elody Gleason, Ericka Haag, Mrs. Marisol Cole I, Anjali Sporer DDS, Mr. Richard Schumm I, and Reanna Braun, with Bobbie Bartoletti as the research adviser and Engr. Benedict Padberg as the technical adviser [4].",
       "label": "RELEVANT"
     },
     {
       "id": "q15",
-      "question": "Paper about a cybersecurity awareness platform for college students",
+      "question": "CEIT-EE-06-18 is what paper?",
       "corpus": "catalog",
       "retrieved": [
-        "paper-17",
-        "paper-35",
-        "paper-21",
-        "paper-46",
-        "paper-11"
+        "paper-914",
+        "paper-301",
+        "paper-417",
+        "paper-420",
+        "paper-860"
       ],
-      "answer": "The query is about a paper on a cybersecurity awareness platform for college students. Based on the provided documents, there is one relevant paper titled \"Cybersecurity Awareness Platform for College Students\" [1]. This paper is a Practicum published in 2018 by the Information Technology department, with catalog code CEIT-IT-18-01. The research adviser is Alexane Sanford, and the technical adviser is Engr. Myron Wisoky. The dean of the department is Dr. Mrs. Brandy Feeney DDS.\n\nThe other documents do not mention cybersecurity awareness platforms for college students. They cover different topics such as student organization management [2], e-learning platforms [3], web-based engineering project collaboration [4], and web-based thesis catalog and search [5]. \n\nTherefore, the only relevant paper to the query is [1], which is specifically focused on a cybersecurity awareness platform for college students. I don't have enough information about the content or findings of the paper, but I can confirm its existence in the catalog.",
+      "answer": "The paper CEIT-EE-06-18 is \"Energy-Efficient Street Lighting Control Using Microcontrollers\", a Capstone project in the Electrical Engineering department, published in 2006 [1].",
       "label": "RELEVANT"
     },
     {
       "id": "q09",
-      "question": "Tell me about the Web-Based Thesis Catalog and Search Platform",
+      "question": "What is the catalog code for Smart Classroom Occupancy Monitoring Using Sensor Networks?",
       "corpus": "catalog",
       "retrieved": [
-        "paper-11",
-        "paper-46",
-        "paper-2",
-        "paper-27",
-        "paper-21"
+        "paper-891",
+        "paper-852",
+        "paper-926",
+        "paper-920",
+        "paper-933"
       ],
-      "answer": "The Web-Based Thesis Catalog and Search Platform is a research project conducted by the Information Technology department, as indicated in document [1]. The project was published in 2013 with the catalog code CEIT-IT-13-02. The research advisers and technical advisers involved in the project were Taryn Farrell and Engr. Tina Stark, respectively, under the supervision of Dean Dr. Mrs. Brandy Feeney DDS [1]. \n\nUnfortunately, the provided documents do not contain detailed information about the platform's features, functionalities, or implementation. Therefore, I don't have enough information to provide a comprehensive description of the Web-Based Thesis Catalog and Search Platform beyond its publication details and the individuals involved in the project.",
-      "label": "PARTLY_RELEVANT"
+      "answer": "The catalog code for \"Smart Classroom Occupancy Monitoring Using Sensor Networks\" varies depending on the publication year and department. \n\nAccording to [1], the catalog code is CEIT-EE-23-13 for the 2023 publication in the Electrical Engineering department. \nIn [2], the catalog code is CEIT-EE-22-15 for the 2022 publication, also in the Electrical Engineering department. \nHowever, in [3], the catalog code is CEIT-CE-13-12 for the 2013 publication, but this time in the Civil Engineering department.\n\nTherefore, there are different catalog codes for the same topic due to variations in publication year and department. \n\nReferences: \n[1] Smart Classroom Occupancy Monitoring Using Sensor Networks, 2023\n[2] Smart Classroom Occupancy Monitoring Using Sensor Networks, 2022\n[3] Smart Classroom Occupancy Monitoring Using Sensor Networks, 2013",
+      "label": "RELEVANT"
     },
     {
       "id": "q07",
-      "question": "Which paper is CEIT-IT-21-01?",
+      "question": "What is the catalog code for Cybersecurity Awareness Platform for College Students?",
       "corpus": "catalog",
       "retrieved": [
-        "paper-8",
-        "paper-6",
-        "paper-17",
-        "paper-5",
-        "paper-4"
+        "paper-952",
+        "paper-947",
+        "paper-841",
+        "paper-915",
+        "paper-889"
       ],
-      "answer": "I don't have enough information. The provided documents [1], [2], [3], [4], and [5] do not contain any information about a paper with the catalog code CEIT-IT-21-01. The available documents only provide information about papers with catalog codes from 2010 to 2018, but none of them match the query.",
-      "label": "NON_RELEVANT"
+      "answer": "The catalog code for the Cybersecurity Awareness Platform for College Students is CEIT-EE-08-17, as stated in document [1]. This document provides the necessary information about the paper, including its authors, research adviser, technical adviser, department, publication year, paper type, and catalog code. \n\nThere is only one document [1] that mentions the Cybersecurity Awareness Platform for College Students, and it clearly states the catalog code. The other documents [2], [3], [4], and [5] are about different topics and do not provide any information about the Cybersecurity Awareness Platform for College Students.",
+      "label": "RELEVANT"
     },
     {
       "id": "q06",
-      "question": "Catalog code for the Wireless Sensor Network for Indoor Air Quality Monitoring",
+      "question": "What is the catalog code for Secure Role-Based Access Control for Student Portals?",
       "corpus": "catalog",
       "retrieved": [
-        "paper-36",
-        "paper-23",
-        "paper-41",
-        "paper-4",
-        "paper-29"
+        "paper-893",
+        "paper-942",
+        "paper-849",
+        "paper-882",
+        "paper-885"
       ],
-      "answer": "The catalog code for the \"Wireless Sensor Network for Indoor Air Quality Monitoring\" is CEIT-EE-24-01, as stated in document [1]. This document provides the necessary information about the paper, including its authors, research adviser, technical adviser, dean, department, publication year, paper type, and catalog code. \n\nThere is no conflicting information regarding the catalog code for this specific paper in the other documents [2], [3], [4], and [5], as they refer to different research papers. Therefore, the catalog code CEIT-EE-24-01 is the correct code for the \"Wireless Sensor Network for Indoor Air Quality Monitoring\" paper.",
+      "answer": "The catalog code for \"Secure Role-Based Access Control for Student Portals\" can be found in three different documents: [1], [2], and [3]. \n\nAccording to [1], the catalog code is CEIT-IT-14-11. \nHowever, [2] states that the catalog code is CEIT-CE-08-12, which is associated with the Civil Engineering department, whereas [1] and [3] are associated with the Information Technology department. \nMoreover, [3] provides a different catalog code, CEIT-IT-08-11, which is also from the Information Technology department but with a different publication year.\n\nGiven the variations, there are two possible catalog codes from the Information Technology department: CEIT-IT-14-11 [1] and CEIT-IT-08-11 [3], and one from the Civil Engineering department: CEIT-CE-08-12 [2]. \n\nNote that [4] and [5] do not provide relevant information for this query as they refer to different research topics.",
       "label": "RELEVANT"
     },
     {
       "id": "q28",
-      "question": "Recent engineering research from 2020 onwards",
+      "question": "What papers did Julien Schinner write?",
       "corpus": "catalog",
       "retrieved": [
-        "paper-5",
-        "paper-4",
-        "paper-18",
-        "paper-46",
-        "paper-9"
+        "paper-785",
+        "paper-789",
+        "paper-793",
+        "paper-808",
+        "paper-943"
       ],
-      "answer": "I don't have enough information to provide recent engineering research from 2020 onwards as the documents provided only contain information on research and publications up to 2017 [1], [2], [3], [4], [5]. None of the documents mention research conducted in 2020 or later.",
-      "label": "NON_RELEVANT"
+      "answer": "Julien Schinner wrote the following papers: \n\n1. \"Autem non iusto sapiente repellat et mollitia\" [1], a Practicum paper published in 2007, \n2. \"Et velit optio enim sit est\" [2], a Thesis paper published in 2005, \n3. \"Ut eos nam est voluptas corporis perferendis velit\" [3], a Capstone paper published in 2020, \n4. \"Alias est dolorem iusto similique id dignissimos\" [4], a Report paper published in 2014, \n5. \"Energy-Efficient Street Lighting Control Using Microcontrollers\" [5], a Practicum paper published in 2024.\n\nThese papers were written in collaboration with other authors and published in different departments, including Civil Engineering [1], Electrical Engineering [2, 3, 5], and Information Technology [4].\n\nReferences:\n[1] Autem non iusto sapiente repellat et mollitia.\n[2] Et velit optio enim sit est.\n[3] Ut eos nam est voluptas corporis perferendis velit.\n[4] Alias est dolorem iusto similique id dignissimos.\n[5] Energy-Efficient Street Lighting Control Using Microcontrollers",
+      "label": "RELEVANT"
     },
     {
       "id": "q39",
-      "question": "Anong year ginawa yung web-based thesis catalog?",
+      "question": "What is Wireless Sensor Network for Indoor Air Quality Monitoring about?",
       "corpus": "catalog",
       "retrieved": [
-        "paper-11",
-        "paper-2",
-        "paper-46",
-        "paper-27",
-        "paper-40"
+        "paper-933",
+        "paper-898",
+        "paper-920",
+        "paper-852",
+        "paper-891"
       ],
-      "answer": "Ang Web-Based Thesis Catalog ay ginawa noong 2013, ayon sa [1]. Ito ay isang Research paper na may catalog code na CEIT-IT-13-02 at nakalista sa departamento ng Information Technology. Walang ibang impormasyon na nakalista sa ibang mga dokumento tungkol sa petsa ng paggawa ng Web-Based Thesis Catalog. \n\nSa ibang mga dokumento, mayroong mga kaugnay na proyekto tulad ng Web-Based Academic Resource Tracking and Borrowing System [2] noong 2009, Web-Based Engineering Project Collaboration Platform [3] noong 2012, Web-Based Alumni Information and Engagement Portal [4] noong 2004, at Development of a Digital Document Archiving System [5] noong 2021, ngunit wala sa mga ito ang direktang nauugnay sa Web-Based Thesis Catalog. \n\nKaya, ayon sa [1], ang Web-Based Thesis Catalog ay ginawa noong 2013.",
-      "label": "RELEVANT"
+      "answer": "Wireless Sensor Network for Indoor Air Quality Monitoring is a feasibility study [1] conducted by Prof. Wendell Torp, Prof. Karson Lynch DDS, Dr. Bo Mitchell V, and Prof. Molly Mante in 2003. The study is part of the Electrical Engineering department and has a catalog code of CEIT-EE-03-09. Unfortunately, the provided documents do not contain information about the contents or findings of the study.\n\nI don't have enough information to provide a detailed description of what the study is about, as the documents only provide metadata about the paper, such as the authors, publication year, and catalog code. The actual content and purpose of the study are not mentioned in the provided documents [1].",
+      "label": "PARTLY_RELEVANT"
     }
   ]
 }

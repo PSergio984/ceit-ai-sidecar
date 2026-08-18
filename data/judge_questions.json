@@ -1,46 +1,211 @@
 {
-  "version": 1,
-  "description": "LLM-as-judge evaluation questions. All 40 are answerable from the bundled corpus/catalog.json (48 synthetic papers). Mix: catalog codes, exact/paraphrase titles, authors, departments, paper types, years, recommendations, and Taglish.",
+  "version": 2,
+  "generated_at": "2026-08-18T18:01:38.332772+00:00",
+  "seed": 20260819,
+  "corpus": {
+    "file": "corpus/catalog.json",
+    "documents": 959
+  },
   "questions": [
-    { "id": "q01", "question": "What is the catalog code for the Smart Library Management System paper?", "corpus": "catalog" },
-    { "id": "q02", "question": "Find the paper with catalog code CEIT-IT-09-01", "corpus": "catalog" },
-    { "id": "q03", "question": "What is the code of the Flood Monitoring and Early Warning System Using IoT Sensors?", "corpus": "catalog" },
-    { "id": "q04", "question": "Look up CEIT-EE-19-01", "corpus": "catalog" },
-    { "id": "q05", "question": "What paper has the code CEIT-CE-24-01?", "corpus": "catalog" },
-    { "id": "q06", "question": "Catalog code for the Wireless Sensor Network for Indoor Air Quality Monitoring", "corpus": "catalog" },
-    { "id": "q07", "question": "Which paper is CEIT-IT-21-01?", "corpus": "catalog" },
-    { "id": "q08", "question": "CEIT-CE-04-02 is what paper?", "corpus": "catalog" },
-    { "id": "q09", "question": "Tell me about the Web-Based Thesis Catalog and Search Platform", "corpus": "catalog" },
-    { "id": "q10", "question": "Is there a paper about a secure QR code attendance system?", "corpus": "catalog" },
-    { "id": "q11", "question": "What do you have on smart waste segregation using computer vision?", "corpus": "catalog" },
-    { "id": "q12", "question": "A paper about a campus navigation mobile app?", "corpus": "catalog" },
-    { "id": "q13", "question": "Solar powered charging station for campus devices", "corpus": "catalog" },
-    { "id": "q14", "question": "Do you have anything about an automated irrigation controller?", "corpus": "catalog" },
-    { "id": "q15", "question": "Paper about a cybersecurity awareness platform for college students", "corpus": "catalog" },
-    { "id": "q16", "question": "Looking for the voice-assisted campus information system", "corpus": "catalog" },
-    { "id": "q17", "question": "Portable water quality testing device design", "corpus": "catalog" },
-    { "id": "q18", "question": "Something about smart parking slot detection", "corpus": "catalog" },
-    { "id": "q19", "question": "Papers by Lisandro Grimes", "corpus": "catalog" },
-    { "id": "q20", "question": "Which papers did Mrs. Cathrine Reichert write?", "corpus": "catalog" },
-    { "id": "q21", "question": "Show me papers by Braden Fritsch", "corpus": "catalog" },
-    { "id": "q22", "question": "Papers authored by Nels Reynolds", "corpus": "catalog" },
-    { "id": "q23", "question": "Do you have papers by Alysson Von?", "corpus": "catalog" },
-    { "id": "q24", "question": "Papers by Moshe Stracke", "corpus": "catalog" },
-    { "id": "q25", "question": "Show me papers from the Information Technology department", "corpus": "catalog" },
-    { "id": "q26", "question": "Do you have any civil engineering papers?", "corpus": "catalog" },
-    { "id": "q27", "question": "What theses are in the catalog?", "corpus": "catalog" },
-    { "id": "q28", "question": "Recent engineering research from 2020 onwards", "corpus": "catalog" },
-    { "id": "q29", "question": "Capstone projects in the library", "corpus": "catalog" },
-    { "id": "q30", "question": "Which papers deal with IoT?", "corpus": "catalog" },
-    { "id": "q31", "question": "I'm looking for something to read about machine learning, can you recommend a paper?", "corpus": "catalog" },
-    { "id": "q32", "question": "Can you recommend a paper about energy or solar?", "corpus": "catalog" },
-    { "id": "q33", "question": "Recommend a good thesis about monitoring systems", "corpus": "catalog" },
-    { "id": "q34", "question": "Any book on cybersecurity you'd suggest?", "corpus": "catalog" },
-    { "id": "q35", "question": "May alam ka bang paper tungkol sa flood monitoring?", "corpus": "catalog" },
-    { "id": "q36", "question": "Ano ang catalog code ng smart library management system?", "corpus": "catalog" },
-    { "id": "q37", "question": "Merong ba tayong paper about QR code attendance?", "corpus": "catalog" },
-    { "id": "q38", "question": "Sino ang may-akda ng intelligent traffic monitoring para sa campus?", "corpus": "catalog" },
-    { "id": "q39", "question": "Anong year ginawa yung web-based thesis catalog?", "corpus": "catalog" },
-    { "id": "q40", "question": "Paki-explain yung paper tungkol sa solar powered charging station", "corpus": "catalog" }
+    {
+      "id": "q01",
+      "question": "What is the catalog code for IoT-Based Environmental Monitoring for Academic Buildings?",
+      "corpus": "catalog"
+    },
+    {
+      "id": "q02",
+      "question": "What is the catalog code for Energy-Efficient Street Lighting Control Using Microcontrollers?",
+      "corpus": "catalog"
+    },
+    {
+      "id": "q03",
+      "question": "What is the catalog code for Secure Role-Based Access Control for Student Portals?",
+      "corpus": "catalog"
+    },
+    {
+      "id": "q04",
+      "question": "What is the catalog code for Intelligent Traffic Monitoring for Campus Roadways?",
+      "corpus": "catalog"
+    },
+    {
+      "id": "q05",
+      "question": "What is the catalog code for Web-Based Thesis Catalog and Search Platform?",
+      "corpus": "catalog"
+    },
+    {
+      "id": "q06",
+      "question": "What is the catalog code for Secure Role-Based Access Control for Student Portals?",
+      "corpus": "catalog"
+    },
+    {
+      "id": "q07",
+      "question": "What is the catalog code for Cybersecurity Awareness Platform for College Students?",
+      "corpus": "catalog"
+    },
+    {
+      "id": "q08",
+      "question": "What is the catalog code for Intelligent Traffic Monitoring for Campus Roadways?",
+      "corpus": "catalog"
+    },
+    {
+      "id": "q09",
+      "question": "What is the catalog code for Smart Classroom Occupancy Monitoring Using Sensor Networks?",
+      "corpus": "catalog"
+    },
+    {
+      "id": "q10",
+      "question": "What is the catalog code for IoT-Based Environmental Monitoring for Academic Buildings?",
+      "corpus": "catalog"
+    },
+    {
+      "id": "q11",
+      "question": "CEIT-EE-19-11 is what paper?",
+      "corpus": "catalog"
+    },
+    {
+      "id": "q12",
+      "question": "CEIT-CE-02-22 is what paper?",
+      "corpus": "catalog"
+    },
+    {
+      "id": "q13",
+      "question": "CEIT-EE-13-12 is what paper?",
+      "corpus": "catalog"
+    },
+    {
+      "id": "q14",
+      "question": "CEIT-CE-10-06 is what paper?",
+      "corpus": "catalog"
+    },
+    {
+      "id": "q15",
+      "question": "CEIT-EE-06-18 is what paper?",
+      "corpus": "catalog"
+    },
+    {
+      "id": "q16",
+      "question": "CEIT-IT-07-11 is what paper?",
+      "corpus": "catalog"
+    },
+    {
+      "id": "q17",
+      "question": "CEIT-EE-05-20 is what paper?",
+      "corpus": "catalog"
+    },
+    {
+      "id": "q18",
+      "question": "CEIT-EE-03-08 is what paper?",
+      "corpus": "catalog"
+    },
+    {
+      "id": "q19",
+      "question": "CEIT-CE-15-11 is what paper?",
+      "corpus": "catalog"
+    },
+    {
+      "id": "q20",
+      "question": "CEIT-EE-09-11 is what paper?",
+      "corpus": "catalog"
+    },
+    {
+      "id": "q21",
+      "question": "What papers did Mohammad Harber write?",
+      "corpus": "catalog"
+    },
+    {
+      "id": "q22",
+      "question": "What papers did Vicenta Schmeler write?",
+      "corpus": "catalog"
+    },
+    {
+      "id": "q23",
+      "question": "What papers did Magnus Hand DDS write?",
+      "corpus": "catalog"
+    },
+    {
+      "id": "q24",
+      "question": "What papers did River Crona III write?",
+      "corpus": "catalog"
+    },
+    {
+      "id": "q25",
+      "question": "What papers did Carleton Hermiston write?",
+      "corpus": "catalog"
+    },
+    {
+      "id": "q26",
+      "question": "What papers did Matt Carter IV write?",
+      "corpus": "catalog"
+    },
+    {
+      "id": "q27",
+      "question": "What papers did Margot Schimmel write?",
+      "corpus": "catalog"
+    },
+    {
+      "id": "q28",
+      "question": "What papers did Julien Schinner write?",
+      "corpus": "catalog"
+    },
+    {
+      "id": "q29",
+      "question": "What papers were published by the Civil Engineering department in 2024?",
+      "corpus": "catalog"
+    },
+    {
+      "id": "q30",
+      "question": "What papers were published by the Civil Engineering department in 2009?",
+      "corpus": "catalog"
+    },
+    {
+      "id": "q31",
+      "question": "What papers were published by the Electrical Engineering department in 2003?",
+      "corpus": "catalog"
+    },
+    {
+      "id": "q32",
+      "question": "What papers were published by the Information Technology department in 2016?",
+      "corpus": "catalog"
+    },
+    {
+      "id": "q33",
+      "question": "What papers were published by the Civil Engineering department in 2017?",
+      "corpus": "catalog"
+    },
+    {
+      "id": "q34",
+      "question": "What papers were published by the Information Technology department in 2023?",
+      "corpus": "catalog"
+    },
+    {
+      "id": "q35",
+      "question": "What is Machine Learning Approach to Academic Risk Classification about?",
+      "corpus": "catalog"
+    },
+    {
+      "id": "q36",
+      "question": "What is Structural Health Monitoring Using Wireless Sensor Networks about?",
+      "corpus": "catalog"
+    },
+    {
+      "id": "q37",
+      "question": "What is Smart Classroom Occupancy Monitoring Using Sensor Networks about?",
+      "corpus": "catalog"
+    },
+    {
+      "id": "q38",
+      "question": "What is IoT-Based Environmental Monitoring for Academic Buildings about?",
+      "corpus": "catalog"
+    },
+    {
+      "id": "q39",
+      "question": "What is Wireless Sensor Network for Indoor Air Quality Monitoring about?",
+      "corpus": "catalog"
+    },
+    {
+      "id": "q40",
+      "question": "What is Smart Classroom Occupancy Monitoring Using Sensor Networks about?",
+      "corpus": "catalog"
+    }
   ]
 }
