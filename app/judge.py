@@ -21,7 +21,7 @@ from typing import TYPE_CHECKING
 
 from .config import settings
 from .rag import MAX_DOC_CHARS, RagService
-from .search import HybridSearch
+from .search import RRF_K, HybridSearch
 
 if TYPE_CHECKING:
     from openai import OpenAI
@@ -98,11 +98,14 @@ class LLMJudge:
         self._model = model or settings.llm_model
         self._max_tokens = max_tokens or 32
 
-    def _ensure_client(self) -> OpenAI:
-        if self._client is None:
-            from openai import OpenAI
+    @property
+    def model(self) -> str:
+        return self._model
 
-            self._client = OpenAI(base_url=self._base_url, api_key=self._api_key)
+    def _ensure_client(self) -> OpenAI:
+        from .llm import ensure_openai_client
+
+        self._client = ensure_openai_client(self._client, self._base_url, self._api_key)
         return self._client
 
     def judge(self, question: str, answer: str, docs: list[dict]) -> dict:
@@ -157,7 +160,7 @@ def run_judge(
     for question in questions:
         results = engine.rrf_search(
             question["question"],
-            k=60,
+            k=RRF_K,
             limit=top_k,
             corpus=question.get("corpus"),
             include_text=True,
@@ -179,7 +182,7 @@ def run_judge(
     if out is not None:
         report = {
             "generated_at": datetime.now(UTC).isoformat(),
-            "model": judge._model,
+            "model": judge.model,
             "top_k": top_k,
             "questions_answered": len(records),
             **aggregate_judge_results(records),
@@ -232,7 +235,7 @@ def main() -> int:
     if not args.json:
         print(
             f"LLM-as-judge: {len(questions)} questions | answerer+judge model "
-            f"{judge._model} | top_k={args.top_k}"
+            f"{judge.model} | top_k={args.top_k}"
         )
     records = run_judge(
         questions,
@@ -250,7 +253,7 @@ def main() -> int:
             json.dumps(
                 {
                     "generated_at": datetime.now(UTC).isoformat(),
-                    "model": judge._model,
+                    "model": judge.model,
                     "top_k": args.top_k,
                     **summary,
                 },

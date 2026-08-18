@@ -187,6 +187,13 @@ docker compose up --build
 | Prometheus | http://localhost:9090      | —                         |
 | Grafana    | http://localhost:3000      | `admin` / `admin`         |
 
+Build the index once (the bundled corpus makes this standalone) so the
+dashboard's "Indexed documents" panel shows real coverage:
+
+```bash
+curl -X POST -H "X-Sidecar-Token: $SIDECAR_TOKEN" http://localhost:8310/index/rebuild
+```
+
 Open Grafana → **CEIT AI Sidecar** dashboard (6 panels). See
 [Monitoring and feedback](#monitoring-and-feedback).
 
@@ -201,6 +208,31 @@ The sidecar also runs on [FastAPI Cloud](https://fastapi.cloud) via
    (scheduled hourly) uploads the export to `POST /corpus/upload`, which
    writes the files under `CORPUS_PATH` and rebuilds atomically.
 3. Point the Laravel app at `SIDECAR_URL=https://ceit-ai-sidecar.fastapicloud.dev`.
+
+## Walkthrough
+
+A 5-minute end-to-end tour (local run):
+
+1. **Start and build the index** — `uv run uvicorn app.main:app --port 8310`, then
+   `POST /index/rebuild` with the token. `/health` flips to `ok` with 48
+   documents embedded.
+2. **Hybrid search** — `POST /search {"query": "flood monitoring using iot sensors"}`
+   returns paper-10 first (ranked by both BM25 and semantic, fused by RRF).
+   Try an exact code: `{"query": "CEIT-IT-21-01"}` — the matching document is
+   pinned to rank 1 (`"pinned": true`).
+3. **Grounded chat** — `POST /chat/stream {"query": "what papers did Lisandro
+   Grimes write?"}` streams an SSE answer with `event: activity` frames, chunk
+   deltas, and a final `event: citations` frame listing the numbered documents.
+   Ask something off-corpus ("recipes for a birthday cake") and it refuses with
+   zero LLM calls.
+4. **Feedback** — `POST /feedback {"query": "...", "rating": "up"}` appends a
+   JSONL record and moves the Prometheus counters.
+5. **Monitoring** — `GET /metrics` shows the Prometheus exposition; with the
+   compose stack up, Grafana charts all of it (traffic, latency p95, feedback,
+   index coverage) on one dashboard.
+6. **Evaluations** — `uv run python -m app.eval --with-rerank` prints the
+   multi-approach retrieval comparison; `uv run python -m app.judge --sample 10`
+   runs the LLM-as-judge answer scoring.
 
 ## Endpoints
 
@@ -237,11 +269,14 @@ The LLM provider is OpenRouter via the openai SDK
 
 [`app/eval.py`](app/eval.py) scores **three retrieval approaches** on the same
 27-case golden set (`data/golden_dataset.json`) through the same seam
-(`HybridSearch.rrf_search(method=...)`):
+(`HybridSearch.rrf_search(method=...)`), plus — with `--with-rerank` — the
+**shipped /search pipeline** (hybrid retrieval + blend re-ranking of the top-k,
+deterministic, no LLM):
 
 ```bash
-uv run python -m app.eval            # human-readable, includes comparison table
-uv run python -m app.eval --json     # machine-readable report
+uv run python -m app.eval                # human-readable, includes comparison table
+uv run python -m app.eval --json         # machine-readable report
+uv run python -m app.eval --with-rerank  # also score the shipped pipeline
 ```
 
 Current results (k=5, 27 cases — catalog codes, exact/paraphrase titles,
@@ -249,15 +284,21 @@ authors, departments, years, plus 5 negative "should return nothing" cases):
 
 | Approach | P@5   | R@5   | F1@5  | Top-1 | Neg-pass |
 |----------|-------|-------|-------|-------|----------|
-| **hybrid** (production) | 0.4636 | 0.8019 | 0.4492 | **0.9545** | **1.0** |
+| **hybrid** (production retrieval) | 0.4636 | 0.8019 | 0.4492 | **0.9545** | **1.0** |
 | bm25     | 0.4818 | 0.7940 | 0.4655 | 0.9091 | 1.0 |
 | semantic | 0.2909 | 0.4816 | 0.2632 | 0.5909 | 1.0 |
+| hybrid + blend re-rank | 0.4636 | 0.8019 | 0.4492 | 0.9545 | 1.0 |
 
 This evaluation measures the **raw retrieval layer** (deterministic — no LLM,
-no rewrite, no re-ranking), which is exactly what the rubric's retrieval
-evaluation asks for. Query rewriting and re-ranking run on top at request time
-(see [Best-practice extras](#best-practice-extras)); they only change the
-top-k ordering of what this table ranks.
+no rewrite), which is exactly what the rubric's retrieval evaluation asks for.
+Query rewriting and re-ranking run on top at request time (see
+[Best-practice extras](#best-practice-extras)); they only change the top-k
+ordering of what this table ranks. The `--with-rerank` row shows the
+deterministic half of that pipeline is **measured, not assumed**: it preserves
+every hybrid outcome (the exact-code pin now survives re-ranking — see below).
+Caveat: the eval re-ranks the same k=5 window it scored, while `/search`
+defaults to a 10-document window — re-ranking a wider window can surface
+documents that rank 6–10 at retrieval.
 
 **Winner rule (documented, stable):** for a library assistant the primary
 quality gates are **top-1 rate** (the right document surfaces first — critical
@@ -272,12 +313,22 @@ anchor the pin and rely on plain hybrid retrieval — the
 [LLM-as-judge](#2-llm-as-judge-answer-evaluation) run below surfaces those as
 the harder cases (q07/q08).
 
-**Honest caveat:** pure BM25 edges hybrid on F1@5 (0.4655 vs 0.4492) — driven
-by a single `papers by <author>` case where the semantic channel's noise
-pushes the author's papers down (BM25 F1 0.89 vs hybrid 0.22). That is exactly
-the gap the **best-practice extras** close: query rewriting strips the
-"papers by" framing into the bare name (letting BM25 dominate), and the
-re-ranker re-orders the top-k (see [Best-practice extras](#best-practice-extras)).
+**Honest caveat — measured, not claimed:** pure BM25 edges hybrid on F1@5
+(0.4655 vs 0.4492) — driven by a single `papers by <author>` case where the
+semantic channel's noise pushes the author's papers down (BM25 F1 0.89 vs
+hybrid 0.22). Measuring the shipped pipeline showed two things: (1) the blend
+re-ranker **does not** recover that case — all five top-k candidates are
+both-retriever docs, so its consensus tie-break keeps the hybrid order — and
+(2) it previously *broke* the code pin (top-1 0.82), which is now fixed: the
+pin is a hard exact-match rule that re-ranking must preserve (regression-tested,
+`"pinned": true` in the search response). The author-case gap is a
+**retrieval-pool** problem (the relevant papers rank 1–4 by BM25 but are
+diluted by fusion), which is what the **query rewriting** extra targets — it
+strips the "papers by" framing into the bare name so BM25 dominates. The
+rewrite path is LLM-dependent (needs a live key), so it is not part of the
+deterministic retrieval eval; the LLM-as-judge run below measures grounded
+answer quality over raw hybrid retrieval (rewrite and re-ranking are not
+applied inside it either).
 
 By category (hybrid):
 
@@ -312,7 +363,9 @@ Results are recorded to `data/judge_results.json`. Current recorded run
 - **`GET /health`** — index coverage + staleness (`documents == embedded`,
   `source_generated_at`).
 - **`GET /metrics`** — Prometheus text exposition:
-  - `ceit_searches_total`, `ceit_rebuilds_total` (counters)
+  - `ceit_searches_total` (API searches) + `ceit_chat_searches_total`
+    (retrievals executed inside `/chat/stream`) — counters
+  - `ceit_rebuilds_total` (counter)
   - `ceit_search_duration_seconds` (histogram with latency buckets)
   - `ceit_feedback_total{rating="up"|"down"}` (counters)
   - `ceit_index_documents` (gauge), `ceit_last_rebuild_timestamp_seconds`
@@ -320,11 +373,17 @@ Results are recorded to `data/judge_results.json`. Current recorded run
   doc ids; appends one JSONL line to `FEEDBACK_PATH` (`var/feedback.jsonl`)
   and feeds the `ceit_feedback_total` counters.
 - **Grafana dashboard** — `docker compose up --build` provisions a "CEIT AI
-  Sidecar" dashboard with **6 charts**: search requests/sec, latency p95,
-  latency average, feedback up/down per sec, indexed documents, and index
-  rebuilds total. Provisioning lives in [`grafana/`](grafana).
+  Sidecar" dashboard with **6 charts**: retrieval traffic (API + chat) per
+  sec, latency p95, latency average, feedback up/down per sec, indexed
+  documents, and index rebuilds total. Provisioning lives in
+  [`grafana/`](grafana).
 
 ![Grafana dashboard — CEIT AI Sidecar](docs/screenshots/grafana-dashboard.png)
+
+The token-gated API surface (all seven endpoints) is documented live by the
+framework at `/docs`:
+
+![API documentation — Swagger UI](docs/screenshots/api-docs.png)
 
 ## Best-practice extras
 
@@ -369,6 +428,7 @@ app/
   rewrite.py    # QueryRewriter: LLM query rewriting with safe fallback
   rerank.py     # Reranker: blend + LLM listwise re-ranking
   judge.py      # LLM-as-judge answer evaluation
+  llm.py        # shared lazy OpenRouter client factory
   eval.py       # golden-set retrieval evaluation + multi-approach comparison
   config.py     # pydantic-settings (env / .env)
   health.py     # /health assembly

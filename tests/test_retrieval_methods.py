@@ -10,31 +10,18 @@ member/ordering reflects ONLY the selected approach:
 from __future__ import annotations
 
 import numpy as np
+from conftest import build_test_index, embed_from
 
-from app.ingest import load_documents
-from app.rebuild import build_index
 from app.search import HybridSearch
 
 
 def _build_index(tmp_path, corpus_path):
-    cache = tmp_path / "cache"
-    docs = load_documents(corpus_path)
-
-    def embed(docs_):
-        vectors = []
-        for d in docs_:
-            rng = np.random.RandomState(sum(ord(c) for c in d["text"]))
-            v = rng.rand(16).astype(np.float32)
-            v = v / np.linalg.norm(v)
-            vectors.append(v)
-        return np.asarray(vectors, dtype=np.float32)
-
-    build_index(corpus_path, "test-model", cache, embed_fn=embed)
+    cache, docs = build_test_index(tmp_path, corpus_path)
 
     import app.search as search_mod
 
     # Pin the query embedding to doc 1 so semantic ranking is deterministic.
-    target = np.asarray(embed([docs[0]])[0])
+    target = np.asarray(embed_from(docs)([docs[0]])[0])
 
     class FakeQuery:
         def encode(self, texts, normalize_embeddings=True):
@@ -98,6 +85,8 @@ def test_code_pin_is_hybrid_only(tmp_path, corpus_path):
     # embedding is pinned to doc 1), so the code doc is NOT first.
     assert hybrid[0]["id"] == "paper-2"
     assert hybrid[0]["metadata"]["catalog_code"] == "CEIT-EE-25-01"
+    assert hybrid[0]["pinned"] is True
+    assert not any(r.get("pinned") for r in semantic)
     assert semantic[0]["id"] != "paper-2"
 
 

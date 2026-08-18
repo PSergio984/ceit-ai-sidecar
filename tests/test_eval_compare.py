@@ -7,7 +7,7 @@ values are hand-computed literals, not recomputed the way the code does.
 
 from __future__ import annotations
 
-from app.eval import METHODS, aggregate, compare_methods
+from app.eval import METHODS, RRF_K, aggregate, compare_methods
 
 
 def _pos(precision: float, recall: float, f1: float, top1: bool) -> dict:
@@ -105,3 +105,64 @@ def test_compare_methods_returns_methods_in_constant_order():
     }
     report = compare_methods(results)
     assert list(report["methods"]) == ["hybrid", "bm25", "semantic"]
+
+
+def test_compare_methods_reports_extra_methods_after_the_trio():
+    """Variant methods (e.g. hybrid+rerank) are reported after the canonical trio."""
+    results = {
+        "hybrid": [_pos(0.5, 1.0, 0.6667, top1=True)],
+        "bm25": [],
+        "semantic": [],
+        "hybrid+rerank": [_pos(0.8, 1.0, 0.8889, top1=True)],
+    }
+    report = compare_methods(results)
+    assert list(report["methods"]) == ["hybrid", "bm25", "semantic", "hybrid+rerank"]
+    assert report["winner"] == "hybrid+rerank"
+
+
+class _FakeEngine:
+    """rrf_search returns the given docs verbatim (no real index needed)."""
+
+    def __init__(self, docs: list[dict]):
+        self.docs = docs
+
+    def rrf_search(self, query, k=RRF_K, limit=10, filters=None, corpus=None, method="hybrid"):
+        return self.docs[:limit]
+
+
+def _retrieval_doc(doc_id: str, bm25=None, sem=None) -> dict:
+    return {
+        "id": doc_id,
+        "corpus": "catalog",
+        "title": doc_id,
+        "score": 0.5,
+        "bm25_rank": bm25,
+        "semantic_rank": sem,
+        "metadata": {},
+    }
+
+
+def test_evaluate_case_rerank_moves_bm25_only_relevant_doc_to_rank_one():
+    """Blend re-ranking promotes the bm25-only relevant doc above semantic-only
+    noise, flipping top-1 without changing the retrieved doc set (hand-computed
+    blend tiers: both-retrievers < bm25-only < semantic-only)."""
+    from app.eval import evaluate_case
+
+    engine = _FakeEngine(
+        [
+            _retrieval_doc("n1", bm25=None, sem=2),
+            _retrieval_doc("n2", bm25=None, sem=3),
+            _retrieval_doc("n3", bm25=5, sem=None),
+            _retrieval_doc("paper-1", bm25=4, sem=None),
+        ]
+    )
+    case = {"query": "x", "relevant_docs": ["paper-1"], "corpus": "catalog"}
+
+    plain = evaluate_case(engine, case, 5, "hybrid")
+    reranked = evaluate_case(engine, case, 5, "hybrid", rerank=True)
+
+    assert plain["top1_hit"] is False
+    assert reranked["top1_hit"] is True
+    # Same retrieved set -> same precision/recall; only the ordering changed.
+    assert reranked["precision"] == plain["precision"]
+    assert reranked["recall"] == plain["recall"]

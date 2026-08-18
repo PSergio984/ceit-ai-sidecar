@@ -8,35 +8,14 @@ NON_RELEVANT.
 
 from __future__ import annotations
 
+from conftest import FakeClient
+
 from app.judge import (
     JUDGE_LABELS,
     LLMJudge,
     aggregate_judge_results,
     classify,
 )
-
-
-class FakeCompletions:
-    def __init__(self, content: str, fail: bool = False):
-        self.content = content
-        self.fail = fail
-        self.calls: list[dict] = []
-
-    def create(self, **kwargs):
-        self.calls.append(kwargs)
-        if self.fail:
-            raise RuntimeError("provider exploded")
-
-        return type(
-            "Resp",
-            (),
-            {"choices": [type("C", (), {"message": type("M", (), {"content": self.content})()})()]},
-        )()
-
-
-class FakeClient:
-    def __init__(self, content: str, fail: bool = False):
-        self.chat = type("Chat", (), {"completions": FakeCompletions(content, fail)})()
 
 
 def test_labels_are_the_contract_triplet():

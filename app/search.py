@@ -20,6 +20,13 @@ CODE_PIN_RE = re.compile(r"^CEIT-[A-Z]{2}-\d{2}(-\d+)?$", re.IGNORECASE)
 
 AUTHOR_KEYS = ("research_adviser", "technical_adviser")
 
+# Reciprocal Rank Fusion constant (shared across the API, agent, eval, judge).
+RRF_K = 60
+
+
+def _rrf_score(k: int, rank: int) -> float:
+    return 1.0 / (k + rank)
+
 
 def _version_artifacts(cache_dir: Path) -> tuple[int, dict, np.ndarray]:
     """Return (version, docs_by_id, vectors) for the current index state."""
@@ -102,7 +109,7 @@ class HybridSearch:
     def rrf_search(
         self,
         query: str,
-        k: int = 60,
+        k: int = RRF_K,
         limit: int = 10,
         filters: dict | None = None,
         corpus: str | None = None,
@@ -159,7 +166,7 @@ class HybridSearch:
         if method == "bm25":
             candidate_ids = set(bm25_ranks)
             ranked = sorted(candidate_ids, key=lambda did: bm25_ranks[did])
-            scores: dict[str, float] = {did: 1.0 / (k + bm25_ranks[did]) for did in ranked}
+            scores: dict[str, float] = {did: _rrf_score(k, bm25_ranks[did]) for did in ranked}
         elif method == "semantic":
             candidate_ids = set(semantic_scores)
             ranked = sorted(candidate_ids, key=lambda did: semantic_scores[did], reverse=True)
@@ -170,9 +177,9 @@ class HybridSearch:
             for did in candidate_ids:
                 score = 0.0
                 if did in bm25_ranks:
-                    score += 1.0 / (k + bm25_ranks[did])
+                    score += _rrf_score(k, bm25_ranks[did])
                 if did in semantic_scores:
-                    score += 1.0 / (k + self._semantic_rank(semantic_scores, did))
+                    score += _rrf_score(k, self._semantic_rank(semantic_scores, did))
                 scores[did] = score
             ranked = sorted(scores, key=lambda did: scores[did], reverse=True)
 
@@ -184,6 +191,9 @@ class HybridSearch:
 
         # Code-exact pin (D-02 exact-match): matching catalog_code -> rank 1.
         # Hybrid-only: the enhancement that justifies hybrid over pure rankers.
+        # The winning doc is marked `pinned` so later stages (re-ranking) can
+        # preserve the hard exact-match rule instead of undoing it.
+        pinned_id: str | None = None
         if method == "hybrid":
             upper_query = query.upper()
             if CODE_PIN_RE.match(upper_query):
@@ -192,6 +202,7 @@ class HybridSearch:
                     if (meta.get("catalog_code") or "").upper() == upper_query:
                         ranked.remove(did)
                         ranked.insert(0, did)
+                        pinned_id = did
                         break
 
         results = []
@@ -209,6 +220,7 @@ class HybridSearch:
                     if method in ("semantic", "hybrid")
                     else None
                 ),
+                "pinned": pinned_id == did,
                 "metadata": meta,
             }
             if include_text:

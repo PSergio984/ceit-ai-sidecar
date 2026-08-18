@@ -72,12 +72,11 @@ class QueryRewriter:
             rewritten = (response.choices[0].message.content or "").strip()
             return rewritten if rewritten else query
         except Exception as exc:  # noqa: BLE001 - fall back, never break retrieval
-            logger.warning("query rewrite failed, using original query: %r", exc)
+            logger.error("query rewrite failed, using original query: %r", exc)
             return query
 
     def _ensure_client(self) -> OpenAI:
-        if self._client is None:
-            from openai import OpenAI
+        from .llm import ensure_openai_client
 
-            self._client = OpenAI(base_url=self._base_url, api_key=self._api_key)
+        self._client = ensure_openai_client(self._client, self._base_url, self._api_key)
         return self._client

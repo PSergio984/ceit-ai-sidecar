@@ -163,6 +163,39 @@ def test_chat_stream_requires_token(tmp_path, corpus_path):
     assert resp.status_code == 401
 
 
+def test_chat_stream_executed_searches_count_in_metrics(tmp_path, corpus_path):
+    """Executed retrievals inside /chat/stream feed ceit_chat_searches_total.
+
+    An `event: activity` frame is emitted per executed tool search, so the
+    counter must be 1 after a search round and 0 for a direct answer.
+    """
+    import app.main as main_mod
+
+    main_mod._metrics = main_mod._fresh_metrics()
+    tool_call = json.dumps({"query": "school ID"})
+    client = make_client(tmp_path, corpus_path, SSE_DOCS, tool_sequence=[tool_call])
+    resp = client.post(
+        "/chat/stream",
+        json={"query": "school ID"},
+        headers={"X-Sidecar-Token": "test-token"},
+    )
+    assert resp.status_code == 200
+    assert main_mod._metrics["chat_searches_total"] == 1
+    assert (
+        "ceit_chat_searches_total 1"
+        in client.get("/metrics", headers={"X-Sidecar-Token": "test-token"}).text
+    )
+
+    main_mod._metrics = main_mod._fresh_metrics()
+    direct = make_client(tmp_path, corpus_path, SSE_DOCS)
+    direct.post(
+        "/chat/stream",
+        json={"query": "school ID"},
+        headers={"X-Sidecar-Token": "test-token"},
+    )
+    assert main_mod._metrics["chat_searches_total"] == 0
+
+
 def test_empty_retrieval_refusal_is_zero_llm(tmp_path, corpus_path):
     tool_call = json.dumps({"query": "school ID"})
     client = make_client(tmp_path, corpus_path, [], tool_sequence=[tool_call])

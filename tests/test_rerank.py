@@ -8,6 +8,8 @@ Safety contract: `none` and any failure mode leave the original order intact.
 
 from __future__ import annotations
 
+from conftest import FakeClient
+
 from app.rerank import RERANK_PROMPT, Reranker
 
 
@@ -21,27 +23,6 @@ def _doc(doc_id: str, bm25=None, sem=None, title: str = "") -> dict:
         "semantic_rank": sem,
         "metadata": {},
     }
-
-
-class FakeCompletions:
-    def __init__(self, content: str, fail: bool = False):
-        self.content = content
-        self.fail = fail
-
-    def create(self, **kwargs):
-        if self.fail:
-            raise RuntimeError("provider exploded")
-
-        return type(
-            "Resp",
-            (),
-            {"choices": [type("C", (), {"message": type("M", (), {"content": self.content})()})()]},
-        )()
-
-
-class FakeClient:
-    def __init__(self, content: str, fail: bool = False):
-        self.chat = type("Chat", (), {"completions": FakeCompletions(content, fail)})()
 
 
 def test_none_mode_returns_same_order_unchanged():
@@ -92,6 +73,31 @@ def test_llm_mode_garbage_output_preserves_original_order():
     reranker = Reranker(mode="llm", client=FakeClient("no numbers here"))
     order = [d["id"] for d in reranker.rerank("q", docs)]
     assert order == ["p1", "p2"]
+
+
+def test_blend_keeps_pinned_doc_first():
+    """The exact-code pin (D-02) is a hard rule: re-ranking must not undo it."""
+    docs = [
+        _doc("both-a", bm25=1, sem=1),
+        _doc("pinned", bm25=4, sem=None, title=""),
+    ]
+    docs[1]["pinned"] = True
+    reranker = Reranker(mode="blend")
+    order = [d["id"] for d in reranker.rerank("q", docs)]
+    assert order[0] == "pinned"
+
+
+def test_llm_mode_keeps_pinned_docs_first():
+    docs = [
+        _doc("p1", 1, 1),
+        _doc("pinned", 3, 3),
+        _doc("p2", 2, 2),
+    ]
+    docs[1]["pinned"] = True
+    reranker = Reranker(mode="llm", client=FakeClient("1, 3, 2"))
+    order = [d["id"] for d in reranker.rerank("q", docs)]
+    # The LLM placed p1 first, but the pinned doc must stay ahead of everything.
+    assert order[0] == "pinned"
 
 
 def test_rerank_prompt_asks_for_relevance_ordered_numbers():

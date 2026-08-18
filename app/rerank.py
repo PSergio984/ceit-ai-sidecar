@@ -82,12 +82,19 @@ class Reranker:
         self._max_tokens = max_tokens or 128
 
     def rerank(self, query: str, results: list[dict]) -> list[dict]:
-        """Return a re-ordered copy of `results` (never drops or invents docs)."""
+        """Return a re-ordered copy of `results` (never drops or invents docs).
+
+        Documents flagged ``pinned`` (the exact-code pin, D-02) always stay at
+        the front — a hard exact-match rule is never undone by a
+        learned/statistical re-order.
+        """
         if self._mode == "none" or not results:
             return list(results)
+        pinned = [doc for doc in results if doc.get("pinned")]
+        rest = [doc for doc in results if not doc.get("pinned")]
         if self._mode == "llm":
-            return self._llm_rerank(query, list(results))
-        return sorted(results, key=_blend_key)
+            return pinned + self._llm_rerank(query, rest)
+        return pinned + sorted(rest, key=_blend_key)
 
     def _llm_rerank(self, query: str, results: list[dict]) -> list[dict]:
         if self._client is None and not self._api_key:
@@ -117,7 +124,7 @@ class Reranker:
             )
             payload = (response.choices[0].message.content or "").strip()
         except Exception as exc:  # noqa: BLE001 - fall back to original order
-            logger.warning("LLM re-rank failed, keeping original order: %r", exc)
+            logger.error("LLM re-rank failed, keeping original order: %r", exc)
             return results
 
         order = _parse_reorder(payload)
@@ -135,8 +142,7 @@ class Reranker:
         return reordered
 
     def _ensure_client(self) -> OpenAI:
-        if self._client is None:
-            from openai import OpenAI
+        from .llm import ensure_openai_client
 
-            self._client = OpenAI(base_url=self._base_url, api_key=self._api_key)
+        self._client = ensure_openai_client(self._client, self._base_url, self._api_key)
         return self._client

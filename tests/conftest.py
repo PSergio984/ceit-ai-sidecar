@@ -40,6 +40,34 @@ class DeterministicEmbedder:
         return np.asarray(vectors, dtype=np.float32)
 
 
+class FakeCompletions:
+    """One-shot completions double: returns fixed content, records calls.
+
+    Shared by the rewrite/rerank/judge tests — any test that needs a provider
+    double without tool-call support.
+    """
+
+    def __init__(self, content: str = "", fail: bool = False):
+        self.content = content
+        self.fail = fail
+        self.calls: list[dict] = []
+
+    def create(self, **kwargs):
+        self.calls.append(kwargs)
+        if self.fail:
+            raise RuntimeError("provider exploded")
+        return type(
+            "Resp",
+            (),
+            {"choices": [type("C", (), {"message": type("M", (), {"content": self.content})()})()]},
+        )()
+
+
+class FakeClient:
+    def __init__(self, content: str = "", fail: bool = False):
+        self.chat = type("Chat", (), {"completions": FakeCompletions(content, fail)})()
+
+
 def make_corpus(tmp_path: Path) -> Path:
     """Write a small catalog + policies corpus with realistic doc shapes."""
     corpus = tmp_path / "corpus"

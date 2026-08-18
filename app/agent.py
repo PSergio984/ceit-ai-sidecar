@@ -31,7 +31,7 @@ from .rag import (
     build_context,
     chunk_frame,
 )
-from .search import HybridSearch
+from .search import RRF_K, HybridSearch
 
 if TYPE_CHECKING:
     from openai import OpenAI
@@ -176,8 +176,13 @@ def activity_line(args: ToolArgs, executed_rounds: int, effective_corpus: str | 
     return "Searching papers…"
 
 
+# One `event: activity` frame is emitted per EXECUTED search round; the
+# /chat/stream metrics wrapper relies on this to count retrievals.
+ACTIVITY_EVENT_PREFIX = "event: activity\n"
+
+
 def _activity_frame(line: str) -> str:
-    return f"event: activity\ndata: {json.dumps({'text': line}, ensure_ascii=False)}\n\n"
+    return f"{ACTIVITY_EVENT_PREFIX}data: {json.dumps({'text': line}, ensure_ascii=False)}\n\n"
 
 
 def _chunk_frames(text: str) -> Iterator[str]:
@@ -379,7 +384,7 @@ class AgenticLoop:
                     yield _activity_frame(activity_line(args, rounds, effective_corpus))
                     results = engine.rrf_search(
                         query=args.query,
-                        k=60,
+                        k=RRF_K,
                         limit=limit,
                         filters=args.filters.model_dump(exclude_none=True) if args.filters else {},
                         corpus=effective_corpus,

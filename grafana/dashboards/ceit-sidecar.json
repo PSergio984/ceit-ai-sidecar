@@ -11,10 +11,11 @@
     {
       "id": 1,
       "type": "timeseries",
-      "title": "Search requests / sec",
+      "title": "Retrieval traffic (API + chat) / sec",
       "datasource": { "type": "prometheus", "uid": "prometheus" },
       "targets": [
-        { "expr": "rate(ceit_searches_total[5m])", "refId": "A" }
+        { "expr": "rate(ceit_searches_total[5m])", "legendFormat": "api", "refId": "A" },
+        { "expr": "rate(ceit_chat_searches_total[5m])", "legendFormat": "chat", "refId": "B" }
       ],
       "fieldConfig": {
         "defaults": { "custom": { "drawStyle": "line", "fillOpacity": 10, "lineWidth": 2 }, "unit": "reqps" },

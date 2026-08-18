@@ -19,7 +19,8 @@ from collections import defaultdict
 from pathlib import Path
 
 from .config import settings
-from .search import HybridSearch
+from .rerank import Reranker
+from .search import RRF_K, HybridSearch
 
 GOLDEN_PATH = Path(__file__).resolve().parent.parent / "data" / "golden_dataset.json"
 
@@ -32,19 +33,24 @@ def load_golden(path: Path = GOLDEN_PATH) -> dict:
         return json.load(f)
 
 
-def evaluate_case(engine: HybridSearch, case: dict, limit: int, method: str = "hybrid") -> dict:
+def evaluate_case(
+    engine: HybridSearch, case: dict, limit: int, method: str = "hybrid", rerank: bool = False
+) -> dict:
     relevant = set(case.get("relevant_docs", []))
     filters = case.get("filters") or {}
     corpus = case.get("corpus")
 
     retrieved = engine.rrf_search(
         case["query"],
-        k=60,
+        k=RRF_K,
         limit=limit,
         filters=filters,
         corpus=corpus,
         method=method,
     )
+    if rerank and retrieved:
+        # Mirror the shipped /search pipeline: blend re-rank of the top-k.
+        retrieved = Reranker(mode="blend").rerank(case["query"], retrieved)
     retrieved_ids = {r["id"] for r in retrieved}
     top1_id = retrieved[0]["id"] if retrieved else None
 
@@ -133,10 +139,11 @@ def compare_methods(results_by_method: dict[str, list[dict]]) -> dict:
     (2) negative-pass rate — no irrelevant results for "nothing here"
     queries; positive-case F1@k breaks ties. This surfaces hybrid's
     exact-match advantage (code pin + fusion) while still exposing F1@k for
-    every approach in the report. Methods are reported in METHODS order
-    regardless of dict insertion order.
+    every approach in the report. The canonical trio (METHODS) is reported
+    first, then any variant methods (e.g. "hybrid+rerank") in insertion order.
     """
-    methods = {m: aggregate(results_by_method.get(m, [])) for m in METHODS}
+    order = list(METHODS) + [m for m in results_by_method if m not in METHODS]
+    methods = {m: aggregate(results_by_method.get(m, [])) for m in order}
 
     def _key(m: str) -> tuple:
         a = methods[m]
@@ -146,7 +153,11 @@ def compare_methods(results_by_method: dict[str, list[dict]]) -> dict:
             a["avg_f1"] if a["avg_f1"] is not None else -1.0,
         )
 
-    return {"methods": methods, "winner": max(METHODS, key=_key)}
+    return {"methods": methods, "winner": max(order, key=_key)}
+
+
+def _fmt_value(value: float | None) -> str:
+    return f"{value}" if value is not None else "-"
 
 
 def main() -> int:
@@ -162,6 +173,12 @@ def main() -> int:
         default=list(METHODS),
         help="retrieval approaches to compare (default: all)",
     )
+    parser.add_argument(
+        "--with-rerank",
+        action="store_true",
+        help="also evaluate the shipped /search pipeline: hybrid retrieval + "
+        "blend re-ranking of the top-k (deterministic, no LLM)",
+    )
     parser.add_argument("--json", action="store_true", help="Emit machine-readable JSON report")
     args = parser.parse_args()
 
@@ -172,11 +189,18 @@ def main() -> int:
 
     engine = HybridSearch(Path(settings.cache_dir), engine_model())
 
+    methods = list(args.methods)
+    if args.with_rerank and "hybrid" not in methods:
+        methods.append("hybrid")
+
     # Evaluate every case once per requested approach through the same seam.
     results_by_method = {
-        method: [evaluate_case(engine, c, args.limit, method) for c in cases]
-        for method in args.methods
+        method: [evaluate_case(engine, c, args.limit, method) for c in cases] for method in methods
     }
+    if args.with_rerank:
+        results_by_method["hybrid+rerank"] = [
+            evaluate_case(engine, c, args.limit, "hybrid", rerank=True) for c in cases
+        ]
 
     comparison = compare_methods(results_by_method)
 
@@ -245,17 +269,16 @@ def main() -> int:
 
     # Multi-approach comparison table.
     print("\nApproach comparison (same golden set, same seam):")
-    print(f"  {'approach':<10} {'P@k':>6} {'R@k':>6} {'F1':>6} {'top-1':>6} {'neg-pass':>9}")
-    for method in METHODS:
-        agg = comparison["methods"][method]
+    print(f"  {'approach':<16} {'P@k':>6} {'R@k':>6} {'F1':>6} {'top-1':>6} {'neg-pass':>9}")
+    for method, agg in comparison["methods"].items():
         marker = "  <= best" if method == comparison["winner"] else ""
         print(
-            f"  {method:<10} "
-            f"{agg['avg_precision'] if agg['avg_precision'] is not None else '-':>6} "
-            f"{agg['avg_recall'] if agg['avg_recall'] is not None else '-':>6} "
-            f"{agg['avg_f1'] if agg['avg_f1'] is not None else '-':>6} "
-            f"{agg['top1_rate'] if agg['top1_rate'] is not None else '-':>6} "
-            f"{agg['negative_pass_rate'] if agg['negative_pass_rate'] is not None else '-':>9}"
+            f"  {method:<16} "
+            f"{_fmt_value(agg['avg_precision']):>6} "
+            f"{_fmt_value(agg['avg_recall']):>6} "
+            f"{_fmt_value(agg['avg_f1']):>6} "
+            f"{_fmt_value(agg['top1_rate']):>6} "
+            f"{_fmt_value(agg['negative_pass_rate']):>9}"
             f"{marker}"
         )
     print(f"Winner: {comparison['winner']}")

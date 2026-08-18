@@ -13,14 +13,14 @@ from typing import Annotated
 from fastapi import FastAPI, File, Request, UploadFile
 from fastapi.responses import JSONResponse, Response, StreamingResponse
 
-from .agent import AgenticLoop
+from .agent import ACTIVITY_EVENT_PREFIX, AgenticLoop
 from .config import settings
 from .health import assemble_health
 from .rag import RagService
 from .rebuild import rebuild
 from .rerank import Reranker
 from .rewrite import QueryRewriter
-from .search import HybridSearch
+from .search import RRF_K, HybridSearch
 
 app = FastAPI(title="ceit-ai-sidecar", version="0.1.0")
 
@@ -33,6 +33,7 @@ SEARCH_LATENCY_BUCKETS = (0.01, 0.05, 0.1, 0.25, 0.5, 1.0)
 def _fresh_metrics() -> dict:
     return {
         "searches_total": 0,
+        "chat_searches_total": 0,
         "rebuilds_total": 0,
         "feedback_up": 0,
         "feedback_down": 0,
@@ -156,7 +157,7 @@ def search(payload: dict):
     corpus = payload.get("corpus")
     try:
         limit = int(payload.get("limit", 10))
-        k = int(payload.get("k", 60))
+        k = int(payload.get("k", RRF_K))
     except (TypeError, ValueError):
         return _invalid("'limit' and 'k' must be integers")
 
@@ -226,10 +227,26 @@ def chat_stream(payload: dict):
     )
 
     return StreamingResponse(
-        events,
+        _count_chat_searches(events),
         media_type="text/event-stream",
         headers={"Cache-Control": "no-cache", "X-Accel-Buffering": "no"},
     )
+
+
+def _count_chat_searches(events):
+    """Count executed retrievals inside the /chat/stream SSE stream.
+
+    The agent emits exactly one ACTIVITY_EVENT_PREFIX frame per executed
+    search round, so each such frame increments `chat_searches_total` — the
+    dashboard then reflects ALL retrieval traffic (API searches + chat
+    searches), not just POST /search. Direct answers (no tool round) emit no
+    activity frame and count nothing.
+    """
+    for event in events:
+        if event.startswith(ACTIVITY_EVENT_PREFIX):
+            with _metrics_lock:
+                _metrics["chat_searches_total"] += 1
+        yield event
 
 
 @app.post("/index/rebuild")
@@ -343,6 +360,9 @@ def metrics():
             "# HELP ceit_searches_total Total hybrid search requests served.",
             "# TYPE ceit_searches_total counter",
             f"ceit_searches_total {_metrics['searches_total']}",
+            "# HELP ceit_chat_searches_total Retrievals executed inside /chat/stream.",
+            "# TYPE ceit_chat_searches_total counter",
+            f"ceit_chat_searches_total {_metrics['chat_searches_total']}",
             "# HELP ceit_rebuilds_total Total index rebuilds completed.",
             "# TYPE ceit_rebuilds_total counter",
             f"ceit_rebuilds_total {_metrics['rebuilds_total']}",
