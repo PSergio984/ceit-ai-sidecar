@@ -7,7 +7,7 @@ retrieved.
 
 The multi-approach comparison (deliverable D2) scores every retrieval approach
 ("hybrid", "bm25", "semantic") on the same golden set through the same seam
-(``HybridSearch.rrf_search(method=...)``) and reports which approach wins.
+(``SearchBackend.rrf_search(method=...)``) and reports which approach wins.
 """
 
 from __future__ import annotations
@@ -18,9 +18,10 @@ import sys
 from collections import defaultdict
 from pathlib import Path
 
+from .backend import SearchBackend, create_backend
 from .config import settings
 from .rerank import Reranker
-from .search import RRF_K, HybridSearch
+from .search import RRF_K
 
 GOLDEN_PATH = Path(__file__).resolve().parent.parent / "data" / "golden_dataset.json"
 
@@ -34,7 +35,7 @@ def load_golden(path: Path = GOLDEN_PATH) -> dict:
 
 
 def evaluate_case(
-    engine: HybridSearch, case: dict, limit: int, method: str = "hybrid", rerank: bool = False
+    engine: SearchBackend, case: dict, limit: int, method: str = "hybrid", rerank: bool = False
 ) -> dict:
     relevant = set(case.get("relevant_docs", []))
     filters = case.get("filters") or {}
@@ -191,7 +192,7 @@ def main() -> int:
     if args.corpus != "all":
         cases = [c for c in cases if (c.get("corpus") or "all") == args.corpus]
 
-    engine = HybridSearch(Path(settings.cache_dir), engine_model())
+    engine = create_backend(Path(settings.cache_dir), engine_model())
 
     methods = list(args.methods)
     if args.with_rerank and "hybrid" not in methods:

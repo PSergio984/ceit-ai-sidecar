@@ -19,9 +19,10 @@ from datetime import UTC, datetime
 from pathlib import Path
 from typing import TYPE_CHECKING
 
+from .backend import SearchBackend, create_backend
 from .config import settings
 from .rag import MAX_DOC_CHARS, RagService
-from .search import RRF_K, HybridSearch
+from .search import RRF_K
 
 if TYPE_CHECKING:
     from openai import OpenAI
@@ -148,7 +149,7 @@ def aggregate_judge_results(records: list[dict]) -> dict:
 
 def run_judge(
     questions: list[dict],
-    engine: HybridSearch,
+    engine: SearchBackend,
     rag: RagService,
     judge: LLMJudge,
     top_k: int = 5,
@@ -235,7 +236,7 @@ def main() -> int:
         print("no questions to evaluate", file=sys.stderr)
         return 2
 
-    engine = HybridSearch(Path(settings.cache_dir), settings.model_name)
+    engine = create_backend(Path(settings.cache_dir), settings.model_name)
     rag = RagService()
     judge = LLMJudge()
 

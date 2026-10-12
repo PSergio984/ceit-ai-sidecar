@@ -23,6 +23,7 @@ from typing import TYPE_CHECKING, Literal
 
 from pydantic import BaseModel, ConfigDict, Field, ValidationError, field_validator
 
+from .backend import SearchBackend, create_backend
 from .config import settings
 from .rag import (
     MAX_DOC_CHARS,
@@ -31,7 +32,7 @@ from .rag import (
     build_context,
     chunk_frame,
 )
-from .search import RRF_K, HybridSearch
+from .search import RRF_K
 
 if TYPE_CHECKING:
     from openai import OpenAI
@@ -228,7 +229,7 @@ class AgenticLoop:
 
     Constructor takes client/engine/model/max_tokens/prompts with settings
     fallbacks; `client` is lazily materialized (`_ensure_client()`), `engine`
-    defaults to the production HybridSearch wiring (same as main._get_engine).
+    defaults to the production SearchBackend wiring (same as main._get_engine).
     """
 
     def __init__(
@@ -239,7 +240,7 @@ class AgenticLoop:
         api_key: str | None = None,
         model: str | None = None,
         max_tokens: int | None = None,
-        engine: HybridSearch | None = None,
+        engine: SearchBackend | None = None,
         prompts: dict[str, str] | None = None,
         on_search: Callable[[], None] | None = None,
     ):
@@ -261,9 +262,9 @@ class AgenticLoop:
             self._client = ensure_openai_client(self._client, self._base_url, self._api_key)
         return self._client
 
-    def _engine_or_default(self) -> HybridSearch:
+    def _engine_or_default(self) -> SearchBackend:
         if self._engine is None:
-            self._engine = HybridSearch(Path(settings.cache_dir), settings.model_name)
+            self._engine = create_backend(Path(settings.cache_dir), settings.model_name)
         return self._engine
 
     def _final_prompt(

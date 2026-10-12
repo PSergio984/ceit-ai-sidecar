@@ -11,6 +11,9 @@ class Settings(BaseSettings):
     host: str = "127.0.0.1"
     port: int = 8310
     cache_dir: str = "index"
+    # Retrieval backend behind the SearchBackend seam (ADR pending): sqlite
+    # is the shipped FTS5+numpy backend; pgvector is a planned alternative.
+    vector_backend: Literal["sqlite", "pgvector"] = "sqlite"
     llm_base_url: str = "https://openrouter.ai/api/v1"
     llm_api_key: str = ""
     # Comma-separated fallback keys (plain string so pydantic-settings does
