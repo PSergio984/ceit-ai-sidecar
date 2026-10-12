@@ -31,3 +31,13 @@ labels at 32 tokens, so absolute judge numbers are not comparable to production 
 Warm, 27 golden queries x 5 passes, Windows dev machine, in-process (no HTTP). p50/p95 ms:
 bm25 6.5/17.2, semantic 12.1/16.6, hybrid 14.1/28.3, hybrid+rerank 16.2/32.7.
 Working set after warm-up 200 MB, peak 235 MB (loads vectors into RAM).
+
+## Post-refactor check (ticket #4, deterministic tie-break)
+After moving fusion to `app/fusion.py` with a `(-score, id)` tie-break, golden results are identical
+across `PYTHONHASHSEED` 0-3. Versus the frozen baseline: bm25 and semantic are unchanged; hybrid and
+hybrid+rerank precision/recall/F1 are unchanged, and top-1 is 0.7727 (17/22) instead of 0.8182
+(seed 0) / 0.8636. The single changed case is the exact-title query "Energy-Efficient Street Lighting
+Control Using Microcontrollers": paper-914 and paper-943 share that title, the golden set marks only
+paper-943 relevant, and the old hash order happened to put 943 first. The id tie-break picks 914.
+This is a golden-set ambiguity (duplicate titles), not a retrieval regression; the deterministic
+number (0.7727) is the reference for later gates.

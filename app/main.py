@@ -15,13 +15,14 @@ from fastapi import FastAPI, File, Request, UploadFile
 from fastapi.responses import JSONResponse, Response, StreamingResponse
 
 from .agent import AgenticLoop
+from .backend import SearchBackend, create_backend
 from .config import settings
 from .health import assemble_health
 from .rag import RagService
 from .rebuild import load_state, rebuild
 from .rerank import Reranker
 from .rewrite import QueryRewriter
-from .search import RRF_K, HybridSearch
+from .search import RRF_K
 
 logger = logging.getLogger("ceit.sidecar")
 logger.setLevel(logging.INFO)
@@ -55,7 +56,7 @@ def _fresh_metrics() -> dict:
 
 _metrics = _fresh_metrics()
 
-_search_engine: HybridSearch | None = None
+_search_engine: SearchBackend | None = None
 _rag: RagService | None = None
 _agent: AgenticLoop | None = None
 _rewriter: QueryRewriter | None = None
@@ -66,10 +67,10 @@ def _get_cache_dir() -> Path:
     return Path(settings.cache_dir)
 
 
-def _get_engine() -> HybridSearch:
+def _get_engine() -> SearchBackend:
     global _search_engine
     if _search_engine is None:
-        _search_engine = HybridSearch(_get_cache_dir(), settings.model_name)
+        _search_engine = create_backend(_get_cache_dir(), settings.model_name)
     return _search_engine
 
 

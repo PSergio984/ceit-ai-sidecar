@@ -14,19 +14,14 @@ from pathlib import Path
 import numpy as np
 from sqlitesearch import TextSearchIndex, Tokenizer
 
+from . import fusion
 from .config import settings
+from .fusion import RRF_K, fuse, passes_filters, pin_catalog_code, shape_results
 from .ingest import embed_query
 
-CODE_PIN_RE = re.compile(r"^CEIT-[A-Z]{2}-\d{2}(-\d+)?$", re.IGNORECASE)
-
-AUTHOR_KEYS = ("research_adviser", "technical_adviser")
-
-# Reciprocal Rank Fusion constant (shared across the API, agent, eval, judge).
-RRF_K = 60
-
-
-def _rrf_score(k: int, rank: int) -> float:
-    return 1.0 / (k + rank)
+# Re-exports kept for existing importers (`from app.search import ...`).
+CODE_PIN_RE = fusion.CODE_PIN_RE
+_rrf_score = fusion._rrf_score
 
 
 def _version_artifacts(cache_dir: Path) -> tuple[int, dict, np.ndarray]:
@@ -115,12 +110,6 @@ class HybridSearch:
         ids = list(docs_by_id.keys())
         return {doc_id: float(score) for doc_id, score in zip(ids, scores)}
 
-    @staticmethod
-    def _semantic_rank_map(semantic_scores: dict[str, float]) -> dict[str, int]:
-        """1-based rank per doc id by descending cosine (precomputed once)."""
-        order = sorted(semantic_scores, key=semantic_scores.get, reverse=True)
-        return {did: i + 1 for i, did in enumerate(order)}
-
     def rrf_search(
         self,
         query: str,
@@ -168,62 +157,25 @@ class HybridSearch:
         if semantic_scores and max(semantic_scores.values()) < settings.min_semantic_similarity:
             semantic_scores = {}
 
-        # Post-retrieval filtering on expanded candidate lists (D-03).
-        def passes(doc: dict) -> bool:
-            meta = doc.get("metadata") or {}
-            f = filters or {}
-            if f.get("paper_type") and meta.get("paper_type") != f["paper_type"]:
-                return False
-            if f.get("department") and meta.get("department") != f["department"]:
-                return False
-            if f.get("publication_year") and meta.get("publication_year") != int(
-                f["publication_year"]
-            ):
-                return False
-            if f.get("year_from") and int(meta.get("publication_year") or 0) < int(f["year_from"]):
-                return False
-            if f.get("year_to") and int(meta.get("publication_year") or 0) > int(f["year_to"]):
-                return False
-            if f.get("author"):
-                needle = str(f["author"]).lower()
-                if not any(needle in str(name).lower() for name in (meta.get("authors") or [])):
-                    return False
-            if f.get("adviser"):
-                needle = str(f["adviser"]).lower()
-                if not any(needle in str(meta.get(k) or "").lower() for k in AUTHOR_KEYS):
-                    return False
-            return not (corpus and doc.get("corpus") != corpus)
-
-        # Filters apply to each retrieval source BEFORE ranking (D-03): an
+        # Post-retrieval filtering on expanded candidate lists (D-03): an
         # excluded document must not consume a rank position or distort the RRF
         # score of surviving documents. BM25 ranks are re-indexed to contiguous
-        # 1-based ranks; semantic ranks are precomputed once (O(n log n)).
-        surviving_bm25 = [
-            did for did in sorted(bm25_ranks, key=bm25_ranks.get) if passes(docs_by_id[did])
-        ]
-        bm25_ranks = {did: rank for rank, did in enumerate(surviving_bm25, start=1)}
-        semantic_scores = {did: s for did, s in semantic_scores.items() if passes(docs_by_id[did])}
-        sem_rank_map = self._semantic_rank_map(semantic_scores)
+        # 1-based ranks.
+        surviving_bm25 = sorted(bm25_ranks, key=bm25_ranks.get)
+        bm25_ranks = {
+            did: rank
+            for rank, did in enumerate(
+                (d for d in surviving_bm25 if passes_filters(docs_by_id[d], filters, corpus)),
+                start=1,
+            )
+        }
+        semantic_scores = {
+            did: s
+            for did, s in semantic_scores.items()
+            if passes_filters(docs_by_id[did], filters, corpus)
+        }
 
-        if method == "bm25":
-            candidate_ids = set(bm25_ranks)
-            ranked = sorted(candidate_ids, key=lambda did: bm25_ranks[did])
-            scores: dict[str, float] = {did: _rrf_score(k, bm25_ranks[did]) for did in ranked}
-        elif method == "semantic":
-            candidate_ids = set(semantic_scores)
-            ranked = sorted(candidate_ids, key=lambda did: semantic_scores[did], reverse=True)
-            scores = {did: semantic_scores[did] for did in ranked}
-        else:  # hybrid — RRF k=60 fusion.
-            candidate_ids = set(bm25_ranks) | set(semantic_scores)
-            scores = {}
-            for did in candidate_ids:
-                score = 0.0
-                if did in bm25_ranks:
-                    score += _rrf_score(k, bm25_ranks[did])
-                if did in semantic_scores:
-                    score += _rrf_score(k, sem_rank_map[did])
-                scores[did] = score
-            ranked = sorted(scores, key=lambda did: scores[did], reverse=True)
+        ranked, scores, sem_rank_map = fuse(method, k, bm25_ranks, semantic_scores)
 
         if not ranked:
             return []
@@ -232,35 +184,16 @@ class HybridSearch:
         # Hybrid-only: the enhancement that justifies hybrid over pure rankers.
         # The winning doc is marked `pinned` so later stages (re-ranking) can
         # preserve the hard exact-match rule instead of undoing it.
-        pinned_id: str | None = None
-        if method == "hybrid":
-            upper_query = query.upper()
-            if CODE_PIN_RE.match(upper_query):
-                for did in ranked:
-                    meta = docs_by_id[did].get("metadata") or {}
-                    if (meta.get("catalog_code") or "").upper() == upper_query:
-                        ranked.remove(did)
-                        ranked.insert(0, did)
-                        pinned_id = did
-                        break
+        pinned_id = pin_catalog_code(query, ranked, docs_by_id) if method == "hybrid" else None
 
-        results = []
-        for did in ranked[:limit]:
-            doc = docs_by_id[did]
-            meta = doc.get("metadata") or {}
-            result = {
-                "id": doc["id"],
-                "corpus": doc.get("corpus"),
-                "title": doc.get("title"),
-                "score": round(scores[did], 4),
-                "bm25_rank": bm25_ranks.get(did) if method in ("bm25", "hybrid") else None,
-                "semantic_rank": (
-                    sem_rank_map.get(did) if method in ("semantic", "hybrid") else None
-                ),
-                "pinned": pinned_id == did,
-                "metadata": meta,
-            }
-            if include_text:
-                result["text"] = doc.get("text", "")
-            results.append(result)
-        return results
+        return shape_results(
+            ranked,
+            limit,
+            docs_by_id,
+            scores,
+            bm25_ranks,
+            sem_rank_map,
+            method,
+            pinned_id,
+            include_text,
+        )
