@@ -51,13 +51,10 @@ class Settings(BaseSettings):
     def llm_key_list(self) -> list[str]:
         """De-duplicated key list: llm_api_keys entries, then llm_api_key."""
         keys: list[str] = []
-        for raw in self.llm_api_keys.split(","):
+        for raw in [*self.llm_api_keys.split(","), *self.llm_api_key.split(",")]:
             key = raw.strip()
             if key and key not in keys:
                 keys.append(key)
-        single = self.llm_api_key.strip()
-        if single and single not in keys:
-            keys.append(single)
         return keys or [""]
 
 

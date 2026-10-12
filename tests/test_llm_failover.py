@@ -230,3 +230,8 @@ def test_key_values_never_appear_in_logs_or_exceptions(monkeypatch, caplog):
     assert "sk-secret-two" not in logged
     assert "sk-secret-one" not in str(excinfo.value)
     assert "sk-secret-two" not in str(excinfo.value)
+
+
+def test_llm_key_list_splits_comma_separated_llm_api_key():
+    settings = Settings(sidecar_token="t", llm_api_keys="", llm_api_key=" a, b ,a,c ")
+    assert settings.llm_key_list == ["a", "b", "c"]
