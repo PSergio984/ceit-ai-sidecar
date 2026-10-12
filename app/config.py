@@ -13,6 +13,9 @@ class Settings(BaseSettings):
     cache_dir: str = "index"
     llm_base_url: str = "https://openrouter.ai/api/v1"
     llm_api_key: str = ""
+    # Comma-separated fallback keys (plain string so pydantic-settings does
+    # not demand JSON). On 429/402/401 the next key is tried automatically.
+    llm_api_keys: str = ""
     llm_model: str = "meta-llama/llama-3.3-70b-instruct"
     llm_max_tokens: int = 512
     # Query rewriting (LLM) and re-ranking (blend|llm) in the /search flow.
@@ -43,6 +46,16 @@ class Settings(BaseSettings):
     feedback_path: Path = Path("var/feedback.jsonl")
 
     model_config = SettingsConfigDict(env_file=".env")
+
+    @property
+    def llm_key_list(self) -> list[str]:
+        """De-duplicated key list: llm_api_keys entries, then llm_api_key."""
+        keys: list[str] = []
+        for raw in [*self.llm_api_keys.split(","), *self.llm_api_key.split(",")]:
+            key = raw.strip()
+            if key and key not in keys:
+                keys.append(key)
+        return keys or [""]
 
 
 settings = Settings()

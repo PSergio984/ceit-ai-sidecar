@@ -141,9 +141,9 @@ class RagService:
 
     def _ensure_client(self) -> OpenAI:
         if self._client is None:
-            from openai import OpenAI
+            from .llm import ensure_openai_client
 
-            self._client = OpenAI(base_url=self._base_url, api_key=self._api_key)
+            self._client = ensure_openai_client(self._client, self._base_url, self._api_key)
         return self._client
 
     def _messages(self, query: str, results: list[dict], mode: str) -> list[dict]:

@@ -1,0 +1,576 @@
+{
+  "generated_at": "2026-10-12T14:40:14.063382+00:00",
+  "model": "qwen/qwen3.8-27b",
+  "top_k": 5,
+  "questions_answered": 40,
+  "counts": {
+    "RELEVANT": 10,
+    "PARTLY_RELEVANT": 0,
+    "NON_RELEVANT": 30
+  },
+  "total": 40,
+  "relevant_rate": 0.25,
+  "partly_or_better_rate": 0.25,
+  "questions": [
+    {
+      "id": "q01",
+      "question": "What is the catalog code for IoT-Based Environmental Monitoring for Academic Buildings?",
+      "corpus": "catalog",
+      "retrieved": [
+        "paper-887",
+        "paper-956",
+        "paper-930",
+        "paper-861",
+        "paper-871"
+      ],
+      "answer": "The provided documents list multiple entries for \"IoT-Based Environmental Monitoring for Academic Buildings\" with different catalog codes, depending on the department, year, and paper type:\n\n*   **CEIT-CE-13-11**: Civil Engineering Practicum from 2013 [1].\n*   **CEIT-IT-04-19**: Information Technology Capstone from 2004 [2].\n*   **CEIT-EE-23-14**: Electrical Engineering Thesis from 2023 [3].\n*   **CEIT-EE-13-13**: Electrical Engineering Practicum from 2013 [4].\n\nTherefore, there is not a single catalog code; the specific code depends on which of these four documents you are referring to.",
+      "label": "RELEVANT"
+    },
+    {
+      "id": "q02",
+      "question": "What is the catalog code for Energy-Efficient Street Lighting Control Using Microcontrollers?",
+      "corpus": "catalog",
+      "retrieved": [
+        "paper-914",
+        "paper-943",
+        "paper-874",
+        "paper-946",
+        "paper-894"
+      ],
+      "answer": "Based on the provided documents, there are two entries for \"Energy-Efficient Street Lighting Control Using Microcontrollers\" with different catalog codes:\n\n1.  The 2006 Capstone project by Trenton Purdy Jr. et al. has the catalog code **CEIT-EE-06-18** [1].\n2.  The 2024 Practicum project by Julien Schinner et al. has the catalog code **CEIT-EE-24-16** [2].\n\nTherefore, the catalog code depends on the specific publication year and project type.",
+      "label": "NON_RELEVANT"
+    },
+    {
+      "id": "q03",
+      "question": "What is the catalog code for Secure Role-Based Access Control for Student Portals?",
+      "corpus": "catalog",
+      "retrieved": [
+        "paper-893",
+        "paper-942",
+        "paper-849",
+        "paper-882",
+        "paper-885"
+      ],
+      "answer": "The title \"Secure Role-Based Access Control for Student Portals\" appears in three different documents with distinct catalog codes, indicating multiple records associated with this title:\n\n1.  **CEIT-IT-14-11**: A 2014 Practicum in the Information Technology department by Anabelle Schinner, Prof. Milan Fahey, and Elyse Heathcote [1].\n2.  **CEIT-CE-08-12**: A 2008 Capstone project in the Civil Engineering department by Dr. Tracy Kuvalis II and five other co-authors [2].\n3.  **CEIT-IT-08-11**: A 2008 Report in the Information Technology department by Brandon O'Connell, Madelynn Witting Jr., Daisy Leffler, and Mr. Savion Monahan III [3].\n\nTherefore, there are three catalog codes listed for this title depending on the specific publication year and department.",
+      "label": "NON_RELEVANT"
+    },
+    {
+      "id": "q04",
+      "question": "What is the catalog code for Intelligent Traffic Monitoring for Campus Roadways?",
+      "corpus": "catalog",
+      "retrieved": [
+        "paper-872",
+        "paper-847",
+        "paper-908",
+        "paper-878",
+        "paper-891"
+      ],
+      "answer": "Based on the provided documents, there are multiple catalog codes for papers titled \"Intelligent Traffic Monitoring for Campus Roadways,\" differing by department, year, and authors. The specific catalog codes are:\n\n*   **CEIT-IT-17-17** for the 2017 Report from the Information Technology department [1].\n*   **CEIT-EE-13-12** for the 2013 Practicum from the Electrical Engineering department [2].\n*   **CEIT-EE-06-17** for the 2006 Practicum from the Electrical Engineering department [3].\n\nIf you are looking for a specific document, please specify the year or department to identify the correct catalog code.",
+      "label": "NON_RELEVANT"
+    },
+    {
+      "id": "q05",
+      "question": "What is the catalog code for Web-Based Thesis Catalog and Search Platform?",
+      "corpus": "catalog",
+      "retrieved": [
+        "paper-948",
+        "paper-941",
+        "paper-902",
+        "paper-242",
+        "paper-899"
+      ],
+      "answer": "The catalog code for the \"Web-Based Thesis Catalog and Search Platform\" is **CEIT-IT-06-19** [1].",
+      "label": "RELEVANT"
+    },
+    {
+      "id": "q06",
+      "question": "What is the catalog code for Secure Role-Based Access Control for Student Portals?",
+      "corpus": "catalog",
+      "retrieved": [
+        "paper-893",
+        "paper-942",
+        "paper-849",
+        "paper-882",
+        "paper-885"
+      ],
+      "answer": "The provided documents list three different catalog codes for papers titled \"Secure Role-Based Access Control for Student Portals,\" as they appear to be distinct publications based on their metadata (authors, departments, and years):\n\n1.  **CEIT-IT-14-11**: This catalog code belongs to the 2014 Practicum in the Information Technology department, authored by Anabelle Schinner and others [1].\n2.  **CEIT-CE-08-12**: This catalog code belongs to the 2008 Capstone in the Civil Engineering department, authored by Dr. Tracy Kuvalis II and others [2].\n3.  **CEIT-IT-08-11**: This catalog code belongs to the 2008 Report in the Information Technology department, authored by Brandon O'Connell and others [3].\n\nSince the query does not specify the year, department, or authors, there are multiple valid answers depending on which specific paper is being referred to.",
+      "label": "NON_RELEVANT"
+    },
+    {
+      "id": "q07",
+      "question": "What is the catalog code for Cybersecurity Awareness Platform for College Students?",
+      "corpus": "catalog",
+      "retrieved": [
+        "paper-952",
+        "paper-947",
+        "paper-841",
+        "paper-915",
+        "paper-889"
+      ],
+      "answer": "The catalog code for \"Cybersecurity Awareness Platform for College Students\" is **CEIT-EE-08-17** [1].",
+      "label": "RELEVANT"
+    },
+    {
+      "id": "q08",
+      "question": "What is the catalog code for Intelligent Traffic Monitoring for Campus Roadways?",
+      "corpus": "catalog",
+      "retrieved": [
+        "paper-872",
+        "paper-847",
+        "paper-908",
+        "paper-878",
+        "paper-891"
+      ],
+      "answer": "The provided documents list three different catalog codes for items titled \"Intelligent Traffic Monitoring for Campus Roadways,\" differing by department, year, and authors. Therefore, the specific catalog code depends on which version of the report or practicum is being referenced:\n\n1.  The 2017 Report from the Information Technology department has the catalog code **CEIT-IT-17-17** [1].\n2.  The 2013 Practicum from the Electrical Engineering department has the catalog code **CEIT-EE-13-12** [2].\n3.  The 2006 Practicum from the Electrical Engineering department has the catalog code **CEIT-EE-06-17** [3].",
+      "label": "NON_RELEVANT"
+    },
+    {
+      "id": "q09",
+      "question": "What is the catalog code for Smart Classroom Occupancy Monitoring Using Sensor Networks?",
+      "corpus": "catalog",
+      "retrieved": [
+        "paper-891",
+        "paper-852",
+        "paper-926",
+        "paper-920",
+        "paper-933"
+      ],
+      "answer": "The provided documents list multiple academic papers with the title **\"Smart Classroom Occupancy Monitoring Using Sensor Networks\"**, each assigned a different catalog code depending on the specific version, year, and author group. The catalog codes for this title are:\n\n*   **CEIT-EE-23-13**: For the 2023 Feasibility study by Winston Schmeler, Roger Hoeger, and Morton Dibbert [1].\n*   **CEIT-EE-22-15**: For the 2022 Research paper by Jameson Monahan, Mr. Issac Weissnat III, and Alayna Rempel [2].\n*   **CEIT-CE-13-12**: For the 2013 Research paper by Daisy Leffler, Kiara Walsh, Miss Kelsie Mohr Sr., and Reggie Streich DDS [3].\n\nSince the query does not specify the author, year, or type of paper, it is not possible to provide a single unique catalog code without that additional context. Please specify the publication year or authors if you are looking for one specific paper.",
+      "label": "NON_RELEVANT"
+    },
+    {
+      "id": "q10",
+      "question": "What is the catalog code for IoT-Based Environmental Monitoring for Academic Buildings?",
+      "corpus": "catalog",
+      "retrieved": [
+        "paper-887",
+        "paper-956",
+        "paper-930",
+        "paper-861",
+        "paper-871"
+      ],
+      "answer": "Based on the provided documents, there are multiple entries titled \"IoT-Based Environmental Monitoring for Academic Buildings,\" each with a different catalog code depending on the department, year, and paper type:\n\n*   For the Civil Engineering Practicum (2013), the catalog code is **CEIT-CE-13-11** [1].\n*   For the Information Technology Capstone (2004), the catalog code is **CEIT-IT-04-19** [2].\n*   For the Electrical Engineering Thesis (2023), the catalog code is **CEIT-EE-23-14** [3].\n*   For the Electrical Engineering Practicum (2013), the catalog code is **CEIT-EE-13-13** [4].\n\nPlease specify the department, year, or paper type if you are looking for a specific record.",
+      "label": "NON_RELEVANT"
+    },
+    {
+      "id": "q11",
+      "question": "CEIT-EE-19-11 is what paper?",
+      "corpus": "catalog",
+      "retrieved": [
+        "paper-901",
+        "paper-777",
+        "paper-20",
+        "paper-506",
+        "paper-664"
+      ],
+      "answer": "The paper with the catalog code CEIT-EE-19-11 is titled \"Web-Based Alumni Information and Engagement Portal.\" It is a Report produced by the Electrical Engineering department in 2019. The authors are Christiana Kihn, Dr. Cristina Stark V, Vivienne Jacobson, Dr. Rae Schimmel, Dr. Colby Stark, and Josie Hoeger. The research adviser is Ms. Mireille McLaughlin DDS, the technical adviser is Engr. Ms. Briana Champlin Jr., and the dean is Dr. Shania Turcotte. [1]",
+      "label": "RELEVANT"
+    },
+    {
+      "id": "q12",
+      "question": "CEIT-CE-02-22 is what paper?",
+      "corpus": "catalog",
+      "retrieved": [
+        "paper-30",
+        "paper-895",
+        "paper-71",
+        "paper-302",
+        "paper-27"
+      ],
+      "answer": "The catalog code CEIT-CE-02-22 corresponds to the thesis titled **\"Cloud-Based Inventory Management for Engineering Laboratories\"** [2].\n\nKey details about this paper include:\n*   **Authors:** Christop Rau, Milton Zieme, Ms. Miracle Heller I, Elyse Heathcote, and Ms. Marjorie Volkman [2].\n*   **Department:** Civil Engineering [2].\n*   **Publication Year:** 2002 [2].\n*   **Paper Type:** Thesis [2].\n*   **Advisers:** Research Adviser Zora Heaney and Technical Adviser Engr. Eugene White [2].\n*   **Dean:** Dr. Mrs. Lupe Ledner DVM [2].",
+      "label": "NON_RELEVANT"
+    },
+    {
+      "id": "q13",
+      "question": "CEIT-EE-13-12 is what paper?",
+      "corpus": "catalog",
+      "retrieved": [
+        "paper-847",
+        "paper-819",
+        "paper-926",
+        "paper-14",
+        "paper-861"
+      ],
+      "answer": "The paper with the catalog code CEIT-EE-13-12 is titled \"Intelligent Traffic Monitoring for Campus Roadways\". [1]\n\nDetails about the paper include:\n*   **Title:** Intelligent Traffic Monitoring for Campus Roadways\n*   **Authors:** Mr. Colin Bashirian III, Sammy Huel III, Mr. Issac Weissnat III, and Margot Schimmel\n*   **Research Adviser:** Hipolito Hansen\n*   **Technical Adviser:** Engr. Dr. Jarrell Satterfield II\n*   **Dean:** Dr. Anastasia Paucek\n*   **Department:** Electrical Engineering\n*   **Publication Year:** 2013\n*   **Paper Type:** Practicum\n*   **Catalog Code:** CEIT-EE-13-12 [1]",
+      "label": "RELEVANT"
+    },
+    {
+      "id": "q14",
+      "question": "CEIT-CE-10-06 is what paper?",
+      "corpus": "catalog",
+      "retrieved": [
+        "paper-459",
+        "paper-915",
+        "paper-581",
+        "paper-404",
+        "paper-241"
+      ],
+      "answer": "Based on the provided documents, **CEIT-CE-10-06** is the catalog code for the report titled **\"E-Learning Platform with Offline Course Material Access\"** [2].\n\nFor more details:\n*   **Type:** Report\n*   **Department:** Civil Engineering\n*   **Publication Year:** 2010 [2]",
+      "label": "NON_RELEVANT"
+    },
+    {
+      "id": "q15",
+      "question": "CEIT-EE-06-18 is what paper?",
+      "corpus": "catalog",
+      "retrieved": [
+        "paper-914",
+        "paper-301",
+        "paper-417",
+        "paper-420",
+        "paper-860"
+      ],
+      "answer": "The paper with the catalog code **CEIT-EE-06-18** is titled **\"Energy-Efficient Street Lighting Control Using Microcontrollers\"** [1].\n\nHere are the key details from the document:\n*   **Authors:** Trenton Purdy Jr., Zelda Dickinson, Virginie Funk, and Reyes Stracke [1].\n*   **Paper Type:** Capstone [1].\n*   **Department:** Electrical Engineering [1].\n*   **Publication Year:** 2006 [1].\n*   **Advisers:** Miss Alvina Steuber III (Research Adviser) and Engr. Heber McCullough (Technical Adviser) [1].\n*   **Dean:** Dr. Virginie Torphy [1].",
+      "label": "RELEVANT"
+    },
+    {
+      "id": "q16",
+      "question": "CEIT-IT-07-11 is what paper?",
+      "corpus": "catalog",
+      "retrieved": [
+        "paper-407",
+        "paper-367",
+        "paper-583",
+        "paper-844",
+        "paper-551"
+      ],
+      "answer": "The paper with the catalog code CEIT-IT-07-11 is titled **\"Machine Learning Model for Student Performance Prediction\"** [4].\n\nDetails for this document include:\n*   **Authors:** Sallie Beer; Dr. Elody Gleason; Ericka Haag; Mrs. Marisol Cole I; Anjali Sporer DDS; Mr. Richard Schumm I; Reanna Braun [4].\n*   **Department:** Information Technology [4].\n*   **Paper Type:** Thesis [4].\n*   **Publication Year:** 2007 [4].\n*   **Advisers:** Research Adviser Bobbie Bartoletti; Technical Adviser Engr. Benedict Padberg; Dean Dr. Ari Stanton PhD [4].",
+      "label": "NON_RELEVANT"
+    },
+    {
+      "id": "q17",
+      "question": "CEIT-EE-05-20 is what paper?",
+      "corpus": "catalog",
+      "retrieved": [
+        "paper-320",
+        "paper-951",
+        "paper-312",
+        "paper-499",
+        "paper-530"
+      ],
+      "answer": "The paper with the catalog code **CEIT-EE-05-20** is titled **\"Network Performance Monitoring for Academic Computer Laboratories\"** [2].\n\nDetails for this publication include:\n*   **Paper Type:** Practicum\n*   **Department:** Electrical Engineering\n*   **Publication Year:** 2005\n*   **Authors:** Dr. Winona Lakin, Scottie Boyle, Mr. Issac Weissnat III, Josefa Krajcik, and Jaron Moore\n*   **Research Adviser:** Dr. Ernestina Willms IV\n*   **Technical Adviser:** Engr. Carolanne Nikolaus\n*   **Dean:** Dr. Abe Schmitt\n\n[2]",
+      "label": "NON_RELEVANT"
+    },
+    {
+      "id": "q18",
+      "question": "CEIT-EE-03-08 is what paper?",
+      "corpus": "catalog",
+      "retrieved": [
+        "paper-47",
+        "paper-877",
+        "paper-542",
+        "paper-330",
+        "paper-824"
+      ],
+      "answer": "The paper with the catalog code **CEIT-EE-03-08** is titled **\"Machine Learning Model for Student Performance Prediction\"** [2].\n\nKey details from the document include:\n*   **Title:** Machine Learning Model for Student Performance Prediction\n*   **Authors:** Dr. Willa Price, Madie Mayert II, Deangelo Schmeler\n*   **Department:** Electrical Engineering\n*   **Publication Year:** 2003\n*   **Paper Type:** Research\n*   **Research Adviser:** Stevie Mante\n*   **Technical Adviser:** Engr. Ms. Lelah Wyman\n*   **Dean:** Dr. Mrs. Lupe Ledner DVM\n\n[2]",
+      "label": "NON_RELEVANT"
+    },
+    {
+      "id": "q19",
+      "question": "CEIT-CE-15-11 is what paper?",
+      "corpus": "catalog",
+      "retrieved": [
+        "paper-907",
+        "paper-889",
+        "paper-658",
+        "paper-929",
+        "paper-16"
+      ],
+      "answer": "The paper with catalog code **CEIT-CE-15-11** is titled **\"Network Performance Monitoring for Academic Computer Laboratories\"**. [1]\n\nHere are the specific details for this paper:\n*   **Authors:** Chasity Gislason, Khalid Abbott DVM, and Christa Pouros [1]\n*   **Department:** Civil Engineering [1]\n*   **Publication Year:** 2015 [1]\n*   **Paper Type:** Research [1]\n*   **Research Adviser:** Jose Reynolds [1]\n*   **Technical Adviser:** Engr. Dr. Estelle Hickle I [1]\n*   **Dean:** Dr. Miss Kailey Schiller DDS [1]\n\n[1]",
+      "label": "RELEVANT"
+    },
+    {
+      "id": "q20",
+      "question": "CEIT-EE-09-11 is what paper?",
+      "corpus": "catalog",
+      "retrieved": [
+        "paper-746",
+        "paper-894",
+        "paper-509",
+        "paper-468",
+        "paper-797"
+      ],
+      "answer": "The paper with the catalog code **CEIT-EE-09-11** is titled **\"Intelligent Energy Consumption Forecasting for Campus Buildings\"** [2].\n\nKey details about this paper include:\n*   **Department:** Electrical Engineering [2]\n*   **Paper Type:** Thesis [2]\n*   **Publication Year:** 2009 [2]\n*   **Authors:** Prof. Wilber Kozey Sr., Blair Huels, Dr. Willa Price, Miss Estelle Steuber DDS, Prof. Mack Walter Sr., Dr. Garland Turner Jr., and Caleb Rolfson I [2]\n*   **Research Adviser:** Adolfo Auer [2]\n*   **Technical Adviser:** Engr. Josue Prohaska III [2]\n*   **Dean:** Dr. Cale Kuvalis [2]\n\n[2]",
+      "label": "NON_RELEVANT"
+    },
+    {
+      "id": "q21",
+      "question": "What papers did Mohammad Harber write?",
+      "corpus": "catalog",
+      "retrieved": [
+        "paper-656",
+        "paper-725",
+        "paper-602",
+        "paper-680",
+        "paper-626"
+      ],
+      "answer": "Based on the provided documents, Mohammad Harber is listed as an author on the following five papers:\n\n1.  **\"Deleniti nam est soluta culpa ut.\"**\n    *   **Co-authors:** Alfonzo Yundt I, Lucy Corwin\n    *   **Details:** Practicum in Electrical Engineering, published in 2003 [1].\n2.  **\"Alias quia consequatur exercitationem molestiae distinctio ipsa tempora.\"**\n    *   **Co-authors:** Madelyn Howell, Precious O'Hara III\n    *   **Details:** Research paper in Civil Engineering, published in 2017 [2].\n3.  **\"Recusandae adipisci modi quaerat et cumque consequatur.\"**\n    *   **Co-authors:** Jakob Ullrich, Miss Dominique Moen DDS, Chasity Gislason\n    *   **Details:** Research paper in Civil Engineering, published in 2003 [3].\n4.  **\"Natus dolores suscipit vitae qui quas quo.\"**\n    *   **Co-authors:** Ms. Susan Ryan, Mr. Colin Bashirian III, Myrtice Kuphal\n    *   **Details:** Practicum in Information Technology, published in 2009 [4].\n5.  **\"Sequi aliquid natus sunt.\"**\n    *   **Co-authors:** Prof. Valerie Bosco, Emma Blick, Alaina Smitham, Parker Harvey, Arnold Homenick III\n    *   **Details:** Feasibility study in Information Technology, published in 2002 [5].",
+      "label": "NON_RELEVANT"
+    },
+    {
+      "id": "q22",
+      "question": "What papers did Vicenta Schmeler write?",
+      "corpus": "catalog",
+      "retrieved": [
+        "paper-606",
+        "paper-541",
+        "paper-930",
+        "paper-562",
+        "paper-550"
+      ],
+      "answer": "Based on the provided documents, Vicenta Schmeler is listed as an author on the following five papers:\n\n1.  **\"Illo voluptate pariatur vel commodi velit.\"** (2013, Capstone, Electrical Engineering) [1]\n2.  **\"Totam repudiandae numquam blanditiis rerum quidem et.\"** (2005, Report, Information Technology) [2]\n3.  **\"IoT-Based Environmental Monitoring for Academic Buildings\"** (2023, Thesis, Electrical Engineering) [3]\n4.  **\"Vitae mollitia qui natus.\"** (2006, Capstone, Electrical Engineering) [4]\n5.  **\"Adipisci eum amet rerum nulla.\"** (2003, Practicum, Civil Engineering) [5]",
+      "label": "RELEVANT"
+    },
+    {
+      "id": "q23",
+      "question": "What papers did Magnus Hand DDS write?",
+      "corpus": "catalog",
+      "retrieved": [
+        "paper-232",
+        "paper-349",
+        "paper-357",
+        "paper-204",
+        "paper-911"
+      ],
+      "answer": "Based on the provided documents, Mr. Magnus Hand DDS is an author or co-author of the following five papers:\n\n1.  **\"Voluptatibus qui fugit vitae et.\"** (2024) - Civil Engineering Department [1].\n2.  **\"Odit sapiente et soluta vel.\"** (2022) - Information Technology Department [2].\n3.  **\"Molestiae laudantium ut possimus iusto quod aperiam.\"** (2022) - Information Technology Department [3].\n4.  **\"Deleniti perspiciatis voluptates et rerum.\"** (2007) - Civil Engineering Department [4].\n5.  **\"Online Academic Advising and Appointment Scheduling System\"** (2016) - Information Technology Department [5].",
+      "label": "RELEVANT"
+    },
+    {
+      "id": "q24",
+      "question": "What papers did River Crona III write?",
+      "corpus": "catalog",
+      "retrieved": [
+        "paper-42",
+        "paper-50",
+        "paper-287",
+        "paper-95",
+        "paper-400"
+      ],
+      "answer": "Based on the provided documents, Ms. River Crona III is an author for the following five papers:\n\n1.  **\"Dolorem aut sunt repellat doloribus et dolor.\"**\n    *   **Type:** Report\n    *   **Department:** Information Technology\n    *   **Publication Year:** 2009\n    *   **Catalog Code:** CEIT-IT-09-03\n    *   **Co-authors:** Patricia Monahan III, Carleton Hermiston, and Ms. River Crona III [1].\n\n2.  **\"Quis culpa in nobis voluptatum aut tenetur.\"**\n    *   **Type:** Report\n    *   **Department:** Electrical Engineering\n    *   **Publication Year:** 2012\n    *   **Catalog Code:** CEIT-EE-12-01\n    *   **Co-authors:** Jaqueline Fisher, Mrs. Marisol Cole I, and Ms. River Crona III [2].\n\n3.  **\"Atque labore quia provident saepe et hic.\"**\n    *   **Type:** Practicum\n    *   **Department:** Information Technology\n    *   **Publication Year:** 2022\n    *   **Catalog Code:** CEIT-IT-22-01\n    *   **Co-authors:** Ms. River Crona III, Mrs. Constance Gutmann III, and Prof. Sebastian Bartell [3].\n\n4.  **\"Dolores sit a rerum ea qui.\"**\n    *   **Type:** Practicum\n    *   **Department:** Information Technology\n    *   **Publication Year:** 2019\n    *   **Catalog Code:** CEIT-IT-19-01\n    *   **Co-authors:** Ms. River Crona III, Mr. Joey Treutel, Jasmin Murray, and Eusebio O'Connell [4].\n\n5.  **\"Possimus perspiciatis veritatis eum qui voluptas.\"**\n    *   **Type:** Feasib\n    *   **Department:** Civil Engineering\n    *   **Publication Year:** 2007\n    *   **Catalog Code:** CEIT-CE-07-10\n    *   **Co-authors:** Ms. River Crona III, Miss Cathryn Schinner DVM, and Bette B",
+      "label": "NON_RELEVANT"
+    },
+    {
+      "id": "q25",
+      "question": "What papers did Carleton Hermiston write?",
+      "corpus": "catalog",
+      "retrieved": [
+        "paper-65",
+        "paper-147",
+        "paper-243",
+        "paper-42",
+        "paper-131"
+      ],
+      "answer": "Based on the provided documents, Carleton Hermiston is listed as an author on the following five papers:\n\n1.  **\"Rerum vel expedita earum\"** (2015, Research)\n    *   Department: Information Technology\n    *   Co-authors: Patricia Monahan III, Mr. Vaughn Cartwright, Zackery Bechtelar, Jensen Thiel [1].\n2.  **\"Quia quidem debitis sit autem nostrum\"** (2014, Practicum)\n    *   Department: Electrical Engineering\n    *   Co-authors: Brandi Heidenreich, Mr. Vaughn Cartwright, Kelton Abernathy [2].\n3.  **\"Provident quas et culpa et consequatur quia\"** (2013, Thesis)\n    *   Department: Electrical Engineering\n    *   Co-authors: Retta Macejkovic, Renee Bahringer, Ms. Anya Pacocha [3].\n4.  **\"Dolorem aut sunt repellat doloribus et dolor\"** (2009, Report)\n    *   Department: Information Technology\n    *   Co-authors: Patricia Monahan III, Margie Gislason, Ms. River Crona III [4].\n5.  **\"Aut excepturi omnis perferendis sint fugiat\"** (2015, Practicum)\n    *   Department: Civil Engineering\n    *   Co-authors: Prof. Emmanuelle Bechtelar II, Caden Thiel, Sonya Bradtke, Mr. Cornell Yundt PhD, Prof. Royal Cummings DVM [5].",
+      "label": "NON_RELEVANT"
+    },
+    {
+      "id": "q26",
+      "question": "What papers did Matt Carter IV write?",
+      "corpus": "catalog",
+      "retrieved": [
+        "paper-123",
+        "paper-144",
+        "paper-143",
+        "paper-141",
+        "paper-149"
+      ],
+      "answer": "Based on the provided documents, Matt Carter IV is listed as a co-author on the following five papers:\n\n1.  **\"Enim voluptatem veniam dolorum tempore.\"** (Civil Engineering, 2015, Practicum) [1]\n2.  **\"Incidunt non et veniam qui.\"** (Information Technology, 2009, Practicum) [2]\n3.  **\"Consequatur quaerat nihil sunt qui non sed asperiores.\"** (Information Technology, 2009, Feasibility) [3]\n4.  **\"Animi temporibus qui itaque voluptas sapiente officia molestiae.\"** (Information Technology, 2017, Research) [4]\n5.  **\"Doloremque quas sit nihil dolore.\"** (Civil Engineering, 2017, Capstone) [5]\n\nThese papers are part of the Civil Engineering or Information Technology departments at CEIT.",
+      "label": "RELEVANT"
+    },
+    {
+      "id": "q27",
+      "question": "What papers did Margot Schimmel write?",
+      "corpus": "catalog",
+      "retrieved": [
+        "paper-888",
+        "paper-856",
+        "paper-264",
+        "paper-868",
+        "paper-847"
+      ],
+      "answer": "Based on the provided documents, Margot Schimmel is listed as an author on the following four papers:\n\n1.  **\"Development of an Online Student Document Request Portal\"** (Civil Engineering Capstone, 2002). Co-authors include Brandi Ward and Kenneth Labadie [1].\n2.  **\"Development of an Online Laboratory Equipment Reservation System\"** (Electrical Engineering Thesis, 2010). Co-authors include Dr. Anibal Friesen, Webster Kuhlman, and Carlie Sipes [2].\n3.  **\"Analysis of Network Security Risks in Educational Institutions\"** (Information Technology Thesis, 2009). Co-authors include Morton Zboncak, Kaden Auer, and Prof. Hortense Gislason [4].\n4.  **\"Intelligent Traffic Monitoring for Campus Roadways\"** (Electrical Engineering Practicum, 2013). Co-authors include Mr. Colin Bashirian III, Sammy Huel III, and Mr. Issac Weissnat III [5].\n\nNote: Document [3] does not list \"Margot Schimmel\" as an author or advisor (it lists \"Ms. Jalyn Schimmel\" as research adviser), so it is not included in this list.",
+      "label": "NON_RELEVANT"
+    },
+    {
+      "id": "q28",
+      "question": "What papers did Julien Schinner write?",
+      "corpus": "catalog",
+      "retrieved": [
+        "paper-785",
+        "paper-789",
+        "paper-793",
+        "paper-808",
+        "paper-943"
+      ],
+      "answer": "Based on the provided documents, Julien Schinner is listed as an author on the following five papers:\n\n1.  **Energy-Efficient Street Lighting Control Using Microcontrollers** (2024). This is a Practicum paper in the Department of Electrical Engineering. Co-authors include Torrance Kovacek III, Prof. Jaron Hartmann IV, Prof. Karson Lynch DDS, Dr. Bo Mitchell V, and Wilmer Auer [5].\n2.  **Ut eos nam est voluptas corporis perferendis velit.** (2020). This is a Capstone paper in the Department of Electrical Engineering. Co-authors include Hertha Terry PhD, Adela Davis, Janet Kuhlman, and Brandi Ward [3].\n3.  **Alias est dolorem iusto similique id dignissimos.** (2014). This is a Report in the Department of Information Technology. Co-authors include Mr. Ramiro Turner V, Frederic Dibbert Jr., Dr. Alvis Lind, Prof. Freddie Wehner IV, and Arch Reichel [4].\n4.  **Et velit optio enim sit est.** (2005). This is a Thesis in the Department of Electrical Engineering. Co-authors include Emmet Lindgren MD, Milton Zieme, Arch Reichel, and Granville Jones [2].\n5.  **Autem non iusto sapiente repellat et mollitia.** (2007). This is a Practicum paper in the Department of Civil Engineering. Co-authors include Raegan Wyman, Dr. Ford Kris IV, and Drake Johnson [1].",
+      "label": "NON_RELEVANT"
+    },
+    {
+      "id": "q29",
+      "question": "What papers were published by the Civil Engineering department in 2024?",
+      "corpus": "catalog",
+      "retrieved": [
+        "paper-398",
+        "paper-610",
+        "paper-564",
+        "paper-428",
+        "paper-682"
+      ],
+      "answer": "Based on the provided documents, the Civil Engineering department published four papers in 2024. Below are the details for each:\n\n1.  **\"Placeat nisi tenetur maiores adipisci.\"**\n    *   **Type:** Practicum\n    *   **Authors:** Mrs. Marisol Cole I; Dixie Mann Sr.; Eldred Kilback; Ora Kohler I; Leora Rempel DVM\n    *   **Advisers/Dean:** Research Adviser: Lloyd Weber; Technical Adviser: Engr. Jerry Nader; Dean: Dr. Alejandrin Kerluke\n    *   **Catalog Code:** CEIT-CE-24-08\n    *   [1]\n\n2.  **\"Cumque veritatis perferendis nemo necessitatibus quia vero id dignissimos.\"**\n    *   **Type:** Report\n    *   **Authors:** Mr. Manuel Koss; Eldred Kilback; Chanelle Willms; Arnold Homenick III; Brandon O'Connell; Griffin Oberbrunner\n    *   **Advisers/Dean:** Research Adviser: Elna Glover; Technical Adviser: Engr. Mac Spencer; Dean: Dr. Mr. Ronaldo Bogisich\n    *   **Catalog Code:** CEIT-CE-24-13\n    *   [2]\n\n3.  **\"Sint consequatur blanditiis dolorum a sed id aut.\"**\n    *   **Type:** Practicum\n    *   **Authors:** Josefa Krajcik; Fabiola Harvey; Alaina Smitham; Tad Roberts; Alfonzo Yundt I\n    *   **Advisers/Dean:** Research Adviser: Ms. Jailyn Smitham; Technical Adviser: Engr. Ophelia Kunze; Dean: Dr. Emiliano Kihn\n    *   **Catalog Code:** CEIT-CE-24-11\n    *   [3]\n\n4.  **\"Quos animi libero aliquam quo libero dolor.\"**\n    *   **Type:** Practicum\n    *   **Authors:** Jennings Swift I; Earlene Goodwin; Mrs. Marisol Cole I; Prof. Bettie Towne\n    *   **Advisers/Dean:** Research Adviser: Dr. Jazmyne Collins PhD; Technical Adviser: Engr. Ms. Addie Lehner; Dean: Dr.",
+      "label": "NON_RELEVANT"
+    },
+    {
+      "id": "q30",
+      "question": "What papers were published by the Civil Engineering department in 2009?",
+      "corpus": "catalog",
+      "retrieved": [
+        "paper-614",
+        "paper-248",
+        "paper-811",
+        "paper-270",
+        "paper-759"
+      ],
+      "answer": "Based on the provided documents, the following papers were published by the Civil Engineering department in 2009:\n\n1.  **\"Minas iure omnis eaque deleniti.\"**\n    *   **Authors:** Lilyan Ernser MD, Vita Ondricka, Keara Dicki, Shanel Schuppe IV\n    *   **Type:** Research\n    *   **Catalog Code:** CEIT-CE-09-04\n    *   [2]\n\n2.  **\"Velit ut nihil cum aut libero.\"**\n    *   **Authors:** Kolby Schiller, Dr. Joseph Blick, Marguerite Schiller, Luis Hackett\n    *   **Type:** Research\n    *   **Catalog Code:** CEIT-CE-09-07\n    *   [4]\n\n3.  **\"Ad sint quidem vero.\"**\n    *   **Authors:** Luther Marvin, Nels Hahn I, Dr. Dino Windler DDS\n    *   **Type:** Practicum\n    *   **Catalog Code:** CEIT-CE-09-13\n    *   [1]\n\n4.  **\"Velit reprehenderit ut repellat.\"**\n    *   **Authors:** Jerald Cole, Willis Feil, Ari Russel, Orland Zieme\n    *   **Type:** Report\n    *   **Catalog Code:** CEIT-CE-09-15\n    *   [5]\n\n5.  **\"Temporibus nesciunt sint sed assumenda nesciunt est.\"**\n    *   **Authors:** Neil Armstrong, Zula Schmidt I, Bessie Reynolds, Merritt Renner\n    *   **Type:** Thesis\n    *   **Catalog Code:** CEIT-CE-09-17\n    *   [3]",
+      "label": "NON_RELEVANT"
+    },
+    {
+      "id": "q31",
+      "question": "What papers were published by the Electrical Engineering department in 2003?",
+      "corpus": "catalog",
+      "retrieved": [
+        "paper-409",
+        "paper-449",
+        "paper-278",
+        "paper-511",
+        "paper-737"
+      ],
+      "answer": "Based on the provided documents, there are two papers published by the Electrical Engineering department in 2003:\n\n1.  **\"In cum doloremque sed ut vel ut.\"**\n    *   **Authors:** Mr. Ramiro Turner V, Kendall Veum, Retta Macejkovic, Leora Rempel DVM, and Abby Heidenreich\n    *   **Type:** Report\n    *   **Catalog Code:** CEIT-EE-03-02\n    *   **Advisers/Dean:** Research Adviser: Malvina Jakubowski MD; Technical Adviser: Engr. Mr. Verner Kris IV; Dean: Dr. Alejandrin Kerluke\n    [1]\n\n2.  **\"Velit deleniti eveniet recusandae dolor repudiandae suscipit atque.\"**\n    *   **Authors:** Prof. Kristin Brown III, Delmer Watsica, Mr. Jarod Grimes DDS, Ms. Katelyn Predovic I, and Mrs. Ocie Metz I\n    *   **Type:** Report\n    *   **Catalog Code:** CEIT-EE-03-03\n    *   **Advisers/Dean:** Research Adviser: Dr. Jazmyne Collins PhD; Technical Adviser: Engr. Margret Harris; Dean: Dr. Ms. Alexandrine Goyette I\n    [2]\n\nThe other documents listed are from different years (2014, 2008, and 2015) and do not fit the criteria for the year 2003 [3,4,5].",
+      "label": "NON_RELEVANT"
+    },
+    {
+      "id": "q32",
+      "question": "What papers were published by the Information Technology department in 2016?",
+      "corpus": "catalog",
+      "retrieved": [
+        "paper-493",
+        "paper-552",
+        "paper-87",
+        "paper-804",
+        "paper-549"
+      ],
+      "answer": "Based on the provided documents, the Information Technology department published three papers in 2016:\n\n1.  **\"Ut autem magni dolor facilis et.\"** by Ari Russel, Miss Natasha Runolfsdottir II, and Miss Elise Stoltenberg III. This is classified as a Research paper [1].\n2.  **\"Dolores consequuntur illo aut voluptatem nobis.\"** by Rosemary Wisozk, Joanie Okuneva, Jameson Monahan, Brandi Heidenreich, Emily Kuhic, and Alfonzo Yundt I. This is classified as a Practicum paper [2].\n3.  **\"Officiis maxime dolores est.\"** by Jennings Swift I, Margie Gislason, Mr. Vaughn Cartwright, and Eleazar McKenzie. This is classified as a Thesis [3].\n\nOther papers listed under the Information Technology department were published in different years (2007 [5] and 2022 [4]).",
+      "label": "NON_RELEVANT"
+    },
+    {
+      "id": "q33",
+      "question": "What papers were published by the Civil Engineering department in 2017?",
+      "corpus": "catalog",
+      "retrieved": [
+        "paper-682",
+        "paper-689",
+        "paper-416",
+        "paper-773",
+        "paper-463"
+      ],
+      "answer": "Based on the provided documents, the following papers were published by the Civil Engineering department in 2017:\n\n1.  **\"Saepe consequatur qui unde et.\"**\n    *   **Authors:** Ettie Wolff, Willis Heidenreich, Mrs. Virginie Farrell\n    *   **Type:** Research\n    *   **Catalog Code:** CEIT-CE-17-10\n    *   [1]\n\n2.  **\"Cumque sed eveniet temporibus sit possimus iste.\"**\n    *   **Authors:** Jovani Simonis, Myah Kuhlman, Mr. Colin Bashirian III\n    *   **Type:** Report\n    *   **Catalog Code:** CEIT-CE-17-11\n    *   [2]",
+      "label": "NON_RELEVANT"
+    },
+    {
+      "id": "q34",
+      "question": "What papers were published by the Information Technology department in 2023?",
+      "corpus": "catalog",
+      "retrieved": [
+        "paper-738",
+        "paper-268",
+        "paper-549",
+        "paper-804",
+        "paper-405"
+      ],
+      "answer": "Based on the provided documents, the Information Technology department published the following papers in 2023:\n\n1.  **\"Eveniet maiores ex quas\"**\n    *   **Authors:** Fatima Batz, Jennie Hirthe, Devan O'Kon, Mrs. Hassie Hoeger III, Dr. Isaac Dickens DVM, Christop Rau, and Alysha Pfannerstill\n    *   **Type:** Practicum\n    *   **Catalog Code:** CEIT-IT-23-11\n    *   **Advisers:** Dr. Cathrine Dickinson V (Research), Engr. Adeline Pouros II (Technical) [1]\n\n2.  **\"Magnam quo recusandae qui autem minus aut\"**\n    *   **Authors:** Jammie Bergnaum, Shawna Bradtke DDS, and Ms. Anya Pacocha\n    *   **Type:** Practicum\n    *   **Catalog Code:** CEIT-IT-23-03\n    *   **Advisers:** Ms. Jalyn Schimmel (Research), Engr. Kaden Cole IV (Technical) [2]\n\n3.  **\"Illo soluta tenetur eligendi enim qui\"**\n    *   **Authors:** Prof. Dagmar Fadel, Kendall Veum, Clinton Roob, Margie Gislason, Bette Bode, and Queenie Reilly\n    *   **Type:** Thesis\n    *   **Catalog Code:** CEIT-IT-23-05\n    *   **Advisers:** Kelvin Kassulke (Research), Engr. Jabari Zulauf (Technical) [5]\n\nOther papers from the Information Technology department in the documents were published in 2007 [3] and 2022 [4], and are therefore not included in the 2023 list.",
+      "label": "NON_RELEVANT"
+    },
+    {
+      "id": "q35",
+      "question": "What is Machine Learning Approach to Academic Risk Classification about?",
+      "corpus": "catalog",
+      "retrieved": [
+        "paper-855",
+        "paper-844",
+        "paper-877",
+        "paper-915",
+        "paper-899"
+      ],
+      "answer": "The provided documents do not contain a description of what the paper *Machine Learning Approach to Academic Risk Classification* is about. Document [1] lists its metadata, including authors (Alexanne Crooks and Anjali Sporer), research adviser (Ludie Rath), technical adviser (Engr. Benedict Padberg), department (Civil Engineering), publication year (2004), and type (Capstone) [1]. However, there is no abstract or summary text explaining the content or methodology of the study.\n\nI don't have enough information.",
+      "label": "NON_RELEVANT"
+    },
+    {
+      "id": "q36",
+      "question": "What is Structural Health Monitoring Using Wireless Sensor Networks about?",
+      "corpus": "catalog",
+      "retrieved": [
+        "paper-898",
+        "paper-920",
+        "paper-933",
+        "paper-891",
+        "paper-852"
+      ],
+      "answer": "The provided documents do not contain an abstract or description explaining what \"Structural Health Monitoring Using Wireless Sensor Networks\" is about. They only list metadata such as authors, advisers, department, publication year, paper type, and catalog code [1, 2].\n\nTherefore, I don't have enough information to describe the content of the paper.",
+      "label": "NON_RELEVANT"
+    },
+    {
+      "id": "q37",
+      "question": "What is Smart Classroom Occupancy Monitoring Using Sensor Networks about?",
+      "corpus": "catalog",
+      "retrieved": [
+        "paper-852",
+        "paper-891",
+        "paper-926",
+        "paper-898",
+        "paper-920"
+      ],
+      "answer": "The provided documents contain metadata for papers titled \"Smart Classroom Occupancy Monitoring Using Sensor Networks\" but do not include an abstract, summary, or description of the specific content or objectives of the research. Therefore, I don't have enough information to explain what the work is about beyond its title and authorship.\n\nHowever, the documents confirm that this title corresponds to three different catalog entries with varying details:\n1. A 2022 Research paper from the Electrical Engineering department by Jameson Monahan, Mr. Issac Weissnat III, and Alayna Rempel [1].\n2. A 2023 Feasibility study from the Electrical Engineering department by Winston Schmeler, Roger Hoeger, and Morton Dibbert [2].\n3. A 2013 Research paper from the Civil Engineering department by Daisy Leffler, Kiara Walsh, Miss Kelsie Mohr Sr., and Reggie Streich DDS [3].",
+      "label": "NON_RELEVANT"
+    },
+    {
+      "id": "q38",
+      "question": "What is IoT-Based Environmental Monitoring for Academic Buildings about?",
+      "corpus": "catalog",
+      "retrieved": [
+        "paper-887",
+        "paper-930",
+        "paper-956",
+        "paper-861",
+        "paper-871"
+      ],
+      "answer": "Based on the provided documents, there is no information describing the specific content, abstract, or goals of the works titled \"IoT-Based Environmental Monitoring for Academic Buildings.\" The documents only list metadata regarding the bibliographic details, such as authors, advisers, departments, and publication years [1] [2] [3] [4].\n\nTherefore, I don't have enough information to answer what the work is about.",
+      "label": "NON_RELEVANT"
+    },
+    {
+      "id": "q39",
+      "question": "What is Wireless Sensor Network for Indoor Air Quality Monitoring about?",
+      "corpus": "catalog",
+      "retrieved": [
+        "paper-933",
+        "paper-898",
+        "paper-920",
+        "paper-891",
+        "paper-852"
+      ],
+      "answer": "I don't have enough information to describe what the paper is about in terms of its specific content or findings. The provided documents only list bibliographic metadata for the paper \"Wireless Sensor Network for Indoor Air Quality Monitoring,\" including the title, authors, advisers, department, and publication year [1].",
+      "label": "NON_RELEVANT"
+    },
+    {
+      "id": "q40",
+      "question": "What is Smart Classroom Occupancy Monitoring Using Sensor Networks about?",
+      "corpus": "catalog",
+      "retrieved": [
+        "paper-852",
+        "paper-891",
+        "paper-926",
+        "paper-898",
+        "paper-920"
+      ],
+      "answer": "Based on the provided documents, there is no detailed abstract or description explaining the specific content, methodology, or findings of the project \"Smart Classroom Occupancy Monitoring Using Sensor Networks.\" The documents only provide bibliographic metadata (authors, year, department, and type) for three distinct project entries with the same title [1, 2, 3].\n\nHowever, based on the metadata available:\n1.  It is a project in the field of **Electrical Engineering** [1, 2] and **Civil Engineering** [3].\n2.  The paper types listed are **Research** [1, 3] and **Feasibility** (listed as \"Feasib\") [2].\n3.  The projects were published in **2022** [1], **2023** [2], and **2013** [3].\n\nI don't have enough information to describe what the project is specifically about regarding its methodology or results.",
+      "label": "NON_RELEVANT"
+    }
+  ]
+}
