@@ -1,0 +1,13 @@
+{
+  "generated_at": "2026-10-12T15:27:34.625923+00:00",
+  "model": "qwen/qwen3.8-27b",
+  "top_k": 5,
+  "counts": {
+    "RELEVANT": 9,
+    "PARTLY_RELEVANT": 0,
+    "NON_RELEVANT": 31
+  },
+  "total": 40,
+  "relevant_rate": 0.225,
+  "partly_or_better_rate": 0.225
+}

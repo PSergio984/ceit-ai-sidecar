@@ -21,8 +21,11 @@ Model (answerer and judge): `qwen/qwen3.8-27b` on Groq, harness defaults (judge 
 `llama-3.3-70b-versatile` is not available to this key and the `gpt-oss` models return empty
 labels at 32 tokens, so absolute judge numbers are not comparable to production OpenRouter runs.
 - Run 1: 40 questions, RELEVANT 10 / PARTLY 0 / NON_RELEVANT 30, relevant rate 0.25 (`judge-run1.*`)
-- Run 2: NOT captured. First attempt hit a Groq 503, retry hit the 200k tokens-per-day limit.
-  The noise band is therefore still unmeasured; rerun after the daily limit resets.
+- Run 2: 40 questions, RELEVANT 9 / PARTLY 0 / NON_RELEVANT 31, relevant rate 0.225 (`judge-run2.*`).
+  Captured after adding multi-key failover (the first attempt had hit a Groq 503, then the daily token limit).
+- Noise band (same code, same model): relevant rate differs by 0.025 between runs; 7 of 40 questions
+  (17.5%) changed label (q01, q10, q11, q14, q21, q22, q23). Judge-score comparisons in the pgvector
+  gate must be read against this band, so a relevant-rate change under about 0.05 is not a regression.
 
 ## Latency and memory (`latency-memory.json`, `bench.py`)
 Warm, 27 golden queries x 5 passes, Windows dev machine, in-process (no HTTP). p50/p95 ms:
