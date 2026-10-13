@@ -263,11 +263,16 @@ class PgIndexStore:
         return state
 
     def load_state(self) -> dict | None:
+        # One REPEATABLE READ snapshot for the state row AND the live counts:
+        # a sync committing between the two reads must never pair version=N
+        # from the old index with counts from the new one.
         with self._connect(autocommit=True) as conn:
             conn.execute("SELECT 1")  # wakes a sleeping Neon compute
             try:
-                state_row = self._state_row(conn)
-                counts = self._live_counts(conn)
+                with conn.transaction():
+                    conn.execute("SET TRANSACTION ISOLATION LEVEL REPEATABLE READ")
+                    state_row = self._state_row(conn)
+                    counts = self._live_counts(conn)
             except (psycopg.errors.UndefinedTable, psycopg.errors.InvalidSchemaName):
                 return None
         if state_row is None:

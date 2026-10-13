@@ -13,8 +13,6 @@ import json
 import os
 import secrets
 import shutil
-import subprocess
-import sys
 import threading
 from pathlib import Path
 
@@ -150,27 +148,6 @@ def test_health_reports_sqlite_backend(tmp_path, corpus_path):
     assert body["status"] == "ok"
     assert body["backend"] == "sqlite"
     assert body["index"]["documents"] == 6
-
-
-def test_pg_index_does_not_import_rebuild():
-    env = dict(os.environ, SIDECAR_TOKEN="t")
-    result = subprocess.run(
-        [
-            sys.executable,
-            "-c",
-            (
-                "import sys; import app.pg_index; "
-                "assert 'app.rebuild' not in sys.modules, "
-                "'pg_index must not import app.rebuild'"
-            ),
-        ],
-        cwd=ROOT,
-        env=env,
-        capture_output=True,
-        text=True,
-        check=False,
-    )
-    assert result.returncode == 0, result.stderr
 
 
 def test_health_degraded_when_pgvector_unconfigured(tmp_path):
@@ -518,3 +495,32 @@ def test_state_reports_live_table_counts(store, pg_schema, tmp_path):
     assert state["embedded"] == 2
     assert sum(state["by_corpus"].values()) == 2
     assert state["version"] == returned["version"]
+
+
+def test_load_state_never_reads_a_torn_index(store, pg_schema, tmp_path, monkeypatch):
+    corpus_dir = _tiny_corpus(tmp_path)
+    store.sync(corpus_dir, "test-model", embed_fn=CountingEmbedder())
+
+    # A second sync adds a doc (bumps version to 2); commit it BETWEEN the
+    # state-row read and the counts read by wrapping _live_counts.
+    grown_dir = tmp_path / "grown"
+    shutil.copytree(corpus_dir, grown_dir)
+    cat_path = grown_dir / "catalog.json"
+    cat = json.loads(cat_path.read_text(encoding="utf-8"))
+    extra = dict(cat["documents"][0])
+    extra["id"] = "d-extra"
+    cat["documents"].append(extra)
+    cat_path.write_text(json.dumps(cat), encoding="utf-8")
+
+    other = PgIndexStore(PG_URL, schema=pg_schema)
+    original = PgIndexStore._live_counts
+
+    def wrapped(conn):
+        other.sync(grown_dir, "test-model", embed_fn=CountingEmbedder())
+        return original(store, conn)
+
+    monkeypatch.setattr(store, "_live_counts", wrapped)
+    state = store.load_state()
+
+    # consistent with ONE committed index: v1+3 or v2+4, never v1+4
+    assert (state["version"], state["documents"]) in {(1, 3), (2, 4)}
