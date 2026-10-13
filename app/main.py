@@ -18,8 +18,9 @@ from .agent import AgenticLoop
 from .backend import SearchBackend, create_backend
 from .config import settings
 from .health import assemble_health
+from .index_store import IndexStore, create_index_store
 from .rag import RagService
-from .rebuild import load_state, rebuild
+from .rebuild import rebuild
 from .rerank import Reranker
 from .rewrite import QueryRewriter
 from .search import RRF_K
@@ -177,15 +178,23 @@ async def log_requests(request: Request, call_next):
     return response
 
 
+def _get_index_store() -> IndexStore:
+    return create_index_store(settings)
+
+
 def _index_doc_count() -> int:
     """Total documents in the current index state (0 = no index built)."""
-    state = load_state(Path(settings.cache_dir))
+    try:
+        state = _get_index_store().load_state()
+    except Exception:  # store down -> log path sees 0, not a 500
+        logger.warning("index doc count: store unreachable", exc_info=True)
+        return 0
     return int((state or {}).get("documents", 0))
 
 
 @app.get("/health")
 def health():
-    return assemble_health(_get_cache_dir())
+    return assemble_health(_get_index_store())
 
 
 @app.post("/search")
@@ -632,7 +641,10 @@ def feedback(payload: dict):
 # Startup diagnostics: log the current index state so a fresh deploy with an
 # empty cache is immediately visible in the runtime logs (searches would
 # return empty results until a rebuild completes).
-_state = load_state(Path(settings.cache_dir))
+try:
+    _state = _get_index_store().load_state()
+except Exception:  # noqa: BLE001 - a down store must not crash import
+    _state = None
 if _state is None:
     logger.warning(
         "startup: NO INDEX BUILT — /search and /chat/stream return empty until "

@@ -16,7 +16,13 @@ from pathlib import Path
 
 from sqlitesearch import TextSearchIndex
 
-from .ingest import embed_documents, load_documents, prune_old_versions, write_cache
+from .ingest import (
+    embed_documents,
+    load_documents,
+    prune_old_versions,
+    source_generated_at,
+    write_cache,
+)
 
 CONTRACT_VERSION = "v1"
 
@@ -71,15 +77,7 @@ def build_index(
     write_cache(cache_dir, version, docs, vectors, db_path)
     db_path.unlink(missing_ok=True)
 
-    generated_at = None
-    for filename in ("catalog.json", "policies.json"):
-        path = corpus_path / filename
-        if path.exists():
-            try:
-                generated_at = json.loads(path.read_text(encoding="utf-8"))["generated_at"]
-                break
-            except (json.JSONDecodeError, KeyError):
-                continue
+    generated_at = source_generated_at(corpus_path)
 
     state = {
         "version": version,
@@ -103,12 +101,17 @@ def build_index(
 
 
 def rebuild(settings) -> dict:
-    """Synchronous full rebuild under a global lock (idempotent per flight)."""
+    """Synchronous index sync under a global lock (idempotent per flight).
+
+    Delegates to the configured IndexStore: sqlite does a full versioned
+    rebuild, pgvector an incremental content-hash sync.
+    """
+    from .index_store import create_index_store
+
     with _lock:
-        return build_index(
+        return create_index_store(settings).sync(
             corpus_path=settings.corpus_path,
             model_name=settings.model_name,
-            cache_dir=Path(settings.cache_dir),
             embed_fn=_embed_override,
         )
 

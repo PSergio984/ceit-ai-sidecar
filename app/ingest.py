@@ -70,6 +70,18 @@ def load_documents(corpus_path: Path) -> list[dict]:
     return docs
 
 
+def source_generated_at(corpus_path: Path) -> str | None:
+    """generated_at of the first corpus file that has one, else None."""
+    for filename in INDEX_FILES:
+        path = corpus_path / filename
+        if path.exists():
+            try:
+                return json.loads(path.read_text(encoding="utf-8"))["generated_at"]
+            except (json.JSONDecodeError, KeyError):
+                continue
+    return None
+
+
 def _fastembed_name(model_name: str) -> str:
     """Map short config names (e.g. `all-MiniLM-L6-v2`) to fastembed's
     supported identifiers (`sentence-transformers/all-MiniLM-L6-v2`)."""
