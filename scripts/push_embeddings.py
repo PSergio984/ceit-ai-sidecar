@@ -400,7 +400,16 @@ def main(argv=None) -> int:
             force_full=args.force_full,
             connect_timeout=settings.pg_connect_timeout,
         )
-    except ImportError:
+    except ImportError as exc:
+        # Only the missing offline deps get the friendly message — an
+        # ImportError from app.ingest/fastembed is a real bug, not a
+        # missing install.
+        if (exc.name or "").split(".")[0] not in {
+            "langchain_postgres",
+            "langchain_core",
+            "sqlalchemy",
+        }:
+            raise
         parser.exit(
             1, "error: langchain-postgres is not installed — run via `uv run --group offline`\n"
         )
