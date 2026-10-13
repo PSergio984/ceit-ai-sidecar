@@ -18,6 +18,9 @@ class Settings(BaseSettings):
     # is a setting (not search_path) so tests can isolate per run.
     database_url: str = ""
     pg_index_schema: str = "public"
+    # Bounds /health and sync against an unreachable database; a cold Neon
+    # compute wakes well inside the default.
+    pg_connect_timeout: int = 15
     llm_base_url: str = "https://openrouter.ai/api/v1"
     llm_api_key: str = ""
     # Comma-separated fallback keys (plain string so pydantic-settings does

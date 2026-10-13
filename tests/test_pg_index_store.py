@@ -31,7 +31,7 @@ PG_URL = os.environ.get("TEST_DATABASE_URL")
 ROOT = Path(__file__).resolve().parent.parent
 CORPUS = ROOT / "corpus"
 H = {"X-Sidecar-Token": "test-token"}
-BAD_URL = "postgresql://postgres:bad@localhost:59999/nope"
+BAD_URL = "postgresql://postgres:bad@127.0.0.1:59999/nope"
 
 
 def _ident(schema: str, table: str):
@@ -71,7 +71,9 @@ def store(pg_schema):
     return PgIndexStore(PG_URL, schema=pg_schema)
 
 
-def _client(corpus_dir: Path, schema: str, embedder, database_url: str) -> TestClient:
+def _client(
+    corpus_dir: Path, schema: str, embedder, database_url: str, connect_timeout: int = 15
+) -> TestClient:
     settings = Settings(
         sidecar_token="test-token",
         corpus_path=corpus_dir,
@@ -79,6 +81,7 @@ def _client(corpus_dir: Path, schema: str, embedder, database_url: str) -> TestC
         vector_backend="pgvector",
         database_url=database_url,
         pg_index_schema=schema,
+        pg_connect_timeout=connect_timeout,
     )
     import app.main as main_mod
     import app.rebuild as rebuild_mod
@@ -304,7 +307,7 @@ def test_failing_embedder_rolls_back(store, pg_schema):
 def test_health_degraded_when_database_unreachable(pg_schema, tmp_path):
     corpus_dir = tmp_path / "corpus"
     corpus_dir.mkdir()
-    app = _client(corpus_dir, "public", None, BAD_URL)
+    app = _client(corpus_dir, "public", None, BAD_URL, connect_timeout=1)
     resp = app.get("/health", headers=H)
     assert resp.status_code == 200
     body = resp.json()

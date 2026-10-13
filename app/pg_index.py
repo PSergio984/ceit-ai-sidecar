@@ -56,9 +56,10 @@ class PgIndexStore:
 
     name = "pgvector"
 
-    def __init__(self, database_url: str, schema: str = "public"):
+    def __init__(self, database_url: str, schema: str = "public", connect_timeout: int = 15):
         self.database_url = database_url
         self.schema = schema
+        self.connect_timeout = connect_timeout
         self._docs = sql.Identifier(schema, "documents")
         self._state = sql.Identifier(schema, "index_state")
         # CREATE INDEX rejects schema-qualified index names — the index lands
@@ -70,7 +71,12 @@ class PgIndexStore:
     def _connect(self, *, autocommit: bool = False) -> psycopg.Connection:
         # prepare_threshold=None: pooled endpoints cannot serve prepared
         # statements across pooled transactions.
-        return psycopg.connect(self.database_url, autocommit=autocommit, prepare_threshold=None)
+        return psycopg.connect(
+            self.database_url,
+            autocommit=autocommit,
+            prepare_threshold=None,
+            connect_timeout=self.connect_timeout,
+        )
 
     def _lakebase_available(self, conn) -> bool:
         return conn.execute(

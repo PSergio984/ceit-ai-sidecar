@@ -53,5 +53,9 @@ def create_index_store(settings: Settings) -> IndexStore:
             raise ValueError("vector_backend=pgvector requires DATABASE_URL")
         from .pg_index import PgIndexStore
 
-        return PgIndexStore(settings.database_url, schema=settings.pg_index_schema)
+        return PgIndexStore(
+            settings.database_url,
+            schema=settings.pg_index_schema,
+            connect_timeout=settings.pg_connect_timeout,
+        )
     raise ValueError(f"unknown vector_backend: {settings.vector_backend}")
