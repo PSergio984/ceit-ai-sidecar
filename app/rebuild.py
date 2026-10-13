@@ -16,6 +16,7 @@ from pathlib import Path
 
 from sqlitesearch import TextSearchIndex
 
+from .contract import CONTRACT_VERSION
 from .ingest import (
     embed_documents,
     load_documents,
@@ -23,8 +24,6 @@ from .ingest import (
     source_generated_at,
     write_cache,
 )
-
-CONTRACT_VERSION = "v1"
 
 _lock = threading.Lock()
 

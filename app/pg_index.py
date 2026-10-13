@@ -13,7 +13,6 @@ from __future__ import annotations
 import hashlib
 import json
 import logging
-from collections import Counter
 from datetime import UTC, datetime
 from pathlib import Path
 
@@ -21,8 +20,8 @@ import psycopg
 from psycopg import sql
 from psycopg.types.json import Jsonb
 
+from .contract import CONTRACT_VERSION
 from .ingest import embed_documents, load_documents, source_generated_at
-from .rebuild import CONTRACT_VERSION
 
 logger = logging.getLogger("ceit.sidecar")
 
@@ -138,31 +137,145 @@ class PgIndexStore:
             ).format(self._state)
         )
 
-    def load_state(self) -> dict | None:
-        with self._connect(autocommit=True) as conn:
-            conn.execute("SELECT 1")  # wakes a sleeping Neon compute
-            try:
-                row = conn.execute(
-                    sql.SQL(
-                        "SELECT version, built_at, source_generated_at, documents,"
-                        " embedded, by_corpus, model_name, contract_version,"
-                        " keyword_index FROM {} WHERE id = 1"
-                    ).format(self._state)
-                ).fetchone()
-            except (psycopg.errors.UndefinedTable, psycopg.errors.InvalidSchemaName):
-                return None
+    def _state_row(self, conn) -> dict | None:
+        row = conn.execute(
+            sql.SQL(
+                "SELECT version, built_at, source_generated_at, model_name,"
+                " contract_version, keyword_index FROM {} WHERE id = 1"
+            ).format(self._state)
+        ).fetchone()
         if row is None:
             return None
         return {
             "version": row[0],
-            "built_at": row[1].isoformat() if row[1] else None,
+            "built_at": row[1],
             "source_generated_at": row[2],
-            "documents": row[3],
-            "embedded": row[4],
-            "by_corpus": row[5],
-            "model_name": row[6],
-            "contract_version": row[7],
-            "keyword_index": row[8],
+            "model_name": row[3],
+            "contract_version": row[4],
+            "keyword_index": row[5],
+        }
+
+    def _live_counts(self, conn) -> dict:
+        """Truth from the documents table — never from the stored state row,
+        so health notices a table that disagrees with the bookkeeping."""
+        rows = conn.execute(
+            sql.SQL("SELECT corpus, count(*), count(embedding) FROM {} GROUP BY corpus").format(
+                self._docs
+            )
+        ).fetchall()
+        by_corpus = {corpus: total for corpus, total, _embedded in rows}
+        return {
+            "documents": sum(by_corpus.values()),
+            "embedded": sum(embedded for _corpus, _total, embedded in rows),
+            "by_corpus": by_corpus,
+        }
+
+    def _diff(self, conn, docs: list[dict], model_name: str) -> tuple:
+        stored = dict(
+            conn.execute(sql.SQL("SELECT id, content_hash FROM {}").format(self._docs)).fetchall()
+        )
+        wanted = {d["id"]: _content_hash(model_name, d) for d in docs}
+        added = [d for d in docs if d["id"] not in stored]
+        changed = [d for d in docs if d["id"] in stored and stored[d["id"]] != wanted[d["id"]]]
+        removed = [doc_id for doc_id in stored if doc_id not in wanted]
+        return added, changed, removed, wanted
+
+    def _upsert(self, conn, to_embed: list[dict], vectors, wanted: dict) -> None:
+        upsert = sql.SQL(
+            """INSERT INTO {}
+                (id, corpus, title, text, metadata, content_hash, embedding)
+                VALUES (%s, %s, %s, %s, %s, %s, %s::vector)
+                ON CONFLICT (id) DO UPDATE SET
+                    corpus = EXCLUDED.corpus,
+                    title = EXCLUDED.title,
+                    text = EXCLUDED.text,
+                    metadata = EXCLUDED.metadata,
+                    content_hash = EXCLUDED.content_hash,
+                    embedding = EXCLUDED.embedding"""
+        ).format(self._docs)
+        rows = [
+            (
+                d["id"],
+                d["corpus"],
+                d["title"],
+                d["text"],
+                Jsonb(d["metadata"]),
+                wanted[d["id"]],
+                _vector_literal(v),
+            )
+            for d, v in zip(to_embed, vectors, strict=True)
+        ]
+        with conn.cursor() as cur:
+            for start in range(0, len(rows), _UPSERT_BATCH):
+                cur.executemany(upsert, rows[start : start + _UPSERT_BATCH])
+
+    def _write_state(
+        self,
+        conn,
+        state_row: dict | None,
+        dirty: bool,
+        source_generated: str | None,
+        counts: dict,
+        model_name: str,
+        keyword_index: str,
+    ) -> dict:
+        # version/built_at advance only when the data changed; metadata is
+        # refreshed either way.
+        if dirty or state_row is None:
+            version = (state_row["version"] if state_row else 0) + 1
+            built_at = datetime.now(UTC)
+        else:
+            version, built_at = state_row["version"], state_row["built_at"]
+        state = {
+            "version": version,
+            "built_at": built_at,
+            "source_generated_at": source_generated,
+            "documents": counts["documents"],
+            "embedded": counts["embedded"],
+            "by_corpus": Jsonb(counts["by_corpus"]),
+            "model_name": model_name,
+            "contract_version": CONTRACT_VERSION,
+            "keyword_index": keyword_index,
+        }
+        conn.execute(
+            sql.SQL(
+                """INSERT INTO {}
+                    (id, version, built_at, source_generated_at, documents,
+                     embedded, by_corpus, model_name, contract_version,
+                     keyword_index)
+                    VALUES (1, %(version)s, %(built_at)s, %(source_generated_at)s,
+                        %(documents)s, %(embedded)s, %(by_corpus)s, %(model_name)s,
+                        %(contract_version)s, %(keyword_index)s)
+                    ON CONFLICT (id) DO UPDATE SET
+                        version = EXCLUDED.version,
+                        built_at = EXCLUDED.built_at,
+                        source_generated_at = EXCLUDED.source_generated_at,
+                        documents = EXCLUDED.documents,
+                        embedded = EXCLUDED.embedded,
+                        by_corpus = EXCLUDED.by_corpus,
+                        model_name = EXCLUDED.model_name,
+                        contract_version = EXCLUDED.contract_version,
+                        keyword_index = EXCLUDED.keyword_index"""
+            ).format(self._state),
+            state,
+        )
+        state["by_corpus"] = counts["by_corpus"]
+        return state
+
+    def load_state(self) -> dict | None:
+        with self._connect(autocommit=True) as conn:
+            conn.execute("SELECT 1")  # wakes a sleeping Neon compute
+            try:
+                state_row = self._state_row(conn)
+                counts = self._live_counts(conn)
+            except (psycopg.errors.UndefinedTable, psycopg.errors.InvalidSchemaName):
+                return None
+        if state_row is None:
+            return None
+        return {
+            **state_row,
+            "built_at": state_row["built_at"].isoformat() if state_row["built_at"] else None,
+            **counts,
         }
 
     def sync(self, corpus_path: Path, model_name: str, embed_fn=None) -> dict:
@@ -181,15 +294,7 @@ class PgIndexStore:
             lakebase = self._lakebase_available(conn)
             keyword_index = "lakebase_bm25" if lakebase else "gin"
 
-            stored = dict(
-                conn.execute(
-                    sql.SQL("SELECT id, content_hash FROM {}").format(self._docs)
-                ).fetchall()
-            )
-            wanted = {d["id"]: _content_hash(model_name, d) for d in docs}
-            added = [d for d in docs if d["id"] not in stored]
-            changed = [d for d in docs if d["id"] in stored and stored[d["id"]] != wanted[d["id"]]]
-            removed = [doc_id for doc_id in stored if doc_id not in wanted]
+            added, changed, removed, wanted = self._diff(conn, docs, model_name)
             dirty = bool(added or changed or removed)
 
             to_embed = added + changed
@@ -199,77 +304,21 @@ class PgIndexStore:
                     if embed_fn is not None
                     else embed_documents(to_embed, model_name)
                 )
-                upsert = sql.SQL(
-                    """INSERT INTO {}
-                        (id, corpus, title, text, metadata, content_hash, embedding)
-                        VALUES (%s, %s, %s, %s, %s, %s, %s::vector)
-                        ON CONFLICT (id) DO UPDATE SET
-                            corpus = EXCLUDED.corpus,
-                            title = EXCLUDED.title,
-                            text = EXCLUDED.text,
-                            metadata = EXCLUDED.metadata,
-                            content_hash = EXCLUDED.content_hash,
-                            embedding = EXCLUDED.embedding"""
-                ).format(self._docs)
-                rows = [
-                    (
-                        d["id"],
-                        d["corpus"],
-                        d["title"],
-                        d["text"],
-                        Jsonb(d["metadata"]),
-                        wanted[d["id"]],
-                        _vector_literal(v),
+                if len(vectors) != len(to_embed):
+                    raise ValueError(
+                        f"embedder returned {len(vectors)} vectors for {len(to_embed)} documents"
                     )
-                    for d, v in zip(to_embed, vectors)
-                ]
-                with conn.cursor() as cur:
-                    for start in range(0, len(rows), _UPSERT_BATCH):
-                        cur.executemany(upsert, rows[start : start + _UPSERT_BATCH])
+                self._upsert(conn, to_embed, vectors, wanted)
             if removed:
                 conn.execute(
                     sql.SQL("DELETE FROM {} WHERE id = ANY(%s)").format(self._docs),
                     (removed,),
                 )
 
-            prev = conn.execute(
-                sql.SQL("SELECT version, built_at FROM {} WHERE id = 1").format(self._state)
-            ).fetchone()
-            if dirty or prev is None:
-                version = (prev[0] if prev else 0) + 1
-                built_at = datetime.now(UTC)
-            else:
-                version, built_at = prev
-            by_corpus = dict(Counter(d["corpus"] for d in docs))
-            conn.execute(
-                sql.SQL(
-                    """INSERT INTO {}
-                        (id, version, built_at, source_generated_at, documents,
-                         embedded, by_corpus, model_name, contract_version,
-                         keyword_index)
-                        VALUES (1, %s, %s, %s, %s, %s, %s, %s, %s, %s)
-                        ON CONFLICT (id) DO UPDATE SET
-                            version = EXCLUDED.version,
-                            built_at = EXCLUDED.built_at,
-                            source_generated_at = EXCLUDED.source_generated_at,
-                            documents = EXCLUDED.documents,
-                            embedded = EXCLUDED.embedded,
-                            by_corpus = EXCLUDED.by_corpus,
-                            model_name = EXCLUDED.model_name,
-                            contract_version = EXCLUDED.contract_version,
-                            keyword_index = EXCLUDED.keyword_index"""
-                ).format(self._state),
-                (
-                    version,
-                    built_at,
-                    source_generated,
-                    len(docs),
-                    len(docs),
-                    Jsonb(by_corpus),
-                    model_name,
-                    CONTRACT_VERSION,
-                    keyword_index,
-                ),
+            state_row = self._state_row(conn)
+            counts = self._live_counts(conn)
+            state = self._write_state(
+                conn, state_row, dirty, source_generated, counts, model_name, keyword_index
             )
 
         # After the commit: the keyword-index ensure runs on every sync (a
@@ -288,17 +337,7 @@ class PgIndexStore:
             len(removed),
             len(docs) - len(added) - len(changed),
         )
-        return {
-            "version": version,
-            "built_at": built_at.isoformat(),
-            "source_generated_at": source_generated,
-            "documents": len(docs),
-            "embedded": len(docs),
-            "by_corpus": by_corpus,
-            "model_name": model_name,
-            "contract_version": CONTRACT_VERSION,
-            "keyword_index": keyword_index,
-        }
+        return {**state, "built_at": state["built_at"].isoformat()}
 
     def _post_commit_maintenance(self, lakebase: bool, dirty: bool) -> None:
         with self._connect(autocommit=True) as conn:

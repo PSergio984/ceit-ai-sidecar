@@ -13,6 +13,8 @@ import json
 import os
 import secrets
 import shutil
+import subprocess
+import sys
 import threading
 from pathlib import Path
 
@@ -148,6 +150,27 @@ def test_health_reports_sqlite_backend(tmp_path, corpus_path):
     assert body["status"] == "ok"
     assert body["backend"] == "sqlite"
     assert body["index"]["documents"] == 6
+
+
+def test_pg_index_does_not_import_rebuild():
+    env = dict(os.environ, SIDECAR_TOKEN="t")
+    result = subprocess.run(
+        [
+            sys.executable,
+            "-c",
+            (
+                "import sys; import app.pg_index; "
+                "assert 'app.rebuild' not in sys.modules, "
+                "'pg_index must not import app.rebuild'"
+            ),
+        ],
+        cwd=ROOT,
+        env=env,
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    assert result.returncode == 0, result.stderr
 
 
 def test_health_degraded_when_pgvector_unconfigured(tmp_path):
@@ -449,3 +472,49 @@ def test_unchanged_sync_checks_index_but_skips_vacuum(store, tmp_path, monkeypat
     store.sync(corpus_dir, "test-model", embed_fn=CountingEmbedder())
     assert len(ensure_calls) == 1
     assert vacuum_calls == []
+
+
+def test_embedder_wrong_vector_count_rolls_back(store, pg_schema, tmp_path):
+    corpus_dir = _tiny_corpus(tmp_path)
+    first = store.sync(corpus_dir, "test-model", embed_fn=CountingEmbedder())
+
+    catalog_path = corpus_dir / "catalog.json"
+    catalog = json.loads(catalog_path.read_text(encoding="utf-8"))
+    catalog["documents"][0]["text"] += " changed"
+    catalog_path.write_text(json.dumps(catalog), encoding="utf-8")
+
+    def too_few(docs):
+        return np.zeros((len(docs) - 1, 384), dtype=np.float32)
+
+    def too_many(docs):
+        return np.zeros((len(docs) + 1, 384), dtype=np.float32)
+
+    with pytest.raises(ValueError, match="vectors for"):
+        store.sync(corpus_dir, "test-model", embed_fn=too_few)
+    with pytest.raises(ValueError, match="vectors for"):
+        store.sync(corpus_dir, "test-model", embed_fn=too_many)
+
+    assert _doc_count(pg_schema) == 3
+    state = store.load_state()
+    assert state["version"] == first["version"]
+    assert state["model_name"] == "test-model"
+
+
+def test_state_reports_live_table_counts(store, pg_schema, tmp_path):
+    corpus_dir = _tiny_corpus(tmp_path)
+    returned = store.sync(corpus_dir, "test-model", embed_fn=CountingEmbedder())
+    state = store.load_state()
+    for key in ("documents", "embedded", "by_corpus"):
+        assert returned[key] == state[key]
+
+    with psycopg.connect(PG_URL, autocommit=True, prepare_threshold=None) as conn:
+        conn.execute(
+            sql.SQL("DELETE FROM {} WHERE id = %s").format(_ident(pg_schema, "documents")),
+            ("d0",),
+        )
+
+    state = store.load_state()
+    assert state["documents"] == 2
+    assert state["embedded"] == 2
+    assert sum(state["by_corpus"].values()) == 2
+    assert state["version"] == returned["version"]
