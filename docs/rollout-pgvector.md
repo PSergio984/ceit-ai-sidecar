@@ -91,13 +91,41 @@ psql "$DATABASE_URL" -c "SELECT keyword_index, version, documents, embedded FROM
 -- expect keyword_index = lakebase_bm25 on Neon (gin on plain pgvector)
 ```
 
-## 5. Flip — human step
+## 5. Real-host gate measurements — before any traffic switches
+
+The dev-machine gate report (`docs/baseline/pgvector-gate.md`) leaves two
+criteria unanswered by design: warm p95 latency and RSS are real-host
+numbers. Measure them on the cloud host **without switching production
+traffic** — e.g. a second sidecar instance (or container replica) deployed
+with `VECTOR_BACKEND=pgvector`, `DATABASE_URL`=<pooled endpoint> and the
+same `PG_INDEX_SCHEMA`, not attached to the Laravel app:
+
+```sh
+# on that pgvector instance, from the host:
+PYTHONHASHSEED=0 MIN_SEMANTIC_SIMILARITY=0.5 \
+  python -m app.eval --json          # sanity: quality matches the gate report
+python docs/baseline/bench.py        # warm p95 per method + RSS
+```
+
+Requirements to proceed (from the gate AC):
+
+- warm p95 within **50 ms** of the SQLite baseline on the same host —
+  re-bench the sqlite instance for a like-for-like number;
+- RSS under **400 MB**;
+- the maintainer's decision on the top-1 label ambiguity (issue #26) —
+  either accept the corrected 0.7727 reference or regenerate the golden
+  set first.
+
+If any of these fail, stop here: production stays on `sqlite` and the
+report records which criterion failed.
+
+## 6. Flip — human step
 
 The maintainer sets `VECTOR_BACKEND=pgvector` on the cloud host and
-restarts/redeploys. This is deliberately manual: the gate report and the
-smoke test are reviewed first.
+restarts/redeploys. This is deliberately manual: the gate report, the
+smoke test and the real-host measurements are reviewed first.
 
-## 6. Smoke test (post-flip)
+## 7. Smoke test (post-flip)
 
 - `GET /health` → `backend: pgvector`, `status: ok`, same
   `documents`/`embedded`/`by_corpus` as above.
@@ -108,7 +136,7 @@ smoke test are reviewed first.
 - `POST /recommend` — `{"seed_ids": ["<catalog id>"]}` returns ranked
   catalog papers, `seeds_used: 1`.
 
-## 7. Rollback
+## 8. Rollback
 
 Set `VECTOR_BACKEND=sqlite` and restart. **Rollback is a single env
 change** — that is an acceptance criterion, not a fallback plan. The
@@ -116,7 +144,7 @@ committed SQLite index artifacts are untouched by the migration, so the
 old backend serves immediately; the Postgres index can stay in place for
 a later re-flip (re-run `push_embeddings.py` first if the corpus moved).
 
-## 8. Watch post-flip
+## 9. Watch post-flip
 
 - `ceit_search_duration_seconds` p95 — hold it inside baseline +50 ms;
   the first request after Neon idle pays the compute wake (health check

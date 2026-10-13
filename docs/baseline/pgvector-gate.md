@@ -20,14 +20,19 @@ Hybrid method vs baseline:
 | metric | baseline | pgvector | criterion | verdict |
 |---|---|---|---|---|
 | negative_pass_rate | 1.0000 | 1.0000 | ≥ baseline | pass |
-| top1_rate | 0.8182 | 0.7727 | ≥ baseline | pass* |
+| top1_rate | 0.8182 | 0.7727 | ≥ baseline | **fail** vs frozen file; **exact** vs corrected reference* |
 | avg_recall @5 | 0.7239 | 0.7235 | within −0.02 | pass (−0.0004) |
 | avg_f1 @5 | 0.3913 | 0.3908 | within −0.02 | pass (−0.0005) |
 
-\* The frozen file records 0.8182, but `docs/baseline/README.md` documents
-that this number predates the deterministic `(-score, id)` tie-break — the
-corrected reference for later gates is **0.7727**, which is exactly what
-pgvector measured. Every one of the 3 case-level differences vs the frozen
+\* Read literally, "top-1 rate at least baseline" fails: 0.7727 < the
+frozen file's 0.8182. The qualifier is that `docs/baseline/README.md`
+documents 0.8182 as pre-deterministic-tie-break hash luck on a
+duplicate-title case and names **0.7727** as "the reference for later
+gates" — the measured value equals it exactly. So the criterion as
+written is not met; satisfying it requires either revising the frozen
+baseline (a data decision — issue #26) or accepting the documented
+corrected reference. That decision belongs to the maintainer, not this
+report. Every one of the 3 case-level differences vs the frozen
 file is a duplicate-title ambiguity ("Energy-Efficient Street Lighting
 Control Using Microcontrollers" papers 914/943, "Secure Role-Based Access
 Control for Student Portals" papers 849/893/942, "Intelligent Traffic
@@ -95,9 +100,12 @@ number is not meaningful for the decision.
 
 ## Verdict
 
-- Retrieval quality: **pass** on every criterion (top-1 reads pass against
-  the documented post-tie-break reference 0.7727; the frozen file's 0.8182
-  delta is the duplicate-title label ambiguity, itemized above).
+- Retrieval quality: **pass on negative-pass, recall, F1 and every
+  per-category band**; top-1 **fails the criterion as written** (0.7727 <
+  frozen 0.8182) — the entire delta is the itemized duplicate-title label
+  ambiguity, and the measured value equals the documented post-tie-break
+  reference. Whether to accept the corrected reference or regenerate the
+  golden set is the maintainer's call (issue #26).
 - Judge: **pass**, within the measured noise band.
 - Latency: **incomplete** — fails vs +50 ms as measured dev→Neon-SG where
   RTT dominates; the criterion is only answerable on the real host. If the
@@ -106,6 +114,8 @@ number is not meaningful for the decision.
 - Memory: **not measured** — real-host step.
 
 Per the spec, "if any criterion fails, the report says which and the
-default backend stays SQLite": the quality criteria all pass; the flip
-decision waits on the real-host latency + memory measurements, which are
-steps 5–6 of `docs/rollout-pgvector.md`.
+default backend stays SQLite": top-1 fails the frozen-baseline criterion
+for the documented duplicate-title reason, and latency/memory are
+incomplete pending the real host — so the default backend stays
+`sqlite` and the flip waits on steps 5–6 of `docs/rollout-pgvector.md`
+plus the maintainer's call on the golden-set labels.
