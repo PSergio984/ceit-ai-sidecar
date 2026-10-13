@@ -166,7 +166,8 @@ def evaluate(
 
     `title_ranker` maps a query title to ranked catalog doc ids — the seam
     for the title-as-query baseline (HybridSearch.rrf_search in the CLI, a
-    deterministic stub in tests).
+    deterministic stub in tests). Raises ValueError when hit_at is outside
+    1..list_size.
     """
     if hit_at < 1 or hit_at > list_size:
         raise ValueError(f"hit_at must be between 1 and list_size ({list_size})")
