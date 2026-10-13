@@ -84,7 +84,8 @@ class PgIndexStore:
 
     def _index_exists(self, conn, index_name: str) -> bool:
         return conn.execute(
-            "SELECT to_regclass(%s) IS NOT NULL", (f"{self.schema}.{index_name}",)
+            "SELECT to_regclass(quote_ident(%s) || '.' || quote_ident(%s)) IS NOT NULL",
+            (self.schema, index_name),
         ).fetchone()[0]
 
     def _ensure_schema(self, conn) -> None:

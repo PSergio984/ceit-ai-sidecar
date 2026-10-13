@@ -524,3 +524,25 @@ def test_load_state_never_reads_a_torn_index(store, pg_schema, tmp_path, monkeyp
 
     # consistent with ONE committed index: v1+3 or v2+4, never v1+4
     assert (state["version"], state["documents"]) in {(1, 3), (2, 4)}
+
+
+def test_index_exists_check_handles_mixed_case_schema():
+    if not PG_URL:
+        pytest.skip("TEST_DATABASE_URL not set")
+    schema = f"CeitMixed_{secrets.token_hex(3)}"
+    with psycopg.connect(PG_URL, autocommit=True, prepare_threshold=None) as conn:
+        conn.execute(sql.SQL("CREATE SCHEMA {}").format(sql.Identifier(schema)))
+        try:
+            conn.execute(
+                sql.SQL("CREATE TABLE {} (t tsvector)").format(sql.Identifier(schema, "documents"))
+            )
+            conn.execute(
+                sql.SQL("CREATE INDEX {} ON {} USING gin (t)").format(
+                    sql.Identifier("documents_tsv_gin"), sql.Identifier(schema, "documents")
+                )
+            )
+            store = PgIndexStore(PG_URL, schema=schema)
+            assert store._index_exists(conn, "documents_tsv_gin")
+            assert not store._index_exists(conn, "documents_missing_idx")
+        finally:
+            conn.execute(sql.SQL("DROP SCHEMA {} CASCADE").format(sql.Identifier(schema)))
