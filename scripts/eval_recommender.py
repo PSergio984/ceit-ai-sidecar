@@ -33,8 +33,12 @@ def main() -> int:
         "--sequences", required=True, type=Path, help="borrow-sequences JSON export"
     )
     parser.add_argument("--index-dir", type=Path, default=ROOT / "index")
-    parser.add_argument("--limit", type=int, default=10, help="Hit@K depth (default 10)")
+    parser.add_argument(
+        "--limit", type=int, default=10, help=f"Hit@K depth, 1-{LIST_SIZE} (default 10)"
+    )
     args = parser.parse_args()
+    if not 1 <= args.limit <= LIST_SIZE:
+        parser.error(f"--limit must be between 1 and {LIST_SIZE}")
 
     try:
         sequences = load_sequences(args.sequences)
@@ -56,8 +60,10 @@ def main() -> int:
             for r in engine.rrf_search(query, method="hybrid", limit=LIST_SIZE, corpus="catalog")
         ]
 
-    outcome = evaluate(docs_by_id, vectors, sequences, title_ranker, hit_at=args.limit)
-    engine.close()
+    try:
+        outcome = evaluate(docs_by_id, vectors, sequences, title_ranker, hit_at=args.limit)
+    finally:
+        engine.close()
     print(format_report(outcome, str(args.sequences)))
     return 0
 

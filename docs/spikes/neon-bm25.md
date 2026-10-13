@@ -16,7 +16,7 @@ Baseline is the live SQLite FTS5 BM25-only run through the same `app.eval` code 
 | avg F1 | 0.4321 | 0.3867 | **0.4321** | 0.4032 |
 | top-1 rate | 0.7273 | 0.6364 | **0.7727** | 0.5909 |
 
-With the normalized tsvector, negative pass rate, precision, recall and F1 equal SQLite exactly (delta 0.0000). Top-1 is +0.0455 (one query out of 22): `CEIT-CE-07-10` ranks the correct paper-400 first on Postgres and second on SQLite (paper-11 first). That is outside the literal 0.02 band but in the favourable direction, and I did not investigate the BM25 formula difference behind it. Results were identical through Neon's pooled endpoint and with `prefilter` on.
+With the normalized tsvector, negative pass rate, precision, recall and F1 equal SQLite exactly (delta 0.0000). Top-1 is +0.0455 (one query out of 22): `CEIT-CE-07-10` ranks the correct paper-400 first on Postgres and second on SQLite (paper-11 first). That is outside the literal 0.02 band but in the favourable direction, and I did not investigate the BM25 formula difference behind it. Golden metrics for the normalized variant were identical when run through Neon's pooled endpoint and with `prefilter` on; the other probes (candidate limit, prefilter correctness, ordering) were run over the direct endpoint only.
 
 Caveat: 22 positive cases means one query moves a rate by 0.045. The corpus is synthetic.
 
