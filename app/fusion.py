@@ -1,13 +1,15 @@
 """Backend-independent fusion: filters, RRF ranking, code pin, result shaping.
 
-Pure functions over plain dicts — no I/O, no sqlite/numpy. Every ordering is
-deterministic: hybrid/semantic sort by (-score, id), bm25 by rank — never by
-set or dict iteration order.
+Pure functions over plain dicts — no I/O, no sqlite. Every ordering is
+deterministic: hybrid/semantic/recommend sort by (-score, id), bm25 by rank —
+never by set or dict iteration order.
 """
 
 from __future__ import annotations
 
 import re
+
+import numpy as np
 
 CODE_PIN_RE = re.compile(r"^CEIT-[A-Z]{2}-\d{2}(-\d+)?$", re.IGNORECASE)
 
@@ -78,6 +80,65 @@ def fuse(
         ranked = sorted(scores, key=lambda did: (-scores[did], did))
 
     return ranked, scores, sem_rank_map
+
+
+def recommend_rank(
+    docs_by_id: dict,
+    vectors: np.ndarray,
+    seed_ids: list[str],
+    exclude_ids: list[str],
+    limit: int,
+) -> tuple[int, list[dict]]:
+    """Rank catalog docs by cosine to the mean of the resolved seed vectors.
+
+    `vectors` rows align with `list(docs_by_id.keys())` (the _semantic_scores
+    convention). A seed resolves only when it exists in docs_by_id AND its
+    corpus is "catalog"; unknown and policy seeds are ignored. seeds_used is
+    the count of distinct resolved seeds — 0 means no query vector, so the
+    result is (0, []). Candidates are catalog docs only, minus every requested
+    seed id (resolved or not) and exclude_ids. Ordering is (-score, id) so the
+    same request always returns the same list.
+    """
+    ids = list(docs_by_id.keys())
+    requested = set(seed_ids)
+    resolved = [
+        i
+        for i, doc_id in enumerate(ids)
+        if doc_id in requested and docs_by_id[doc_id].get("corpus") == "catalog"
+    ]
+    seeds_used = len(resolved)
+    if seeds_used == 0:
+        return 0, []
+
+    q = vectors[resolved].mean(axis=0)
+    norm = np.linalg.norm(q)
+    if norm == 0:
+        return seeds_used, []
+    q = q / norm
+
+    blocked = requested | set(exclude_ids)
+    scores = vectors @ q  # normalized vectors -> cosine similarity
+    candidates = sorted(
+        (
+            (float(scores[i]), doc_id)
+            for i, doc_id in enumerate(ids)
+            if doc_id not in blocked and docs_by_id[doc_id].get("corpus") == "catalog"
+        ),
+        key=lambda item: (-item[0], item[1]),
+    )
+    results = []
+    for score, doc_id in candidates[:limit]:
+        doc = docs_by_id[doc_id]
+        results.append(
+            {
+                "id": doc["id"],
+                "corpus": doc.get("corpus"),
+                "title": doc.get("title"),
+                "score": round(score, 4),
+                "metadata": doc.get("metadata") or {},
+            }
+        )
+    return seeds_used, results
 
 
 def pin_catalog_code(query: str, ranked: list[str], docs_by_id: dict) -> str | None:
