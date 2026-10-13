@@ -335,7 +335,20 @@ def recommend(payload: dict):
     seed_ids, exclude_ids, limit = validated
 
     started = time.perf_counter()
-    seeds_used, results = _get_engine().recommend(seed_ids, exclude_ids, limit)
+    try:
+        seeds_used, results = _get_engine().recommend(seed_ids, exclude_ids, limit)
+    except NotImplementedError:
+        # The pgvector backend ships recommend in #11 — answer 501 instead
+        # of an unhandled 500 until it lands.
+        return JSONResponse(
+            status_code=501,
+            content={
+                "error": {
+                    "code": "not_implemented",
+                    "message": "recommend is not implemented on this backend yet",
+                }
+            },
+        )
     took_ms = int((time.perf_counter() - started) * 1000)
 
     logger.info(

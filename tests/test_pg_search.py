@@ -235,6 +235,36 @@ def test_pg_recommend_not_implemented_yet(pg_engine):
         pg_engine.recommend(["paper-1"], [], 5)
 
 
+def test_recommend_returns_501_on_pgvector_backend(pg_schema, tmp_path, monkeypatch):
+    """#11 pending: /recommend must answer a clean 501, not an unhandled 500."""
+    from conftest import make_corpus, reset_main_singletons
+    from fastapi.testclient import TestClient
+
+    make_corpus(tmp_path)
+    import app.main as main_mod
+    from app.config import settings as cfg_settings
+
+    # Mutate the shared singleton: create_backend reads app.backend's own
+    # import binding, which replacing main_mod.settings would not reach.
+    monkeypatch.setattr(cfg_settings, "vector_backend", "pgvector")
+    monkeypatch.setattr(cfg_settings, "database_url", PG_URL)
+    monkeypatch.setattr(cfg_settings, "pg_index_schema", pg_schema)
+    reset_main_singletons(main_mod)
+    try:
+        resp = TestClient(main_mod.app).post(
+            "/recommend",
+            json={"seed_ids": ["paper-1"]},
+            headers={"X-Sidecar-Token": "test-token"},
+        )
+    finally:
+        engine = main_mod._search_engine
+        if engine is not None:
+            engine.close()
+            main_mod._search_engine = None
+    assert resp.status_code == 501
+    assert resp.json()["error"]["code"] == "not_implemented"
+
+
 def test_factory_builds_pgvector_engine(pg_schema, monkeypatch):
     from app import backend as backend_mod
 
@@ -273,13 +303,17 @@ def test_factory_pgvector_requires_database_url(monkeypatch):
 
 
 def _sync_committed(store: PgIndexStore) -> dict:
-    """Push the committed index artifacts through the real sync path."""
-    from app.ingest import load_documents
+    """Push the committed index artifacts through the real sync path.
 
-    docs = load_documents(ROOT / "corpus")
-    vectors = np.load(COMMITTED_CACHE / "vectors-1.npy")
-    cached = {d["id"]: i for i, d in enumerate(docs)}
-    assert len(vectors) == len(docs)
+    Vectors are mapped to documents by id via _version_artifacts, which reads
+    docs-N.json and vectors-N.npy together — the rows are guaranteed aligned
+    regardless of the order load_documents happens to return.
+    """
+    from app.search import _version_artifacts
+
+    _version, docs_by_id, vectors = _version_artifacts(COMMITTED_CACHE)
+    cached = {doc_id: i for i, doc_id in enumerate(docs_by_id)}
+    assert len(vectors) == len(cached)
     state = store.sync(
         ROOT / "corpus",
         "all-MiniLM-L6-v2",
