@@ -10,7 +10,8 @@ it exists, falling back to ts_rank_cd + @@ match on plain pgvector — the
 fallback is functional but not score-identical (measured in the #5 spike).
 Per-query settings are SET LOCAL inside the query transaction, safe under
 Neon's transaction pooling; connections come from a psycopg_pool so search
-never pays a connect handshake. recommend() lands in #11.
+never pays a connect handshake. recommend() mirrors fusion.recommend_rank:
+mean of resolved seed vectors, cosine order, seeds/excludes filtered out.
 """
 
 from __future__ import annotations
@@ -297,4 +298,55 @@ class PgVectorSearch:
             )
 
     def recommend(self, seed_ids: list[str], exclude_ids: list[str], limit: int):
-        raise NotImplementedError("pgvector recommend lands in #11")
+        """Same semantics as fusion.recommend_rank, in SQL (#11).
+
+        Seeds resolve only as catalog docs (policy/unknown ignored);
+        candidates are catalog docs minus every requested seed id and
+        exclude_id; order is cosine-to-mean descending, id ascending.
+        """
+        with self._conn() as conn:
+            try:
+                rows = conn.execute(
+                    sql.SQL(
+                        "SELECT id, embedding::text FROM {}"
+                        " WHERE corpus = 'catalog' AND id = ANY(%s)"
+                    ).format(self._docs),
+                    (seed_ids,),
+                ).fetchall()
+            except (psycopg.errors.UndefinedTable, psycopg.errors.InvalidSchemaName):
+                conn.rollback()
+                return 0, []
+            seeds_used = len(rows)  # ids are unique — dup seeds can't double-count
+            if seeds_used == 0:
+                return 0, []
+
+            # Same math as recommend_rank: float32 mean, L2-normalize; a
+            # cancelling mean (norm 0) yields no ranking.
+            vectors = np.array(
+                [np.fromstring(r[1].strip("[]"), sep=",", dtype=np.float32) for r in rows]
+            )
+            q = vectors.mean(axis=0)
+            norm = np.linalg.norm(q)
+            if norm == 0:
+                return seeds_used, []
+            q = q / norm
+
+            blocked = list(dict.fromkeys([*seed_ids, *exclude_ids]))
+            rows = conn.execute(
+                sql.SQL(
+                    "SELECT id, title, metadata, 1 - (embedding <=> %s::vector) AS score"
+                    " FROM {} WHERE corpus = 'catalog' AND id != ALL(%s)"
+                    " ORDER BY score DESC, id LIMIT %s"
+                ).format(self._docs),
+                (_vector_literal(q), blocked, limit),
+            ).fetchall()
+        return seeds_used, [
+            {
+                "id": r[0],
+                "corpus": "catalog",
+                "title": r[1],
+                "metadata": r[2] or {},
+                "score": round(float(r[3]), 4),
+            }
+            for r in rows
+        ]

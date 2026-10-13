@@ -75,7 +75,9 @@ def pg_schema():
 
 @pytest.fixture
 def pg_engine(pg_schema, tmp_path):
-    corpus_path = make_corpus(tmp_path)
+    # tmp_path/"pg": the parity test also resolves sqlite_engine, which
+    # builds the same corpus layout directly under tmp_path.
+    corpus_path = make_corpus(tmp_path / "pg")
     store = PgIndexStore(PG_URL, schema=pg_schema)
     store.sync(corpus_path, "test-model", embed_fn=_hash_embed_fn)
     engine = PgVectorSearch(
@@ -215,6 +217,96 @@ def test_unknown_method_falls_back_to_hybrid(engine):
 
 
 # ---------------------------------------------------------------------------
+# Contract: /recommend parity — same assertions on BOTH backends (#11)
+# ---------------------------------------------------------------------------
+
+
+def test_recommend_seeds_and_excludes_never_in_results(engine):
+    seeds_used, results = engine.recommend(["paper-1"], ["paper-2"], limit=10)
+    assert seeds_used == 1
+    ids = {r["id"] for r in results}
+    assert ids.isdisjoint({"paper-1", "paper-2"})
+    assert ids == {"paper-3", "paper-4"}
+
+
+def test_recommend_unknown_seed_is_ignored(engine):
+    seeds_used, results = engine.recommend(["paper-1", "ghost"], [], limit=10)
+    assert seeds_used == 1
+    assert results
+
+
+def test_recommend_dedupes_seed_ids(engine):
+    seeds_used, _ = engine.recommend(["paper-1", "paper-1", "ghost"], [], limit=10)
+    assert seeds_used == 1
+
+
+def test_recommend_policy_seed_resolves_nothing(engine):
+    assert engine.recommend(["policy-h1"], [], 10) == (0, [])
+
+
+def test_recommend_all_unknown_seeds_returns_empty(engine):
+    assert engine.recommend(["nope-1", "nope-2"], [], 10) == (0, [])
+
+
+def test_recommend_returns_catalog_docs_only(engine):
+    _, results = engine.recommend(["paper-1"], [], limit=50)
+    assert all(r["corpus"] == "catalog" for r in results)
+    assert len(results) == 3
+
+
+def test_recommend_limit_truncates(engine):
+    _, results = engine.recommend(["paper-1"], [], limit=2)
+    assert len(results) == 2
+
+
+def test_recommend_result_shape(engine):
+    _, results = engine.recommend(["paper-1"], [], limit=1)
+    r = results[0]
+    assert set(r) == {"id", "corpus", "title", "score", "metadata"}
+    assert r["corpus"] == "catalog"
+    assert isinstance(r["metadata"], dict)
+    assert r["score"] == round(r["score"], 4)
+
+
+def test_recommend_is_deterministic(engine):
+    a = engine.recommend(["paper-1", "paper-2"], ["paper-3"], limit=5)
+    b = engine.recommend(["paper-1", "paper-2"], ["paper-3"], limit=5)
+    assert a == b
+
+
+def _tie_groups(results, eps: float = 1e-4) -> list[list[str]]:
+    """Consecutive near-tie runs — order inside a run is arbitrary."""
+    groups, run, last = [], [], None
+    for r in results:
+        if last is not None and last - r["score"] > eps:
+            groups.append(run)
+            run = []
+        run.append(r["id"])
+        last = r["score"]
+    groups.append(run)
+    return groups
+
+
+def test_recommend_parity_same_order_both_backends(sqlite_engine, pg_engine):
+    """#11 AC: same ids in the same order on a shared fixture; near-ties may
+    legitimately flip between float32 numpy dot and pgvector <=>."""
+    for seeds, excludes in [
+        (["paper-1"], []),
+        (["paper-1", "paper-2"], ["paper-3"]),
+        (["paper-2", "paper-4"], []),
+    ]:
+        seeds_sqlite, res_sqlite = sqlite_engine.recommend(seeds, excludes, limit=10)
+        seeds_pg, res_pg = pg_engine.recommend(seeds, excludes, limit=10)
+        assert seeds_sqlite == seeds_pg
+        g_sqlite, g_pg = _tie_groups(res_sqlite), _tie_groups(res_pg)
+        assert len(g_sqlite) == len(g_pg)
+        assert all(set(a) == set(b) for a, b in zip(g_sqlite, g_pg))
+        for a, b in zip(res_sqlite, res_pg):
+            if a["id"] == b["id"]:
+                assert a["score"] == pytest.approx(b["score"], abs=1e-3)
+
+
+# ---------------------------------------------------------------------------
 # pgvector-only cases
 # ---------------------------------------------------------------------------
 
@@ -230,17 +322,25 @@ def test_pg_unsynced_schema_returns_empty(pg_schema):
         engine.close()
 
 
-def test_pg_recommend_not_implemented_yet(pg_engine):
-    with pytest.raises(NotImplementedError):
-        pg_engine.recommend(["paper-1"], [], 5)
+def test_pg_recommend_unsynced_schema_returns_empty(pg_schema):
+    # No documents table — recommend answers (0, []) like sqlite, not a 500.
+    engine = PgVectorSearch(
+        PG_URL, schema=pg_schema, model_name="test-model", embed_query_fn=_query_embed_fn
+    )
+    try:
+        assert engine.recommend(["paper-1"], [], 5) == (0, [])
+    finally:
+        engine.close()
 
 
-def test_recommend_returns_501_on_pgvector_backend(pg_schema, tmp_path, monkeypatch):
-    """#11 pending: /recommend must answer a clean 501, not an unhandled 500."""
+def test_recommend_works_on_pgvector_backend(pg_schema, tmp_path, monkeypatch):
+    """#11: /recommend returns real results end-to-end under pgvector."""
     from conftest import make_corpus, reset_main_singletons
     from fastapi.testclient import TestClient
 
-    make_corpus(tmp_path)
+    corpus_path = make_corpus(tmp_path)
+    PgIndexStore(PG_URL, schema=pg_schema).sync(corpus_path, "test-model", embed_fn=_hash_embed_fn)
+
     import app.main as main_mod
     from app.config import settings as cfg_settings
 
@@ -253,7 +353,7 @@ def test_recommend_returns_501_on_pgvector_backend(pg_schema, tmp_path, monkeypa
     try:
         resp = TestClient(main_mod.app).post(
             "/recommend",
-            json={"seed_ids": ["paper-1"]},
+            json={"seed_ids": ["paper-1"], "limit": 5},
             headers={"X-Sidecar-Token": "test-token"},
         )
     finally:
@@ -261,8 +361,12 @@ def test_recommend_returns_501_on_pgvector_backend(pg_schema, tmp_path, monkeypa
         if engine is not None:
             engine.close()
             main_mod._search_engine = None
-    assert resp.status_code == 501
-    assert resp.json()["error"]["code"] == "not_implemented"
+    assert resp.status_code == 200
+    body = resp.json()
+    assert body["seeds_used"] == 1
+    ids = {r["id"] for r in body["results"]}
+    assert ids == {"paper-2", "paper-3", "paper-4"}
+    assert all(r["corpus"] == "catalog" for r in body["results"])
 
 
 def test_factory_builds_pgvector_engine(pg_schema, monkeypatch):
