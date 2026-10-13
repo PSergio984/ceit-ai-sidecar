@@ -10,8 +10,6 @@ commit, then the keyword index + VACUUM on an autocommit connection.
 
 from __future__ import annotations
 
-import hashlib
-import json
 import logging
 from datetime import UTC, datetime
 from pathlib import Path
@@ -22,28 +20,13 @@ from psycopg.types.json import Jsonb
 
 from .contract import CONTRACT_VERSION
 from .ingest import embed_documents, load_documents, source_generated_at
+from .pg_common import SYNC_LOCK_KEY as _SYNC_LOCK_KEY
+from .pg_common import content_hash as _content_hash  # noqa: F401 — re-exported for tests
+from .pg_common import diff_documents
 
 logger = logging.getLogger("ceit.sidecar")
 
-# Serialises concurrent syncs across processes; transaction-scoped so it is
-# safe under transaction pooling.
-_SYNC_LOCK_KEY = 727_272_006
 _UPSERT_BATCH = 200
-
-
-def _content_hash(model_name: str, doc: dict) -> str:
-    """sha256 over canonical JSON — includes model_name so a model change
-    re-embeds every document."""
-    payload = {
-        "model_name": model_name,
-        "id": doc["id"],
-        "corpus": doc["corpus"],
-        "title": doc["title"],
-        "text": doc["text"],
-        "metadata": doc["metadata"],
-    }
-    canonical = json.dumps(payload, sort_keys=True, ensure_ascii=False, separators=(",", ":"))
-    return hashlib.sha256(canonical.encode("utf-8")).hexdigest()
 
 
 def _vector_literal(vector) -> str:
@@ -175,11 +158,7 @@ class PgIndexStore:
         stored = dict(
             conn.execute(sql.SQL("SELECT id, content_hash FROM {}").format(self._docs)).fetchall()
         )
-        wanted = {d["id"]: _content_hash(model_name, d) for d in docs}
-        added = [d for d in docs if d["id"] not in stored]
-        changed = [d for d in docs if d["id"] in stored and stored[d["id"]] != wanted[d["id"]]]
-        removed = [doc_id for doc_id in stored if doc_id not in wanted]
-        return added, changed, removed, wanted
+        return diff_documents(stored, docs, model_name)
 
     def _upsert(self, conn, to_embed: list[dict], vectors, wanted: dict) -> None:
         upsert = sql.SQL(
