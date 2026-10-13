@@ -48,7 +48,7 @@ class Settings(BaseSettings):
     # Durable thumbs-up/down feedback log (JSONL).
     feedback_path: Path = Path("var/feedback.jsonl")
 
-    model_config = SettingsConfigDict(env_file=".env")
+    model_config = SettingsConfigDict(env_file=".env", extra="ignore")
 
     @property
     def llm_key_list(self) -> list[str]:
