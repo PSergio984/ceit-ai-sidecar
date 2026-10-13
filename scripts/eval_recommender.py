@@ -56,7 +56,12 @@ def main() -> int:
             for r in engine.rrf_search(query, method="hybrid", limit=LIST_SIZE, corpus="catalog")
         ]
 
-    outcome = evaluate(docs_by_id, vectors, sequences, title_ranker, hit_at=args.limit)
+    try:
+        outcome = evaluate(docs_by_id, vectors, sequences, title_ranker, hit_at=args.limit)
+    except ValueError as exc:
+        engine.close()
+        print(f"error: {exc}", file=sys.stderr)
+        return 2
     engine.close()
     print(format_report(outcome, str(args.sequences)))
     return 0

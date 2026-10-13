@@ -201,3 +201,32 @@ def test_report_always_shows_user_count_and_approaches():
     assert "Eligible users (>=2 distinct borrows) : 3" in report
     for name in ("recommend", "popularity", "title-as-query"):
         assert name in report
+
+
+def test_evaluate_popularity_scores_a_popular_target():
+    # Users 2 and 3 are single-borrow (ineligible) but their borrows still
+    # count toward popularity: paper-2 ends up the most-borrowed paper, so
+    # user 0's held-out target is suggested at rank 1; user 1's target
+    # paper-4 is never borrowed anywhere and never suggested.
+    docs = _tiny_docs()
+    vectors = _tiny_vectors()
+    sequences = {"0": [1, 2], "2": [2], "3": [2], "1": [3, 4]}
+
+    outcome = evaluate(docs, vectors, sequences, lambda q: [], hit_at=10)
+
+    assert outcome["stats"].eligible_users == 2
+    assert outcome["stats"].ineligible_users == 2
+    assert outcome["results"]["popularity"]["hit_at_k"] == 0.5
+    assert outcome["results"]["popularity"]["mrr"] == 0.5
+
+
+def test_evaluate_rejects_hit_at_outside_list_size():
+    docs = _tiny_docs()
+    vectors = _tiny_vectors()
+    sequences = {"0": [1, 2]}
+    with pytest.raises(ValueError, match="hit_at"):
+        evaluate(docs, vectors, sequences, lambda q: [], hit_at=0)
+    with pytest.raises(ValueError, match="hit_at"):
+        evaluate(docs, vectors, sequences, lambda q: [], hit_at=51)
+    # The boundary value is allowed.
+    evaluate(docs, vectors, sequences, lambda q: [], hit_at=50)
