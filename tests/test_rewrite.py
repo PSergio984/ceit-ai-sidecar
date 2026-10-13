@@ -36,19 +36,47 @@ def test_rewrite_disabled_returns_original_without_calling_provider():
     assert client.chat.completions.calls == []
 
 
-def test_rewrite_without_key_or_client_returns_original_without_provider():
+def test_rewrite_without_key_or_client_returns_original_without_provider(monkeypatch):
     """No API key configured -> fast fallback, zero provider attempts."""
-    import app.rewrite as rewrite_mod
+    from app.config import settings
 
-    original_client = rewrite_mod.settings
-    try:
-        rewrite_mod.settings = type(
-            "S", (), {"llm_api_key": "", "llm_base_url": "", "llm_model": ""}
-        )()
-        rw = QueryRewriter(enabled=True)
-        assert rw.rewrite("any query") == "any query"
-    finally:
-        rewrite_mod.settings = original_client
+    monkeypatch.setattr(settings, "llm_api_key", "")
+    monkeypatch.setattr(settings, "llm_api_keys", "")
+    rw = QueryRewriter(enabled=True)
+    assert rw.rewrite("any query") == "any query"
+    assert rw._client is None
+
+
+def test_rewrite_with_llm_api_keys_only_calls_provider(monkeypatch):
+    """LLM_API_KEYS alone (LLM_API_KEY empty) must still enable rewriting."""
+    import app.llm as llm_mod
+    from app.config import settings
+
+    monkeypatch.setattr(settings, "llm_api_key", "")
+    monkeypatch.setattr(settings, "llm_api_keys", "k1,k2")
+    client = FakeClient("rewritten query")
+    monkeypatch.setattr(llm_mod, "_make_client", lambda base_url, key: client)
+
+    rw = QueryRewriter(enabled=True)
+    assert rw.rewrite("a verbose user query") == "rewritten query"
+    assert len(client.chat.completions.calls) == 1
+    assert rw._client._api_keys == ["k1", "k2"]
+
+
+def test_rewrite_with_explicit_api_key_ignores_settings_list(monkeypatch):
+    """An explicit api_key stays a single-key client even when the settings
+    list is configured — the guard must not disable it either."""
+    import app.llm as llm_mod
+    from app.config import settings
+
+    monkeypatch.setattr(settings, "llm_api_key", "")
+    monkeypatch.setattr(settings, "llm_api_keys", "k1,k2")
+    client = FakeClient("rewritten query")
+    monkeypatch.setattr(llm_mod, "_make_client", lambda base_url, key: client)
+
+    rw = QueryRewriter(enabled=True, api_key="explicit")
+    assert rw.rewrite("a verbose user query") == "rewritten query"
+    assert rw._client._api_keys == ["explicit"]
 
 
 def test_rewrite_prompt_mentions_keyword_optimization_and_exact_codes():

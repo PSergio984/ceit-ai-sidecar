@@ -99,8 +99,11 @@ class Reranker:
         return pinned + sorted(rest, key=_blend_key)
 
     def _llm_rerank(self, query: str, results: list[dict]) -> list[dict]:
-        if self._client is None and not self._api_key:
-            return results
+        if self._client is None:
+            from .llm import failover_keys
+
+            if not any(failover_keys(self._api_key)):
+                return results
         documents = []
         for i, doc in enumerate(results[:MAX_RERANK_DOCS], start=1):
             text = (doc.get("text") or doc.get("title") or "").strip().replace("\n", " ")

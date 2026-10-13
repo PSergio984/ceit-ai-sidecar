@@ -101,11 +101,16 @@ class _FailoverChat:
         self.completions = _FailoverCompletions(owner)
 
 
+def failover_keys(api_key: str) -> list[str]:
+    """Keys a failover client rotates through for `api_key`: the merged
+    settings list when the caller passes the settings default, else just it."""
+    from .config import settings
+
+    return settings.llm_key_list if api_key == settings.llm_api_key else [api_key]
+
+
 def ensure_openai_client(client: OpenAI | None, base_url: str, api_key: str) -> OpenAI:
     """Return the injected client, or lazily materialize one for the provider."""
     if client is not None:
         return client
-    from .config import settings
-
-    keys = settings.llm_key_list if api_key == settings.llm_api_key else [api_key]
-    return FailoverOpenAI(base_url, keys)
+    return FailoverOpenAI(base_url, failover_keys(api_key))
