@@ -14,6 +14,20 @@ jobs:
     name: SonarCloud Scan
     runs-on: ubuntu-latest
     timeout-minutes: 20
+    services:
+      # pg_index coverage: the Postgres tests must run in the job that
+      # produces coverage.xml or the new code reports 0% to the gate.
+      postgres:
+        image: pgvector/pgvector:pg17
+        env:
+          POSTGRES_PASSWORD: postgres
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
@@ -27,6 +41,7 @@ jobs:
       - name: Test with coverage
         env:
           SIDECAR_TOKEN: ci-test-token
+          TEST_DATABASE_URL: postgresql://postgres:postgres@localhost:5432/postgres
         run: |
           uv run pytest --cov=app --cov-report=xml
       - name: SonarCloud Scan
