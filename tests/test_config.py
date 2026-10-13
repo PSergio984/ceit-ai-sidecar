@@ -14,7 +14,7 @@ UNDECLARED_KEYS = ("GRAFANA_ADMIN_PASSWORD", "DATABASE_URL_UNPOOLED", "NEON_BRAN
 
 @pytest.fixture(autouse=True)
 def _clean_env(monkeypatch):
-    for key in ("SIDECAR_TOKEN", *UNDECLARED_KEYS):
+    for key in ("SIDECAR_TOKEN", "VECTOR_BACKEND", "DATABASE_URL", *UNDECLARED_KEYS):
         monkeypatch.delenv(key, raising=False)
 
 
