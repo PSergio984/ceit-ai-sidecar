@@ -9,6 +9,18 @@ from .index_store import IndexStore
 logger = logging.getLogger("ceit.sidecar")
 
 
+def degraded_health(backend: str) -> dict:
+    """The degraded /health shape — also used when the store cannot even be
+    constructed (e.g. pgvector selected but DATABASE_URL unset)."""
+    return {
+        "status": "degraded",
+        "contract_version": "v1",
+        "model": None,
+        "index": None,
+        "backend": backend,
+    }
+
+
 def assemble_health(store: IndexStore) -> dict:
     """GET /health shape: healthy = index loaded AND documents == embedded.
 
@@ -22,13 +34,7 @@ def assemble_health(store: IndexStore) -> dict:
         state = None
 
     if state is None:
-        return {
-            "status": "degraded",
-            "contract_version": "v1",
-            "model": None,
-            "index": None,
-            "backend": store.name,
-        }
+        return degraded_health(store.name)
 
     healthy = state["documents"] == state["embedded"]
     return {

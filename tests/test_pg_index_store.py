@@ -150,6 +150,20 @@ def test_health_reports_sqlite_backend(tmp_path, corpus_path):
     assert body["index"]["documents"] == 6
 
 
+def test_health_degraded_when_pgvector_unconfigured(tmp_path):
+    # No database needed: pgvector with an empty DATABASE_URL cannot even
+    # construct the store — /health must still answer 200 degraded.
+    corpus_dir = tmp_path / "corpus"
+    corpus_dir.mkdir()
+    app = _client(corpus_dir, "public", None, "")
+    resp = app.get("/health", headers=H)
+    assert resp.status_code == 200
+    body = resp.json()
+    assert body["status"] == "degraded"
+    assert body["index"] is None
+    assert body["backend"] == "pgvector"
+
+
 # --- Postgres tests (skipped without TEST_DATABASE_URL) -----------------------
 
 
@@ -340,3 +354,98 @@ def test_gin_fallback_when_lakebase_unavailable(store, pg_schema, monkeypatch):
         assert conn.execute(
             "SELECT to_regclass(%s) IS NOT NULL", (f"{pg_schema}.documents_tsv_gin",)
         ).fetchone()[0]
+
+
+def _tiny_corpus(tmp_path: Path) -> Path:
+    corpus_dir = tmp_path / "corpus"
+    corpus_dir.mkdir()
+    docs = [
+        {
+            "id": f"d{i}",
+            "corpus": "catalog",
+            "title": f"doc {i}",
+            "text": f"text body {i}",
+            "metadata": {},
+        }
+        for i in range(3)
+    ]
+    (corpus_dir / "catalog.json").write_text(
+        json.dumps(
+            {"schema_version": 1, "generated_at": "2026-01-01T00:00:00Z", "documents": docs}
+        ),
+        encoding="utf-8",
+    )
+    return corpus_dir
+
+
+def test_maintenance_failure_after_commit_keeps_upload(pg_schema, tmp_path, monkeypatch):
+    # Post-commit maintenance (CREATE INDEX / VACUUM) failing must not turn
+    # an already-committed sync into an upload failure that deletes files.
+    corpus_dir = tmp_path / "corpus"
+    corpus_dir.mkdir()
+    app = _client(corpus_dir, pg_schema, CountingEmbedder(), PG_URL)
+
+    def explode(self, lakebase, dirty):
+        raise psycopg.OperationalError("simulated maintenance failure")
+
+    monkeypatch.setattr(PgIndexStore, "_post_commit_maintenance", explode)
+    catalog = json.dumps(
+        {
+            "schema_version": 1,
+            "generated_at": "2026-01-01T00:00:00Z",
+            "documents": [
+                {
+                    "id": "d1",
+                    "corpus": "catalog",
+                    "title": "one",
+                    "text": "alpha",
+                    "metadata": {},
+                }
+            ],
+        }
+    ).encode()
+    resp = app.post(
+        "/corpus/upload",
+        files={"catalog": ("catalog.json", catalog, "application/json")},
+        headers=H,
+    )
+    assert resp.status_code == 200
+    assert (corpus_dir / "catalog.json").exists()  # committed -> not removed
+    assert _doc_count(pg_schema) == 1
+
+
+def test_unchanged_sync_recreates_missing_keyword_index(store, pg_schema, tmp_path):
+    corpus_dir = _tiny_corpus(tmp_path)
+    store.sync(corpus_dir, "test-model", embed_fn=CountingEmbedder())
+    index_name = (
+        "documents_bm25"
+        if store.load_state()["keyword_index"] == "lakebase_bm25"
+        else "documents_tsv_gin"
+    )
+    with psycopg.connect(PG_URL, autocommit=True, prepare_threshold=None) as conn:
+        conn.execute(sql.SQL("DROP INDEX {}").format(sql.Identifier(pg_schema, index_name)))
+
+    embedder = CountingEmbedder()
+    store.sync(corpus_dir, "test-model", embed_fn=embedder)
+    assert embedder.batch_sizes == []  # unchanged corpus -> no embedder calls
+    with psycopg.connect(PG_URL, autocommit=True, prepare_threshold=None) as conn:
+        assert conn.execute(
+            "SELECT to_regclass(%s) IS NOT NULL", (f"{pg_schema}.{index_name}",)
+        ).fetchone()[0]
+
+
+def test_unchanged_sync_checks_index_but_skips_vacuum(store, tmp_path, monkeypatch):
+    corpus_dir = _tiny_corpus(tmp_path)
+    store.sync(corpus_dir, "test-model", embed_fn=CountingEmbedder())
+
+    ensure_calls = []
+    vacuum_calls = []
+    monkeypatch.setattr(
+        store,
+        "_ensure_keyword_index",
+        lambda conn, lakebase: ensure_calls.append(lakebase),
+    )
+    monkeypatch.setattr(store, "_vacuum", lambda conn: vacuum_calls.append(True))
+    store.sync(corpus_dir, "test-model", embed_fn=CountingEmbedder())
+    assert len(ensure_calls) == 1
+    assert vacuum_calls == []

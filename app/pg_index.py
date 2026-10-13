@@ -272,10 +272,14 @@ class PgIndexStore:
                 ),
             )
 
-        # After the commit: the keyword index must see a populated table
-        # (spike finding) and VACUUM cannot run inside a transaction.
-        if dirty:
-            self._post_commit_maintenance(lakebase)
+        # After the commit: the keyword-index ensure runs on every sync (a
+        # failed CREATE INDEX must not strand index_state.keyword_index) and
+        # VACUUM cannot run inside a transaction. Maintenance errors must
+        # not fail the sync — the data already committed.
+        try:
+            self._post_commit_maintenance(lakebase, dirty)
+        except psycopg.Error:
+            logger.warning("pg sync: post-commit maintenance failed", exc_info=True)
 
         logger.info(
             "pg sync: added=%d changed=%d removed=%d unchanged=%d",
@@ -296,20 +300,27 @@ class PgIndexStore:
             "keyword_index": keyword_index,
         }
 
-    def _post_commit_maintenance(self, lakebase: bool) -> None:
+    def _post_commit_maintenance(self, lakebase: bool, dirty: bool) -> None:
         with self._connect(autocommit=True) as conn:
-            if lakebase:
-                if not self._index_exists(conn, "documents_bm25"):
-                    conn.execute(
-                        sql.SQL(
-                            "CREATE INDEX IF NOT EXISTS {} ON {}"
-                            " USING lakebase_bm25 (tsv) WITH (k1 = 1.2, b = 0.75)"
-                        ).format(self._bm25_idx, self._docs)
-                    )
-            elif not self._index_exists(conn, "documents_tsv_gin"):
+            self._ensure_keyword_index(conn, lakebase)
+            if dirty:
+                self._vacuum(conn)
+
+    def _ensure_keyword_index(self, conn, lakebase: bool) -> None:
+        if lakebase:
+            if not self._index_exists(conn, "documents_bm25"):
                 conn.execute(
-                    sql.SQL("CREATE INDEX IF NOT EXISTS {} ON {} USING gin (tsv)").format(
-                        self._gin_idx, self._docs
-                    )
+                    sql.SQL(
+                        "CREATE INDEX IF NOT EXISTS {} ON {}"
+                        " USING lakebase_bm25 (tsv) WITH (k1 = 1.2, b = 0.75)"
+                    ).format(self._bm25_idx, self._docs)
                 )
-            conn.execute(sql.SQL("VACUUM (ANALYZE) {}").format(self._docs))
+        elif not self._index_exists(conn, "documents_tsv_gin"):
+            conn.execute(
+                sql.SQL("CREATE INDEX IF NOT EXISTS {} ON {} USING gin (tsv)").format(
+                    self._gin_idx, self._docs
+                )
+            )
+
+    def _vacuum(self, conn) -> None:
+        conn.execute(sql.SQL("VACUUM (ANALYZE) {}").format(self._docs))

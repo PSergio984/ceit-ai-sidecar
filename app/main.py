@@ -17,7 +17,7 @@ from fastapi.responses import JSONResponse, Response, StreamingResponse
 from .agent import AgenticLoop
 from .backend import SearchBackend, create_backend
 from .config import settings
-from .health import assemble_health
+from .health import assemble_health, degraded_health
 from .index_store import IndexStore, create_index_store
 from .rag import RagService
 from .rebuild import rebuild
@@ -194,7 +194,12 @@ def _index_doc_count() -> int:
 
 @app.get("/health")
 def health():
-    return assemble_health(_get_index_store())
+    try:
+        store = _get_index_store()
+    except ValueError:
+        logger.warning("health: index store misconfigured", exc_info=True)
+        return degraded_health(settings.vector_backend)
+    return assemble_health(store)
 
 
 @app.post("/search")
