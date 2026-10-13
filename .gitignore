@@ -18,3 +18,5 @@ skills-lock.json
 # SQLite WAL sidecar files from local runs (index is committed, journals are not)
 index/*.db-shm
 index/*.db-wal
+.neon
+node_modules/
