@@ -37,7 +37,7 @@ jobs:
       - name: Set up uv
         uses: astral-sh/setup-uv@v10.0.1
       - name: Install dependencies
-        run: uv sync --frozen
+        run: uv sync --frozen --group offline
       - name: Test with coverage
         env:
           SIDECAR_TOKEN: ci-test-token

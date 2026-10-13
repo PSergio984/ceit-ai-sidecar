@@ -49,7 +49,9 @@ jobs:
       - name: Set up uv
         uses: astral-sh/setup-uv@v10.0.1
       - name: Install dependencies
-        run: uv sync --frozen
+        # --group offline: the LangChain push-script tests need the optional
+        # group; the runtime image still syncs without it.
+        run: uv sync --frozen --group offline
       - name: Test with pytest
         env:
           TEST_DATABASE_URL: postgresql://postgres:postgres@localhost:5432/postgres
