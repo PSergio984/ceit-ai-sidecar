@@ -21,6 +21,10 @@ class SearchBackend(Protocol):
         method: str = "hybrid",
     ) -> list[dict]: ...
 
+    def recommend(
+        self, seed_ids: list[str], exclude_ids: list[str], limit: int
+    ) -> tuple[int, list[dict]]: ...
+
     def close(self) -> None: ...
 
 

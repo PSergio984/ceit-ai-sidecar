@@ -16,7 +16,14 @@ from sqlitesearch import TextSearchIndex, Tokenizer
 
 from . import fusion
 from .config import settings
-from .fusion import RRF_K, fuse, passes_filters, pin_catalog_code, shape_results
+from .fusion import (
+    RRF_K,
+    fuse,
+    passes_filters,
+    pin_catalog_code,
+    recommend_rank,
+    shape_results,
+)
 from .ingest import embed_query
 
 # Re-exports kept for existing importers (`from app.search import ...`).
@@ -109,6 +116,21 @@ class HybridSearch:
         scores = vectors @ q  # normalized vectors -> cosine similarity
         ids = list(docs_by_id.keys())
         return {doc_id: float(score) for doc_id, score in zip(ids, scores)}
+
+    def recommend(
+        self, seed_ids: list[str], exclude_ids: list[str], limit: int
+    ) -> tuple[int, list[dict]]:
+        """Catalog recommendations from stored vectors — no embedding call.
+
+        Ranks catalog docs by cosine to the mean of the resolved seed
+        embeddings; seeds and exclude_ids never appear in results. Returns
+        (seeds_used, results); (0, []) when no index is built or no seed
+        resolves.
+        """
+        version, docs_by_id, vectors = _version_artifacts(self.cache_dir)
+        if version == 0 or not docs_by_id:
+            return 0, []
+        return recommend_rank(docs_by_id, vectors, seed_ids, exclude_ids, limit)
 
     def rrf_search(
         self,

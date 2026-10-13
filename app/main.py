@@ -1,4 +1,4 @@
-"""FastAPI app: token-gated /health /search /index/rebuild /metrics /feedback."""
+"""FastAPI app: token-gated /health /search /recommend /index/rebuild /metrics /feedback."""
 
 from __future__ import annotations
 
@@ -50,6 +50,9 @@ def _fresh_metrics() -> dict:
         "last_rebuild_at": None,
         "search_sum_ms": 0.0,
         "search_buckets": {le: 0 for le in SEARCH_LATENCY_BUCKETS},
+        "recommend_total": 0,
+        "recommend_sum_ms": 0.0,
+        "recommend_buckets": {le: 0 for le in SEARCH_LATENCY_BUCKETS},
         "index_documents": None,
     }
 
@@ -118,6 +121,7 @@ def _invalid(message: str) -> JSONResponse:
 
 SEARCH_ALLOWED_KEYS = {"query", "filters", "corpus", "limit", "k"}
 CHAT_ALLOWED_KEYS = {"query", "mode", "corpus", "top_k"}
+RECOMMEND_ALLOWED_KEYS = {"seed_ids", "exclude_ids", "limit"}
 
 
 def _reject_unknown(payload: dict, allowed: set[str]) -> JSONResponse | None:
@@ -275,6 +279,74 @@ def search(payload: dict):
     if search_query != query:
         body["rewritten_query"] = search_query
     return body
+
+
+def _recommend_validate(payload: dict) -> tuple[list[str], list[str], int] | JSONResponse:
+    """Closed-key validation for /recommend (ADR 0015 bounds)."""
+    seed_ids = payload.get("seed_ids")
+    if (
+        not isinstance(seed_ids, list)
+        or not 1 <= len(seed_ids) <= 20
+        or any(not isinstance(s, str) or not s for s in seed_ids)
+    ):
+        return _invalid("'seed_ids' must be a list of 1-20 non-empty strings")
+    exclude_ids = payload.get("exclude_ids", [])
+    if (
+        not isinstance(exclude_ids, list)
+        or len(exclude_ids) > 200
+        or any(not isinstance(s, str) for s in exclude_ids)
+    ):
+        return _invalid("'exclude_ids' must be a list of 0-200 strings")
+    limit = payload.get("limit", 10)
+    if isinstance(limit, bool) or not isinstance(limit, int) or not 1 <= limit <= 50:
+        return _invalid("'limit' must be an integer between 1 and 50")
+    return seed_ids, exclude_ids, limit
+
+
+@app.post("/recommend")
+def recommend(payload: dict):
+    """Seed-based catalog recommendations over stored vectors (ADR 0015).
+
+    Request: {"seed_ids": [str, ...], "exclude_ids"?: [str, ...], "limit"?: int}
+    Response: {"seeds_used": int, "total": int, "took_ms": int, "results": [...]}
+    Deterministic: cosine to the mean of resolved seed embeddings, catalog
+    corpus only, ties broken by id. No LLM/rewrite/rerank involvement.
+    """
+    rejected = _reject_unknown(payload, RECOMMEND_ALLOWED_KEYS)
+    if rejected:
+        return rejected
+    validated = _recommend_validate(payload)
+    if isinstance(validated, JSONResponse):
+        return validated
+    seed_ids, exclude_ids, limit = validated
+
+    started = time.perf_counter()
+    seeds_used, results = _get_engine().recommend(seed_ids, exclude_ids, limit)
+    took_ms = int((time.perf_counter() - started) * 1000)
+
+    logger.info(
+        "recommend seeds=%d seeds_used=%d exclude=%d results=%d took_ms=%d",
+        len(seed_ids),
+        seeds_used,
+        len(exclude_ids),
+        len(results),
+        took_ms,
+    )
+
+    with _metrics_lock:
+        _metrics["recommend_total"] += 1
+        _metrics["recommend_sum_ms"] += took_ms
+        seconds = took_ms / 1000.0
+        for le in SEARCH_LATENCY_BUCKETS:
+            if seconds <= le:
+                _metrics["recommend_buckets"][le] += 1
+
+    return {
+        "seeds_used": seeds_used,
+        "total": len(results),
+        "took_ms": took_ms,
+        "results": results,
+    }
 
 
 @app.post("/chat/stream")
@@ -476,6 +548,25 @@ def metrics():
         )
         lines.append(f"ceit_search_duration_seconds_sum {_metrics['search_sum_ms'] / 1000.0:.6f}")
         lines.append(f"ceit_search_duration_seconds_count {_metrics['searches_total']}")
+        lines.append("# HELP ceit_recommend_total Total recommend requests served.")
+        lines.append("# TYPE ceit_recommend_total counter")
+        lines.append(f"ceit_recommend_total {_metrics['recommend_total']}")
+        lines.append(
+            "# HELP ceit_recommend_duration_seconds Recommend latency histogram (seconds)."
+        )
+        lines.append("# TYPE ceit_recommend_duration_seconds histogram")
+        for le in SEARCH_LATENCY_BUCKETS:
+            lines.append(
+                f'ceit_recommend_duration_seconds_bucket{{le="{le}"}} '
+                f"{_metrics['recommend_buckets'][le]}"
+            )
+        lines.append(
+            f'ceit_recommend_duration_seconds_bucket{{le="+Inf"}} {_metrics["recommend_total"]}'
+        )
+        lines.append(
+            f"ceit_recommend_duration_seconds_sum {_metrics['recommend_sum_ms'] / 1000.0:.6f}"
+        )
+        lines.append(f"ceit_recommend_duration_seconds_count {_metrics['recommend_total']}")
         lines.append("# HELP ceit_index_documents Documents in the current index.")
         lines.append("# TYPE ceit_index_documents gauge")
         lines.append(f"ceit_index_documents {_metrics['index_documents'] or 0}")
