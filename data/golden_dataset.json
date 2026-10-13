@@ -1,6 +1,6 @@
 {
-  "version": 3,
-  "generated_at": "2026-08-18T18:00:38.479421+00:00",
+  "version": 4,
+  "generated_at": "2026-10-13T14:13:48.174908+00:00",
   "seed": 20260819,
   "corpus": {
     "file": "corpus/catalog.json",
@@ -34,7 +34,7 @@
         "catalog_code": "CEIT-IT-04-01",
         "department": "Information Technology",
         "publication_year": 2004,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Prof. Emmanuelle Bechtelar II",
           "Breana Bednar",
@@ -147,7 +147,7 @@
         "catalog_code": "CEIT-EE-08-01",
         "department": "Electrical Engineering",
         "publication_year": 2008,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Kolby Schiller"
         ],
@@ -165,7 +165,7 @@
         "catalog_code": "CEIT-CE-11-01",
         "department": "Civil Engineering",
         "publication_year": 2011,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Jammie Bergnaum",
           "Ross Padberg"
@@ -326,7 +326,7 @@
           "Breana Bednar"
         ],
         "research_adviser": "Chaya Waters",
-        "technical_adviser": "Engr. Ms. Leonor Jast V",
+        "technical_adviser": "Ms. Leonor Jast V",
         "dean": "Dr. Elwyn McDermott",
         "url": "/academic-papers/18"
       }
@@ -344,7 +344,7 @@
           "Mrs. Marisol Cole I"
         ],
         "research_adviser": "Precious Johnston",
-        "technical_adviser": "Engr. Mr. Clinton Vandervort V",
+        "technical_adviser": "Mr. Clinton Vandervort V",
         "dean": "Dr. Wendell Stiedemann DDS",
         "url": "/academic-papers/19"
       }
@@ -382,7 +382,7 @@
           "Susana Kuhlman DVM"
         ],
         "research_adviser": "Madie Hansen",
-        "technical_adviser": "Engr. Mr. Clinton Vandervort V",
+        "technical_adviser": "Mr. Clinton Vandervort V",
         "dean": "Dr. Kirsten West",
         "url": "/academic-papers/21"
       }
@@ -433,7 +433,7 @@
         "catalog_code": "CEIT-EE-11-01",
         "department": "Electrical Engineering",
         "publication_year": 2011,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Jammie Bergnaum"
         ],
@@ -476,7 +476,7 @@
           "Mr. Lesley Wisoky"
         ],
         "research_adviser": "Prof. Rafael McCullough",
-        "technical_adviser": "Engr. Ms. Leonor Jast V",
+        "technical_adviser": "Ms. Leonor Jast V",
         "dean": "Dr. Baby Nicolas I",
         "url": "/academic-papers/26"
       }
@@ -618,7 +618,7 @@
         ],
         "research_adviser": "Mr. Efrain Bogan",
         "technical_adviser": "Engr. Stefanie Wilderman",
-        "dean": "Dr. Prof. Reyna Gleichner",
+        "dean": "Prof. Reyna Gleichner",
         "url": "/academic-papers/33"
       }
     },
@@ -637,7 +637,7 @@
           "Margie Gislason"
         ],
         "research_adviser": "Joanny Erdman",
-        "technical_adviser": "Engr. Mr. Milton Donnelly",
+        "technical_adviser": "Mr. Milton Donnelly",
         "dean": "Dr. Craig Hills Sr.",
         "url": "/academic-papers/34"
       }
@@ -680,7 +680,7 @@
           "Joanie Okuneva"
         ],
         "research_adviser": "Camron Krajcik Sr.",
-        "technical_adviser": "Engr. Mrs. Rhoda Marquardt MD",
+        "technical_adviser": "Mrs. Rhoda Marquardt MD",
         "dean": "Dr. Leonard Heaney II",
         "url": "/academic-papers/36"
       }
@@ -704,7 +704,7 @@
           "Dr. Lois Kozey I"
         ],
         "research_adviser": "Yadira Rath",
-        "technical_adviser": "Engr. Miss Marjolaine Boyle",
+        "technical_adviser": "Miss Marjolaine Boyle",
         "dean": "Dr. Craig Hills Sr.",
         "url": "/academic-papers/37"
       }
@@ -748,7 +748,7 @@
           "Hillard Halvorson"
         ],
         "research_adviser": "Sonny Anderson MD",
-        "technical_adviser": "Engr. Mrs. Rhoda Marquardt MD",
+        "technical_adviser": "Mrs. Rhoda Marquardt MD",
         "dean": "Dr. Craig Hills Sr.",
         "url": "/academic-papers/39"
       }
@@ -769,7 +769,7 @@
           "Dr. Tracy Kuvalis II"
         ],
         "research_adviser": "Mrs. Marjorie Kilback",
-        "technical_adviser": "Engr. Miss Marjolaine Boyle",
+        "technical_adviser": "Miss Marjolaine Boyle",
         "dean": "Dr. Jeramy Stiedemann",
         "url": "/academic-papers/40"
       }
@@ -782,7 +782,7 @@
         "catalog_code": "CEIT-EE-08-02",
         "department": "Electrical Engineering",
         "publication_year": 2008,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Mr. Taurean Kuhn",
           "Joanie Okuneva",
@@ -831,7 +831,7 @@
         ],
         "research_adviser": "Skylar Gaylord",
         "technical_adviser": "Engr. Stefanie Wilderman",
-        "dean": "Dr. Prof. Reyna Gleichner",
+        "dean": "Prof. Reyna Gleichner",
         "url": "/academic-papers/43"
       }
     },
@@ -937,7 +937,7 @@
           "Dr. Lois Kozey I"
         ],
         "research_adviser": "Sonny Anderson MD",
-        "technical_adviser": "Engr. Ms. Ashly Hickle",
+        "technical_adviser": "Ms. Ashly Hickle",
         "dean": "Dr. Craig Hills Sr.",
         "url": "/academic-papers/48"
       }
@@ -958,7 +958,7 @@
           "Dr. Lois Kozey I"
         ],
         "research_adviser": "Camron Krajcik Sr.",
-        "technical_adviser": "Engr. Ms. Ashly Hickle",
+        "technical_adviser": "Ms. Ashly Hickle",
         "dean": "Dr. Craig Hills Sr.",
         "url": "/academic-papers/49"
       }
@@ -978,7 +978,7 @@
           "Ms. River Crona III"
         ],
         "research_adviser": "Michelle Murphy III",
-        "technical_adviser": "Engr. Mrs. Rhoda Marquardt MD",
+        "technical_adviser": "Mrs. Rhoda Marquardt MD",
         "dean": "Dr. Jaydon Mayert",
         "url": "/academic-papers/50"
       }
@@ -997,7 +997,7 @@
           "Dr. Tracy Kuvalis II"
         ],
         "research_adviser": "Michelle Murphy III",
-        "technical_adviser": "Engr. Miss Kitty Buckridge",
+        "technical_adviser": "Miss Kitty Buckridge",
         "dean": "Dr. Craig Hills Sr.",
         "url": "/academic-papers/51"
       }
@@ -1066,8 +1066,8 @@
           "Brandi Heidenreich"
         ],
         "research_adviser": "Jennifer Cummings",
-        "technical_adviser": "Engr. Miss Marjolaine Boyle",
-        "dean": "Dr. Prof. Reyna Gleichner",
+        "technical_adviser": "Miss Marjolaine Boyle",
+        "dean": "Prof. Reyna Gleichner",
         "url": "/academic-papers/54"
       }
     },
@@ -1149,7 +1149,7 @@
         ],
         "research_adviser": "Earnestine Rath MD",
         "technical_adviser": "Engr. Emanuel McLaughlin",
-        "dean": "Dr. Prof. Reyna Gleichner",
+        "dean": "Prof. Reyna Gleichner",
         "url": "/academic-papers/58"
       }
     },
@@ -1168,7 +1168,7 @@
         ],
         "research_adviser": "Geovanni Feil II",
         "technical_adviser": "Engr. Russell Harber",
-        "dean": "Dr. Prof. Reyna Gleichner",
+        "dean": "Prof. Reyna Gleichner",
         "url": "/academic-papers/59"
       }
     },
@@ -1187,8 +1187,8 @@
           "Miss Karlee Veum"
         ],
         "research_adviser": "Skylar Gaylord",
-        "technical_adviser": "Engr. Ms. Ashly Hickle",
-        "dean": "Dr. Prof. Reyna Gleichner",
+        "technical_adviser": "Ms. Ashly Hickle",
+        "dean": "Prof. Reyna Gleichner",
         "url": "/academic-papers/60"
       }
     },
@@ -1200,7 +1200,7 @@
         "catalog_code": "CEIT-EE-13-04",
         "department": "Electrical Engineering",
         "publication_year": 2013,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Hillard Halvorson",
           "Ross Padberg",
@@ -1208,8 +1208,8 @@
           "Dr. Maya Jenkins"
         ],
         "research_adviser": "Bret Lockman",
-        "technical_adviser": "Engr. Dr. Adelle Haag DDS",
-        "dean": "Dr. Dr. Lenny Purdy DDS",
+        "technical_adviser": "Dr. Adelle Haag DDS",
+        "dean": "Dr. Lenny Purdy DDS",
         "url": "/academic-papers/61"
       }
     },
@@ -1250,7 +1250,7 @@
         ],
         "research_adviser": "Dr. Alaina Davis",
         "technical_adviser": "Engr. Stephania Hansen",
-        "dean": "Dr. Dr. Lenny Purdy DDS",
+        "dean": "Dr. Lenny Purdy DDS",
         "url": "/academic-papers/63"
       }
     },
@@ -1315,8 +1315,8 @@
           "Dr. Maya Jenkins"
         ],
         "research_adviser": "Edd Schulist",
-        "technical_adviser": "Engr. Prof. Liliana Marvin",
-        "dean": "Dr. Dr. Lenny Purdy DDS",
+        "technical_adviser": "Prof. Liliana Marvin",
+        "dean": "Dr. Lenny Purdy DDS",
         "url": "/academic-papers/66"
       }
     },
@@ -1337,7 +1337,7 @@
         ],
         "research_adviser": "Prof. Hailie Gislason IV",
         "technical_adviser": "Engr. Austyn Romaguera",
-        "dean": "Dr. Dr. Creola Reilly V",
+        "dean": "Dr. Creola Reilly V",
         "url": "/academic-papers/67"
       }
     },
@@ -1356,8 +1356,8 @@
           "Kenya Pollich III"
         ],
         "research_adviser": "Edd Schulist",
-        "technical_adviser": "Engr. Prof. Liliana Marvin",
-        "dean": "Dr. Dr. Creola Reilly V",
+        "technical_adviser": "Prof. Liliana Marvin",
+        "dean": "Dr. Creola Reilly V",
         "url": "/academic-papers/68"
       }
     },
@@ -1380,7 +1380,7 @@
         ],
         "research_adviser": "Kellen Pagac",
         "technical_adviser": "Engr. Rae Reichel",
-        "dean": "Dr. Dr. Lenny Purdy DDS",
+        "dean": "Dr. Lenny Purdy DDS",
         "url": "/academic-papers/69"
       }
     },
@@ -1443,7 +1443,7 @@
         ],
         "research_adviser": "Mr. Toney Daugherty",
         "technical_adviser": "Engr. Mariah Homenick",
-        "dean": "Dr. Dr. Creola Reilly V",
+        "dean": "Dr. Creola Reilly V",
         "url": "/academic-papers/72"
       }
     },
@@ -1462,9 +1462,9 @@
           "Tyra Hickle",
           "Jensen Thiel"
         ],
-        "research_adviser": "asdasd",
-        "technical_adviser": "Engr. Prof. Cody McKenzie",
-        "dean": "Dr. Dr. Creola Reilly V",
+        "research_adviser": "",
+        "technical_adviser": "Prof. Cody McKenzie",
+        "dean": "Dr. Creola Reilly V",
         "url": "/academic-papers/73"
       }
     },
@@ -1484,7 +1484,7 @@
         ],
         "research_adviser": "Edd Schulist",
         "technical_adviser": "Engr. Giovanni Yundt",
-        "dean": "Dr. Dr. Creola Reilly V",
+        "dean": "Dr. Creola Reilly V",
         "url": "/academic-papers/74"
       }
     },
@@ -1519,15 +1519,15 @@
         "catalog_code": "CEIT-IT-11-01",
         "department": "Information Technology",
         "publication_year": 2011,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Demetrius Ratke Sr.",
           "Jaqueline Fisher",
           "Cordelia Carroll"
         ],
-        "research_adviser": "asdasd",
+        "research_adviser": "",
         "technical_adviser": "Engr. Rudy Muller",
-        "dean": "Dr. Dr. Lenny Purdy DDS",
+        "dean": "Dr. Lenny Purdy DDS",
         "url": "/academic-papers/76"
       }
     },
@@ -1549,7 +1549,7 @@
         ],
         "research_adviser": "Mr. Hardy Lesch",
         "technical_adviser": "Engr. Giovanni Yundt",
-        "dean": "Dr. Dr. Lenny Purdy DDS",
+        "dean": "Dr. Lenny Purdy DDS",
         "url": "/academic-papers/77"
       }
     },
@@ -1567,8 +1567,8 @@
           "Cordelia Carroll",
           "Adrien Price"
         ],
-        "research_adviser": "asdasd",
-        "technical_adviser": "Engr. Dr. Adelle Haag DDS",
+        "research_adviser": "",
+        "technical_adviser": "Dr. Adelle Haag DDS",
         "dean": "Dr. Ellis Kutch",
         "url": "/academic-papers/78"
       }
@@ -1590,9 +1590,9 @@
           "Kenya Pollich III",
           "Dr. Jerome Stokes"
         ],
-        "research_adviser": "asdasd",
-        "technical_adviser": "Engr. Prof. Liliana Marvin",
-        "dean": "Dr. Dr. Creola Reilly V",
+        "research_adviser": "",
+        "technical_adviser": "Prof. Liliana Marvin",
+        "dean": "Dr. Creola Reilly V",
         "url": "/academic-papers/79"
       }
     },
@@ -1639,7 +1639,7 @@
         ],
         "research_adviser": "Edd Schulist",
         "technical_adviser": "Engr. Rudy Muller",
-        "dean": "Dr. Dr. Creola Reilly V",
+        "dean": "Dr. Creola Reilly V",
         "url": "/academic-papers/81"
       }
     },
@@ -1658,8 +1658,8 @@
           "Miss Tatyana Kirlin Sr."
         ],
         "research_adviser": "Carolyne Casper",
-        "technical_adviser": "Engr. Prof. Cody McKenzie",
-        "dean": "Dr. Dr. Creola Reilly V",
+        "technical_adviser": "Prof. Cody McKenzie",
+        "dean": "Dr. Creola Reilly V",
         "url": "/academic-papers/82"
       }
     },
@@ -1680,7 +1680,7 @@
         ],
         "research_adviser": "Mr. Toney Daugherty",
         "technical_adviser": "Engr. Rae Reichel",
-        "dean": "Dr. Dr. Lenny Purdy DDS",
+        "dean": "Dr. Lenny Purdy DDS",
         "url": "/academic-papers/83"
       }
     },
@@ -1701,8 +1701,8 @@
           "Ms. Miracle Heller I"
         ],
         "research_adviser": "Mr. Hardy Lesch",
-        "technical_adviser": "Engr. Miss Freida Breitenberg Jr.",
-        "dean": "Dr. Dr. Creola Reilly V",
+        "technical_adviser": "Miss Freida Breitenberg Jr.",
+        "dean": "Dr. Creola Reilly V",
         "url": "/academic-papers/84"
       }
     },
@@ -1736,7 +1736,7 @@
         "catalog_code": "CEIT-IT-11-02",
         "department": "Information Technology",
         "publication_year": 2011,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Breana Bednar",
           "Demetrius Ratke Sr.",
@@ -1766,9 +1766,9 @@
           "Mr. Vaughn Cartwright",
           "Eleazar McKenzie"
         ],
-        "research_adviser": "asdasd",
+        "research_adviser": "",
         "technical_adviser": "Engr. Winfield Mayer Jr.",
-        "dean": "Dr. Dr. Lenny Purdy DDS",
+        "dean": "Dr. Lenny Purdy DDS",
         "url": "/academic-papers/87"
       }
     },
@@ -1809,8 +1809,8 @@
           "Kaden Auer"
         ],
         "research_adviser": "Mr. Hardy Lesch",
-        "technical_adviser": "Engr. Prof. Gustave Dooley",
-        "dean": "Dr. Dr. Lenny Purdy DDS",
+        "technical_adviser": "Prof. Gustave Dooley",
+        "dean": "Dr. Lenny Purdy DDS",
         "url": "/academic-papers/89"
       }
     },
@@ -1832,7 +1832,7 @@
         ],
         "research_adviser": "Zelda Zulauf",
         "technical_adviser": "Engr. Winfield Mayer Jr.",
-        "dean": "Dr. Dr. Lenny Purdy DDS",
+        "dean": "Dr. Lenny Purdy DDS",
         "url": "/academic-papers/90"
       }
     },
@@ -1969,15 +1969,15 @@
         "catalog_code": "CEIT-CE-19-03",
         "department": "Civil Engineering",
         "publication_year": 2019,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Ross Padberg",
           "Dasia Shields",
           "Marguerite Schiller"
         ],
         "research_adviser": "Wilhelm Kreiger",
-        "technical_adviser": "Engr. Miss Vita West V",
-        "dean": "Dr. Prof. Bert Fisher II",
+        "technical_adviser": "Miss Vita West V",
+        "dean": "Prof. Bert Fisher II",
         "url": "/academic-papers/96"
       }
     },
@@ -1989,7 +1989,7 @@
         "catalog_code": "CEIT-CE-06-02",
         "department": "Civil Engineering",
         "publication_year": 2006,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Retta Macejkovic",
           "Mr. Lesley Wisoky",
@@ -2043,7 +2043,7 @@
         ],
         "research_adviser": "Jamil Johnston",
         "technical_adviser": "Engr. Scot Stark",
-        "dean": "Dr. Prof. Bert Fisher II",
+        "dean": "Prof. Bert Fisher II",
         "url": "/academic-papers/99"
       }
     },
@@ -2110,7 +2110,7 @@
           "Marguerite Schiller"
         ],
         "research_adviser": "Mr. Garrett Dickens",
-        "technical_adviser": "Engr. Miss Vita West V",
+        "technical_adviser": "Miss Vita West V",
         "dean": "Dr. Guillermo Runolfsdottir",
         "url": "/academic-papers/102"
       }
@@ -2131,8 +2131,8 @@
           "Bernie Thompson"
         ],
         "research_adviser": "Wilhelm Kreiger",
-        "technical_adviser": "Engr. Miss Flossie Boyle",
-        "dean": "Dr. Prof. Bert Fisher II",
+        "technical_adviser": "Miss Flossie Boyle",
+        "dean": "Prof. Bert Fisher II",
         "url": "/academic-papers/103"
       }
     },
@@ -2144,7 +2144,7 @@
         "catalog_code": "CEIT-IT-09-04",
         "department": "Information Technology",
         "publication_year": 2009,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Dr. Lois Kozey I",
           "Dr. Maya Jenkins",
@@ -2175,7 +2175,7 @@
           "Mr. Jared Hills"
         ],
         "research_adviser": "Melisa Gislason",
-        "technical_adviser": "Engr. Dr. Coty Wolff Sr.",
+        "technical_adviser": "Dr. Coty Wolff Sr.",
         "dean": "Dr. Guillermo Runolfsdottir",
         "url": "/academic-papers/105"
       }
@@ -2188,7 +2188,7 @@
         "catalog_code": "CEIT-CE-07-03",
         "department": "Civil Engineering",
         "publication_year": 2007,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Renee Bahringer",
           "Kenya Pollich III",
@@ -2198,7 +2198,7 @@
         ],
         "research_adviser": "Jamil Johnston",
         "technical_adviser": "Engr. Scottie Grant",
-        "dean": "Dr. Prof. Bert Fisher II",
+        "dean": "Prof. Bert Fisher II",
         "url": "/academic-papers/106"
       }
     },
@@ -2218,7 +2218,7 @@
         ],
         "research_adviser": "Murl Dickens",
         "technical_adviser": "Engr. Scot Stark",
-        "dean": "Dr. Prof. Bert Fisher II",
+        "dean": "Prof. Bert Fisher II",
         "url": "/academic-papers/107"
       }
     },
@@ -2230,13 +2230,13 @@
         "catalog_code": "CEIT-CE-07-04",
         "department": "Civil Engineering",
         "publication_year": 2007,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Joanie Okuneva",
           "Jordane Ziemann"
         ],
         "research_adviser": "Melisa Gislason",
-        "technical_adviser": "Engr. Dr. Coty Wolff Sr.",
+        "technical_adviser": "Dr. Coty Wolff Sr.",
         "dean": "Dr. Kathleen Funk",
         "url": "/academic-papers/108"
       }
@@ -2258,7 +2258,7 @@
         ],
         "research_adviser": "Murl Dickens",
         "technical_adviser": "Engr. Jaren Wolff",
-        "dean": "Dr. Prof. Bert Fisher II",
+        "dean": "Prof. Bert Fisher II",
         "url": "/academic-papers/109"
       }
     },
@@ -2355,7 +2355,7 @@
         "catalog_code": "CEIT-CE-18-03",
         "department": "Civil Engineering",
         "publication_year": 2018,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Ross Padberg",
           "Miss Karlee Veum",
@@ -2388,7 +2388,7 @@
         ],
         "research_adviser": "Mr. Alexys Larson",
         "technical_adviser": "Engr. Jaren Wolff",
-        "dean": "Dr. Prof. Bert Fisher II",
+        "dean": "Prof. Bert Fisher II",
         "url": "/academic-papers/115"
       }
     },
@@ -2450,7 +2450,7 @@
           "Arvilla Barton"
         ],
         "research_adviser": "Wilhelm Kreiger",
-        "technical_adviser": "Engr. Miss Vita West V",
+        "technical_adviser": "Miss Vita West V",
         "dean": "Dr. Kassandra Cummings",
         "url": "/academic-papers/118"
       }
@@ -2473,7 +2473,7 @@
         ],
         "research_adviser": "Jamil Johnston",
         "technical_adviser": "Engr. Cortney Bayer",
-        "dean": "Dr. Prof. Bert Fisher II",
+        "dean": "Prof. Bert Fisher II",
         "url": "/academic-papers/119"
       }
     },
@@ -2514,7 +2514,7 @@
           "Prof. Mathilde Torp IV"
         ],
         "research_adviser": "Jillian Kihn",
-        "technical_adviser": "Engr. Miss Alexandrea Abbott II",
+        "technical_adviser": "Miss Alexandrea Abbott II",
         "dean": "Dr. Orie Turcotte",
         "url": "/academic-papers/121"
       }
@@ -2537,7 +2537,7 @@
         ],
         "research_adviser": "Marietta Block",
         "technical_adviser": "Engr. Tanya Keeling",
-        "dean": "Dr. Ms. Kiera Prosacco",
+        "dean": "Ms. Kiera Prosacco",
         "url": "/academic-papers/122"
       }
     },
@@ -2560,7 +2560,7 @@
         ],
         "research_adviser": "Duane Carter MD",
         "technical_adviser": "Engr. Tanya Keeling",
-        "dean": "Dr. Ms. Kiera Prosacco",
+        "dean": "Ms. Kiera Prosacco",
         "url": "/academic-papers/123"
       }
     },
@@ -2572,14 +2572,14 @@
         "catalog_code": "CEIT-EE-10-04",
         "department": "Electrical Engineering",
         "publication_year": 2010,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Jett Bins V",
           "Patricia Monahan III",
           "Kade Stoltenberg"
         ],
         "research_adviser": "Bret Dibbert",
-        "technical_adviser": "Engr. Mrs. Micaela Aufderhar IV",
+        "technical_adviser": "Mrs. Micaela Aufderhar IV",
         "dean": "Dr. Orie Turcotte",
         "url": "/academic-papers/124"
       }
@@ -2592,7 +2592,7 @@
         "catalog_code": "CEIT-EE-18-02",
         "department": "Electrical Engineering",
         "publication_year": 2018,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Kolby Schiller",
           "Hillard Halvorson",
@@ -2612,7 +2612,7 @@
         "catalog_code": "CEIT-CE-17-02",
         "department": "Civil Engineering",
         "publication_year": 2017,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Sonya Bradtke",
           "Prof. Emmanuelle Bechtelar II",
@@ -2622,7 +2622,7 @@
           "Delmer Watsica"
         ],
         "research_adviser": "Cheyenne Ledner",
-        "technical_adviser": "Engr. Prof. Patience Mueller",
+        "technical_adviser": "Prof. Patience Mueller",
         "dean": "Dr. Orie Turcotte",
         "url": "/academic-papers/126"
       }
@@ -2688,7 +2688,7 @@
           "Prof. Mathilde Torp IV"
         ],
         "research_adviser": "Jillian Kihn",
-        "technical_adviser": "Engr. Miss Alexandrea Abbott II",
+        "technical_adviser": "Miss Alexandrea Abbott II",
         "dean": "Dr. Dorothea Cassin",
         "url": "/academic-papers/129"
       }
@@ -2800,7 +2800,7 @@
           "Kelton Abernathy"
         ],
         "research_adviser": "Jillian Kihn",
-        "technical_adviser": "Engr. Mrs. Micaela Aufderhar IV",
+        "technical_adviser": "Mrs. Micaela Aufderhar IV",
         "dean": "Dr. Orie Turcotte",
         "url": "/academic-papers/134"
       }
@@ -2819,7 +2819,7 @@
           "Adrien Kilback"
         ],
         "research_adviser": "Aileen Hilpert",
-        "technical_adviser": "Engr. Dr. Ryan Schneider",
+        "technical_adviser": "Dr. Ryan Schneider",
         "dean": "Dr. Jodie McCullough",
         "url": "/academic-papers/135"
       }
@@ -2856,7 +2856,7 @@
         "catalog_code": "CEIT-CE-11-03",
         "department": "Civil Engineering",
         "publication_year": 2011,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Jett Bins V",
           "Bret Dibbert",
@@ -2864,7 +2864,7 @@
           "Prof. Royal Cummings DVM"
         ],
         "research_adviser": "Rosamond Hackett",
-        "technical_adviser": "Engr. Mrs. Micaela Aufderhar IV",
+        "technical_adviser": "Mrs. Micaela Aufderhar IV",
         "dean": "Dr. Dorothea Cassin",
         "url": "/academic-papers/137"
       }
@@ -2927,7 +2927,7 @@
           "Delmer Watsica"
         ],
         "research_adviser": "Jillian Kihn",
-        "technical_adviser": "Engr. Dr. Erling Torp",
+        "technical_adviser": "Dr. Erling Torp",
         "dean": "Dr. Dedrick McDermott II",
         "url": "/academic-papers/140"
       }
@@ -2949,7 +2949,7 @@
           "Prof. Mathilde Torp IV"
         ],
         "research_adviser": "Aileen Hilpert",
-        "technical_adviser": "Engr. Prof. Evelyn Hayes I",
+        "technical_adviser": "Prof. Evelyn Hayes I",
         "dean": "Dr. Dedrick McDermott II",
         "url": "/academic-papers/141"
       }
@@ -2981,7 +2981,7 @@
         "catalog_code": "CEIT-IT-09-05",
         "department": "Information Technology",
         "publication_year": 2009,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Jensen Thiel",
           "Ms. Arielle Pouros IV",
@@ -3046,7 +3046,7 @@
         "catalog_code": "CEIT-EE-21-03",
         "department": "Electrical Engineering",
         "publication_year": 2021,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Ross Padberg",
           "Kiarra Pollich DDS",
@@ -3054,7 +3054,7 @@
           "Delmer Watsica"
         ],
         "research_adviser": "Nicola Langworth DDS",
-        "technical_adviser": "Engr. Prof. Evelyn Hayes I",
+        "technical_adviser": "Prof. Evelyn Hayes I",
         "dean": "Dr. Jodie McCullough",
         "url": "/academic-papers/146"
       }
@@ -3075,7 +3075,7 @@
           "Kelton Abernathy"
         ],
         "research_adviser": "Cheyenne Ledner",
-        "technical_adviser": "Engr. Dr. Erling Torp",
+        "technical_adviser": "Dr. Erling Torp",
         "dean": "Dr. Dedrick McDermott II",
         "url": "/academic-papers/147"
       }
@@ -3100,7 +3100,7 @@
         ],
         "research_adviser": "Mable Gottlieb",
         "technical_adviser": "Engr. Aubree Schneider",
-        "dean": "Dr. Ms. Kiera Prosacco",
+        "dean": "Ms. Kiera Prosacco",
         "url": "/academic-papers/148"
       }
     },
@@ -3135,7 +3135,7 @@
         "catalog_code": "CEIT-CE-02-04",
         "department": "Civil Engineering",
         "publication_year": 2002,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Jammie Bergnaum",
           "Sallie Beer",
@@ -3146,7 +3146,7 @@
           "Adrien Kilback"
         ],
         "research_adviser": "Keely Ankunding",
-        "technical_adviser": "Engr. Miss Alexandrea Abbott II",
+        "technical_adviser": "Miss Alexandrea Abbott II",
         "dean": "Dr. Jodie McCullough",
         "url": "/academic-papers/150"
       }
@@ -3168,8 +3168,8 @@
           "Devan O'Kon"
         ],
         "research_adviser": "Karen Dickens MD",
-        "technical_adviser": "Engr. Mr. Johnson Hammes",
-        "dean": "Dr. Mr. Larry Koelpin",
+        "technical_adviser": "Mr. Johnson Hammes",
+        "dean": "Mr. Larry Koelpin",
         "url": "/academic-papers/151"
       }
     },
@@ -3232,7 +3232,7 @@
         ],
         "research_adviser": "Mr. Chase Bartoletti",
         "technical_adviser": "Engr. Estelle Nolan",
-        "dean": "Dr. Ms. Dolores Hoeger",
+        "dean": "Ms. Dolores Hoeger",
         "url": "/academic-papers/154"
       }
     },
@@ -3244,7 +3244,7 @@
         "catalog_code": "CEIT-EE-12-02",
         "department": "Electrical Engineering",
         "publication_year": 2012,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Brandi Heidenreich",
           "Mabel Hilpert",
@@ -3253,7 +3253,7 @@
           "Miss Catherine Pagac"
         ],
         "research_adviser": "Tyreek Mitchell",
-        "technical_adviser": "Engr. Mr. Johnson Hammes",
+        "technical_adviser": "Mr. Johnson Hammes",
         "dean": "Dr. Mackenzie Herman DDS",
         "url": "/academic-papers/155"
       }
@@ -3275,7 +3275,7 @@
         ],
         "research_adviser": "Prof. Patrick Monahan II",
         "technical_adviser": "Engr. Hillard Barrows",
-        "dean": "Dr. Ms. Dolores Hoeger",
+        "dean": "Ms. Dolores Hoeger",
         "url": "/academic-papers/156"
       }
     },
@@ -3316,8 +3316,8 @@
           "Dr. Kendra Towne III"
         ],
         "research_adviser": "Joy Hyatt",
-        "technical_adviser": "Engr. Dr. Kelley Mann",
-        "dean": "Dr. Ms. Dolores Hoeger",
+        "technical_adviser": "Dr. Kelley Mann",
+        "dean": "Ms. Dolores Hoeger",
         "url": "/academic-papers/158"
       }
     },
@@ -3329,7 +3329,7 @@
         "catalog_code": "CEIT-IT-03-04",
         "department": "Information Technology",
         "publication_year": 2003,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Ms. Miracle Heller I",
           "Dr. Minnie Stokes III",
@@ -3340,7 +3340,7 @@
         ],
         "research_adviser": "Paxton Weimann",
         "technical_adviser": "Engr. Lester Berge",
-        "dean": "Dr. Ms. Dolores Hoeger",
+        "dean": "Ms. Dolores Hoeger",
         "url": "/academic-papers/159"
       }
     },
@@ -3373,7 +3373,7 @@
         "catalog_code": "CEIT-CE-10-02",
         "department": "Civil Engineering",
         "publication_year": 2010,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Sonya Bradtke",
           "Jennings Swift I",
@@ -3405,7 +3405,7 @@
         ],
         "research_adviser": "Serenity McClure",
         "technical_adviser": "Engr. Citlalli Mraz",
-        "dean": "Dr. Ms. Dolores Hoeger",
+        "dean": "Ms. Dolores Hoeger",
         "url": "/academic-papers/162"
       }
     },
@@ -3426,7 +3426,7 @@
         ],
         "research_adviser": "Merlin Huel",
         "technical_adviser": "Engr. Juanita Boehm V",
-        "dean": "Dr. Ms. Dolores Hoeger",
+        "dean": "Ms. Dolores Hoeger",
         "url": "/academic-papers/163"
       }
     },
@@ -3450,7 +3450,7 @@
         ],
         "research_adviser": "Karen Dickens MD",
         "technical_adviser": "Engr. Talon Hartmann",
-        "dean": "Dr. Ms. Dolores Hoeger",
+        "dean": "Ms. Dolores Hoeger",
         "url": "/academic-papers/164"
       }
     },
@@ -3488,7 +3488,7 @@
         ],
         "research_adviser": "Prof. Patrick Monahan II",
         "technical_adviser": "Engr. Juanita Boehm V",
-        "dean": "Dr. Ms. Dolores Hoeger",
+        "dean": "Ms. Dolores Hoeger",
         "url": "/academic-papers/166"
       }
     },
@@ -3512,7 +3512,7 @@
         ],
         "research_adviser": "Karen Dickens MD",
         "technical_adviser": "Engr. Hillard Barrows",
-        "dean": "Dr. Ms. Dolores Hoeger",
+        "dean": "Ms. Dolores Hoeger",
         "url": "/academic-papers/167"
       }
     },
@@ -3555,7 +3555,7 @@
         ],
         "research_adviser": "Mr. Chase Bartoletti",
         "technical_adviser": "Engr. Estelle Nolan",
-        "dean": "Dr. Ms. Dolores Hoeger",
+        "dean": "Ms. Dolores Hoeger",
         "url": "/academic-papers/169"
       }
     },
@@ -3618,7 +3618,7 @@
         ],
         "research_adviser": "Tyreek Mitchell",
         "technical_adviser": "Engr. Luis Schmeler",
-        "dean": "Dr. Mr. Larry Koelpin",
+        "dean": "Mr. Larry Koelpin",
         "url": "/academic-papers/172"
       }
     },
@@ -3639,7 +3639,7 @@
         ],
         "research_adviser": "Florian Rippin IV",
         "technical_adviser": "Engr. Georgianna Sanford",
-        "dean": "Dr. Ms. Dolores Hoeger",
+        "dean": "Ms. Dolores Hoeger",
         "url": "/academic-papers/173"
       }
     },
@@ -3723,7 +3723,7 @@
         ],
         "research_adviser": "Florian Rippin IV",
         "technical_adviser": "Engr. Fabian Welch",
-        "dean": "Dr. Ms. Dolores Hoeger",
+        "dean": "Ms. Dolores Hoeger",
         "url": "/academic-papers/177"
       }
     },
@@ -3745,7 +3745,7 @@
         ],
         "research_adviser": "Wayne Hettinger",
         "technical_adviser": "Engr. Isabella Roberts",
-        "dean": "Dr. Mr. Larry Koelpin",
+        "dean": "Mr. Larry Koelpin",
         "url": "/academic-papers/178"
       }
     },
@@ -3757,7 +3757,7 @@
         "catalog_code": "CEIT-EE-07-03",
         "department": "Electrical Engineering",
         "publication_year": 2007,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Waylon Cummerata",
           "Mr. Tyreek Von",
@@ -3827,7 +3827,7 @@
           "Stephanie Hayes MD"
         ],
         "research_adviser": "Mr. Paxton Wintheiser",
-        "technical_adviser": "Engr. Miss Genesis Osinski I",
+        "technical_adviser": "Miss Genesis Osinski I",
         "dean": "Dr. Arianna Tromp",
         "url": "/academic-papers/182"
       }
@@ -3869,7 +3869,7 @@
           "Dr. Kaylie Cruickshank I"
         ],
         "research_adviser": "Nettie Lynch",
-        "technical_adviser": "Engr. Miss Genesis Osinski I",
+        "technical_adviser": "Miss Genesis Osinski I",
         "dean": "Dr. Arianna Tromp",
         "url": "/academic-papers/184"
       }
@@ -3882,7 +3882,7 @@
         "catalog_code": "CEIT-IT-20-02",
         "department": "Information Technology",
         "publication_year": 2020,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Anderson Glover",
           "Jan Reilly",
@@ -3890,7 +3890,7 @@
           "Lilyan Ernser MD"
         ],
         "research_adviser": "Prof. Ladarius Hoppe Sr.",
-        "technical_adviser": "Engr. Ms. Ariane Harber IV",
+        "technical_adviser": "Ms. Ariane Harber IV",
         "dean": "Dr. Marilie Auer",
         "url": "/academic-papers/185"
       }
@@ -3903,7 +3903,7 @@
         "catalog_code": "CEIT-CE-02-05",
         "department": "Civil Engineering",
         "publication_year": 2002,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Kolby Schiller",
           "Margie Gislason",
@@ -3913,7 +3913,7 @@
         ],
         "research_adviser": "Dr. Tiana Johnson MD",
         "technical_adviser": "Engr. Madison Wiza",
-        "dean": "Dr. Mr. Granville Bauch PhD",
+        "dean": "Mr. Granville Bauch PhD",
         "url": "/academic-papers/186"
       }
     },
@@ -3946,7 +3946,7 @@
         "catalog_code": "CEIT-IT-20-03",
         "department": "Information Technology",
         "publication_year": 2020,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Stella Bahringer III",
           "Margie Gislason",
@@ -3954,7 +3954,7 @@
           "Carley Berge"
         ],
         "research_adviser": "Rosalind Little",
-        "technical_adviser": "Engr. Mr. Paul Gleason",
+        "technical_adviser": "Mr. Paul Gleason",
         "dean": "Dr. Arianna Tromp",
         "url": "/academic-papers/188"
       }
@@ -3967,7 +3967,7 @@
         "catalog_code": "CEIT-CE-25-05",
         "department": "Civil Engineering",
         "publication_year": 2025,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Jacinto Purdy",
           "Gennaro Romaguera II",
@@ -4019,7 +4019,7 @@
           "Mrs. Constance Gutmann III"
         ],
         "research_adviser": "Augustine Mayer DDS",
-        "technical_adviser": "Engr. Dr. Gino Ward DDS",
+        "technical_adviser": "Dr. Gino Ward DDS",
         "dean": "Dr. Marilie Auer",
         "url": "/academic-papers/191"
       }
@@ -4040,7 +4040,7 @@
         ],
         "research_adviser": "Nettie Lynch",
         "technical_adviser": "Engr. Nathen Dach",
-        "dean": "Dr. Mr. Granville Bauch PhD",
+        "dean": "Mr. Granville Bauch PhD",
         "url": "/academic-papers/192"
       }
     },
@@ -4061,7 +4061,7 @@
           "Prof. Wendell Torp"
         ],
         "research_adviser": "Baron Toy",
-        "technical_adviser": "Engr. Prof. Humberto Conn MD",
+        "technical_adviser": "Prof. Humberto Conn MD",
         "dean": "Dr. Kitty Daugherty",
         "url": "/academic-papers/193"
       }
@@ -4083,8 +4083,8 @@
           "Liana Schaefer II"
         ],
         "research_adviser": "Augustine Mayer DDS",
-        "technical_adviser": "Engr. Prof. Humberto Conn MD",
-        "dean": "Dr. Mr. Granville Bauch PhD",
+        "technical_adviser": "Prof. Humberto Conn MD",
+        "dean": "Mr. Granville Bauch PhD",
         "url": "/academic-papers/194"
       }
     },
@@ -4153,7 +4153,7 @@
         ],
         "research_adviser": "Sunny Rice",
         "technical_adviser": "Engr. Frederic McClure II",
-        "dean": "Dr. Mr. Granville Bauch PhD",
+        "dean": "Mr. Granville Bauch PhD",
         "url": "/academic-papers/197"
       }
     },
@@ -4165,7 +4165,7 @@
         "catalog_code": "CEIT-CE-03-05",
         "department": "Civil Engineering",
         "publication_year": 2003,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Helmer Ferry",
           "Mr. Lesley Wisoky",
@@ -4194,7 +4194,7 @@
           "Earlene Goodwin"
         ],
         "research_adviser": "Augustine Mayer DDS",
-        "technical_adviser": "Engr. Ms. Ariane Harber IV",
+        "technical_adviser": "Ms. Ariane Harber IV",
         "dean": "Dr. Melyna Sporer",
         "url": "/academic-papers/199"
       }
@@ -4214,7 +4214,7 @@
           "Josefa Krajcik"
         ],
         "research_adviser": "Ransom Bailey",
-        "technical_adviser": "Engr. Mr. Paul Gleason",
+        "technical_adviser": "Mr. Paul Gleason",
         "dean": "Dr. Melyna Sporer",
         "url": "/academic-papers/200"
       }
@@ -4282,7 +4282,7 @@
           "Mrs. Constance Gutmann III"
         ],
         "research_adviser": "Araceli Medhurst",
-        "technical_adviser": "Engr. Mrs. Linda Stark Sr.",
+        "technical_adviser": "Mrs. Linda Stark Sr.",
         "dean": "Dr. Melyna Sporer",
         "url": "/academic-papers/203"
       }
@@ -4366,7 +4366,7 @@
           "Stephanie Hayes MD"
         ],
         "research_adviser": "Hiram Bogisich",
-        "technical_adviser": "Engr. Miss Genesis Osinski I",
+        "technical_adviser": "Miss Genesis Osinski I",
         "dean": "Dr. Marilie Auer",
         "url": "/academic-papers/207"
       }
@@ -4414,7 +4414,7 @@
         ],
         "research_adviser": "Baron Toy",
         "technical_adviser": "Engr. Verona Stracke",
-        "dean": "Dr. Mr. Granville Bauch PhD",
+        "dean": "Mr. Granville Bauch PhD",
         "url": "/academic-papers/209"
       }
     },
@@ -4457,7 +4457,7 @@
           "Jazmyn Jerde"
         ],
         "research_adviser": "Ms. Bianka Mann V",
-        "technical_adviser": "Engr. Miss Cheyanne Larson",
+        "technical_adviser": "Miss Cheyanne Larson",
         "dean": "Dr. Anais Johns",
         "url": "/academic-papers/211"
       }
@@ -4521,8 +4521,8 @@
           "Zackery Lynch"
         ],
         "research_adviser": "Ubaldo Walter",
-        "technical_adviser": "Engr. Mrs. Katharina Fay PhD",
-        "dean": "Dr. Ms. Clemmie Goldner",
+        "technical_adviser": "Mrs. Katharina Fay PhD",
+        "dean": "Ms. Clemmie Goldner",
         "url": "/academic-papers/214"
       }
     },
@@ -4544,8 +4544,8 @@
           "Jazmyn Jerde"
         ],
         "research_adviser": "Dennis Torphy",
-        "technical_adviser": "Engr. Mrs. Katharina Fay PhD",
-        "dean": "Dr. Mr. Jensen VonRueden Sr.",
+        "technical_adviser": "Mrs. Katharina Fay PhD",
+        "dean": "Mr. Jensen VonRueden Sr.",
         "url": "/academic-papers/215"
       }
     },
@@ -4557,7 +4557,7 @@
         "catalog_code": "CEIT-IT-12-05",
         "department": "Information Technology",
         "publication_year": 2012,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Stephanie Hayes MD",
           "Virginia Muller",
@@ -4578,14 +4578,14 @@
         "catalog_code": "CEIT-EE-24-04",
         "department": "Electrical Engineering",
         "publication_year": 2024,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Cathryn Effertz",
           "Mr. Howell Halvorson",
           "Kaden Dicki"
         ],
         "research_adviser": "Mrs. Flossie Yundt Jr.",
-        "technical_adviser": "Engr. Prof. Eino Pacocha",
+        "technical_adviser": "Prof. Eino Pacocha",
         "dean": "Dr. Justina Boyle",
         "url": "/academic-papers/217"
       }
@@ -4622,7 +4622,7 @@
         "catalog_code": "CEIT-CE-06-03",
         "department": "Civil Engineering",
         "publication_year": 2006,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Bret Dibbert",
           "Retta Macejkovic",
@@ -4632,7 +4632,7 @@
         ],
         "research_adviser": "Ubaldo Walter",
         "technical_adviser": "Engr. Mina Wiza",
-        "dean": "Dr. Ms. Clemmie Goldner",
+        "dean": "Ms. Clemmie Goldner",
         "url": "/academic-papers/219"
       }
     },
@@ -4653,7 +4653,7 @@
           "Kaden Dicki"
         ],
         "research_adviser": "Lee Hill",
-        "technical_adviser": "Engr. Mrs. Katharina Fay PhD",
+        "technical_adviser": "Mrs. Katharina Fay PhD",
         "dean": "Dr. Justina Boyle",
         "url": "/academic-papers/220"
       }
@@ -4674,7 +4674,7 @@
           "Mrs. Hassie Hoeger III"
         ],
         "research_adviser": "Vergie Mosciski",
-        "technical_adviser": "Engr. Mrs. Kathryne Hilpert",
+        "technical_adviser": "Mrs. Kathryne Hilpert",
         "dean": "Dr. Justina Boyle",
         "url": "/academic-papers/221"
       }
@@ -4687,7 +4687,7 @@
         "catalog_code": "CEIT-CE-19-04",
         "department": "Civil Engineering",
         "publication_year": 2019,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Cordelia Carroll",
           "Jammie Bergnaum",
@@ -4696,7 +4696,7 @@
         ],
         "research_adviser": "Mariela Fay DVM",
         "technical_adviser": "Engr. Dulce Bins",
-        "dean": "Dr. Mr. Jensen VonRueden Sr.",
+        "dean": "Mr. Jensen VonRueden Sr.",
         "url": "/academic-papers/222"
       }
     },
@@ -4742,7 +4742,7 @@
         ],
         "research_adviser": "Ms. Bianka Mann V",
         "technical_adviser": "Engr. Filomena Becker",
-        "dean": "Dr. Mr. Jensen VonRueden Sr.",
+        "dean": "Mr. Jensen VonRueden Sr.",
         "url": "/academic-papers/224"
       }
     },
@@ -4761,7 +4761,7 @@
           "Domenic Lehner"
         ],
         "research_adviser": "Leif Muller",
-        "technical_adviser": "Engr. Mrs. Kathryne Hilpert",
+        "technical_adviser": "Mrs. Kathryne Hilpert",
         "dean": "Dr. Anais Johns",
         "url": "/academic-papers/225"
       }
@@ -4806,7 +4806,7 @@
         ],
         "research_adviser": "Alexandrea Monahan",
         "technical_adviser": "Engr. Eloisa Lueilwitz",
-        "dean": "Dr. Mr. Jensen VonRueden Sr.",
+        "dean": "Mr. Jensen VonRueden Sr.",
         "url": "/academic-papers/227"
       }
     },
@@ -4852,7 +4852,7 @@
         ],
         "research_adviser": "Alexandrea Monahan",
         "technical_adviser": "Engr. Mina Wiza",
-        "dean": "Dr. Ms. Clemmie Goldner",
+        "dean": "Ms. Clemmie Goldner",
         "url": "/academic-papers/229"
       }
     },
@@ -4872,7 +4872,7 @@
         ],
         "research_adviser": "Alexanne Turner",
         "technical_adviser": "Engr. Emery Purdy",
-        "dean": "Dr. Mr. Jensen VonRueden Sr.",
+        "dean": "Mr. Jensen VonRueden Sr.",
         "url": "/academic-papers/230"
       }
     },
@@ -4904,14 +4904,14 @@
         "catalog_code": "CEIT-CE-24-05",
         "department": "Civil Engineering",
         "publication_year": 2024,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Mr. Magnus Hand DDS",
           "Kaden Dicki"
         ],
         "research_adviser": "Vergie Mosciski",
         "technical_adviser": "Engr. Jamison Spencer",
-        "dean": "Dr. Mr. Jensen VonRueden Sr.",
+        "dean": "Mr. Jensen VonRueden Sr.",
         "url": "/academic-papers/232"
       }
     },
@@ -4932,8 +4932,8 @@
           "Mrs. Hassie Hoeger III"
         ],
         "research_adviser": "Leif Muller",
-        "technical_adviser": "Engr. Prof. Eino Pacocha",
-        "dean": "Dr. Mr. Jensen VonRueden Sr.",
+        "technical_adviser": "Prof. Eino Pacocha",
+        "dean": "Mr. Jensen VonRueden Sr.",
         "url": "/academic-papers/233"
       }
     },
@@ -4955,7 +4955,7 @@
         ],
         "research_adviser": "Alexandrea Monahan",
         "technical_adviser": "Engr. Filomena Becker",
-        "dean": "Dr. Mr. Jensen VonRueden Sr.",
+        "dean": "Mr. Jensen VonRueden Sr.",
         "url": "/academic-papers/234"
       }
     },
@@ -4995,7 +4995,7 @@
         ],
         "research_adviser": "Mariela Fay DVM",
         "technical_adviser": "Engr. Abbigail Schumm",
-        "dean": "Dr. Mr. Jensen VonRueden Sr.",
+        "dean": "Mr. Jensen VonRueden Sr.",
         "url": "/academic-papers/236"
       }
     },
@@ -5015,7 +5015,7 @@
           "Cierra Blick DVM"
         ],
         "research_adviser": "Mariela Fay DVM",
-        "technical_adviser": "Engr. Miss Cheyanne Larson",
+        "technical_adviser": "Miss Cheyanne Larson",
         "dean": "Dr. Adeline Marquardt DDS",
         "url": "/academic-papers/237"
       }
@@ -5061,7 +5061,7 @@
         ],
         "research_adviser": "Leif Muller",
         "technical_adviser": "Engr. Mazie Cummerata III",
-        "dean": "Dr. Mr. Jensen VonRueden Sr.",
+        "dean": "Mr. Jensen VonRueden Sr.",
         "url": "/academic-papers/239"
       }
     },
@@ -5081,7 +5081,7 @@
           "Damien Skiles"
         ],
         "research_adviser": "Mariela Fay DVM",
-        "technical_adviser": "Engr. Prof. Eino Pacocha",
+        "technical_adviser": "Prof. Eino Pacocha",
         "dean": "Dr. Justina Boyle",
         "url": "/academic-papers/240"
       }
@@ -5103,7 +5103,7 @@
         ],
         "research_adviser": "Gideon Sanford",
         "technical_adviser": "Engr. Kenton Harber",
-        "dean": "Dr. Prof. Jeremy Kutch DDS",
+        "dean": "Prof. Jeremy Kutch DDS",
         "url": "/academic-papers/241"
       }
     },
@@ -5122,7 +5122,7 @@
         ],
         "research_adviser": "Kade Bradtke",
         "technical_adviser": "Engr. Marilou Boehm",
-        "dean": "Dr. Prof. Jeremy Kutch DDS",
+        "dean": "Prof. Jeremy Kutch DDS",
         "url": "/academic-papers/242"
       }
     },
@@ -5142,7 +5142,7 @@
           "Ms. Anya Pacocha"
         ],
         "research_adviser": "Roslyn Gulgowski",
-        "technical_adviser": "Engr. Dr. Jeffrey Corwin",
+        "technical_adviser": "Dr. Jeffrey Corwin",
         "dean": "Dr. Maud Ferry",
         "url": "/academic-papers/243"
       }
@@ -5163,7 +5163,7 @@
         ],
         "research_adviser": "Dr. Weston Rodriguez PhD",
         "technical_adviser": "Engr. Isabelle Bogisich",
-        "dean": "Dr. Prof. Jeremy Kutch DDS",
+        "dean": "Prof. Jeremy Kutch DDS",
         "url": "/academic-papers/244"
       }
     },
@@ -5197,7 +5197,7 @@
         "catalog_code": "CEIT-EE-12-03",
         "department": "Electrical Engineering",
         "publication_year": 2012,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Retta Macejkovic",
           "Prof. Coy Sporer V",
@@ -5219,7 +5219,7 @@
         "catalog_code": "CEIT-EE-18-05",
         "department": "Electrical Engineering",
         "publication_year": 2018,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Lewis Nolan",
           "Gennaro Romaguera II",
@@ -5228,7 +5228,7 @@
         ],
         "research_adviser": "Camille Wisoky",
         "technical_adviser": "Engr. Marilou Boehm",
-        "dean": "Dr. Mrs. Elva Tillman IV",
+        "dean": "Mrs. Elva Tillman IV",
         "url": "/academic-papers/247"
       }
     },
@@ -5249,7 +5249,7 @@
         ],
         "research_adviser": "Dr. Weston Rodriguez PhD",
         "technical_adviser": "Engr. Erick Franecki",
-        "dean": "Dr. Prof. Jeremy Kutch DDS",
+        "dean": "Prof. Jeremy Kutch DDS",
         "url": "/academic-papers/248"
       }
     },
@@ -5268,8 +5268,8 @@
           "Shanel Schuppe IV"
         ],
         "research_adviser": "Dr. Weston Rodriguez PhD",
-        "technical_adviser": "Engr. Dr. Jeffrey Corwin",
-        "dean": "Dr. Prof. Jeremy Kutch DDS",
+        "technical_adviser": "Dr. Jeffrey Corwin",
+        "dean": "Prof. Jeremy Kutch DDS",
         "url": "/academic-papers/249"
       }
     },
@@ -5289,7 +5289,7 @@
           "Trenton Purdy Jr."
         ],
         "research_adviser": "Dillan Schinner",
-        "technical_adviser": "Engr. Dr. Jeffrey Corwin",
+        "technical_adviser": "Dr. Jeffrey Corwin",
         "dean": "Dr. Maud Ferry",
         "url": "/academic-papers/250"
       }
@@ -5310,7 +5310,7 @@
           "Shanel Schuppe IV"
         ],
         "research_adviser": "Ms. Ally Haley II",
-        "technical_adviser": "Engr. Mr. Jamaal Bechtelar PhD",
+        "technical_adviser": "Mr. Jamaal Bechtelar PhD",
         "dean": "Dr. Maud Ferry",
         "url": "/academic-papers/251"
       }
@@ -5343,7 +5343,7 @@
         "catalog_code": "CEIT-EE-08-05",
         "department": "Electrical Engineering",
         "publication_year": 2008,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Mr. Dagmar Zboncak DVM",
           "Alexandria Gleichner PhD",
@@ -5372,8 +5372,8 @@
           "Victoria Reilly"
         ],
         "research_adviser": "Lora Schamberger Sr.",
-        "technical_adviser": "Engr. Prof. Margot Kassulke II",
-        "dean": "Dr. Mrs. Elva Tillman IV",
+        "technical_adviser": "Prof. Margot Kassulke II",
+        "dean": "Mrs. Elva Tillman IV",
         "url": "/academic-papers/254"
       }
     },
@@ -5415,7 +5415,7 @@
         ],
         "research_adviser": "Dillan Schinner",
         "technical_adviser": "Engr. Guiseppe Macejkovic",
-        "dean": "Dr. Prof. Jeremy Kutch DDS",
+        "dean": "Prof. Jeremy Kutch DDS",
         "url": "/academic-papers/256"
       }
     },
@@ -5439,7 +5439,7 @@
         ],
         "research_adviser": "Ms. Lilliana Pouros",
         "technical_adviser": "Engr. Judd Wilderman IV",
-        "dean": "Dr. Mrs. Elva Tillman IV",
+        "dean": "Mrs. Elva Tillman IV",
         "url": "/academic-papers/257"
       }
     },
@@ -5461,8 +5461,8 @@
           "Prof. Briana Anderson V"
         ],
         "research_adviser": "Vernon Stanton",
-        "technical_adviser": "Engr. Prof. Maximo Cummings",
-        "dean": "Dr. Mrs. Elva Tillman IV",
+        "technical_adviser": "Prof. Maximo Cummings",
+        "dean": "Mrs. Elva Tillman IV",
         "url": "/academic-papers/258"
       }
     },
@@ -5503,7 +5503,7 @@
           "Cody Hauck V"
         ],
         "research_adviser": "Rodrick Bradtke",
-        "technical_adviser": "Engr. Prof. Maximo Cummings",
+        "technical_adviser": "Prof. Maximo Cummings",
         "dean": "Dr. Dina Oberbrunner",
         "url": "/academic-papers/260"
       }
@@ -5545,8 +5545,8 @@
           "Melvina Franecki"
         ],
         "research_adviser": "Ms. Lilliana Pouros",
-        "technical_adviser": "Engr. Dr. Jeffrey Corwin",
-        "dean": "Dr. Mrs. Elva Tillman IV",
+        "technical_adviser": "Dr. Jeffrey Corwin",
+        "dean": "Mrs. Elva Tillman IV",
         "url": "/academic-papers/262"
       }
     },
@@ -5588,8 +5588,8 @@
           "Mohammed Ortiz"
         ],
         "research_adviser": "Ms. Jalyn Schimmel",
-        "technical_adviser": "Engr. Prof. Margot Kassulke II",
-        "dean": "Dr. Mrs. Elva Tillman IV",
+        "technical_adviser": "Prof. Margot Kassulke II",
+        "dean": "Mrs. Elva Tillman IV",
         "url": "/academic-papers/264"
       }
     },
@@ -5632,8 +5632,8 @@
           "Cody Hauck V"
         ],
         "research_adviser": "Ms. Jalyn Schimmel",
-        "technical_adviser": "Engr. Dr. Jeffrey Corwin",
-        "dean": "Dr. Mrs. Elva Tillman IV",
+        "technical_adviser": "Dr. Jeffrey Corwin",
+        "dean": "Mrs. Elva Tillman IV",
         "url": "/academic-papers/266"
       }
     },
@@ -5645,7 +5645,7 @@
         "catalog_code": "CEIT-EE-08-06",
         "department": "Electrical Engineering",
         "publication_year": 2008,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Waylon Cummerata",
           "Mabel Hilpert",
@@ -5653,8 +5653,8 @@
           "Shanel Schuppe IV"
         ],
         "research_adviser": "Roslyn Gulgowski",
-        "technical_adviser": "Engr. Prof. Margot Kassulke II",
-        "dean": "Dr. Mrs. Elva Tillman IV",
+        "technical_adviser": "Prof. Margot Kassulke II",
+        "dean": "Mrs. Elva Tillman IV",
         "url": "/academic-papers/267"
       }
     },
@@ -5717,7 +5717,7 @@
           "Luis Hackett"
         ],
         "research_adviser": "Camille Wisoky",
-        "technical_adviser": "Engr. Prof. Margot Kassulke II",
+        "technical_adviser": "Prof. Margot Kassulke II",
         "dean": "Dr. Dina Oberbrunner",
         "url": "/academic-papers/270"
       }
@@ -5730,7 +5730,7 @@
         "catalog_code": "CEIT-CE-13-02",
         "department": "Civil Engineering",
         "publication_year": 2013,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Adrien Price",
           "Dr. Elody Gleason"
@@ -5885,7 +5885,7 @@
           "Jovany Trantow"
         ],
         "research_adviser": "Theodora Bogisich",
-        "technical_adviser": "Engr. Mr. Christophe Stiedemann IV",
+        "technical_adviser": "Mr. Christophe Stiedemann IV",
         "dean": "Dr. Seamus Quigley",
         "url": "/academic-papers/279"
       }
@@ -5969,7 +5969,7 @@
           "Mr. Fausto Johnson"
         ],
         "research_adviser": "Bettye Mitchell Jr.",
-        "technical_adviser": "Engr. Mr. Benjamin Quigley II",
+        "technical_adviser": "Mr. Benjamin Quigley II",
         "dean": "Dr. Seamus Quigley",
         "url": "/academic-papers/283"
       }
@@ -5982,7 +5982,7 @@
         "catalog_code": "CEIT-IT-17-09",
         "department": "Information Technology",
         "publication_year": 2017,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Jammie Bergnaum",
           "Jasmin Murray",
@@ -5992,7 +5992,7 @@
           "Jazlyn Reichel"
         ],
         "research_adviser": "Theodora Bogisich",
-        "technical_adviser": "Engr. Mr. Benjamin Quigley II",
+        "technical_adviser": "Mr. Benjamin Quigley II",
         "dean": "Dr. Teresa Armstrong Sr.",
         "url": "/academic-papers/284"
       }
@@ -6014,7 +6014,7 @@
           "Jazlyn Reichel"
         ],
         "research_adviser": "Kendall Gibson",
-        "technical_adviser": "Engr. Mrs. Gilda Langworth",
+        "technical_adviser": "Mrs. Gilda Langworth",
         "dean": "Dr. Teresa Armstrong Sr.",
         "url": "/academic-papers/285"
       }
@@ -6037,7 +6037,7 @@
           "Jerald Cole"
         ],
         "research_adviser": "Kendall Gibson",
-        "technical_adviser": "Engr. Ms. Carlie Littel MD",
+        "technical_adviser": "Ms. Carlie Littel MD",
         "dean": "Dr. Daniela Ankunding PhD",
         "url": "/academic-papers/286"
       }
@@ -6139,7 +6139,7 @@
           "Raegan Wyman"
         ],
         "research_adviser": "Einar Daugherty",
-        "technical_adviser": "Engr. Ms. Carlie Littel MD",
+        "technical_adviser": "Ms. Carlie Littel MD",
         "dean": "Dr. Elias Mills DVM",
         "url": "/academic-papers/291"
       }
@@ -6152,7 +6152,7 @@
         "catalog_code": "CEIT-EE-21-06",
         "department": "Electrical Engineering",
         "publication_year": 2021,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Dr. Tracy Kuvalis II",
           "Robyn Harris",
@@ -6181,7 +6181,7 @@
           "Ms. Jena Steuber IV"
         ],
         "research_adviser": "Tiffany Haley",
-        "technical_adviser": "Engr. Dr. Althea Shields III",
+        "technical_adviser": "Dr. Althea Shields III",
         "dean": "Dr. Teresa Armstrong Sr.",
         "url": "/academic-papers/293"
       }
@@ -6238,7 +6238,7 @@
         "catalog_code": "CEIT-EE-13-07",
         "department": "Electrical Engineering",
         "publication_year": 2013,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Mr. Jared Hills",
           "Miss Tatyana Kirlin Sr.",
@@ -6248,7 +6248,7 @@
           "Jazlyn Reichel"
         ],
         "research_adviser": "Dr. Afton Treutel V",
-        "technical_adviser": "Engr. Prof. Elwin Satterfield",
+        "technical_adviser": "Prof. Elwin Satterfield",
         "dean": "Dr. Seamus Quigley",
         "url": "/academic-papers/296"
       }
@@ -6261,7 +6261,7 @@
         "catalog_code": "CEIT-EE-24-05",
         "department": "Electrical Engineering",
         "publication_year": 2024,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Brandi Heidenreich",
           "Dr. Tamara Keebler IV",
@@ -6290,7 +6290,7 @@
           "Prof. Sebastian Bartell"
         ],
         "research_adviser": "Tiffany Haley",
-        "technical_adviser": "Engr. Prof. Elwin Satterfield",
+        "technical_adviser": "Prof. Elwin Satterfield",
         "dean": "Dr. Alvena Weber",
         "url": "/academic-papers/298"
       }
@@ -6354,7 +6354,7 @@
           "Mustafa Thiel"
         ],
         "research_adviser": "Quinton Batz",
-        "technical_adviser": "Engr. Mr. Mohammad Cole",
+        "technical_adviser": "Mr. Mohammad Cole",
         "dean": "Dr. Hugh Johnston I",
         "url": "/academic-papers/301"
       }
@@ -6530,7 +6530,7 @@
           "Donavon Pollich"
         ],
         "research_adviser": "Mrs. Earline Lockman II",
-        "technical_adviser": "Engr. Ms. Krystina Cartwright",
+        "technical_adviser": "Ms. Krystina Cartwright",
         "dean": "Dr. Monty Leuschke",
         "url": "/academic-papers/309"
       }
@@ -6603,7 +6603,7 @@
         "catalog_code": "CEIT-IT-10-05",
         "department": "Information Technology",
         "publication_year": 2010,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Prof. Donna Rutherford",
           "Noble Conroy",
@@ -6672,7 +6672,7 @@
         "catalog_code": "CEIT-IT-17-10",
         "department": "Information Technology",
         "publication_year": 2017,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Clinton Roob",
           "Mabel Hilpert",
@@ -6703,7 +6703,7 @@
           "Vincenza Haag"
         ],
         "research_adviser": "Mrs. Krista Turcotte",
-        "technical_adviser": "Engr. Mr. Elias Bauch Sr.",
+        "technical_adviser": "Mr. Elias Bauch Sr.",
         "dean": "Dr. Monty Leuschke",
         "url": "/academic-papers/317"
       }
@@ -6722,7 +6722,7 @@
           "Ophelia Kuhlman MD"
         ],
         "research_adviser": "Nasir Tromp Jr.",
-        "technical_adviser": "Engr. Ms. Krystina Cartwright",
+        "technical_adviser": "Ms. Krystina Cartwright",
         "dean": "Dr. Javier O'Reilly",
         "url": "/academic-papers/318"
       }
@@ -6766,7 +6766,7 @@
           "Donavon Pollich"
         ],
         "research_adviser": "Quinton Batz",
-        "technical_adviser": "Engr. Ms. Krystina Cartwright",
+        "technical_adviser": "Ms. Krystina Cartwright",
         "dean": "Dr. Emelia Grimes",
         "url": "/academic-papers/320"
       }
@@ -6850,7 +6850,7 @@
           "Cruz Kiehn"
         ],
         "research_adviser": "Mrs. Vanessa Aufderhar V",
-        "technical_adviser": "Engr. Ms. Krystina Cartwright",
+        "technical_adviser": "Ms. Krystina Cartwright",
         "dean": "Dr. Rod Treutel",
         "url": "/academic-papers/324"
       }
@@ -6863,7 +6863,7 @@
         "catalog_code": "CEIT-CE-06-08",
         "department": "Civil Engineering",
         "publication_year": 2006,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Dr. Minnie Stokes III",
           "Gennaro Romaguera II",
@@ -6892,7 +6892,7 @@
           "Americo Jacobs V"
         ],
         "research_adviser": "Dr. Stewart Windler III",
-        "technical_adviser": "Engr. Ms. Krystina Cartwright",
+        "technical_adviser": "Ms. Krystina Cartwright",
         "dean": "Dr. Monty Leuschke",
         "url": "/academic-papers/326"
       }
@@ -6928,7 +6928,7 @@
         "catalog_code": "CEIT-IT-19-05",
         "department": "Information Technology",
         "publication_year": 2019,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Miss Catherine Pagac",
           "Americo Jacobs V"
@@ -7321,7 +7321,7 @@
           "Conrad O'Kon"
         ],
         "research_adviser": "Prof. Virginia Doyle IV",
-        "technical_adviser": "Engr. Dr. Jena Collier",
+        "technical_adviser": "Dr. Jena Collier",
         "dean": "Dr. Cathrine Fisher",
         "url": "/academic-papers/346"
       }
@@ -7366,7 +7366,7 @@
           "Ms. Delilah Swift DVM"
         ],
         "research_adviser": "Raphaelle O'Hara",
-        "technical_adviser": "Engr. Dr. Jena Collier",
+        "technical_adviser": "Dr. Jena Collier",
         "dean": "Dr. King Franecki PhD",
         "url": "/academic-papers/348"
       }
@@ -7379,7 +7379,7 @@
         "catalog_code": "CEIT-IT-22-05",
         "department": "Information Technology",
         "publication_year": 2022,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Prof. Talon Sipes III",
           "Elinore Denesik",
@@ -7388,7 +7388,7 @@
           "Prof. Milan Fahey"
         ],
         "research_adviser": "Prof. Ulices Christiansen DDS",
-        "technical_adviser": "Engr. Dr. Jena Collier",
+        "technical_adviser": "Dr. Jena Collier",
         "dean": "Dr. Cathrine Fisher",
         "url": "/academic-papers/349"
       }
@@ -7421,7 +7421,7 @@
         "catalog_code": "CEIT-CE-24-07",
         "department": "Civil Engineering",
         "publication_year": 2024,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Dasia Shields",
           "Adalberto Tillman",
@@ -7464,7 +7464,7 @@
         "catalog_code": "CEIT-EE-12-04",
         "department": "Electrical Engineering",
         "publication_year": 2012,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Norris Dibbert",
           "Nellie Jenkins",
@@ -7485,7 +7485,7 @@
         "catalog_code": "CEIT-IT-14-05",
         "department": "Information Technology",
         "publication_year": 2014,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Jasmin Murray",
           "Kendall Veum",
@@ -7508,7 +7508,7 @@
         "catalog_code": "CEIT-IT-16-04",
         "department": "Information Technology",
         "publication_year": 2016,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Zackery Lynch",
           "Miss Cali Howe"
@@ -7556,7 +7556,7 @@
           "Tess Pfannerstill"
         ],
         "research_adviser": "Shanie Beahan",
-        "technical_adviser": "Engr. Dr. Bradley Lakin",
+        "technical_adviser": "Dr. Bradley Lakin",
         "dean": "Dr. Rafaela Watsica",
         "url": "/academic-papers/357"
       }
@@ -7579,7 +7579,7 @@
           "Ms. Delilah Swift DVM"
         ],
         "research_adviser": "Verna Labadie",
-        "technical_adviser": "Engr. Dr. Bradley Lakin",
+        "technical_adviser": "Dr. Bradley Lakin",
         "dean": "Dr. Frederick Skiles MD",
         "url": "/academic-papers/358"
       }
@@ -7615,7 +7615,7 @@
         "catalog_code": "CEIT-EE-12-05",
         "department": "Electrical Engineering",
         "publication_year": 2012,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Jensen Thiel",
           "Katlyn Dare",
@@ -7636,7 +7636,7 @@
         "catalog_code": "CEIT-IT-11-06",
         "department": "Information Technology",
         "publication_year": 2011,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Geovany Morar",
           "Dr. Trinity Legros I",
@@ -7657,15 +7657,15 @@
         "catalog_code": "CEIT-EE-09-04",
         "department": "Electrical Engineering",
         "publication_year": 2009,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Stephanie Hayes MD",
           "Mr. Fausto Johnson",
           "Noble Bednar"
         ],
         "research_adviser": "Prof. Kaylee Grimes MD",
-        "technical_adviser": "Engr. Prof. Emie Cronin DVM",
-        "dean": "Dr. Dr. Clinton Littel",
+        "technical_adviser": "Prof. Emie Cronin DVM",
+        "dean": "Dr. Clinton Littel",
         "url": "/academic-papers/362"
       }
     },
@@ -7706,7 +7706,7 @@
         ],
         "research_adviser": "Keanu Mayer",
         "technical_adviser": "Engr. Laurianne Torp",
-        "dean": "Dr. Dr. Coby Tillman",
+        "dean": "Dr. Coby Tillman",
         "url": "/academic-papers/364"
       }
     },
@@ -7751,7 +7751,7 @@
         ],
         "research_adviser": "Ebony Cummerata V",
         "technical_adviser": "Engr. Molly Ledner",
-        "dean": "Dr. Dr. Clinton Littel",
+        "dean": "Dr. Clinton Littel",
         "url": "/academic-papers/366"
       }
     },
@@ -7763,7 +7763,7 @@
         "catalog_code": "CEIT-IT-11-07",
         "department": "Information Technology",
         "publication_year": 2011,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Dr. Lois Kozey I",
           "Caleigh Tremblay",
@@ -7784,7 +7784,7 @@
         "catalog_code": "CEIT-IT-21-02",
         "department": "Information Technology",
         "publication_year": 2021,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Finn Fahey",
           "Mose Purdy",
@@ -7804,7 +7804,7 @@
         "catalog_code": "CEIT-EE-08-08",
         "department": "Electrical Engineering",
         "publication_year": 2008,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Anika Borer",
           "Eleazar McKenzie",
@@ -7854,7 +7854,7 @@
         ],
         "research_adviser": "Leland Thompson MD",
         "technical_adviser": "Engr. Blake Jerde",
-        "dean": "Dr. Dr. Coby Tillman",
+        "dean": "Dr. Coby Tillman",
         "url": "/academic-papers/371"
       }
     },
@@ -7890,14 +7890,14 @@
         "catalog_code": "CEIT-EE-25-05",
         "department": "Electrical Engineering",
         "publication_year": 2025,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Mr. Cecil Cremin MD",
           "Donavon Pollich",
           "Karen Davis PhD"
         ],
         "research_adviser": "Claudie Gutkowski I",
-        "technical_adviser": "Engr. Dr. Erick Bergnaum",
+        "technical_adviser": "Dr. Erick Bergnaum",
         "dean": "Dr. Velma Bergnaum",
         "url": "/academic-papers/373"
       }
@@ -7965,7 +7965,7 @@
           "Prof. Kristin Brown III"
         ],
         "research_adviser": "Claudie Gutkowski I",
-        "technical_adviser": "Engr. Dr. Erick Bergnaum",
+        "technical_adviser": "Dr. Erick Bergnaum",
         "dean": "Dr. Deron Howe Sr.",
         "url": "/academic-papers/376"
       }
@@ -7988,7 +7988,7 @@
         ],
         "research_adviser": "Raven Jerde",
         "technical_adviser": "Engr. Eleazar Beier",
-        "dean": "Dr. Dr. Clinton Littel",
+        "dean": "Dr. Clinton Littel",
         "url": "/academic-papers/377"
       }
     },
@@ -8010,7 +8010,7 @@
         ],
         "research_adviser": "Ebony Cummerata V",
         "technical_adviser": "Engr. Lance Rogahn",
-        "dean": "Dr. Dr. Coby Tillman",
+        "dean": "Dr. Coby Tillman",
         "url": "/academic-papers/378"
       }
     },
@@ -8073,7 +8073,7 @@
         ],
         "research_adviser": "Abdul Bosco",
         "technical_adviser": "Engr. Nelda McClure",
-        "dean": "Dr. Dr. Coby Tillman",
+        "dean": "Dr. Coby Tillman",
         "url": "/academic-papers/381"
       }
     },
@@ -8093,7 +8093,7 @@
           "Mose Purdy"
         ],
         "research_adviser": "Freddie Volkman",
-        "technical_adviser": "Engr. Dr. Erick Bergnaum",
+        "technical_adviser": "Dr. Erick Bergnaum",
         "dean": "Dr. Deron Howe Sr.",
         "url": "/academic-papers/382"
       }
@@ -8106,7 +8106,7 @@
         "catalog_code": "CEIT-CE-14-05",
         "department": "Civil Engineering",
         "publication_year": 2014,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Mrs. Marisol Cole I",
           "Dr. Kaylie Cruickshank I",
@@ -8127,7 +8127,7 @@
         "catalog_code": "CEIT-CE-02-10",
         "department": "Civil Engineering",
         "publication_year": 2002,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Luis Hackett",
           "Mose Purdy",
@@ -8157,7 +8157,7 @@
           "Ray Jaskolski"
         ],
         "research_adviser": "Oscar O'Conner",
-        "technical_adviser": "Engr. Dr. Erick Bergnaum",
+        "technical_adviser": "Dr. Erick Bergnaum",
         "dean": "Dr. Kacey Schowalter",
         "url": "/academic-papers/385"
       }
@@ -8170,7 +8170,7 @@
         "catalog_code": "CEIT-EE-23-05",
         "department": "Electrical Engineering",
         "publication_year": 2023,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Conrad O'Kon",
           "Dr. Trinity Legros I"
@@ -8189,7 +8189,7 @@
         "catalog_code": "CEIT-EE-21-11",
         "department": "Electrical Engineering",
         "publication_year": 2021,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Americo Jacobs V",
           "Stephanie Hayes MD",
@@ -8199,7 +8199,7 @@
         ],
         "research_adviser": "Bruce Barrows IV",
         "technical_adviser": "Engr. Caitlyn Gislason",
-        "dean": "Dr. Dr. Coby Tillman",
+        "dean": "Dr. Coby Tillman",
         "url": "/academic-papers/387"
       }
     },
@@ -8220,7 +8220,7 @@
         ],
         "research_adviser": "Leland Thompson MD",
         "technical_adviser": "Engr. Caitlyn Gislason",
-        "dean": "Dr. Dr. Coby Tillman",
+        "dean": "Dr. Coby Tillman",
         "url": "/academic-papers/388"
       }
     },
@@ -8232,7 +8232,7 @@
         "catalog_code": "CEIT-IT-17-11",
         "department": "Information Technology",
         "publication_year": 2017,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Dr. Minnie Stokes III",
           "Jovani Russel",
@@ -8273,7 +8273,7 @@
         "catalog_code": "CEIT-EE-19-04",
         "department": "Electrical Engineering",
         "publication_year": 2019,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Hillard Halvorson",
           "Dashawn Armstrong",
@@ -8285,7 +8285,7 @@
         ],
         "research_adviser": "Flo Bode",
         "technical_adviser": "Engr. Jerry Nader",
-        "dean": "Dr. Mrs. Violette Romaguera",
+        "dean": "Mrs. Violette Romaguera",
         "url": "/academic-papers/391"
       }
     },
@@ -8330,7 +8330,7 @@
         ],
         "research_adviser": "Jannie Schinner",
         "technical_adviser": "Engr. Noe Will",
-        "dean": "Dr. Mr. Gerardo Treutel DVM",
+        "dean": "Mr. Gerardo Treutel DVM",
         "url": "/academic-papers/393"
       }
     },
@@ -8369,8 +8369,8 @@
           "Prof. Wilber Kozey Sr."
         ],
         "research_adviser": "Mr. Keegan Gleichner PhD",
-        "technical_adviser": "Engr. Prof. Philip Effertz",
-        "dean": "Dr. Mrs. Violette Romaguera",
+        "technical_adviser": "Prof. Philip Effertz",
+        "dean": "Mrs. Violette Romaguera",
         "url": "/academic-papers/395"
       }
     },
@@ -8392,7 +8392,7 @@
           "Woodrow Hettinger"
         ],
         "research_adviser": "Dr. Friedrich Boehm Jr.",
-        "technical_adviser": "Engr. Ms. Clemmie Heidenreich",
+        "technical_adviser": "Ms. Clemmie Heidenreich",
         "dean": "Dr. Alejandrin Kerluke",
         "url": "/academic-papers/396"
       }
@@ -8411,7 +8411,7 @@
           "Abby Heidenreich"
         ],
         "research_adviser": "Prof. Michale Dibbert",
-        "technical_adviser": "Engr. Prof. Eugene Beier",
+        "technical_adviser": "Prof. Eugene Beier",
         "dean": "Dr. Gerardo Cronin",
         "url": "/academic-papers/397"
       }
@@ -8453,7 +8453,7 @@
         ],
         "research_adviser": "Flo Bode",
         "technical_adviser": "Engr. Noe Will",
-        "dean": "Dr. Mr. Gerardo Treutel DVM",
+        "dean": "Mr. Gerardo Treutel DVM",
         "url": "/academic-papers/399"
       }
     },
@@ -8465,7 +8465,7 @@
         "catalog_code": "CEIT-CE-07-10",
         "department": "Civil Engineering",
         "publication_year": 2007,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Ms. River Crona III",
           "Miss Cathryn Schinner DVM",
@@ -8491,7 +8491,7 @@
           "Alaina Smitham"
         ],
         "research_adviser": "Dr. Thalia Steuber Sr.",
-        "technical_adviser": "Engr. Dr. David Kautzer II",
+        "technical_adviser": "Dr. David Kautzer II",
         "dean": "Dr. Alejandrin Kerluke",
         "url": "/academic-papers/401"
       }
@@ -8514,7 +8514,7 @@
         ],
         "research_adviser": "Kelvin Kassulke",
         "technical_adviser": "Engr. Jamie O'Reilly",
-        "dean": "Dr. Mr. Gerardo Treutel DVM",
+        "dean": "Mr. Gerardo Treutel DVM",
         "url": "/academic-papers/402"
       }
     },
@@ -8534,8 +8534,8 @@
           "Kasey Carroll"
         ],
         "research_adviser": "Dr. Thalia Steuber Sr.",
-        "technical_adviser": "Engr. Miss Magali Simonis Jr.",
-        "dean": "Dr. Mrs. Violette Romaguera",
+        "technical_adviser": "Miss Magali Simonis Jr.",
+        "dean": "Mrs. Violette Romaguera",
         "url": "/academic-papers/403"
       }
     },
@@ -8553,8 +8553,8 @@
           "Beth Ondricka"
         ],
         "research_adviser": "Malvina Jakubowski MD",
-        "technical_adviser": "Engr. Prof. Philip Effertz",
-        "dean": "Dr. Mr. Gerardo Treutel DVM",
+        "technical_adviser": "Prof. Philip Effertz",
+        "dean": "Mr. Gerardo Treutel DVM",
         "url": "/academic-papers/404"
       }
     },
@@ -8589,7 +8589,7 @@
         "catalog_code": "CEIT-EE-05-10",
         "department": "Electrical Engineering",
         "publication_year": 2005,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Kelton Abernathy",
           "Cristian Hane",
@@ -8598,7 +8598,7 @@
           "Willow Schultz"
         ],
         "research_adviser": "Malvina Jakubowski MD",
-        "technical_adviser": "Engr. Prof. Jovany Zieme Jr.",
+        "technical_adviser": "Prof. Jovany Zieme Jr.",
         "dean": "Dr. Alejandrin Kerluke",
         "url": "/academic-papers/406"
       }
@@ -8662,7 +8662,7 @@
           "Abby Heidenreich"
         ],
         "research_adviser": "Malvina Jakubowski MD",
-        "technical_adviser": "Engr. Mr. Verner Kris IV",
+        "technical_adviser": "Mr. Verner Kris IV",
         "dean": "Dr. Alejandrin Kerluke",
         "url": "/academic-papers/409"
       }
@@ -8687,7 +8687,7 @@
         ],
         "research_adviser": "Mr. Keegan Gleichner PhD",
         "technical_adviser": "Engr. Jabari Zulauf",
-        "dean": "Dr. Mr. Gerardo Treutel DVM",
+        "dean": "Mr. Gerardo Treutel DVM",
         "url": "/academic-papers/410"
       }
     },
@@ -8709,7 +8709,7 @@
         ],
         "research_adviser": "Kelvin Kassulke",
         "technical_adviser": "Engr. Noe Will",
-        "dean": "Dr. Mr. Gerardo Treutel DVM",
+        "dean": "Mr. Gerardo Treutel DVM",
         "url": "/academic-papers/411"
       }
     },
@@ -8729,7 +8729,7 @@
           "Bette Bode"
         ],
         "research_adviser": "Kelvin Kassulke",
-        "technical_adviser": "Engr. Dr. David Kautzer II",
+        "technical_adviser": "Dr. David Kautzer II",
         "dean": "Dr. Reanna Littel PhD",
         "url": "/academic-papers/412"
       }
@@ -8762,7 +8762,7 @@
         "catalog_code": "CEIT-CE-24-09",
         "department": "Civil Engineering",
         "publication_year": 2024,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Nellie Jenkins",
           "Dr. Kaylie Cruickshank I",
@@ -8774,7 +8774,7 @@
         ],
         "research_adviser": "Mabelle Ferry",
         "technical_adviser": "Engr. Jabari Zulauf",
-        "dean": "Dr. Mrs. Violette Romaguera",
+        "dean": "Mrs. Violette Romaguera",
         "url": "/academic-papers/414"
       }
     },
@@ -8794,7 +8794,7 @@
           "Prof. Wilber Kozey Sr."
         ],
         "research_adviser": "Kelvin Kassulke",
-        "technical_adviser": "Engr. Miss Magali Simonis Jr.",
+        "technical_adviser": "Miss Magali Simonis Jr.",
         "dean": "Dr. Gerardo Cronin",
         "url": "/academic-papers/415"
       }
@@ -8833,7 +8833,7 @@
           "Queenie Reilly"
         ],
         "research_adviser": "Mabelle Ferry",
-        "technical_adviser": "Engr. Mr. Verner Kris IV",
+        "technical_adviser": "Mr. Verner Kris IV",
         "dean": "Dr. Reanna Littel PhD",
         "url": "/academic-papers/417"
       }
@@ -8846,15 +8846,15 @@
         "catalog_code": "CEIT-CE-18-05",
         "department": "Civil Engineering",
         "publication_year": 2018,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Jasmin Murray",
           "Lucienne Considine",
           "Leora Rempel DVM"
         ],
         "research_adviser": "Dr. Friedrich Boehm Jr.",
-        "technical_adviser": "Engr. Miss Magali Simonis Jr.",
-        "dean": "Dr. Mr. Gerardo Treutel DVM",
+        "technical_adviser": "Miss Magali Simonis Jr.",
+        "dean": "Mr. Gerardo Treutel DVM",
         "url": "/academic-papers/418"
       }
     },
@@ -8866,7 +8866,7 @@
         "catalog_code": "CEIT-IT-04-07",
         "department": "Information Technology",
         "publication_year": 2004,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Emerald Dooley",
           "Mr. Dominic Hickle",
@@ -8877,7 +8877,7 @@
           "Woodrow Hettinger"
         ],
         "research_adviser": "Kelvin Kassulke",
-        "technical_adviser": "Engr. Dr. David Kautzer II",
+        "technical_adviser": "Dr. David Kautzer II",
         "dean": "Dr. Alejandrin Kerluke",
         "url": "/academic-papers/419"
       }
@@ -8983,7 +8983,7 @@
         ],
         "research_adviser": "Mrs. Shaniya Tillman",
         "technical_adviser": "Engr. Karine Davis",
-        "dean": "Dr. Ms. Alexandrine Goyette I",
+        "dean": "Ms. Alexandrine Goyette I",
         "url": "/academic-papers/424"
       }
     },
@@ -9005,7 +9005,7 @@
         ],
         "research_adviser": "Ms. Hellen Grant",
         "technical_adviser": "Engr. Jany Kling",
-        "dean": "Dr. Ms. Alexandrine Goyette I",
+        "dean": "Ms. Alexandrine Goyette I",
         "url": "/academic-papers/425"
       }
     },
@@ -9066,7 +9066,7 @@
           "Prof. Bettie Towne"
         ],
         "research_adviser": "Dr. Jazmyne Collins PhD",
-        "technical_adviser": "Engr. Ms. Addie Lehner",
+        "technical_adviser": "Ms. Addie Lehner",
         "dean": "Dr. Marcia Cormier",
         "url": "/academic-papers/428"
       }
@@ -9123,7 +9123,7 @@
         "catalog_code": "CEIT-CE-10-04",
         "department": "Civil Engineering",
         "publication_year": 2010,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Ross Padberg",
           "Dixie Mann Sr.",
@@ -9134,7 +9134,7 @@
         ],
         "research_adviser": "Roosevelt Cummerata",
         "technical_adviser": "Engr. Lincoln Mills",
-        "dean": "Dr. Ms. Alexandrine Goyette I",
+        "dean": "Ms. Alexandrine Goyette I",
         "url": "/academic-papers/431"
       }
     },
@@ -9178,7 +9178,7 @@
         ],
         "research_adviser": "Roosevelt Cummerata",
         "technical_adviser": "Engr. Jonatan Moore",
-        "dean": "Dr. Ms. Alexandrine Goyette I",
+        "dean": "Ms. Alexandrine Goyette I",
         "url": "/academic-papers/433"
       }
     },
@@ -9213,7 +9213,7 @@
         "catalog_code": "CEIT-IT-22-08",
         "department": "Information Technology",
         "publication_year": 2022,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Miss Cathryn Schinner DVM",
           "Mr. Jaylen VonRueden Sr.",
@@ -9236,7 +9236,7 @@
         "catalog_code": "CEIT-EE-08-09",
         "department": "Electrical Engineering",
         "publication_year": 2008,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Rahsaan Fahey",
           "Franco Haag",
@@ -9244,7 +9244,7 @@
         ],
         "research_adviser": "Aliyah Reinger",
         "technical_adviser": "Engr. Jonatan Moore",
-        "dean": "Dr. Ms. Alexandrine Goyette I",
+        "dean": "Ms. Alexandrine Goyette I",
         "url": "/academic-papers/436"
       }
     },
@@ -9265,7 +9265,7 @@
           "Adela Davis"
         ],
         "research_adviser": "Zoila Casper",
-        "technical_adviser": "Engr. Ms. Addie Lehner",
+        "technical_adviser": "Ms. Addie Lehner",
         "dean": "Dr. Sammy Sanford",
         "url": "/academic-papers/437"
       }
@@ -9372,7 +9372,7 @@
         ],
         "research_adviser": "Jaydon Schulist PhD",
         "technical_adviser": "Engr. Alvena Bergstrom",
-        "dean": "Dr. Ms. Alexandrine Goyette I",
+        "dean": "Ms. Alexandrine Goyette I",
         "url": "/academic-papers/442"
       }
     },
@@ -9384,7 +9384,7 @@
         "catalog_code": "CEIT-EE-19-06",
         "department": "Electrical Engineering",
         "publication_year": 2019,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Odessa Ferry",
           "Shanel Carroll",
@@ -9426,7 +9426,7 @@
         "catalog_code": "CEIT-EE-16-04",
         "department": "Electrical Engineering",
         "publication_year": 2016,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Miss Karlee Veum",
           "Jacinto Purdy",
@@ -9523,7 +9523,7 @@
         ],
         "research_adviser": "Dr. Jazmyne Collins PhD",
         "technical_adviser": "Engr. Margret Harris",
-        "dean": "Dr. Ms. Alexandrine Goyette I",
+        "dean": "Ms. Alexandrine Goyette I",
         "url": "/academic-papers/449"
       }
     },
@@ -9562,8 +9562,8 @@
           "Markus Crona"
         ],
         "research_adviser": "Queenie Nienow",
-        "technical_adviser": "Engr. Dr. Gilbert Block",
-        "dean": "Dr. Mr. Keyon Armstrong",
+        "technical_adviser": "Dr. Gilbert Block",
+        "dean": "Mr. Keyon Armstrong",
         "url": "/academic-papers/451"
       }
     },
@@ -9585,7 +9585,7 @@
         ],
         "research_adviser": "Jadon Muller II",
         "technical_adviser": "Engr. Oliver Braun",
-        "dean": "Dr. Mr. Keyon Armstrong",
+        "dean": "Mr. Keyon Armstrong",
         "url": "/academic-papers/452"
       }
     },
@@ -9605,7 +9605,7 @@
           "Corrine Von"
         ],
         "research_adviser": "Mrs. Adell Kuphal",
-        "technical_adviser": "Engr. Miss Lilly Stoltenberg I",
+        "technical_adviser": "Miss Lilly Stoltenberg I",
         "dean": "Dr. Zula Marvin",
         "url": "/academic-papers/453"
       }
@@ -9626,7 +9626,7 @@
         ],
         "research_adviser": "Ms. Arielle Hilpert",
         "technical_adviser": "Engr. Irwin Eichmann",
-        "dean": "Dr. Mr. Keyon Armstrong",
+        "dean": "Mr. Keyon Armstrong",
         "url": "/academic-papers/454"
       }
     },
@@ -9668,8 +9668,8 @@
           "Flo McKenzie DDS"
         ],
         "research_adviser": "Newell Roob",
-        "technical_adviser": "Engr. Dr. Gilbert Block",
-        "dean": "Dr. Mr. Keyon Armstrong",
+        "technical_adviser": "Dr. Gilbert Block",
+        "dean": "Mr. Keyon Armstrong",
         "url": "/academic-papers/456"
       }
     },
@@ -9703,7 +9703,7 @@
         "catalog_code": "CEIT-CE-04-10",
         "department": "Civil Engineering",
         "publication_year": 2004,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Prof. Jackie Yost Jr.",
           "Keon Gulgowski"
@@ -9753,7 +9753,7 @@
         ],
         "research_adviser": "Newell Roob",
         "technical_adviser": "Engr. Enoch Wiza",
-        "dean": "Dr. Mr. Keyon Armstrong",
+        "dean": "Mr. Keyon Armstrong",
         "url": "/academic-papers/460"
       }
     },
@@ -9774,8 +9774,8 @@
           "Corrine Von"
         ],
         "research_adviser": "Newell Roob",
-        "technical_adviser": "Engr. Mr. Sim Flatley Sr.",
-        "dean": "Dr. Mr. Keyon Armstrong",
+        "technical_adviser": "Mr. Sim Flatley Sr.",
+        "dean": "Mr. Keyon Armstrong",
         "url": "/academic-papers/461"
       }
     },
@@ -9817,8 +9817,8 @@
           "Bertha Fadel"
         ],
         "research_adviser": "Queenie Nienow",
-        "technical_adviser": "Engr. Mr. Sim Flatley Sr.",
-        "dean": "Dr. Mr. Keyon Armstrong",
+        "technical_adviser": "Mr. Sim Flatley Sr.",
+        "dean": "Mr. Keyon Armstrong",
         "url": "/academic-papers/463"
       }
     },
@@ -9837,8 +9837,8 @@
           "Vivienne Jacobson"
         ],
         "research_adviser": "Ericka Torphy",
-        "technical_adviser": "Engr. Mr. Zane Stehr III",
-        "dean": "Dr. Mr. Keyon Armstrong",
+        "technical_adviser": "Mr. Zane Stehr III",
+        "dean": "Mr. Keyon Armstrong",
         "url": "/academic-papers/464"
       }
     },
@@ -9891,14 +9891,14 @@
         "catalog_code": "CEIT-IT-21-04",
         "department": "Information Technology",
         "publication_year": 2021,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Kaden Dicki",
           "Lonzo Yost"
         ],
         "research_adviser": "Ericka Torphy",
-        "technical_adviser": "Engr. Miss Lilly Stoltenberg I",
-        "dean": "Dr. Mr. Keyon Armstrong",
+        "technical_adviser": "Miss Lilly Stoltenberg I",
+        "dean": "Mr. Keyon Armstrong",
         "url": "/academic-papers/467"
       }
     },
@@ -9920,7 +9920,7 @@
         ],
         "research_adviser": "Mrs. Adell Kuphal",
         "technical_adviser": "Engr. Enoch Wiza",
-        "dean": "Dr. Ms. Clarabelle Kulas",
+        "dean": "Ms. Clarabelle Kulas",
         "url": "/academic-papers/468"
       }
     },
@@ -9932,7 +9932,7 @@
         "catalog_code": "CEIT-IT-18-07",
         "department": "Information Technology",
         "publication_year": 2018,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Merlin Cruickshank Sr.",
           "Guadalupe Parker",
@@ -9944,7 +9944,7 @@
         ],
         "research_adviser": "Jadon Muller II",
         "technical_adviser": "Engr. Arnoldo Gulgowski",
-        "dean": "Dr. Mr. Keyon Armstrong",
+        "dean": "Mr. Keyon Armstrong",
         "url": "/academic-papers/469"
       }
     },
@@ -10006,7 +10006,7 @@
         ],
         "research_adviser": "Anastacio Stracke",
         "technical_adviser": "Engr. Ernestina Becker I",
-        "dean": "Dr. Mr. Keyon Armstrong",
+        "dean": "Mr. Keyon Armstrong",
         "url": "/academic-papers/472"
       }
     },
@@ -10072,8 +10072,8 @@
           "Dr. Jolie Hahn Sr."
         ],
         "research_adviser": "Newell Roob",
-        "technical_adviser": "Engr. Dr. Luisa Prohaska IV",
-        "dean": "Dr. Mr. Keyon Armstrong",
+        "technical_adviser": "Dr. Luisa Prohaska IV",
+        "dean": "Mr. Keyon Armstrong",
         "url": "/academic-papers/475"
       }
     },
@@ -10094,7 +10094,7 @@
           "Dr. Dameon Pouros"
         ],
         "research_adviser": "Anastacio Stracke",
-        "technical_adviser": "Engr. Dr. Gilbert Block",
+        "technical_adviser": "Dr. Gilbert Block",
         "dean": "Dr. Efrain Torphy",
         "url": "/academic-papers/476"
       }
@@ -10140,7 +10140,7 @@
         ],
         "research_adviser": "Jadon Muller II",
         "technical_adviser": "Engr. Irwin Eichmann",
-        "dean": "Dr. Mr. Keyon Armstrong",
+        "dean": "Mr. Keyon Armstrong",
         "url": "/academic-papers/478"
       }
     },
@@ -10173,7 +10173,7 @@
         "catalog_code": "CEIT-CE-21-04",
         "department": "Civil Engineering",
         "publication_year": 2021,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Miss Lulu Bins DDS",
           "Margaretta Champlin",
@@ -10217,7 +10217,7 @@
         "catalog_code": "CEIT-EE-07-06",
         "department": "Electrical Engineering",
         "publication_year": 2007,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Mohammed Ortiz",
           "Einar Hermann",
@@ -10225,7 +10225,7 @@
           "Dr. Kenyon VonRueden"
         ],
         "research_adviser": "Kiera Klocko",
-        "technical_adviser": "Engr. Mrs. Gudrun Friesen III",
+        "technical_adviser": "Mrs. Gudrun Friesen III",
         "dean": "Dr. Jalon Sauer",
         "url": "/academic-papers/482"
       }
@@ -10246,8 +10246,8 @@
           "Blair Huels"
         ],
         "research_adviser": "Prof. Ines Barton Jr.",
-        "technical_adviser": "Engr. Dr. Genoveva Zulauf PhD",
-        "dean": "Dr. Mr. Olin Kub",
+        "technical_adviser": "Dr. Genoveva Zulauf PhD",
+        "dean": "Mr. Olin Kub",
         "url": "/academic-papers/483"
       }
     },
@@ -10259,7 +10259,7 @@
         "catalog_code": "CEIT-EE-04-05",
         "department": "Electrical Engineering",
         "publication_year": 2004,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Ari Russel",
           "Dashawn Armstrong",
@@ -10288,7 +10288,7 @@
         ],
         "research_adviser": "Michale Murazik",
         "technical_adviser": "Engr. Ena Bosco",
-        "dean": "Dr. Miss Meda Turcotte IV",
+        "dean": "Miss Meda Turcotte IV",
         "url": "/academic-papers/485"
       }
     },
@@ -10309,7 +10309,7 @@
         ],
         "research_adviser": "Deonte Thiel",
         "technical_adviser": "Engr. Jess Mosciski",
-        "dean": "Dr. Miss Meda Turcotte IV",
+        "dean": "Miss Meda Turcotte IV",
         "url": "/academic-papers/486"
       }
     },
@@ -10332,7 +10332,7 @@
           "Lois Jerde"
         ],
         "research_adviser": "Mr. Angel Bogisich Jr.",
-        "technical_adviser": "Engr. Dr. Genoveva Zulauf PhD",
+        "technical_adviser": "Dr. Genoveva Zulauf PhD",
         "dean": "Dr. Betsy Erdman",
         "url": "/academic-papers/487"
       }
@@ -10352,8 +10352,8 @@
           "Jailyn Reichert"
         ],
         "research_adviser": "Mia Larson",
-        "technical_adviser": "Engr. Ms. Zena Berge MD",
-        "dean": "Dr. Prof. Tyshawn Hansen",
+        "technical_adviser": "Ms. Zena Berge MD",
+        "dean": "Prof. Tyshawn Hansen",
         "url": "/academic-papers/488"
       }
     },
@@ -10365,7 +10365,7 @@
         "catalog_code": "CEIT-CE-11-05",
         "department": "Civil Engineering",
         "publication_year": 2011,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Josefa Krajcik",
           "Leora Rempel DVM",
@@ -10377,7 +10377,7 @@
         ],
         "research_adviser": "Mr. Stevie McKenzie",
         "technical_adviser": "Engr. Ena Bosco",
-        "dean": "Dr. Miss Meda Turcotte IV",
+        "dean": "Miss Meda Turcotte IV",
         "url": "/academic-papers/489"
       }
     },
@@ -10389,7 +10389,7 @@
         "catalog_code": "CEIT-IT-07-08",
         "department": "Information Technology",
         "publication_year": 2007,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Adalberto Tillman",
           "Prof. Morton Dare",
@@ -10398,8 +10398,8 @@
           "Miss Natasha Runolfsdottir II"
         ],
         "research_adviser": "Prof. Ines Barton Jr.",
-        "technical_adviser": "Engr. Ms. Zena Berge MD",
-        "dean": "Dr. Mr. Olin Kub",
+        "technical_adviser": "Ms. Zena Berge MD",
+        "dean": "Mr. Olin Kub",
         "url": "/academic-papers/490"
       }
     },
@@ -10420,7 +10420,7 @@
         ],
         "research_adviser": "Deonte Thiel",
         "technical_adviser": "Engr. Margarett Ratke",
-        "dean": "Dr. Prof. Tyshawn Hansen",
+        "dean": "Prof. Tyshawn Hansen",
         "url": "/academic-papers/491"
       }
     },
@@ -10442,7 +10442,7 @@
         ],
         "research_adviser": "Prof. Amber Turcotte I",
         "technical_adviser": "Engr. Lurline Osinski",
-        "dean": "Dr. Prof. Tyshawn Hansen",
+        "dean": "Prof. Tyshawn Hansen",
         "url": "/academic-papers/492"
       }
     },
@@ -10461,8 +10461,8 @@
           "Miss Elise Stoltenberg III"
         ],
         "research_adviser": "Prof. Ines Barton Jr.",
-        "technical_adviser": "Engr. Ms. Zena Berge MD",
-        "dean": "Dr. Mr. Olin Kub",
+        "technical_adviser": "Ms. Zena Berge MD",
+        "dean": "Mr. Olin Kub",
         "url": "/academic-papers/493"
       }
     },
@@ -10483,7 +10483,7 @@
         ],
         "research_adviser": "Mr. Geovanny Ernser II",
         "technical_adviser": "Engr. Lurline Osinski",
-        "dean": "Dr. Mr. Olin Kub",
+        "dean": "Mr. Olin Kub",
         "url": "/academic-papers/494"
       }
     },
@@ -10506,7 +10506,7 @@
         ],
         "research_adviser": "Prof. Ines Barton Jr.",
         "technical_adviser": "Engr. Anne Lockman",
-        "dean": "Dr. Mr. Olin Kub",
+        "dean": "Mr. Olin Kub",
         "url": "/academic-papers/495"
       }
     },
@@ -10530,7 +10530,7 @@
         ],
         "research_adviser": "Dr. Anahi Kling IV",
         "technical_adviser": "Engr. Jess Mosciski",
-        "dean": "Dr. Miss Meda Turcotte IV",
+        "dean": "Miss Meda Turcotte IV",
         "url": "/academic-papers/496"
       }
     },
@@ -10542,7 +10542,7 @@
         "catalog_code": "CEIT-IT-14-06",
         "department": "Information Technology",
         "publication_year": 2014,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Syble Vandervort",
           "Bernie Thompson",
@@ -10552,7 +10552,7 @@
         ],
         "research_adviser": "Woodrow Becker",
         "technical_adviser": "Engr. Felton Barton Sr.",
-        "dean": "Dr. Mr. Olin Kub",
+        "dean": "Mr. Olin Kub",
         "url": "/academic-papers/497"
       }
     },
@@ -10573,8 +10573,8 @@
           "Colten Robel"
         ],
         "research_adviser": "Woodrow Becker",
-        "technical_adviser": "Engr. Miss Madge Torp IV",
-        "dean": "Dr. Mr. Olin Kub",
+        "technical_adviser": "Miss Madge Torp IV",
+        "dean": "Mr. Olin Kub",
         "url": "/academic-papers/498"
       }
     },
@@ -10596,7 +10596,7 @@
         ],
         "research_adviser": "Mia Larson",
         "technical_adviser": "Engr. Mya Zemlak",
-        "dean": "Dr. Prof. Tyshawn Hansen",
+        "dean": "Prof. Tyshawn Hansen",
         "url": "/academic-papers/499"
       }
     },
@@ -10664,7 +10664,7 @@
         ],
         "research_adviser": "Kiera Klocko",
         "technical_adviser": "Engr. Jess Mosciski",
-        "dean": "Dr. Prof. Tyshawn Hansen",
+        "dean": "Prof. Tyshawn Hansen",
         "url": "/academic-papers/502"
       }
     },
@@ -10712,7 +10712,7 @@
         ],
         "research_adviser": "Dr. Anahi Kling IV",
         "technical_adviser": "Engr. Mercedes Leffler",
-        "dean": "Dr. Prof. Tyshawn Hansen",
+        "dean": "Prof. Tyshawn Hansen",
         "url": "/academic-papers/504"
       }
     },
@@ -10732,8 +10732,8 @@
           "Blair Huels"
         ],
         "research_adviser": "Michale Murazik",
-        "technical_adviser": "Engr. Miss Madge Torp IV",
-        "dean": "Dr. Miss Meda Turcotte IV",
+        "technical_adviser": "Miss Madge Torp IV",
+        "dean": "Miss Meda Turcotte IV",
         "url": "/academic-papers/505"
       }
     },
@@ -10775,7 +10775,7 @@
         ],
         "research_adviser": "Dr. Anahi Kling IV",
         "technical_adviser": "Engr. Ena Bosco",
-        "dean": "Dr. Miss Meda Turcotte IV",
+        "dean": "Miss Meda Turcotte IV",
         "url": "/academic-papers/507"
       }
     },
@@ -10796,7 +10796,7 @@
         ],
         "research_adviser": "Woodrow Becker",
         "technical_adviser": "Engr. Anne Lockman",
-        "dean": "Dr. Prof. Tyshawn Hansen",
+        "dean": "Prof. Tyshawn Hansen",
         "url": "/academic-papers/508"
       }
     },
@@ -10816,7 +10816,7 @@
         ],
         "research_adviser": "Deonte Thiel",
         "technical_adviser": "Engr. Mya Zemlak",
-        "dean": "Dr. Mr. Olin Kub",
+        "dean": "Mr. Olin Kub",
         "url": "/academic-papers/509"
       }
     },
@@ -10828,7 +10828,7 @@
         "catalog_code": "CEIT-EE-23-06",
         "department": "Electrical Engineering",
         "publication_year": 2023,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Luis Hackett",
           "Jailyn Reichert"
@@ -10877,8 +10877,8 @@
           "Holly Parker"
         ],
         "research_adviser": "Prof. Shawna Koelpin III",
-        "technical_adviser": "Engr. Mrs. Itzel Pacocha",
-        "dean": "Dr. Dr. Jammie Walsh",
+        "technical_adviser": "Mrs. Itzel Pacocha",
+        "dean": "Dr. Jammie Walsh",
         "url": "/academic-papers/512"
       }
     },
@@ -10964,7 +10964,7 @@
         ],
         "research_adviser": "Prof. Bud Kessler",
         "technical_adviser": "Engr. Shannon Harber",
-        "dean": "Dr. Dr. Jammie Walsh",
+        "dean": "Dr. Jammie Walsh",
         "url": "/academic-papers/516"
       }
     },
@@ -11006,7 +11006,7 @@
           "Carmelo Fay"
         ],
         "research_adviser": "Mr. Merritt Schoen Jr.",
-        "technical_adviser": "Engr. Miss Elenor Stark",
+        "technical_adviser": "Miss Elenor Stark",
         "dean": "Dr. Kenny Rempel",
         "url": "/academic-papers/518"
       }
@@ -11028,7 +11028,7 @@
         ],
         "research_adviser": "Werner Dickens",
         "technical_adviser": "Engr. Shannon Harber",
-        "dean": "Dr. Dr. Jammie Walsh",
+        "dean": "Dr. Jammie Walsh",
         "url": "/academic-papers/519"
       }
     },
@@ -11082,7 +11082,7 @@
         "catalog_code": "CEIT-CE-13-05",
         "department": "Civil Engineering",
         "publication_year": 2013,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Jazlyn Reichel",
           "Beth Ondricka",
@@ -11092,7 +11092,7 @@
         ],
         "research_adviser": "Chad O'Keefe",
         "technical_adviser": "Engr. Terry Feeney MD",
-        "dean": "Dr. Dr. Jammie Walsh",
+        "dean": "Dr. Jammie Walsh",
         "url": "/academic-papers/522"
       }
     },
@@ -11104,7 +11104,7 @@
         "catalog_code": "CEIT-EE-25-08",
         "department": "Electrical Engineering",
         "publication_year": 2025,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Anderson Glover",
           "Alaina Smitham",
@@ -11113,7 +11113,7 @@
         ],
         "research_adviser": "Prof. Shawna Koelpin III",
         "technical_adviser": "Engr. Amy Littel",
-        "dean": "Dr. Dr. Jammie Walsh",
+        "dean": "Dr. Jammie Walsh",
         "url": "/academic-papers/523"
       }
     },
@@ -11134,7 +11134,7 @@
           "Anastasia Littel"
         ],
         "research_adviser": "Vance Mante",
-        "technical_adviser": "Engr. Prof. Avis Gleason V",
+        "technical_adviser": "Prof. Avis Gleason V",
         "dean": "Dr. Giles Vandervort",
         "url": "/academic-papers/524"
       }
@@ -11156,7 +11156,7 @@
           "Birdie Prohaska"
         ],
         "research_adviser": "Werner Dickens",
-        "technical_adviser": "Engr. Miss Cheyanne Bailey",
+        "technical_adviser": "Miss Cheyanne Bailey",
         "dean": "Dr. Giles Vandervort",
         "url": "/academic-papers/525"
       }
@@ -11197,7 +11197,7 @@
         ],
         "research_adviser": "Chad O'Keefe",
         "technical_adviser": "Engr. Casimir Huel",
-        "dean": "Dr. Dr. Jammie Walsh",
+        "dean": "Dr. Jammie Walsh",
         "url": "/academic-papers/527"
       }
     },
@@ -11277,7 +11277,7 @@
           "Katelynn Crooks"
         ],
         "research_adviser": "Prof. Shawna Koelpin III",
-        "technical_adviser": "Engr. Dr. Billy Jerde Sr.",
+        "technical_adviser": "Dr. Billy Jerde Sr.",
         "dean": "Dr. Gloria Rowe",
         "url": "/academic-papers/531"
       }
@@ -11300,8 +11300,8 @@
           "Anastasia Littel"
         ],
         "research_adviser": "Kade Macejkovic II",
-        "technical_adviser": "Engr. Dr. Billy Jerde Sr.",
-        "dean": "Dr. Dr. Jammie Walsh",
+        "technical_adviser": "Dr. Billy Jerde Sr.",
+        "dean": "Dr. Jammie Walsh",
         "url": "/academic-papers/532"
       }
     },
@@ -11313,7 +11313,7 @@
         "catalog_code": "CEIT-EE-15-05",
         "department": "Electrical Engineering",
         "publication_year": 2015,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Shawna Bradtke DDS",
           "Mr. Cecil Cremin MD",
@@ -11344,7 +11344,7 @@
           "Miss Rebecca Shanahan"
         ],
         "research_adviser": "Mr. Merritt Schoen Jr.",
-        "technical_adviser": "Engr. Dr. Billy Jerde Sr.",
+        "technical_adviser": "Dr. Billy Jerde Sr.",
         "dean": "Dr. Kenny Rempel",
         "url": "/academic-papers/534"
       }
@@ -11387,7 +11387,7 @@
           "Diana Crist"
         ],
         "research_adviser": "Prof. Esteban Rowe",
-        "technical_adviser": "Engr. Prof. Avis Gleason V",
+        "technical_adviser": "Prof. Avis Gleason V",
         "dean": "Dr. Kamille Kulas",
         "url": "/academic-papers/536"
       }
@@ -11409,7 +11409,7 @@
           "Miss Rebecca Shanahan"
         ],
         "research_adviser": "Prof. Esteban Rowe",
-        "technical_adviser": "Engr. Miss Elenor Stark",
+        "technical_adviser": "Miss Elenor Stark",
         "dean": "Dr. Kamille Kulas",
         "url": "/academic-papers/537"
       }
@@ -11430,7 +11430,7 @@
           "Miss Rebecca Shanahan"
         ],
         "research_adviser": "Ms. Catharine Halvorson",
-        "technical_adviser": "Engr. Miss Cheyanne Bailey",
+        "technical_adviser": "Miss Cheyanne Bailey",
         "dean": "Dr. Kamille Kulas",
         "url": "/academic-papers/538"
       }
@@ -11443,7 +11443,7 @@
         "catalog_code": "CEIT-IT-15-02",
         "department": "Information Technology",
         "publication_year": 2015,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Trevion Cole",
           "Breana Bednar",
@@ -11491,7 +11491,7 @@
           "Vicenta Schmeler"
         ],
         "research_adviser": "Raphaelle Wiegand",
-        "technical_adviser": "Engr. Prof. Delaney Barton V",
+        "technical_adviser": "Prof. Delaney Barton V",
         "dean": "Dr. Thurman Torphy MD",
         "url": "/academic-papers/541"
       }
@@ -11526,13 +11526,13 @@
         "catalog_code": "CEIT-IT-02-08",
         "department": "Information Technology",
         "publication_year": 2002,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Kasey Carroll",
           "Coleman Considine"
         ],
         "research_adviser": "Amira Oberbrunner",
-        "technical_adviser": "Engr. Ms. Dora Fay Jr.",
+        "technical_adviser": "Ms. Dora Fay Jr.",
         "dean": "Dr. Lula Bins",
         "url": "/academic-papers/543"
       }
@@ -11555,7 +11555,7 @@
           "Melyssa Cronin"
         ],
         "research_adviser": "Ariel Kautzer I",
-        "technical_adviser": "Engr. Dr. Marcellus Fritsch IV",
+        "technical_adviser": "Dr. Marcellus Fritsch IV",
         "dean": "Dr. Lula Bins",
         "url": "/academic-papers/544"
       }
@@ -11574,7 +11574,7 @@
           "Myrtie Champlin"
         ],
         "research_adviser": "Tod Pagac",
-        "technical_adviser": "Engr. Dr. Ada Williamson DVM",
+        "technical_adviser": "Dr. Ada Williamson DVM",
         "dean": "Dr. Eldora Connelly PhD",
         "url": "/academic-papers/545"
       }
@@ -11587,7 +11587,7 @@
         "catalog_code": "CEIT-EE-02-07",
         "department": "Electrical Engineering",
         "publication_year": 2002,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Jordane Hickle",
           "Mr. Vaughn Cartwright",
@@ -11596,7 +11596,7 @@
         ],
         "research_adviser": "Prof. Pedro Orn PhD",
         "technical_adviser": "Engr. Mose Balistreri MD",
-        "dean": "Dr. Mr. Elbert Gaylord PhD",
+        "dean": "Mr. Elbert Gaylord PhD",
         "url": "/academic-papers/546"
       }
     },
@@ -11630,7 +11630,7 @@
         "catalog_code": "CEIT-CE-25-08",
         "department": "Civil Engineering",
         "publication_year": 2025,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Prof. Kane Miller V",
           "Victoria Reilly",
@@ -11704,8 +11704,8 @@
           "Madelyn Howell"
         ],
         "research_adviser": "Prof. Pedro Orn PhD",
-        "technical_adviser": "Engr. Dr. Marcellus Fritsch IV",
-        "dean": "Dr. Mr. Elbert Gaylord PhD",
+        "technical_adviser": "Dr. Marcellus Fritsch IV",
+        "dean": "Mr. Elbert Gaylord PhD",
         "url": "/academic-papers/551"
       }
     },
@@ -11728,7 +11728,7 @@
         ],
         "research_adviser": "Amira Oberbrunner",
         "technical_adviser": "Engr. Mose Balistreri MD",
-        "dean": "Dr. Mr. Elbert Gaylord PhD",
+        "dean": "Mr. Elbert Gaylord PhD",
         "url": "/academic-papers/552"
       }
     },
@@ -11740,7 +11740,7 @@
         "catalog_code": "CEIT-EE-04-07",
         "department": "Electrical Engineering",
         "publication_year": 2004,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Karen Davis PhD",
           "Ms. Jena Steuber IV",
@@ -11748,7 +11748,7 @@
           "Nels Hahn I"
         ],
         "research_adviser": "Ariel Kautzer I",
-        "technical_adviser": "Engr. Prof. Delaney Barton V",
+        "technical_adviser": "Prof. Delaney Barton V",
         "dean": "Dr. Thurman Torphy MD",
         "url": "/academic-papers/553"
       }
@@ -11768,7 +11768,7 @@
           "Mr. Juwan Deckow III"
         ],
         "research_adviser": "Jason Dickens",
-        "technical_adviser": "Engr. Dr. Marcellus Fritsch IV",
+        "technical_adviser": "Dr. Marcellus Fritsch IV",
         "dean": "Dr. Emiliano Kihn",
         "url": "/academic-papers/554"
       }
@@ -11791,7 +11791,7 @@
           "Mr. Juwan Deckow III"
         ],
         "research_adviser": "Marianne Lehner MD",
-        "technical_adviser": "Engr. Dr. Marcellus Fritsch IV",
+        "technical_adviser": "Dr. Marcellus Fritsch IV",
         "dean": "Dr. Thurman Torphy MD",
         "url": "/academic-papers/555"
       }
@@ -11804,7 +11804,7 @@
         "catalog_code": "CEIT-EE-05-12",
         "department": "Electrical Engineering",
         "publication_year": 2005,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Miss Maryse Lowe Sr.",
           "Mr. Clement Marks",
@@ -11815,8 +11815,8 @@
           "Melyssa Cronin"
         ],
         "research_adviser": "Lurline Spinka",
-        "technical_adviser": "Engr. Dr. Robyn Hegmann",
-        "dean": "Dr. Mr. Elbert Gaylord PhD",
+        "technical_adviser": "Dr. Robyn Hegmann",
+        "dean": "Mr. Elbert Gaylord PhD",
         "url": "/academic-papers/556"
       }
     },
@@ -11872,7 +11872,7 @@
         "catalog_code": "CEIT-IT-18-08",
         "department": "Information Technology",
         "publication_year": 2018,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Dr. Elody Gleason",
           "Randal Franecki",
@@ -11880,7 +11880,7 @@
         ],
         "research_adviser": "Marianne Lehner MD",
         "technical_adviser": "Engr. Ophelia Kunze",
-        "dean": "Dr. Mr. Elbert Gaylord PhD",
+        "dean": "Mr. Elbert Gaylord PhD",
         "url": "/academic-papers/559"
       }
     },
@@ -11970,7 +11970,7 @@
           "Melyssa Cronin"
         ],
         "research_adviser": "Ms. Jailyn Smitham",
-        "technical_adviser": "Engr. Prof. Delaney Barton V",
+        "technical_adviser": "Prof. Delaney Barton V",
         "dean": "Dr. Emiliano Kihn",
         "url": "/academic-papers/563"
       }
@@ -12061,7 +12061,7 @@
         ],
         "research_adviser": "Raphaelle Wiegand",
         "technical_adviser": "Engr. Talia Weber",
-        "dean": "Dr. Mr. Elbert Gaylord PhD",
+        "dean": "Mr. Elbert Gaylord PhD",
         "url": "/academic-papers/567"
       }
     },
@@ -12073,7 +12073,7 @@
         "catalog_code": "CEIT-CE-12-09",
         "department": "Civil Engineering",
         "publication_year": 2012,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Bud Brekke",
           "Emily Kuhic",
@@ -12081,7 +12081,7 @@
         ],
         "research_adviser": "Raphaelle Wiegand",
         "technical_adviser": "Engr. Ophelia Kunze",
-        "dean": "Dr. Mr. Elbert Gaylord PhD",
+        "dean": "Mr. Elbert Gaylord PhD",
         "url": "/academic-papers/568"
       }
     },
@@ -12101,7 +12101,7 @@
           "Dr. Orrin Robel PhD"
         ],
         "research_adviser": "Lennie Beatty",
-        "technical_adviser": "Engr. Dr. Robyn Hegmann",
+        "technical_adviser": "Dr. Robyn Hegmann",
         "dean": "Dr. Emiliano Kihn",
         "url": "/academic-papers/569"
       }
@@ -12114,7 +12114,7 @@
         "catalog_code": "CEIT-EE-02-08",
         "department": "Electrical Engineering",
         "publication_year": 2002,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Miss Elise Stoltenberg III",
           "Tyrell Will",
@@ -12124,7 +12124,7 @@
           "Mr. Alexzander Ondricka"
         ],
         "research_adviser": "Amira Oberbrunner",
-        "technical_adviser": "Engr. Miss Flo Bechtelar",
+        "technical_adviser": "Miss Flo Bechtelar",
         "dean": "Dr. Emiliano Kihn",
         "url": "/academic-papers/570"
       }
@@ -12218,7 +12218,7 @@
         "catalog_code": "CEIT-IT-19-08",
         "department": "Information Technology",
         "publication_year": 2019,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Dr. Alfonso Conn",
           "Alexanne Crooks"
@@ -12269,7 +12269,7 @@
           "Claude Ledner"
         ],
         "research_adviser": "Dr. Lane Mills",
-        "technical_adviser": "Engr. Dr. Arlie Rodriguez DDS",
+        "technical_adviser": "Dr. Arlie Rodriguez DDS",
         "dean": "Dr. Alycia Morissette",
         "url": "/academic-papers/577"
       }
@@ -12309,7 +12309,7 @@
           "Wanda Nader"
         ],
         "research_adviser": "Marjory Jacobson",
-        "technical_adviser": "Engr. Dr. Annie Kunde",
+        "technical_adviser": "Dr. Annie Kunde",
         "dean": "Dr. Darlene Brekke",
         "url": "/academic-papers/579"
       }
@@ -12322,7 +12322,7 @@
         "catalog_code": "CEIT-CE-11-06",
         "department": "Civil Engineering",
         "publication_year": 2011,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Eldred Kilback",
           "Jakob Ullrich"
@@ -12370,7 +12370,7 @@
           "Manuel Hand"
         ],
         "research_adviser": "Jerel Franecki",
-        "technical_adviser": "Engr. Dr. Annie Kunde",
+        "technical_adviser": "Dr. Annie Kunde",
         "dean": "Dr. Carissa Metz",
         "url": "/academic-papers/582"
       }
@@ -12391,7 +12391,7 @@
           "Jakob Ullrich"
         ],
         "research_adviser": "Kristofer Beahan Jr.",
-        "technical_adviser": "Engr. Dr. Annie Kunde",
+        "technical_adviser": "Dr. Annie Kunde",
         "dean": "Dr. Maida Kub",
         "url": "/academic-papers/583"
       }
@@ -12411,7 +12411,7 @@
           "Kaycee Spinka"
         ],
         "research_adviser": "Dr. Houston Hamill",
-        "technical_adviser": "Engr. Mr. Alexander Heathcote PhD",
+        "technical_adviser": "Mr. Alexander Heathcote PhD",
         "dean": "Dr. Alycia Morissette",
         "url": "/academic-papers/584"
       }
@@ -12424,7 +12424,7 @@
         "catalog_code": "CEIT-IT-23-08",
         "department": "Information Technology",
         "publication_year": 2023,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Abby Heidenreich",
           "Timmothy Windler",
@@ -12523,7 +12523,7 @@
           "Claude Ledner"
         ],
         "research_adviser": "Rowena Heidenreich",
-        "technical_adviser": "Engr. Ms. Marion Bode",
+        "technical_adviser": "Ms. Marion Bode",
         "dean": "Dr. Maida Kub",
         "url": "/academic-papers/589"
       }
@@ -12546,7 +12546,7 @@
           "Dr. Hope McCullough"
         ],
         "research_adviser": "Margarita Kuvalis",
-        "technical_adviser": "Engr. Mr. Solon Cruickshank V",
+        "technical_adviser": "Mr. Solon Cruickshank V",
         "dean": "Dr. Carissa Metz",
         "url": "/academic-papers/590"
       }
@@ -12589,7 +12589,7 @@
           "Sylvester Grimes"
         ],
         "research_adviser": "Hayley Roob",
-        "technical_adviser": "Engr. Mr. Solon Cruickshank V",
+        "technical_adviser": "Mr. Solon Cruickshank V",
         "dean": "Dr. Carissa Metz",
         "url": "/academic-papers/592"
       }
@@ -12610,7 +12610,7 @@
           "Dr. Nels Keeling Jr."
         ],
         "research_adviser": "Ms. Maritza Kutch Sr.",
-        "technical_adviser": "Engr. Mr. Torrance Schneider",
+        "technical_adviser": "Mr. Torrance Schneider",
         "dean": "Dr. Maida Kub",
         "url": "/academic-papers/593"
       }
@@ -12710,7 +12710,7 @@
         "catalog_code": "CEIT-EE-19-09",
         "department": "Electrical Engineering",
         "publication_year": 2019,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Bertha Fadel",
           "Abby Heidenreich",
@@ -12787,7 +12787,7 @@
         ],
         "research_adviser": "Dr. Darien Nienow DVM",
         "technical_adviser": "Engr. Augusta Swaniawski MD",
-        "dean": "Dr. Prof. Robbie Jast MD",
+        "dean": "Prof. Robbie Jast MD",
         "url": "/academic-papers/601"
       }
     },
@@ -12820,7 +12820,7 @@
         "catalog_code": "CEIT-IT-13-01",
         "department": "Information Technology",
         "publication_year": 2013,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Mr. Leopold Lockman II",
           "Prof. Agnes Feil IV",
@@ -12828,7 +12828,7 @@
           "Vida McKenzie"
         ],
         "research_adviser": "Murl Emard II",
-        "technical_adviser": "Engr. Dr. Caroline Wiza",
+        "technical_adviser": "Dr. Caroline Wiza",
         "dean": "Dr. Elouise Franecki",
         "url": "/academic-papers/603"
       }
@@ -12849,7 +12849,7 @@
           "Miss Domenica Eichmann"
         ],
         "research_adviser": "Janelle Grant MD",
-        "technical_adviser": "Engr. Dr. Caroline Wiza",
+        "technical_adviser": "Dr. Caroline Wiza",
         "dean": "Dr. Imani Goyette",
         "url": "/academic-papers/604"
       }
@@ -12913,7 +12913,7 @@
         ],
         "research_adviser": "Krystal Hand",
         "technical_adviser": "Engr. Birdie West",
-        "dean": "Dr. Prof. Robbie Jast MD",
+        "dean": "Prof. Robbie Jast MD",
         "url": "/academic-papers/607"
       }
     },
@@ -12956,7 +12956,7 @@
         ],
         "research_adviser": "Jordan Gaylord",
         "technical_adviser": "Engr. Rae Halvorson",
-        "dean": "Dr. Mr. Ronaldo Bogisich",
+        "dean": "Mr. Ronaldo Bogisich",
         "url": "/academic-papers/609"
       }
     },
@@ -12979,7 +12979,7 @@
         ],
         "research_adviser": "Elna Glover",
         "technical_adviser": "Engr. Mac Spencer",
-        "dean": "Dr. Mr. Ronaldo Bogisich",
+        "dean": "Mr. Ronaldo Bogisich",
         "url": "/academic-papers/610"
       }
     },
@@ -12991,7 +12991,7 @@
         "catalog_code": "CEIT-IT-02-09",
         "department": "Information Technology",
         "publication_year": 2002,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Prof. Talon Sipes III",
           "Ari Russel",
@@ -13021,7 +13021,7 @@
         ],
         "research_adviser": "Krystal Hand",
         "technical_adviser": "Engr. Hilbert Hilpert",
-        "dean": "Dr. Prof. Robbie Jast MD",
+        "dean": "Prof. Robbie Jast MD",
         "url": "/academic-papers/612"
       }
     },
@@ -13045,7 +13045,7 @@
         ],
         "research_adviser": "Lulu Will",
         "technical_adviser": "Engr. Ivory Maggio DVM",
-        "dean": "Dr. Prof. Robbie Jast MD",
+        "dean": "Prof. Robbie Jast MD",
         "url": "/academic-papers/613"
       }
     },
@@ -13087,7 +13087,7 @@
         ],
         "research_adviser": "Ethel Kessler",
         "technical_adviser": "Engr. Hilbert Hilpert",
-        "dean": "Dr. Prof. Robbie Jast MD",
+        "dean": "Prof. Robbie Jast MD",
         "url": "/academic-papers/615"
       }
     },
@@ -13099,7 +13099,7 @@
         "catalog_code": "CEIT-CE-19-10",
         "department": "Civil Engineering",
         "publication_year": 2019,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Lucienne Considine",
           "Orville Paucek",
@@ -13129,7 +13129,7 @@
         ],
         "research_adviser": "Prof. Chester Mraz",
         "technical_adviser": "Engr. Glen Balistreri III",
-        "dean": "Dr. Prof. Robbie Jast MD",
+        "dean": "Prof. Robbie Jast MD",
         "url": "/academic-papers/617"
       }
     },
@@ -13148,7 +13148,7 @@
         ],
         "research_adviser": "Jazmyne Hettinger III",
         "technical_adviser": "Engr. Mac Spencer",
-        "dean": "Dr. Prof. Robbie Jast MD",
+        "dean": "Prof. Robbie Jast MD",
         "url": "/academic-papers/618"
       }
     },
@@ -13170,8 +13170,8 @@
           "Zelda Dickinson"
         ],
         "research_adviser": "Jazmyne Hettinger III",
-        "technical_adviser": "Engr. Dr. Caroline Wiza",
-        "dean": "Dr. Mr. Ronaldo Bogisich",
+        "technical_adviser": "Dr. Caroline Wiza",
+        "dean": "Mr. Ronaldo Bogisich",
         "url": "/academic-papers/619"
       }
     },
@@ -13239,7 +13239,7 @@
         ],
         "research_adviser": "Myles Bayer",
         "technical_adviser": "Engr. Justice Koelpin",
-        "dean": "Dr. Mr. Ronaldo Bogisich",
+        "dean": "Mr. Ronaldo Bogisich",
         "url": "/academic-papers/622"
       }
     },
@@ -13285,7 +13285,7 @@
         ],
         "research_adviser": "Elna Glover",
         "technical_adviser": "Engr. Gregory Beahan",
-        "dean": "Dr. Prof. Robbie Jast MD",
+        "dean": "Prof. Robbie Jast MD",
         "url": "/academic-papers/624"
       }
     },
@@ -13317,7 +13317,7 @@
         "catalog_code": "CEIT-IT-02-10",
         "department": "Information Technology",
         "publication_year": 2002,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Prof. Valerie Bosco",
           "Emma Blick",
@@ -13328,7 +13328,7 @@
         ],
         "research_adviser": "Elna Glover",
         "technical_adviser": "Engr. Mac Spencer",
-        "dean": "Dr. Prof. Robbie Jast MD",
+        "dean": "Prof. Robbie Jast MD",
         "url": "/academic-papers/626"
       }
     },
@@ -13340,7 +13340,7 @@
         "catalog_code": "CEIT-IT-03-07",
         "department": "Information Technology",
         "publication_year": 2003,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Madelyn Emard",
           "Mrs. Emely Schumm DVM",
@@ -13462,7 +13462,7 @@
           "Hallie Harber"
         ],
         "research_adviser": "Orlo Steuber",
-        "technical_adviser": "Engr. Mr. Jules Gutkowski II",
+        "technical_adviser": "Mr. Jules Gutkowski II",
         "dean": "Dr. Matt Rippin",
         "url": "/academic-papers/632"
       }
@@ -13507,7 +13507,7 @@
         ],
         "research_adviser": "Parker Kris",
         "technical_adviser": "Engr. Imogene Hodkiewicz",
-        "dean": "Dr. Mr. Gabe Dach Jr.",
+        "dean": "Mr. Gabe Dach Jr.",
         "url": "/academic-papers/634"
       }
     },
@@ -13519,7 +13519,7 @@
         "catalog_code": "CEIT-CE-20-07",
         "department": "Civil Engineering",
         "publication_year": 2020,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Breana Bednar",
           "Amaya Gleichner",
@@ -13549,7 +13549,7 @@
         ],
         "research_adviser": "Dr. Mabel Larkin",
         "technical_adviser": "Engr. Wilfred O'Connell",
-        "dean": "Dr. Mr. Gabe Dach Jr.",
+        "dean": "Mr. Gabe Dach Jr.",
         "url": "/academic-papers/636"
       }
     },
@@ -13612,7 +13612,7 @@
         ],
         "research_adviser": "Braden Doyle",
         "technical_adviser": "Engr. Keenan Fisher",
-        "dean": "Dr. Mr. Gabe Dach Jr.",
+        "dean": "Mr. Gabe Dach Jr.",
         "url": "/academic-papers/639"
       }
     },
@@ -13634,7 +13634,7 @@
         ],
         "research_adviser": "Orlo Steuber",
         "technical_adviser": "Engr. Alfonso Braun",
-        "dean": "Dr. Mr. Gabe Dach Jr.",
+        "dean": "Mr. Gabe Dach Jr.",
         "url": "/academic-papers/640"
       }
     },
@@ -13646,7 +13646,7 @@
         "catalog_code": "CEIT-EE-10-11",
         "department": "Electrical Engineering",
         "publication_year": 2010,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Willis Feil",
           "Mr. Howell Halvorson",
@@ -13678,7 +13678,7 @@
           "Lucy Corwin"
         ],
         "research_adviser": "Orlo Steuber",
-        "technical_adviser": "Engr. Prof. Royal Von Jr.",
+        "technical_adviser": "Prof. Royal Von Jr.",
         "dean": "Dr. Matt Rippin",
         "url": "/academic-papers/642"
       }
@@ -13702,7 +13702,7 @@
         ],
         "research_adviser": "Dr. Darius Hansen",
         "technical_adviser": "Engr. Telly Cassin",
-        "dean": "Dr. Mr. Gabe Dach Jr.",
+        "dean": "Mr. Gabe Dach Jr.",
         "url": "/academic-papers/643"
       }
     },
@@ -13723,7 +13723,7 @@
           "Ervin Collier"
         ],
         "research_adviser": "Ahmed Runolfsdottir",
-        "technical_adviser": "Engr. Mr. Jules Gutkowski II",
+        "technical_adviser": "Mr. Jules Gutkowski II",
         "dean": "Dr. Austyn Breitenberg MD",
         "url": "/academic-papers/644"
       }
@@ -13745,7 +13745,7 @@
         ],
         "research_adviser": "Hershel Tromp",
         "technical_adviser": "Engr. Alfonso Braun",
-        "dean": "Dr. Dr. Geovanni Fritsch",
+        "dean": "Dr. Geovanni Fritsch",
         "url": "/academic-papers/645"
       }
     },
@@ -13766,7 +13766,7 @@
           "Valerie Cormier"
         ],
         "research_adviser": "Mr. Macey Monahan",
-        "technical_adviser": "Engr. Ms. Destiney Dicki III",
+        "technical_adviser": "Ms. Destiney Dicki III",
         "dean": "Dr. Austyn Breitenberg MD",
         "url": "/academic-papers/646"
       }
@@ -13830,7 +13830,7 @@
         ],
         "research_adviser": "Dr. Mabel Larkin",
         "technical_adviser": "Engr. Imogene Hodkiewicz",
-        "dean": "Dr. Dr. Geovanni Fritsch",
+        "dean": "Dr. Geovanni Fritsch",
         "url": "/academic-papers/649"
       }
     },
@@ -13853,7 +13853,7 @@
         ],
         "research_adviser": "Letha Jacobson",
         "technical_adviser": "Engr. Charity Sawayn",
-        "dean": "Dr. Dr. Geovanni Fritsch",
+        "dean": "Dr. Geovanni Fritsch",
         "url": "/academic-papers/650"
       }
     },
@@ -13887,7 +13887,7 @@
         "catalog_code": "CEIT-CE-16-17",
         "department": "Civil Engineering",
         "publication_year": 2016,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Phoebe Bernier",
           "Lonzo Yost",
@@ -13935,7 +13935,7 @@
           "Hertha Terry PhD"
         ],
         "research_adviser": "German Gottlieb",
-        "technical_adviser": "Engr. Mr. Jules Gutkowski II",
+        "technical_adviser": "Mr. Jules Gutkowski II",
         "dean": "Dr. Matt Rippin",
         "url": "/academic-papers/654"
       }
@@ -13957,7 +13957,7 @@
         ],
         "research_adviser": "Dr. Darius Hansen",
         "technical_adviser": "Engr. Margie Lueilwitz",
-        "dean": "Dr. Mr. Gabe Dach Jr.",
+        "dean": "Mr. Gabe Dach Jr.",
         "url": "/academic-papers/655"
       }
     },
@@ -13977,7 +13977,7 @@
         ],
         "research_adviser": "Mr. Macey Monahan",
         "technical_adviser": "Engr. Alfonso Braun",
-        "dean": "Dr. Dr. Geovanni Fritsch",
+        "dean": "Dr. Geovanni Fritsch",
         "url": "/academic-papers/656"
       }
     },
@@ -14018,7 +14018,7 @@
           "Noble Halvorson"
         ],
         "research_adviser": "German Gottlieb",
-        "technical_adviser": "Engr. Ms. Karianne Oberbrunner Jr.",
+        "technical_adviser": "Ms. Karianne Oberbrunner Jr.",
         "dean": "Dr. Karlee Doyle",
         "url": "/academic-papers/658"
       }
@@ -14058,8 +14058,8 @@
           "Antwon McCullough"
         ],
         "research_adviser": "Dr. Mabel Larkin",
-        "technical_adviser": "Engr. Prof. Royal Von Jr.",
-        "dean": "Dr. Mr. Gabe Dach Jr.",
+        "technical_adviser": "Prof. Royal Von Jr.",
+        "dean": "Mr. Gabe Dach Jr.",
         "url": "/academic-papers/660"
       }
     },
@@ -14123,7 +14123,7 @@
           "Dr. Jonathan Stroman III"
         ],
         "research_adviser": "Mae Spinka IV",
-        "technical_adviser": "Engr. Mr. Johnathan Bechtelar IV",
+        "technical_adviser": "Mr. Johnathan Bechtelar IV",
         "dean": "Dr. Jeffery Wolf",
         "url": "/academic-papers/663"
       }
@@ -14136,7 +14136,7 @@
         "catalog_code": "CEIT-EE-19-10",
         "department": "Electrical Engineering",
         "publication_year": 2019,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Amaya Gleichner",
           "Brandon O'Connell",
@@ -14178,7 +14178,7 @@
         "catalog_code": "CEIT-EE-11-08",
         "department": "Electrical Engineering",
         "publication_year": 2011,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Geovany Morar",
           "Bertha Fadel",
@@ -14188,7 +14188,7 @@
         ],
         "research_adviser": "Juston Stanton",
         "technical_adviser": "Engr. Alena Spencer",
-        "dean": "Dr. Prof. Levi Greenfelder",
+        "dean": "Prof. Levi Greenfelder",
         "url": "/academic-papers/666"
       }
     },
@@ -14210,7 +14210,7 @@
           "Mona Kerluke I"
         ],
         "research_adviser": "Dr. Madie Krajcik",
-        "technical_adviser": "Engr. Miss Janiya Becker",
+        "technical_adviser": "Miss Janiya Becker",
         "dean": "Dr. Gordon Bartoletti",
         "url": "/academic-papers/667"
       }
@@ -14230,7 +14230,7 @@
           "Sydnee Jones Jr."
         ],
         "research_adviser": "Delphia Hane",
-        "technical_adviser": "Engr. Mrs. Kyra Carroll I",
+        "technical_adviser": "Mrs. Kyra Carroll I",
         "dean": "Dr. Jeffery Wolf",
         "url": "/academic-papers/668"
       }
@@ -14271,7 +14271,7 @@
           "Willis Heidenreich"
         ],
         "research_adviser": "Lon Langosh",
-        "technical_adviser": "Engr. Mr. Dillon Padberg",
+        "technical_adviser": "Mr. Dillon Padberg",
         "dean": "Dr. Gordon Bartoletti",
         "url": "/academic-papers/670"
       }
@@ -14295,7 +14295,7 @@
           "Myah Kuhlman"
         ],
         "research_adviser": "Dr. Rosalee Quigley V",
-        "technical_adviser": "Engr. Mr. Johnathan Bechtelar IV",
+        "technical_adviser": "Mr. Johnathan Bechtelar IV",
         "dean": "Dr. Antonietta Roob",
         "url": "/academic-papers/671"
       }
@@ -14360,7 +14360,7 @@
         ],
         "research_adviser": "Adaline Hegmann",
         "technical_adviser": "Engr. Lenora Streich",
-        "dean": "Dr. Prof. Levi Greenfelder",
+        "dean": "Prof. Levi Greenfelder",
         "url": "/academic-papers/674"
       }
     },
@@ -14381,7 +14381,7 @@
           "Mrs. Virginie Farrell"
         ],
         "research_adviser": "Juston Stanton",
-        "technical_adviser": "Engr. Dr. Candace Huels",
+        "technical_adviser": "Dr. Candace Huels",
         "dean": "Dr. Jeffery Wolf",
         "url": "/academic-papers/675"
       }
@@ -14404,7 +14404,7 @@
         ],
         "research_adviser": "Hobart Muller",
         "technical_adviser": "Engr. Alena Spencer",
-        "dean": "Dr. Mr. Humberto Hane",
+        "dean": "Mr. Humberto Hane",
         "url": "/academic-papers/676"
       }
     },
@@ -14444,7 +14444,7 @@
           "Mona Kerluke I"
         ],
         "research_adviser": "Javon Roberts",
-        "technical_adviser": "Engr. Mr. Dillon Padberg",
+        "technical_adviser": "Mr. Dillon Padberg",
         "dean": "Dr. Gordon Bartoletti",
         "url": "/academic-papers/678"
       }
@@ -14457,7 +14457,7 @@
         "catalog_code": "CEIT-IT-18-11",
         "department": "Information Technology",
         "publication_year": 2018,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Dr. Jordi Stroman",
           "Annabell Becker",
@@ -14507,7 +14507,7 @@
           "Juliet Nicolas"
         ],
         "research_adviser": "Hobart Muller",
-        "technical_adviser": "Engr. Mr. Johnathan Bechtelar IV",
+        "technical_adviser": "Mr. Johnathan Bechtelar IV",
         "dean": "Dr. Gordon Bartoletti",
         "url": "/academic-papers/681"
       }
@@ -14570,7 +14570,7 @@
         ],
         "research_adviser": "Adaline Hegmann",
         "technical_adviser": "Engr. Darrell Nolan",
-        "dean": "Dr. Mr. Humberto Hane",
+        "dean": "Mr. Humberto Hane",
         "url": "/academic-papers/684"
       }
     },
@@ -14582,7 +14582,7 @@
         "catalog_code": "CEIT-IT-06-13",
         "department": "Information Technology",
         "publication_year": 2006,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Mrs. Marisol Cole I",
           "Earlene Grady",
@@ -14592,8 +14592,8 @@
           "Orin Hilpert"
         ],
         "research_adviser": "Adaline Hegmann",
-        "technical_adviser": "Engr. Dr. Candace Huels",
-        "dean": "Dr. Mr. Humberto Hane",
+        "technical_adviser": "Dr. Candace Huels",
+        "dean": "Mr. Humberto Hane",
         "url": "/academic-papers/685"
       }
     },
@@ -14632,7 +14632,7 @@
           "Sheridan Tillman DVM"
         ],
         "research_adviser": "Izaiah Anderson",
-        "technical_adviser": "Engr. Miss Janiya Becker",
+        "technical_adviser": "Miss Janiya Becker",
         "dean": "Dr. Gordon Bartoletti",
         "url": "/academic-papers/687"
       }
@@ -14645,7 +14645,7 @@
         "catalog_code": "CEIT-EE-25-10",
         "department": "Electrical Engineering",
         "publication_year": 2025,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Dr. Elody Gleason",
           "Willis Heidenreich",
@@ -14673,7 +14673,7 @@
         ],
         "research_adviser": "Dr. Madie Krajcik",
         "technical_adviser": "Engr. Gretchen Funk",
-        "dean": "Dr. Mr. Humberto Hane",
+        "dean": "Mr. Humberto Hane",
         "url": "/academic-papers/689"
       }
     },
@@ -14693,7 +14693,7 @@
           "Mr. Jacey Bergnaum DDS"
         ],
         "research_adviser": "Adaline Hegmann",
-        "technical_adviser": "Engr. Mr. Johnathan Bechtelar IV",
+        "technical_adviser": "Mr. Johnathan Bechtelar IV",
         "dean": "Dr. Gordon Bartoletti",
         "url": "/academic-papers/690"
       }
@@ -14716,7 +14716,7 @@
           "Mrs. Robyn Dicki"
         ],
         "research_adviser": "Daniela Schiller",
-        "technical_adviser": "Engr. Ms. Kira Kerluke",
+        "technical_adviser": "Ms. Kira Kerluke",
         "dean": "Dr. Hallie Crona DVM",
         "url": "/academic-papers/691"
       }
@@ -14760,8 +14760,8 @@
           "Aliyah Morissette"
         ],
         "research_adviser": "Prof. Reynold Douglas Sr.",
-        "technical_adviser": "Engr. Mr. Jaydon Block",
-        "dean": "Dr. Mr. Obie Streich IV",
+        "technical_adviser": "Mr. Jaydon Block",
+        "dean": "Mr. Obie Streich IV",
         "url": "/academic-papers/693"
       }
     },
@@ -14801,7 +14801,7 @@
           "Raul Heathcote PhD"
         ],
         "research_adviser": "Carmella Grant DVM",
-        "technical_adviser": "Engr. Dr. Colby Beer MD",
+        "technical_adviser": "Dr. Colby Beer MD",
         "dean": "Dr. Okey Kovacek",
         "url": "/academic-papers/695"
       }
@@ -14824,7 +14824,7 @@
         ],
         "research_adviser": "Obie Blick III",
         "technical_adviser": "Engr. Danial Orn",
-        "dean": "Dr. Mrs. Theresia Hessel MD",
+        "dean": "Mrs. Theresia Hessel MD",
         "url": "/academic-papers/696"
       }
     },
@@ -14867,7 +14867,7 @@
         ],
         "research_adviser": "Jayson Cremin Jr.",
         "technical_adviser": "Engr. Justine Funk",
-        "dean": "Dr. Mrs. Theresia Hessel MD",
+        "dean": "Mrs. Theresia Hessel MD",
         "url": "/academic-papers/698"
       }
     },
@@ -14911,7 +14911,7 @@
         ],
         "research_adviser": "Ms. Idell Harber MD",
         "technical_adviser": "Engr. Gabriel Harber",
-        "dean": "Dr. Mr. Obie Streich IV",
+        "dean": "Mr. Obie Streich IV",
         "url": "/academic-papers/700"
       }
     },
@@ -14978,7 +14978,7 @@
         ],
         "research_adviser": "Dr. Karlee Bauch",
         "technical_adviser": "Engr. Justine Funk",
-        "dean": "Dr. Mrs. Theresia Hessel MD",
+        "dean": "Mrs. Theresia Hessel MD",
         "url": "/academic-papers/703"
       }
     },
@@ -15013,7 +15013,7 @@
         "catalog_code": "CEIT-EE-22-11",
         "department": "Electrical Engineering",
         "publication_year": 2022,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Shanel Schuppe IV",
           "Hillard Halvorson",
@@ -15043,8 +15043,8 @@
           "Aliyah Morissette"
         ],
         "research_adviser": "Miss Deja Eichmann DDS",
-        "technical_adviser": "Engr. Ms. Kira Kerluke",
-        "dean": "Dr. Mrs. Theresia Hessel MD",
+        "technical_adviser": "Ms. Kira Kerluke",
+        "dean": "Mrs. Theresia Hessel MD",
         "url": "/academic-papers/706"
       }
     },
@@ -15064,7 +15064,7 @@
           "Juston Lind I"
         ],
         "research_adviser": "Prof. Reynold Douglas Sr.",
-        "technical_adviser": "Engr. Prof. Philip Mertz",
+        "technical_adviser": "Prof. Philip Mertz",
         "dean": "Dr. Okey Kovacek",
         "url": "/academic-papers/707"
       }
@@ -15077,7 +15077,7 @@
         "catalog_code": "CEIT-CE-22-10",
         "department": "Civil Engineering",
         "publication_year": 2022,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Birdie Prohaska",
           "Dr. Dameon Pouros",
@@ -15130,8 +15130,8 @@
           "Mrs. Robyn Dicki"
         ],
         "research_adviser": "Cecil Pollich",
-        "technical_adviser": "Engr. Prof. Philip Mertz",
-        "dean": "Dr. Mr. Obie Streich IV",
+        "technical_adviser": "Prof. Philip Mertz",
+        "dean": "Mr. Obie Streich IV",
         "url": "/academic-papers/710"
       }
     },
@@ -15150,8 +15150,8 @@
           "Prof. Cletus Keeling"
         ],
         "research_adviser": "Vaughn Smitham",
-        "technical_adviser": "Engr. Mrs. Fatima Harris",
-        "dean": "Dr. Mr. Obie Streich IV",
+        "technical_adviser": "Mrs. Fatima Harris",
+        "dean": "Mr. Obie Streich IV",
         "url": "/academic-papers/711"
       }
     },
@@ -15184,14 +15184,14 @@
         "catalog_code": "CEIT-EE-06-12",
         "department": "Electrical Engineering",
         "publication_year": 2006,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Pietro Schuster",
           "Ms. Alisa Sporer V"
         ],
         "research_adviser": "Micheal Mitchell",
         "technical_adviser": "Engr. Danial Orn",
-        "dean": "Dr. Mrs. Theresia Hessel MD",
+        "dean": "Mrs. Theresia Hessel MD",
         "url": "/academic-papers/713"
       }
     },
@@ -15209,8 +15209,8 @@
           "Jennifer Hoppe"
         ],
         "research_adviser": "Prof. Mathilde Leannon",
-        "technical_adviser": "Engr. Ms. Kira Kerluke",
-        "dean": "Dr. Mr. Obie Streich IV",
+        "technical_adviser": "Ms. Kira Kerluke",
+        "dean": "Mr. Obie Streich IV",
         "url": "/academic-papers/714"
       }
     },
@@ -15233,7 +15233,7 @@
           "Vance Mueller PhD"
         ],
         "research_adviser": "Micheal Mitchell",
-        "technical_adviser": "Engr. Ms. Kira Kerluke",
+        "technical_adviser": "Ms. Kira Kerluke",
         "dean": "Dr. Hallie Crona DVM",
         "url": "/academic-papers/715"
       }
@@ -15253,8 +15253,8 @@
           "Prof. Cletus Keeling"
         ],
         "research_adviser": "Vaughn Smitham",
-        "technical_adviser": "Engr. Mr. Jaydon Block",
-        "dean": "Dr. Mrs. Theresia Hessel MD",
+        "technical_adviser": "Mr. Jaydon Block",
+        "dean": "Mrs. Theresia Hessel MD",
         "url": "/academic-papers/716"
       }
     },
@@ -15358,7 +15358,7 @@
           "Alysha Pfannerstill"
         ],
         "research_adviser": "Quinten Cummerata",
-        "technical_adviser": "Engr. Ms. Gretchen Pollich",
+        "technical_adviser": "Ms. Gretchen Pollich",
         "dean": "Dr. Marty Will",
         "url": "/academic-papers/721"
       }
@@ -15442,7 +15442,7 @@
           "Precious O'Hara III"
         ],
         "research_adviser": "Quinten Cummerata",
-        "technical_adviser": "Engr. Ms. Gretchen Pollich",
+        "technical_adviser": "Ms. Gretchen Pollich",
         "dean": "Dr. Marty Will",
         "url": "/academic-papers/725"
       }
@@ -15497,7 +15497,7 @@
         "catalog_code": "CEIT-CE-13-07",
         "department": "Civil Engineering",
         "publication_year": 2013,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Marcos Koss",
           "Miss Dominique Moen DDS",
@@ -15508,7 +15508,7 @@
           "Ben Heidenreich"
         ],
         "research_adviser": "Prof. Dayana Crooks",
-        "technical_adviser": "Engr. Ms. Gretchen Pollich",
+        "technical_adviser": "Ms. Gretchen Pollich",
         "dean": "Dr. Eldred DuBuque",
         "url": "/academic-papers/728"
       }
@@ -15530,7 +15530,7 @@
           "Joey Volkman I"
         ],
         "research_adviser": "Leonard Willms",
-        "technical_adviser": "Engr. Dr. Percy Kuvalis",
+        "technical_adviser": "Dr. Percy Kuvalis",
         "dean": "Dr. Marty Will",
         "url": "/academic-papers/729"
       }
@@ -15649,7 +15649,7 @@
         "catalog_code": "CEIT-CE-07-14",
         "department": "Civil Engineering",
         "publication_year": 2007,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Dr. Winona Lakin",
           "Ms. Rosamond Skiles",
@@ -15669,7 +15669,7 @@
         "catalog_code": "CEIT-EE-05-14",
         "department": "Electrical Engineering",
         "publication_year": 2005,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Jacinto Purdy",
           "Rowan Kassulke II",
@@ -15852,7 +15852,7 @@
         "catalog_code": "CEIT-EE-10-13",
         "department": "Electrical Engineering",
         "publication_year": 2010,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Raegan Wyman",
           "Chanelle Willms",
@@ -15941,7 +15941,7 @@
           "Prof. Mervin Kovacek MD"
         ],
         "research_adviser": "Wilmer Ratke PhD",
-        "technical_adviser": "Engr. Mr. Murray Towne",
+        "technical_adviser": "Mr. Murray Towne",
         "dean": "Dr. Ross Carroll",
         "url": "/academic-papers/749"
       }
@@ -15954,7 +15954,7 @@
         "catalog_code": "CEIT-IT-25-07",
         "department": "Information Technology",
         "publication_year": 2025,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Queenie Reilly",
           "Prof. Kristin Brown III",
@@ -15984,7 +15984,7 @@
           "Mr. Jay O'Hara PhD"
         ],
         "research_adviser": "Rebeca Swaniawski",
-        "technical_adviser": "Engr. Dr. Felicia Berge II",
+        "technical_adviser": "Dr. Felicia Berge II",
         "dean": "Dr. Drew McKenzie",
         "url": "/academic-papers/751"
       }
@@ -16026,7 +16026,7 @@
         ],
         "research_adviser": "Iliana Grimes",
         "technical_adviser": "Engr. Brigitte Mitchell",
-        "dean": "Dr. Dr. Ludie Labadie DVM",
+        "dean": "Dr. Ludie Labadie DVM",
         "url": "/academic-papers/753"
       }
     },
@@ -16046,7 +16046,7 @@
           "Mr. Jay O'Hara PhD"
         ],
         "research_adviser": "Ruby Shields",
-        "technical_adviser": "Engr. Dr. Felicia Berge II",
+        "technical_adviser": "Dr. Felicia Berge II",
         "dean": "Dr. Drew McKenzie",
         "url": "/academic-papers/754"
       }
@@ -16101,7 +16101,7 @@
         "catalog_code": "CEIT-CE-13-08",
         "department": "Civil Engineering",
         "publication_year": 2013,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Mr. Jared Hills",
           "Prof. Cedrick Armstrong",
@@ -16153,7 +16153,7 @@
           "Orland Zieme"
         ],
         "research_adviser": "Lindsay Rau Jr.",
-        "technical_adviser": "Engr. Prof. Sterling Koelpin",
+        "technical_adviser": "Prof. Sterling Koelpin",
         "dean": "Dr. Flo Cruickshank MD",
         "url": "/academic-papers/759"
       }
@@ -16173,7 +16173,7 @@
           "Mrs. Ardith Kiehn DDS"
         ],
         "research_adviser": "Albin Oberbrunner",
-        "technical_adviser": "Engr. Dr. Isom Weber",
+        "technical_adviser": "Dr. Isom Weber",
         "dean": "Dr. Flo Cruickshank MD",
         "url": "/academic-papers/760"
       }
@@ -16219,7 +16219,7 @@
         ],
         "research_adviser": "Albin Oberbrunner",
         "technical_adviser": "Engr. Kelsi Block",
-        "dean": "Dr. Dr. Ludie Labadie DVM",
+        "dean": "Dr. Ludie Labadie DVM",
         "url": "/academic-papers/762"
       }
     },
@@ -16231,13 +16231,13 @@
         "catalog_code": "CEIT-IT-15-07",
         "department": "Information Technology",
         "publication_year": 2015,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Ms. Miracle Heller I",
           "Dr. Eileen Strosin PhD"
         ],
         "research_adviser": "Vella Haag",
-        "technical_adviser": "Engr. Dr. Felicia Berge II",
+        "technical_adviser": "Dr. Felicia Berge II",
         "dean": "Dr. Drew McKenzie",
         "url": "/academic-papers/763"
       }
@@ -16329,7 +16329,7 @@
         ],
         "research_adviser": "Abby Kuhn Jr.",
         "technical_adviser": "Engr. Marley Reilly I",
-        "dean": "Dr. Mrs. Providenci Tillman Jr.",
+        "dean": "Mrs. Providenci Tillman Jr.",
         "url": "/academic-papers/767"
       }
     },
@@ -16350,8 +16350,8 @@
           "Omari Donnelly"
         ],
         "research_adviser": "Michaela Mosciski",
-        "technical_adviser": "Engr. Prof. Sterling Koelpin",
-        "dean": "Dr. Mrs. Providenci Tillman Jr.",
+        "technical_adviser": "Prof. Sterling Koelpin",
+        "dean": "Mrs. Providenci Tillman Jr.",
         "url": "/academic-papers/768"
       }
     },
@@ -16373,7 +16373,7 @@
           "Virginia Donnelly DDS"
         ],
         "research_adviser": "Prof. Conner O'Connell II",
-        "technical_adviser": "Engr. Dr. Felicia Berge II",
+        "technical_adviser": "Dr. Felicia Berge II",
         "dean": "Dr. Levi Legros",
         "url": "/academic-papers/769"
       }
@@ -16420,7 +16420,7 @@
         ],
         "research_adviser": "Dr. Celine Grimes",
         "technical_adviser": "Engr. Marley Reilly I",
-        "dean": "Dr. Dr. Ludie Labadie DVM",
+        "dean": "Dr. Ludie Labadie DVM",
         "url": "/academic-papers/771"
       }
     },
@@ -16442,7 +16442,7 @@
         ],
         "research_adviser": "Albin Oberbrunner",
         "technical_adviser": "Engr. Alysa Bauch V",
-        "dean": "Dr. Dr. Ludie Labadie DVM",
+        "dean": "Dr. Ludie Labadie DVM",
         "url": "/academic-papers/772"
       }
     },
@@ -16481,8 +16481,8 @@
           "Delia Reichel"
         ],
         "research_adviser": "Lindsay Rau Jr.",
-        "technical_adviser": "Engr. Miss Gudrun Hills I",
-        "dean": "Dr. Mrs. Providenci Tillman Jr.",
+        "technical_adviser": "Miss Gudrun Hills I",
+        "dean": "Mrs. Providenci Tillman Jr.",
         "url": "/academic-papers/774"
       }
     },
@@ -16494,14 +16494,14 @@
         "catalog_code": "CEIT-IT-21-09",
         "department": "Information Technology",
         "publication_year": 2021,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Ben Heidenreich",
           "Brennon Larson"
         ],
         "research_adviser": "Mariano McDermott",
-        "technical_adviser": "Engr. Dr. Felicia Berge II",
-        "dean": "Dr. Mrs. Providenci Tillman Jr.",
+        "technical_adviser": "Dr. Felicia Berge II",
+        "dean": "Mrs. Providenci Tillman Jr.",
         "url": "/academic-papers/775"
       }
     },
@@ -16522,8 +16522,8 @@
           "Mrs. Berneice Gerhold PhD"
         ],
         "research_adviser": "Iliana Grimes",
-        "technical_adviser": "Engr. Prof. Stephania Koss",
-        "dean": "Dr. Mrs. Providenci Tillman Jr.",
+        "technical_adviser": "Prof. Stephania Koss",
+        "dean": "Mrs. Providenci Tillman Jr.",
         "url": "/academic-papers/776"
       }
     },
@@ -16575,13 +16575,13 @@
         "catalog_code": "CEIT-EE-20-13",
         "department": "Electrical Engineering",
         "publication_year": 2020,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Verla Morar",
           "Mrs. Ardith Kiehn DDS"
         ],
         "research_adviser": "Iliana Grimes",
-        "technical_adviser": "Engr. Miss Gudrun Hills I",
+        "technical_adviser": "Miss Gudrun Hills I",
         "dean": "Dr. Drew McKenzie",
         "url": "/academic-papers/779"
       }
@@ -16603,7 +16603,7 @@
         ],
         "research_adviser": "Jonathon Lind DDS",
         "technical_adviser": "Engr. Marley Reilly I",
-        "dean": "Dr. Dr. Ludie Labadie DVM",
+        "dean": "Dr. Ludie Labadie DVM",
         "url": "/academic-papers/780"
       }
     },
@@ -16646,7 +16646,7 @@
         ],
         "research_adviser": "Faye Bauch",
         "technical_adviser": "Engr. Jessyca Olson",
-        "dean": "Dr. Mrs. Alyce Kohler DVM",
+        "dean": "Mrs. Alyce Kohler DVM",
         "url": "/academic-papers/782"
       }
     },
@@ -16658,7 +16658,7 @@
         "catalog_code": "CEIT-EE-04-10",
         "department": "Electrical Engineering",
         "publication_year": 2004,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Presley Reynolds",
           "Grady Hammes IV",
@@ -16668,7 +16668,7 @@
           "Santino Schimmel"
         ],
         "research_adviser": "Filomena Konopelski PhD",
-        "technical_adviser": "Engr. Ms. Sonya Pfeffer",
+        "technical_adviser": "Ms. Sonya Pfeffer",
         "dean": "Dr. Raul Watsica DDS",
         "url": "/academic-papers/783"
       }
@@ -16692,7 +16692,7 @@
           "Dr. Reuben Nitzsche"
         ],
         "research_adviser": "Faye Bauch",
-        "technical_adviser": "Engr. Prof. America Smitham PhD",
+        "technical_adviser": "Prof. America Smitham PhD",
         "dean": "Dr. Benedict Fadel DDS",
         "url": "/academic-papers/784"
       }
@@ -16735,7 +16735,7 @@
           "Prof. Alice Mertz IV"
         ],
         "research_adviser": "Filomena Konopelski PhD",
-        "technical_adviser": "Engr. Ms. Astrid Abshire II",
+        "technical_adviser": "Ms. Astrid Abshire II",
         "dean": "Dr. Mona Kuhic",
         "url": "/academic-papers/786"
       }
@@ -16774,8 +16774,8 @@
           "Margarita Beer"
         ],
         "research_adviser": "Wilhelm Reynolds",
-        "technical_adviser": "Engr. Prof. America Smitham PhD",
-        "dean": "Dr. Mrs. Alyce Kohler DVM",
+        "technical_adviser": "Prof. America Smitham PhD",
+        "dean": "Mrs. Alyce Kohler DVM",
         "url": "/academic-papers/788"
       }
     },
@@ -16820,7 +16820,7 @@
         ],
         "research_adviser": "Emily Deckow",
         "technical_adviser": "Engr. Andreanne Shanahan",
-        "dean": "Dr. Ms. Chelsie Cronin PhD",
+        "dean": "Ms. Chelsie Cronin PhD",
         "url": "/academic-papers/790"
       }
     },
@@ -16841,7 +16841,7 @@
         ],
         "research_adviser": "Lula Rogahn",
         "technical_adviser": "Engr. Ricky Fadel",
-        "dean": "Dr. Mrs. Alyce Kohler DVM",
+        "dean": "Mrs. Alyce Kohler DVM",
         "url": "/academic-papers/791"
       }
     },
@@ -16883,7 +16883,7 @@
         ],
         "research_adviser": "Filomena Konopelski PhD",
         "technical_adviser": "Engr. Ricky Fadel",
-        "dean": "Dr. Mrs. Alyce Kohler DVM",
+        "dean": "Mrs. Alyce Kohler DVM",
         "url": "/academic-papers/793"
       }
     },
@@ -16904,7 +16904,7 @@
           "Dr. Cristina Stark V"
         ],
         "research_adviser": "Mekhi Veum",
-        "technical_adviser": "Engr. Ms. Astrid Abshire II",
+        "technical_adviser": "Ms. Astrid Abshire II",
         "dean": "Dr. Benedict Fadel DDS",
         "url": "/academic-papers/794"
       }
@@ -16979,7 +16979,7 @@
         "catalog_code": "CEIT-IT-24-16",
         "department": "Information Technology",
         "publication_year": 2024,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Rebecca Willms",
           "Mr. Micah Rempel",
@@ -16988,7 +16988,7 @@
         ],
         "research_adviser": "Tom King DDS",
         "technical_adviser": "Engr. Halie Ankunding",
-        "dean": "Dr. Ms. Chelsie Cronin PhD",
+        "dean": "Ms. Chelsie Cronin PhD",
         "url": "/academic-papers/798"
       }
     },
@@ -17011,7 +17011,7 @@
         ],
         "research_adviser": "Faye Bauch",
         "technical_adviser": "Engr. Lambert Swift Jr.",
-        "dean": "Dr. Ms. Chelsie Cronin PhD",
+        "dean": "Ms. Chelsie Cronin PhD",
         "url": "/academic-papers/799"
       }
     },
@@ -17032,7 +17032,7 @@
         ],
         "research_adviser": "Jermey Harvey",
         "technical_adviser": "Engr. Margret Turcotte",
-        "dean": "Dr. Mrs. Alyce Kohler DVM",
+        "dean": "Mrs. Alyce Kohler DVM",
         "url": "/academic-papers/800"
       }
     },
@@ -17078,7 +17078,7 @@
         ],
         "research_adviser": "Tom King DDS",
         "technical_adviser": "Engr. Ricky Fadel",
-        "dean": "Dr. Mrs. Alyce Kohler DVM",
+        "dean": "Mrs. Alyce Kohler DVM",
         "url": "/academic-papers/802"
       }
     },
@@ -17161,7 +17161,7 @@
           "Thomas Cassin"
         ],
         "research_adviser": "Jermey Harvey",
-        "technical_adviser": "Engr. Dr. Rex Kautzer",
+        "technical_adviser": "Dr. Rex Kautzer",
         "dean": "Dr. Benedict Fadel DDS",
         "url": "/academic-papers/806"
       }
@@ -17226,7 +17226,7 @@
         ],
         "research_adviser": "Jermey Harvey",
         "technical_adviser": "Engr. Halie Ankunding",
-        "dean": "Dr. Ms. Chelsie Cronin PhD",
+        "dean": "Ms. Chelsie Cronin PhD",
         "url": "/academic-papers/809"
       }
     },
@@ -17238,7 +17238,7 @@
         "catalog_code": "CEIT-IT-15-09",
         "department": "Information Technology",
         "publication_year": 2015,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Lewis Nolan",
           "Jazmin McDermott IV",
@@ -17322,7 +17322,7 @@
         "catalog_code": "CEIT-EE-21-16",
         "department": "Electrical Engineering",
         "publication_year": 2021,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Torrance Kovacek III",
           "Delia Reichel",
@@ -17354,7 +17354,7 @@
           "Bessie Reynolds"
         ],
         "research_adviser": "Meggie Thompson",
-        "technical_adviser": "Engr. Mr. Shaun Robel II",
+        "technical_adviser": "Mr. Shaun Robel II",
         "dean": "Dr. Braxton Yost IV",
         "url": "/academic-papers/815"
       }
@@ -17416,7 +17416,7 @@
           "Rosa Kertzmann"
         ],
         "research_adviser": "Nathan Deckow",
-        "technical_adviser": "Engr. Dr. Eugene Hickle DVM",
+        "technical_adviser": "Dr. Eugene Hickle DVM",
         "dean": "Dr. Jamie O'Kon",
         "url": "/academic-papers/818"
       }
@@ -17450,7 +17450,7 @@
         "catalog_code": "CEIT-EE-07-09",
         "department": "Electrical Engineering",
         "publication_year": 2007,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Raphael O'Reilly",
           "Kiara Walsh",
@@ -17492,7 +17492,7 @@
         "catalog_code": "CEIT-CE-13-10",
         "department": "Civil Engineering",
         "publication_year": 2013,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Colten Robel",
           "Markus Crona",
@@ -17500,8 +17500,8 @@
           "Bessie Reynolds"
         ],
         "research_adviser": "Velva O'Kon DDS",
-        "technical_adviser": "Engr. Ms. Brenna Monahan",
-        "dean": "Dr. Prof. Dangelo Kerluke III",
+        "technical_adviser": "Ms. Brenna Monahan",
+        "dean": "Prof. Dangelo Kerluke III",
         "url": "/academic-papers/822"
       }
     },
@@ -17558,7 +17558,7 @@
         "catalog_code": "CEIT-IT-24-17",
         "department": "Information Technology",
         "publication_year": 2024,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Prof. Crystel Moore",
           "Mose Purdy",
@@ -17609,7 +17609,7 @@
         ],
         "research_adviser": "Leon Klocko V",
         "technical_adviser": "Engr. Braxton Trantow",
-        "dean": "Dr. Prof. Dangelo Kerluke III",
+        "dean": "Prof. Dangelo Kerluke III",
         "url": "/academic-papers/827"
       }
     },
@@ -17629,7 +17629,7 @@
         ],
         "research_adviser": "Nathan Deckow",
         "technical_adviser": "Engr. Nova Ratke",
-        "dean": "Dr. Prof. Dangelo Kerluke III",
+        "dean": "Prof. Dangelo Kerluke III",
         "url": "/academic-papers/828"
       }
     },
@@ -17652,7 +17652,7 @@
         ],
         "research_adviser": "Meggie Thompson",
         "technical_adviser": "Engr. Nova Ratke",
-        "dean": "Dr. Prof. Dangelo Kerluke III",
+        "dean": "Prof. Dangelo Kerluke III",
         "url": "/academic-papers/829"
       }
     },
@@ -17684,7 +17684,7 @@
         "catalog_code": "CEIT-CE-16-22",
         "department": "Civil Engineering",
         "publication_year": 2016,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Zackery Bechtelar",
           "Antwon McCullough",
@@ -17754,7 +17754,7 @@
           "Dewitt Nolan"
         ],
         "research_adviser": "Nathan Deckow",
-        "technical_adviser": "Engr. Dr. Eugene Hickle DVM",
+        "technical_adviser": "Dr. Eugene Hickle DVM",
         "dean": "Dr. Ophelia Kovacek",
         "url": "/academic-papers/834"
       }
@@ -17775,7 +17775,7 @@
         ],
         "research_adviser": "Prof. Stefan Gutmann PhD",
         "technical_adviser": "Engr. Braxton Trantow",
-        "dean": "Dr. Prof. Dangelo Kerluke III",
+        "dean": "Prof. Dangelo Kerluke III",
         "url": "/academic-papers/835"
       }
     },
@@ -17787,7 +17787,7 @@
         "catalog_code": "CEIT-IT-09-15",
         "department": "Information Technology",
         "publication_year": 2009,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Dr. Kendra Towne III",
           "Margie Gislason",
@@ -17795,7 +17795,7 @@
           "Dr. Reggie Connelly II"
         ],
         "research_adviser": "Creola Romaguera",
-        "technical_adviser": "Engr. Dr. Harmon Kub I",
+        "technical_adviser": "Dr. Harmon Kub I",
         "dean": "Dr. Ophelia Kovacek",
         "url": "/academic-papers/836"
       }
@@ -17828,7 +17828,7 @@
         "catalog_code": "CEIT-CE-02-20",
         "department": "Civil Engineering",
         "publication_year": 2002,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Felicia Von",
           "Mr. Jay O'Hara PhD",
@@ -17839,7 +17839,7 @@
           "Caleb Bayer"
         ],
         "research_adviser": "Izaiah Spinka",
-        "technical_adviser": "Engr. Dr. Ian Price",
+        "technical_adviser": "Dr. Ian Price",
         "dean": "Dr. Jamie O'Kon",
         "url": "/academic-papers/838"
       }
@@ -17858,7 +17858,7 @@
           "Dr. Elvis Heller PhD"
         ],
         "research_adviser": "Izaiah Spinka",
-        "technical_adviser": "Engr. Dr. Harmon Kub I",
+        "technical_adviser": "Dr. Harmon Kub I",
         "dean": "Dr. Buck Hayes",
         "url": "/academic-papers/839"
       }
@@ -17902,7 +17902,7 @@
         ],
         "research_adviser": "Regan Wilkinson",
         "technical_adviser": "Engr. Jeffery Lindgren",
-        "dean": "Dr. Mrs. Chloe O'Conner",
+        "dean": "Mrs. Chloe O'Conner",
         "url": "/academic-papers/841"
       }
     },
@@ -17920,7 +17920,7 @@
           "Emiliano Ortiz"
         ],
         "research_adviser": "Monte Huels MD",
-        "technical_adviser": "Engr. Mr. Cristopher Eichmann",
+        "technical_adviser": "Mr. Cristopher Eichmann",
         "dean": "Dr. Anastasia Paucek",
         "url": "/academic-papers/842"
       }
@@ -17933,7 +17933,7 @@
         "catalog_code": "CEIT-CE-24-15",
         "department": "Civil Engineering",
         "publication_year": 2024,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Jaqueline Fisher",
           "Cathryn Effertz",
@@ -18011,7 +18011,7 @@
         ],
         "research_adviser": "Dr. Blanca Cummings III",
         "technical_adviser": "Engr. Luisa Pacocha",
-        "dean": "Dr. Dr. Marcelino Doyle",
+        "dean": "Dr. Marcelino Doyle",
         "url": "/academic-papers/846"
       }
     },
@@ -18031,7 +18031,7 @@
           "Margot Schimmel"
         ],
         "research_adviser": "Hipolito Hansen",
-        "technical_adviser": "Engr. Dr. Jarrell Satterfield II",
+        "technical_adviser": "Dr. Jarrell Satterfield II",
         "dean": "Dr. Anastasia Paucek",
         "url": "/academic-papers/847"
       }
@@ -18056,7 +18056,7 @@
         ],
         "research_adviser": "Hipolito Hansen",
         "technical_adviser": "Engr. Benedict Padberg",
-        "dean": "Dr. Mrs. Chloe O'Conner",
+        "dean": "Mrs. Chloe O'Conner",
         "url": "/academic-papers/848"
       }
     },
@@ -18076,7 +18076,7 @@
           "Mr. Savion Monahan III"
         ],
         "research_adviser": "Mrs. Alice Durgan",
-        "technical_adviser": "Engr. Mr. Jermey Durgan",
+        "technical_adviser": "Mr. Jermey Durgan",
         "dean": "Dr. Ilene Hettinger",
         "url": "/academic-papers/849"
       }
@@ -18140,7 +18140,7 @@
           "Alayna Rempel"
         ],
         "research_adviser": "Monte Huels MD",
-        "technical_adviser": "Engr. Dr. Jarrell Satterfield II",
+        "technical_adviser": "Dr. Jarrell Satterfield II",
         "dean": "Dr. Ilene Hettinger",
         "url": "/academic-papers/852"
       }
@@ -18161,8 +18161,8 @@
           "Ellie Rippin"
         ],
         "research_adviser": "Roosevelt Stracke",
-        "technical_adviser": "Engr. Dr. Jarrell Satterfield II",
-        "dean": "Dr. Dr. Marcelino Doyle",
+        "technical_adviser": "Dr. Jarrell Satterfield II",
+        "dean": "Dr. Marcelino Doyle",
         "url": "/academic-papers/853"
       }
     },
@@ -18174,7 +18174,7 @@
         "catalog_code": "CEIT-IT-08-12",
         "department": "Information Technology",
         "publication_year": 2008,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Tess Pfannerstill",
           "Alysha Pfannerstill",
@@ -18236,7 +18236,7 @@
         "catalog_code": "CEIT-EE-06-16",
         "department": "Electrical Engineering",
         "publication_year": 2006,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Cruz Kiehn",
           "Dr. Alfonso Conn",
@@ -18247,7 +18247,7 @@
           "Kip Schumm"
         ],
         "research_adviser": "Garfield Abbott",
-        "technical_adviser": "Engr. Dr. Jarrell Satterfield II",
+        "technical_adviser": "Dr. Jarrell Satterfield II",
         "dean": "Dr. Ari Stanton PhD",
         "url": "/academic-papers/857"
       }
@@ -18270,7 +18270,7 @@
           "Clarissa Schiller MD"
         ],
         "research_adviser": "Mrs. Alice Durgan",
-        "technical_adviser": "Engr. Dr. Jarrell Satterfield II",
+        "technical_adviser": "Dr. Jarrell Satterfield II",
         "dean": "Dr. Ilene Hettinger",
         "url": "/academic-papers/858"
       }
@@ -18283,7 +18283,7 @@
         "catalog_code": "CEIT-EE-05-17",
         "department": "Electrical Engineering",
         "publication_year": 2005,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Marguerite Schiller",
           "Madelynn Witting Jr.",
@@ -18291,7 +18291,7 @@
         ],
         "research_adviser": "Hipolito Hansen",
         "technical_adviser": "Engr. Jeffery Lindgren",
-        "dean": "Dr. Mrs. Chloe O'Conner",
+        "dean": "Mrs. Chloe O'Conner",
         "url": "/academic-papers/859"
       }
     },
@@ -18335,7 +18335,7 @@
           "Reanna Braun"
         ],
         "research_adviser": "Hipolito Hansen",
-        "technical_adviser": "Engr. Mr. Cristopher Eichmann",
+        "technical_adviser": "Mr. Cristopher Eichmann",
         "dean": "Dr. Ari Stanton PhD",
         "url": "/academic-papers/861"
       }
@@ -18358,8 +18358,8 @@
           "Emiliano Ortiz"
         ],
         "research_adviser": "Luis Rice",
-        "technical_adviser": "Engr. Mr. Jermey Durgan",
-        "dean": "Dr. Mrs. Chloe O'Conner",
+        "technical_adviser": "Mr. Jermey Durgan",
+        "dean": "Mrs. Chloe O'Conner",
         "url": "/academic-papers/862"
       }
     },
@@ -18392,7 +18392,7 @@
         "catalog_code": "CEIT-IT-05-10",
         "department": "Information Technology",
         "publication_year": 2005,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Prof. Darron Lang DDS",
           "Mr. Taurean Kuhn",
@@ -18401,7 +18401,7 @@
         ],
         "research_adviser": "Garfield Abbott",
         "technical_adviser": "Engr. Tyshawn Purdy",
-        "dean": "Dr. Mrs. Chloe O'Conner",
+        "dean": "Mrs. Chloe O'Conner",
         "url": "/academic-papers/864"
       }
     },
@@ -18445,7 +18445,7 @@
         ],
         "research_adviser": "Monte Huels MD",
         "technical_adviser": "Engr. Benedict Padberg",
-        "dean": "Dr. Mrs. Chloe O'Conner",
+        "dean": "Mrs. Chloe O'Conner",
         "url": "/academic-papers/866"
       }
     },
@@ -18467,7 +18467,7 @@
         ],
         "research_adviser": "Ludie Rath",
         "technical_adviser": "Engr. Lyric Ward MD",
-        "dean": "Dr. Dr. Marcelino Doyle",
+        "dean": "Dr. Marcelino Doyle",
         "url": "/academic-papers/867"
       }
     },
@@ -18500,13 +18500,13 @@
         "catalog_code": "CEIT-IT-21-10",
         "department": "Information Technology",
         "publication_year": 2021,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Phoebe Bernier",
           "Ellie Rippin"
         ],
         "research_adviser": "Mr. Terrill Conroy Jr.",
-        "technical_adviser": "Engr. Prof. Darrell Hermann DDS",
+        "technical_adviser": "Prof. Darrell Hermann DDS",
         "dean": "Dr. Anastasia Paucek",
         "url": "/academic-papers/869"
       }
@@ -18519,7 +18519,7 @@
         "catalog_code": "CEIT-CE-18-13",
         "department": "Civil Engineering",
         "publication_year": 2018,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Scottie Boyle",
           "Seamus Brown",
@@ -18595,7 +18595,7 @@
           "Ms. Marjorie Volkman"
         ],
         "research_adviser": "Stevie Mante",
-        "technical_adviser": "Engr. Prof. Aida Schmeler MD",
+        "technical_adviser": "Prof. Aida Schmeler MD",
         "dean": "Dr. Charlotte Hermann",
         "url": "/academic-papers/873"
       }
@@ -18608,7 +18608,7 @@
         "catalog_code": "CEIT-CE-16-23",
         "department": "Civil Engineering",
         "publication_year": 2016,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Prof. Freddie Wehner IV",
           "Mr. Colin Bashirian III",
@@ -18630,7 +18630,7 @@
         "catalog_code": "CEIT-IT-17-18",
         "department": "Information Technology",
         "publication_year": 2017,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Mrs. Hassie Hoeger III",
           "Dr. Nels Keeling Jr.",
@@ -18659,8 +18659,8 @@
           "Ms. Marjorie Volkman"
         ],
         "research_adviser": "Catalina Lind",
-        "technical_adviser": "Engr. Mr. Giuseppe Walker II",
-        "dean": "Dr. Mrs. Lupe Ledner DVM",
+        "technical_adviser": "Mr. Giuseppe Walker II",
+        "dean": "Mrs. Lupe Ledner DVM",
         "url": "/academic-papers/876"
       }
     },
@@ -18679,8 +18679,8 @@
           "Deangelo Schmeler"
         ],
         "research_adviser": "Stevie Mante",
-        "technical_adviser": "Engr. Ms. Lelah Wyman",
-        "dean": "Dr. Mrs. Lupe Ledner DVM",
+        "technical_adviser": "Ms. Lelah Wyman",
+        "dean": "Mrs. Lupe Ledner DVM",
         "url": "/academic-papers/877"
       }
     },
@@ -18740,7 +18740,7 @@
           "Dr. Abner Dicki DDS"
         ],
         "research_adviser": "Esta Morissette",
-        "technical_adviser": "Engr. Ms. Lelah Wyman",
+        "technical_adviser": "Ms. Lelah Wyman",
         "dean": "Dr. Arvid Wiza",
         "url": "/academic-papers/880"
       }
@@ -18760,7 +18760,7 @@
           "Ms. Marjorie Volkman"
         ],
         "research_adviser": "Esta Morissette",
-        "technical_adviser": "Engr. Prof. Aida Schmeler MD",
+        "technical_adviser": "Prof. Aida Schmeler MD",
         "dean": "Dr. Arvid Wiza",
         "url": "/academic-papers/881"
       }
@@ -18813,14 +18813,14 @@
         "catalog_code": "CEIT-EE-04-11",
         "department": "Electrical Engineering",
         "publication_year": 2004,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Jasmin Murray",
           "Brenna Lubowitz"
         ],
         "research_adviser": "Paolo Kreiger III",
-        "technical_adviser": "Engr. Mr. Giuseppe Walker II",
-        "dean": "Dr. Mrs. Lupe Ledner DVM",
+        "technical_adviser": "Mr. Giuseppe Walker II",
+        "dean": "Mrs. Lupe Ledner DVM",
         "url": "/academic-papers/884"
       }
     },
@@ -18948,7 +18948,7 @@
         "catalog_code": "CEIT-EE-23-13",
         "department": "Electrical Engineering",
         "publication_year": 2023,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Winston Schmeler",
           "Roger Hoeger",
@@ -18996,8 +18996,8 @@
           "Elyse Heathcote"
         ],
         "research_adviser": "Dr. Amely Carter",
-        "technical_adviser": "Engr. Ms. Lelah Wyman",
-        "dean": "Dr. Mrs. Lupe Ledner DVM",
+        "technical_adviser": "Ms. Lelah Wyman",
+        "dean": "Mrs. Lupe Ledner DVM",
         "url": "/academic-papers/893"
       }
     },
@@ -19043,7 +19043,7 @@
         ],
         "research_adviser": "Zora Heaney",
         "technical_adviser": "Engr. Eugene White",
-        "dean": "Dr. Mrs. Lupe Ledner DVM",
+        "dean": "Mrs. Lupe Ledner DVM",
         "url": "/academic-papers/895"
       }
     },
@@ -19107,7 +19107,7 @@
           "Morton Dibbert"
         ],
         "research_adviser": "Catalina Lind",
-        "technical_adviser": "Engr. Prof. Aida Schmeler MD",
+        "technical_adviser": "Prof. Aida Schmeler MD",
         "dean": "Dr. Charlotte Hermann",
         "url": "/academic-papers/898"
       }
@@ -19127,8 +19127,8 @@
           "Joanny Smith"
         ],
         "research_adviser": "Mr. Mckenna Bashirian PhD",
-        "technical_adviser": "Engr. Dr. Kelly Kozey",
-        "dean": "Dr. Mrs. Lupe Ledner DVM",
+        "technical_adviser": "Dr. Kelly Kozey",
+        "dean": "Mrs. Lupe Ledner DVM",
         "url": "/academic-papers/899"
       }
     },
@@ -19171,7 +19171,7 @@
           "Josie Hoeger"
         ],
         "research_adviser": "Ms. Mireille McLaughlin DDS",
-        "technical_adviser": "Engr. Ms. Briana Champlin Jr.",
+        "technical_adviser": "Ms. Briana Champlin Jr.",
         "dean": "Dr. Shania Turcotte",
         "url": "/academic-papers/901"
       }
@@ -19193,7 +19193,7 @@
           "Clement Collier"
         ],
         "research_adviser": "Blaise Mohr",
-        "technical_adviser": "Engr. Mr. Hans Bashirian III",
+        "technical_adviser": "Mr. Hans Bashirian III",
         "dean": "Dr. Maegan Herman",
         "url": "/academic-papers/902"
       }
@@ -19236,8 +19236,8 @@
           "Ms. Brooklyn Schiller"
         ],
         "research_adviser": "Christop Tremblay",
-        "technical_adviser": "Engr. Dr. Estelle Hickle I",
-        "dean": "Dr. Miss Kailey Schiller DDS",
+        "technical_adviser": "Dr. Estelle Hickle I",
+        "dean": "Miss Kailey Schiller DDS",
         "url": "/academic-papers/904"
       }
     },
@@ -19278,7 +19278,7 @@
           "Reggie Streich DDS"
         ],
         "research_adviser": "Christop Tremblay",
-        "technical_adviser": "Engr. Dr. Estelle Hickle I",
+        "technical_adviser": "Dr. Estelle Hickle I",
         "dean": "Dr. Shania Turcotte",
         "url": "/academic-papers/906"
       }
@@ -19298,8 +19298,8 @@
           "Christa Pouros"
         ],
         "research_adviser": "Jose Reynolds",
-        "technical_adviser": "Engr. Dr. Estelle Hickle I",
-        "dean": "Dr. Miss Kailey Schiller DDS",
+        "technical_adviser": "Dr. Estelle Hickle I",
+        "dean": "Miss Kailey Schiller DDS",
         "url": "/academic-papers/907"
       }
     },
@@ -19322,7 +19322,7 @@
           "Horace Langosh"
         ],
         "research_adviser": "Miss Alvina Steuber III",
-        "technical_adviser": "Engr. Dr. Estelle Hickle I",
+        "technical_adviser": "Dr. Estelle Hickle I",
         "dean": "Dr. Ludie Lynch III",
         "url": "/academic-papers/908"
       }
@@ -19366,7 +19366,7 @@
           "Clement Collier"
         ],
         "research_adviser": "Dr. Sheldon Huel",
-        "technical_adviser": "Engr. Dr. Estelle Hickle I",
+        "technical_adviser": "Dr. Estelle Hickle I",
         "dean": "Dr. Shania Turcotte",
         "url": "/academic-papers/910"
       }
@@ -19388,7 +19388,7 @@
           "Horace Langosh"
         ],
         "research_adviser": "Christop Tremblay",
-        "technical_adviser": "Engr. Dr. Morton McDermott",
+        "technical_adviser": "Dr. Morton McDermott",
         "dean": "Dr. Virginie Torphy",
         "url": "/academic-papers/911"
       }
@@ -19401,7 +19401,7 @@
         "catalog_code": "CEIT-IT-05-12",
         "department": "Information Technology",
         "publication_year": 2005,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Abe Kunze",
           "Prof. Abraham Renner II",
@@ -19422,7 +19422,7 @@
         "catalog_code": "CEIT-IT-05-13",
         "department": "Information Technology",
         "publication_year": 2005,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Kay Prohaska",
           "Dr. Rae Schimmel",
@@ -19473,7 +19473,7 @@
           "Reyes Stracke"
         ],
         "research_adviser": "Dr. Sheldon Huel",
-        "technical_adviser": "Engr. Ms. Briana Champlin Jr.",
+        "technical_adviser": "Ms. Briana Champlin Jr.",
         "dean": "Dr. Ludie Lynch III",
         "url": "/academic-papers/915"
       }
@@ -19516,7 +19516,7 @@
           "Dr. Stephon Buckridge DVM"
         ],
         "research_adviser": "Gayle Abernathy",
-        "technical_adviser": "Engr. Prof. Dasia Reichert",
+        "technical_adviser": "Prof. Dasia Reichert",
         "dean": "Dr. Shania Turcotte",
         "url": "/academic-papers/917"
       }
@@ -19529,7 +19529,7 @@
         "catalog_code": "CEIT-IT-17-20",
         "department": "Information Technology",
         "publication_year": 2017,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Nellie Jenkins",
           "Noble Bednar",
@@ -19552,7 +19552,7 @@
         "catalog_code": "CEIT-IT-16-12",
         "department": "Information Technology",
         "publication_year": 2016,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Alicia Parker DVM",
           "Zackery Bechtelar",
@@ -19561,7 +19561,7 @@
           "Holden Stoltenberg I"
         ],
         "research_adviser": "Ms. Mireille McLaughlin DDS",
-        "technical_adviser": "Engr. Dr. Morton McDermott",
+        "technical_adviser": "Dr. Morton McDermott",
         "dean": "Dr. Shania Turcotte",
         "url": "/academic-papers/919"
       }
@@ -19583,7 +19583,7 @@
           "Dr. Stephon Buckridge DVM"
         ],
         "research_adviser": "Lindsey Wyman PhD",
-        "technical_adviser": "Engr. Mr. Hans Bashirian III",
+        "technical_adviser": "Mr. Hans Bashirian III",
         "dean": "Dr. Shania Turcotte",
         "url": "/academic-papers/920"
       }
@@ -19628,7 +19628,7 @@
           "Ms. Brooklyn Schiller"
         ],
         "research_adviser": "Violet Kautzer",
-        "technical_adviser": "Engr. Mr. Roger Morar",
+        "technical_adviser": "Mr. Roger Morar",
         "dean": "Dr. Maegan Herman",
         "url": "/academic-papers/922"
       }
@@ -19648,7 +19648,7 @@
           "Ms. Brooklyn Schiller"
         ],
         "research_adviser": "Jose Reynolds",
-        "technical_adviser": "Engr. Dr. Morton McDermott",
+        "technical_adviser": "Dr. Morton McDermott",
         "dean": "Dr. Virginie Torphy",
         "url": "/academic-papers/923"
       }
@@ -19670,7 +19670,7 @@
         ],
         "research_adviser": "Blaise Mohr",
         "technical_adviser": "Engr. Velma Wyman",
-        "dean": "Dr. Miss Kailey Schiller DDS",
+        "dean": "Miss Kailey Schiller DDS",
         "url": "/academic-papers/924"
       }
     },
@@ -19688,7 +19688,7 @@
           "Khalid Abbott DVM"
         ],
         "research_adviser": "Dr. Marshall Botsford",
-        "technical_adviser": "Engr. Dr. Estelle Hickle I",
+        "technical_adviser": "Dr. Estelle Hickle I",
         "dean": "Dr. Ludie Lynch III",
         "url": "/academic-papers/925"
       }
@@ -19709,7 +19709,7 @@
           "Reggie Streich DDS"
         ],
         "research_adviser": "Hilma Stiedemann",
-        "technical_adviser": "Engr. Mr. Hans Bashirian III",
+        "technical_adviser": "Mr. Hans Bashirian III",
         "dean": "Dr. Virginie Torphy",
         "url": "/academic-papers/926"
       }
@@ -19722,7 +19722,7 @@
         "catalog_code": "CEIT-EE-05-19",
         "department": "Electrical Engineering",
         "publication_year": 2005,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Irwin Pagac",
           "Dr. Lois Kozey I",
@@ -19730,7 +19730,7 @@
           "Stephany Casper"
         ],
         "research_adviser": "Dr. Sheldon Huel",
-        "technical_adviser": "Engr. Mr. Melany Hermann Jr.",
+        "technical_adviser": "Mr. Melany Hermann Jr.",
         "dean": "Dr. Virginie Torphy",
         "url": "/academic-papers/927"
       }
@@ -19752,8 +19752,8 @@
           "Dr. Rae Schimmel"
         ],
         "research_adviser": "Blaise Mohr",
-        "technical_adviser": "Engr. Dr. Estelle Hickle I",
-        "dean": "Dr. Miss Kailey Schiller DDS",
+        "technical_adviser": "Dr. Estelle Hickle I",
+        "dean": "Miss Kailey Schiller DDS",
         "url": "/academic-papers/928"
       }
     },
@@ -19772,7 +19772,7 @@
         ],
         "research_adviser": "Ms. Mireille McLaughlin DDS",
         "technical_adviser": "Engr. Heber McCullough",
-        "dean": "Dr. Miss Kailey Schiller DDS",
+        "dean": "Miss Kailey Schiller DDS",
         "url": "/academic-papers/929"
       }
     },
@@ -19791,7 +19791,7 @@
           "Jillian Casper"
         ],
         "research_adviser": "Gina Grimes",
-        "technical_adviser": "Engr. Mr. Melany Hermann Jr.",
+        "technical_adviser": "Mr. Melany Hermann Jr.",
         "dean": "Dr. Maegan Herman",
         "url": "/academic-papers/930"
       }
@@ -19804,7 +19804,7 @@
         "catalog_code": "CEIT-CE-21-11",
         "department": "Civil Engineering",
         "publication_year": 2021,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Claire Brakus",
           "Austen Waelchi",
@@ -19846,7 +19846,7 @@
         "catalog_code": "CEIT-EE-03-09",
         "department": "Electrical Engineering",
         "publication_year": 2003,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Prof. Wendell Torp",
           "Prof. Karson Lynch DDS",
@@ -19878,7 +19878,7 @@
         ],
         "research_adviser": "Kale Upton",
         "technical_adviser": "Engr. Carolanne Nikolaus",
-        "dean": "Dr. Ms. Belle Luettgen",
+        "dean": "Ms. Belle Luettgen",
         "url": "/academic-papers/934"
       }
     },
@@ -19890,7 +19890,7 @@
         "catalog_code": "CEIT-EE-17-08",
         "department": "Electrical Engineering",
         "publication_year": 2017,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Paige Howe",
           "Giovanny Johns",
@@ -19902,7 +19902,7 @@
         ],
         "research_adviser": "Kacie Tremblay Sr.",
         "technical_adviser": "Engr. Roberto Senger",
-        "dean": "Dr. Ms. Belle Luettgen",
+        "dean": "Ms. Belle Luettgen",
         "url": "/academic-papers/935"
       }
     },
@@ -19979,7 +19979,7 @@
         "catalog_code": "CEIT-IT-17-21",
         "department": "Information Technology",
         "publication_year": 2017,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Dr. Marvin Powlowski I",
           "Vincent Bechtelar",
@@ -20079,7 +20079,7 @@
         ],
         "research_adviser": "Katrine Pfeffer",
         "technical_adviser": "Engr. Elias Raynor IV",
-        "dean": "Dr. Ms. Belle Luettgen",
+        "dean": "Ms. Belle Luettgen",
         "url": "/academic-papers/943"
       }
     },
@@ -20119,7 +20119,7 @@
         ],
         "research_adviser": "Dr. Ernestina Willms IV",
         "technical_adviser": "Engr. Roberto Senger",
-        "dean": "Dr. Ms. Belle Luettgen",
+        "dean": "Ms. Belle Luettgen",
         "url": "/academic-papers/945"
       }
     },
@@ -20131,7 +20131,7 @@
         "catalog_code": "CEIT-CE-13-13",
         "department": "Civil Engineering",
         "publication_year": 2013,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Prof. Bettie Towne",
           "Elinor Batz",
@@ -20162,7 +20162,7 @@
         ],
         "research_adviser": "Dr. Ernestina Willms IV",
         "technical_adviser": "Engr. Tanya Bauch",
-        "dean": "Dr. Ms. Belle Luettgen",
+        "dean": "Ms. Belle Luettgen",
         "url": "/academic-papers/947"
       }
     },
@@ -20184,7 +20184,7 @@
           "Mrs. Lesly Stracke V"
         ],
         "research_adviser": "Kale Upton",
-        "technical_adviser": "Engr. Mr. Paolo O'Reilly Jr.",
+        "technical_adviser": "Mr. Paolo O'Reilly Jr.",
         "dean": "Dr. Jasper Shields",
         "url": "/academic-papers/948"
       }
@@ -20207,7 +20207,7 @@
         ],
         "research_adviser": "Dr. Ernestina Willms IV",
         "technical_adviser": "Engr. Elias Raynor IV",
-        "dean": "Dr. Ms. Belle Luettgen",
+        "dean": "Ms. Belle Luettgen",
         "url": "/academic-papers/949"
       }
     },
@@ -20294,7 +20294,7 @@
         ],
         "research_adviser": "Mr. Jules Pacocha",
         "technical_adviser": "Engr. Flavio Pfannerstill",
-        "dean": "Dr. Ms. Belle Luettgen",
+        "dean": "Ms. Belle Luettgen",
         "url": "/academic-papers/953"
       }
     },
@@ -20327,7 +20327,7 @@
         "catalog_code": "CEIT-IT-04-18",
         "department": "Information Technology",
         "publication_year": 2004,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Ryan Hirthe DVM",
           "Jillian Casper",
@@ -20338,8 +20338,8 @@
           "Jaren Schultz"
         ],
         "research_adviser": "Dr. Ernestina Willms IV",
-        "technical_adviser": "Engr. Prof. Dale Dach",
-        "dean": "Dr. Ms. Belle Luettgen",
+        "technical_adviser": "Prof. Dale Dach",
+        "dean": "Ms. Belle Luettgen",
         "url": "/academic-papers/955"
       }
     },
@@ -20361,7 +20361,7 @@
         ],
         "research_adviser": "Prof. Jedidiah Spinka I",
         "technical_adviser": "Engr. Eveline Langworth",
-        "dean": "Dr. Ms. Belle Luettgen",
+        "dean": "Ms. Belle Luettgen",
         "url": "/academic-papers/956"
       }
     },
@@ -20373,7 +20373,7 @@
         "catalog_code": "CEIT-IT-18-13",
         "department": "Information Technology",
         "publication_year": 2018,
-        "paper_type": "Feasib",
+        "paper_type": "Feasibility",
         "authors": [
           "Jan Reilly",
           "Eugenia Marvin",
@@ -20401,7 +20401,7 @@
           "Wilmer Auer"
         ],
         "research_adviser": "Dr. Ernestina Willms IV",
-        "technical_adviser": "Engr. Mr. Paolo O'Reilly Jr.",
+        "technical_adviser": "Mr. Paolo O'Reilly Jr.",
         "dean": "Dr. Shana Bashirian III",
         "url": "/academic-papers/958"
       }
@@ -20422,7 +20422,7 @@
         ],
         "research_adviser": "Prof. Jedidiah Spinka I",
         "technical_adviser": "Engr. Devin Hayes IV",
-        "dean": "Dr. Ms. Belle Luettgen",
+        "dean": "Ms. Belle Luettgen",
         "url": "/academic-papers/959"
       }
     },
@@ -20455,84 +20455,106 @@
       "corpus": "catalog",
       "relevant_docs": [
         "paper-656"
-      ]
+      ],
+      "category": "catalog_code"
     },
     {
       "query": "CEIT-EE-23-14",
       "corpus": "catalog",
       "relevant_docs": [
         "paper-930"
-      ]
+      ],
+      "category": "catalog_code"
     },
     {
       "query": "CEIT-IT-22-06",
       "corpus": "catalog",
       "relevant_docs": [
         "paper-357"
-      ]
+      ],
+      "category": "catalog_code"
     },
     {
       "query": "CEIT-CE-07-10",
       "corpus": "catalog",
       "relevant_docs": [
         "paper-400"
-      ]
+      ],
+      "category": "catalog_code"
     },
     {
       "query": "Energy-Efficient Street Lighting Control Using Microcontrollers",
       "corpus": "catalog",
       "relevant_docs": [
+        "paper-914",
         "paper-943"
-      ]
+      ],
+      "category": "exact_title"
     },
     {
       "query": "Secure Role-Based Access Control for Student Portals",
       "corpus": "catalog",
       "relevant_docs": [
-        "paper-849"
-      ]
+        "paper-849",
+        "paper-893",
+        "paper-942"
+      ],
+      "category": "exact_title"
     },
     {
       "query": "Intelligent Traffic Monitoring for Campus Roadways",
       "corpus": "catalog",
       "relevant_docs": [
+        "paper-847",
+        "paper-872",
         "paper-908"
-      ]
+      ],
+      "category": "exact_title"
     },
     {
       "query": "Web-Based Thesis Catalog and Search Platform",
       "corpus": "catalog",
       "relevant_docs": [
         "paper-948"
-      ]
-    },
-    {
-      "query": "Secure Role-Based Access Control for Student Portals",
-      "corpus": "catalog",
-      "relevant_docs": [
-        "paper-893"
-      ]
+      ],
+      "category": "exact_title"
     },
     {
       "query": "Cybersecurity Awareness Platform for College Students",
       "corpus": "catalog",
       "relevant_docs": [
         "paper-952"
-      ]
-    },
-    {
-      "query": "Intelligent Traffic Monitoring for Campus Roadways",
-      "corpus": "catalog",
-      "relevant_docs": [
-        "paper-872"
-      ]
+      ],
+      "category": "exact_title"
     },
     {
       "query": "Smart Classroom Occupancy Monitoring Using Sensor Networks",
       "corpus": "catalog",
       "relevant_docs": [
+        "paper-852",
+        "paper-891",
         "paper-926"
-      ]
+      ],
+      "category": "exact_title"
+    },
+    {
+      "query": "IoT-Based Environmental Monitoring for Academic Buildings",
+      "corpus": "catalog",
+      "relevant_docs": [
+        "paper-861",
+        "paper-887",
+        "paper-930",
+        "paper-956"
+      ],
+      "category": "exact_title"
+    },
+    {
+      "query": "Web-Based Alumni Information and Engagement Portal",
+      "corpus": "catalog",
+      "relevant_docs": [
+        "paper-901"
+      ],
+      "category": "exact_title"
     },
     {
       "query": "papers by Jolie Hahn Sr.",
@@ -20542,7 +20564,8 @@
         "paper-474",
         "paper-475",
         "paper-690"
-      ]
+      ],
+      "category": "people"
     },
     {
       "query": "papers by Alfonso Conn",
@@ -20561,7 +20584,8 @@
         "paper-783",
         "paper-857",
         "paper-858"
-      ]
+      ],
+      "category": "people"
     },
     {
       "query": "papers by Colten Robel",
@@ -20571,7 +20595,8 @@
         "paper-500",
         "paper-783",
         "paper-822"
-      ]
+      ],
+      "category": "people"
     },
     {
       "query": "papers by Susana Kuhlman DVM",
@@ -20591,7 +20616,8 @@
         "paper-342",
         "paper-434",
         "paper-622"
-      ]
+      ],
+      "category": "people"
     },
     {
       "query": "papers from the Civil Engineering department published in 2024",
@@ -20612,7 +20638,8 @@
         "paper-610",
         "paper-624",
         "paper-843"
-      ]
+      ],
+      "category": "paraphrase"
     },
     {
       "query": "Capstone papers from 2009",
@@ -20627,7 +20654,8 @@
         "paper-637",
         "paper-704",
         "paper-925"
-      ]
+      ],
+      "category": "paraphrase"
     },
     {
       "query": "engineering papers published in 2014",
@@ -20664,7 +20692,8 @@
         "paper-922",
         "paper-923",
         "paper-949"
-      ]
+      ],
+      "category": "paraphrase"
     },
     {
       "query": "recent Civil Engineering research papers from 2022",
@@ -20683,7 +20712,8 @@
         "paper-726",
         "paper-816",
         "paper-827"
-      ]
+      ],
+      "category": "paraphrase"
     },
     {
       "query": "research papers from the Electrical Engineering department in 2005",
@@ -20709,7 +20739,8 @@
         "paper-873",
         "paper-927",
         "paper-951"
-      ]
+      ],
+      "category": "paraphrase"
     },
     {
       "query": "Report papers from the Information Technology department",
@@ -20760,36 +20791,42 @@
         "paper-849",
         "paper-872",
         "paper-889"
-      ]
+      ],
+      "category": "paraphrase"
     },
     {
       "query": "recipes for a birthday cake",
       "corpus": "catalog",
       "relevant_docs": [],
+      "category": "negative",
       "negative": true
     },
     {
       "query": "how to fix a car engine",
       "corpus": "catalog",
       "relevant_docs": [],
+      "category": "negative",
       "negative": true
     },
     {
       "query": "best travel destinations in japan",
       "corpus": "catalog",
       "relevant_docs": [],
+      "category": "negative",
       "negative": true
     },
     {
       "query": "mathematical proofs about prime numbers",
       "corpus": "catalog",
       "relevant_docs": [],
+      "category": "negative",
       "negative": true
     },
     {
       "query": "soccer training drills for beginners",
       "corpus": "catalog",
       "relevant_docs": [],
+      "category": "negative",
       "negative": true
     }
   ]
