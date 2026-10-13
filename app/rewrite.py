@@ -54,9 +54,12 @@ class QueryRewriter:
     def rewrite(self, query: str) -> str:
         if not self._enabled or not query.strip():
             return query
-        if self._client is None and not self._api_key:
-            # No provider configured — original query is the best rewrite.
-            return query
+        if self._client is None:
+            from .llm import failover_keys
+
+            if not any(failover_keys(self._api_key)):
+                # No provider configured — original query is the best rewrite.
+                return query
         try:
             client = self._ensure_client()
             response = client.chat.completions.create(

@@ -61,6 +61,23 @@ def test_llm_mode_reorders_by_provider_list():
     assert order == ["p3", "p1", "p2"]
 
 
+def test_llm_mode_with_llm_api_keys_only_reranks(monkeypatch):
+    """LLM_API_KEYS alone (LLM_API_KEY empty) must still enable re-ranking."""
+    import app.llm as llm_mod
+    from app.config import settings
+
+    monkeypatch.setattr(settings, "llm_api_key", "")
+    monkeypatch.setattr(settings, "llm_api_keys", "k1,k2")
+    client = FakeClient("2, 1")
+    monkeypatch.setattr(llm_mod, "_make_client", lambda base_url, key: client)
+
+    docs = [_doc("p1", 1, 1), _doc("p2", 2, 2)]
+    reranker = Reranker(mode="llm")
+    order = [d["id"] for d in reranker.rerank("q", docs)]
+    assert order == ["p2", "p1"]
+    assert reranker._client._api_keys == ["k1", "k2"]
+
+
 def test_llm_mode_failure_preserves_original_order():
     docs = [_doc("p1", 1, 1), _doc("p2", 2, 2)]
     reranker = Reranker(mode="llm", client=FakeClient("", fail=True))
