@@ -36,11 +36,12 @@ sidecar on FastAPI Cloud:
 
 ## Table of contents
 
-- [Problem statement](#problem-statement)
+- [Motivation](#motivation)
 - [Live demo](#live-demo)
 - [Dataset](#dataset)
 - [Architecture and flow](#architecture-and-flow)
-- [Run it](#run-it)
+- [Quick Start](#quick-start)
+- [Usage](#usage)
 - [Endpoints](#endpoints)
 - [Evaluation](#evaluation)
 - [Monitoring and feedback](#monitoring-and-feedback)
@@ -48,11 +49,13 @@ sidecar on FastAPI Cloud:
 - [Rubric mapping](#rubric-mapping)
 - [Project structure](#project-structure)
 - [Testing](#testing)
+- [Contributing](#contributing)
+- [Limitations](#limitations)
 - [Security notes](#security-notes)
 
 ---
 
-## Problem statement
+## Motivation
 
 A university library catalog has two search problems that a single approach
 cannot solve:
@@ -182,7 +185,7 @@ via `os.replace` so readers never observe a half-built index. Old versions are
 pruned (keep 2); rebuilds serialize under a global lock; the embedding model
 is a lazy thread-safe singleton.
 
-## Run it
+## Quick Start
 
 ### Prerequisites
 
@@ -247,7 +250,7 @@ The sidecar also runs on [FastAPI Cloud](https://fastapi.cloud) via
    writes the files under `CORPUS_PATH` and rebuilds atomically.
 3. Point the Laravel app at `SIDECAR_URL=https://ceit-ai-sidecar.fastapicloud.dev`.
 
-## Walkthrough
+## Usage
 
 A 5-minute end-to-end tour (local run):
 
@@ -449,7 +452,7 @@ framework at `/docs`:
 
 | Rubric item | Where |
 |-------------|-------|
-| Problem description | [Problem statement](#problem-statement) |
+| Problem description | [Motivation](#motivation) |
 | Dataset (own / prepared) | [Dataset](#dataset) — bundled 1,338-doc synthetic CEIT catalog (959 papers + 379 policies) |
 | Retrieval flow: search index + LLM | [Architecture and flow](#architecture-and-flow) + `/search` + `/chat/stream` |
 | Interface: RAG API | FastAPI endpoints (token-gated), SSE streaming contract |
@@ -508,6 +511,21 @@ no model download, no provider calls. A live smoke test
 (`test_chat_stream_live.py`) is gated behind `SIDECAR_LIVE_CHAT_TEST=1` and
 never runs in CI. CI (GitHub Actions) runs lint, tests, an app-boot + auth
 smoke, SonarCloud, and a secrets scan on every push.
+
+## Contributing
+
+Issues and PRs are tracked on GitHub (`PSergio984/ceit-ai-sidecar`).
+
+- **Setup** — `uv sync`, `cp .env.example .env`, then the
+  [Quick Start](#quick-start) steps. Never commit `.env` or a real token.
+- **Before opening a PR** — `uv run pytest`, `uv run ruff check .`, and
+  `uv run ruff format .` must all be clean; CI enforces them plus SonarCloud
+  and a secrets scan.
+- **Corpus changes** — if you edit `corpus/`, regenerate the evaluation data
+  (`scripts/build_golden.py`, `scripts/build_judge_questions.py`) in the same
+  PR so the numbers keep describing the shipped data.
+- **Conventions** — see `AGENTS.md` (agent workflow, issue tracker) and
+  `docs/` for ADRs, the pgvector rollout runbook, and baseline eval docs.
 
 ## Limitations
 
