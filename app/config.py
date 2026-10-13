@@ -21,6 +21,9 @@ class Settings(BaseSettings):
     # Bounds /health and sync against an unreachable database; a cold Neon
     # compute wakes well inside the default.
     pg_connect_timeout: int = 15
+    # Search-path connection pool (search pays no connect handshake; the
+    # sync/health path still connects per call).
+    pg_pool_size: int = 4
     llm_base_url: str = "https://openrouter.ai/api/v1"
     llm_api_key: str = ""
     # Comma-separated fallback keys (plain string so pydantic-settings does

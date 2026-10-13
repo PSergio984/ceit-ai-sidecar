@@ -128,7 +128,9 @@ def test_create_index_store_selects_sqlite_by_default():
 
 def test_create_index_store_pgvector_requires_database_url():
     with pytest.raises(ValueError, match="DATABASE_URL"):
-        create_index_store(Settings(sidecar_token="t", vector_backend="pgvector"))
+        # database_url="" explicitly — Settings also reads .env, where a real
+        # DATABASE_URL (e.g. a Neon link) would silently satisfy the check.
+        create_index_store(Settings(sidecar_token="t", vector_backend="pgvector", database_url=""))
     store = create_index_store(
         Settings(sidecar_token="t", vector_backend="pgvector", database_url=BAD_URL)
     )

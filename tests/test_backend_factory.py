@@ -15,9 +15,10 @@ def test_sqlite_default_returns_hybrid_search(tmp_path):
     backend.close()
 
 
-def test_pgvector_raises_not_implemented(tmp_path, monkeypatch):
+def test_pgvector_requires_database_url(tmp_path, monkeypatch):
     monkeypatch.setattr(settings, "vector_backend", "pgvector")
-    with pytest.raises(NotImplementedError, match="pgvector"):
+    monkeypatch.setattr(settings, "database_url", "")
+    with pytest.raises(ValueError, match="DATABASE_URL"):
         create_backend(tmp_path, "test-model")
 
 
