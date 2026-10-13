@@ -62,15 +62,23 @@ def _filter_sql(filters: dict | None, corpus: str | None) -> tuple[list, list]:
     if f.get("department"):
         where.append(sql.SQL("metadata->>'department' = %s"))
         params.append(f["department"])
-    digits = sql.SQL("(metadata->>'publication_year') ~ '^[0-9]+$'")
+    # CASE has guaranteed evaluation order (unlike AND-ed quals, which the
+    # planner may reorder), so the ::int cast only ever sees digits — a
+    # non-numeric or overflowing year yields NULL instead of raising, and
+    # COALESCE maps it to 0 exactly like sqlite's `or 0`: year_to keeps
+    # year-less docs, year_from drops them, equality excludes them.
+    year = sql.SQL(
+        "CASE WHEN (metadata->>'publication_year') ~ '^[0-9]{1,9}$'"
+        " THEN (metadata->>'publication_year')::int END"
+    )
     if f.get("publication_year"):
-        where.append(sql.SQL("{} AND (metadata->>'publication_year')::int = %s").format(digits))
+        where.append(sql.SQL("{} = %s").format(year))
         params.append(int(f["publication_year"]))
     if f.get("year_from"):
-        where.append(sql.SQL("{} AND (metadata->>'publication_year')::int >= %s").format(digits))
+        where.append(sql.SQL("COALESCE({}, 0) >= %s").format(year))
         params.append(int(f["year_from"]))
     if f.get("year_to"):
-        where.append(sql.SQL("{} AND (metadata->>'publication_year')::int <= %s").format(digits))
+        where.append(sql.SQL("COALESCE({}, 0) <= %s").format(year))
         params.append(int(f["year_to"]))
     if f.get("author"):
         where.append(

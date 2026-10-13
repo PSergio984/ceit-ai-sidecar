@@ -157,6 +157,19 @@ def test_publication_year_filters(engine):
     assert {r["id"] for r in rng} == {"paper-3", "paper-4"}
 
 
+def test_year_to_keeps_docs_without_a_year(engine):
+    # sqlite maps a missing publication_year to 0 — year_to must KEEP those
+    # docs (policy docs have no year). year_from still drops them.
+    kept = engine.rrf_search(
+        "ceit students school id", limit=10, method="bm25", filters={"year_to": 2000}
+    )
+    assert {r["id"] for r in kept} == {"policy-h1-r1"}
+    dropped = engine.rrf_search(
+        "ceit students school id", limit=10, method="bm25", filters={"year_from": 2000}
+    )
+    assert "policy-h1-r1" not in {r["id"] for r in dropped}
+
+
 def test_author_and_adviser_filters(engine):
     author = engine.rrf_search("ceit", limit=10, method="bm25", filters={"author": "dela"})
     assert {r["id"] for r in author} == {"paper-1", "paper-2"}
