@@ -88,7 +88,7 @@ exposed on `/health`; check it in the database:
 
 ```sh
 psql "$DATABASE_URL" -c "SELECT keyword_index, version, documents, embedded FROM index_state WHERE id = 1"
--- expect keyword_index = lakebase_bm25 on Neon (gin on plain pgvector)
+# expect keyword_index = lakebase_bm25 on Neon (gin on plain pgvector)
 ```
 
 ## 5. Real-host gate measurements — before any traffic switches

@@ -166,3 +166,52 @@ def test_evaluate_case_rerank_moves_bm25_only_relevant_doc_to_rank_one():
     # Same retrieved set -> same precision/recall; only the ordering changed.
     assert reranked["precision"] == plain["precision"]
     assert reranked["recall"] == plain["recall"]
+
+
+def test_evaluate_case_retrieved_preserves_rank_order():
+    """The serialized `retrieved` list must keep the engine's rank order —
+    downstream analysis (e.g. checking which titles ranked where) needs
+    positions, and top1_hit semantics depend on position 0 being real."""
+    from app.eval import evaluate_case
+
+    engine = _FakeEngine(
+        [
+            _retrieval_doc("paper-30"),
+            _retrieval_doc("paper-10"),
+            _retrieval_doc("paper-20"),
+        ]
+    )
+    case = {"query": "x", "relevant_docs": ["paper-30"], "corpus": "catalog"}
+
+    result = evaluate_case(engine, case, 5, "hybrid")
+
+    assert result["retrieved"] == ["paper-30", "paper-10", "paper-20"]
+
+
+def test_evaluate_case_negative_retrieved_preserves_rank_order():
+    from app.eval import evaluate_case
+
+    engine = _FakeEngine([_retrieval_doc("paper-9"), _retrieval_doc("paper-3")])
+    case = {"query": "x", "relevant_docs": [], "corpus": "catalog", "negative": True}
+
+    result = evaluate_case(engine, case, 5, "hybrid")
+
+    assert result["passed"] is False
+    assert result["retrieved"] == ["paper-9", "paper-3"]
+
+
+def test_category_of_prefers_explicit_field_over_len_heuristic():
+    """An exact_title case with a multi-id relevant set (duplicate titles)
+    must still classify as exact_title once the dataset states it."""
+    from app.eval import category_of
+
+    ambiguous = {
+        "query": "Secure Role-Based Access Control for Student Portals",
+        "corpus": "catalog",
+        "relevant_docs": ["paper-849", "paper-893", "paper-942"],
+        "category": "exact_title",
+    }
+    assert category_of(ambiguous) == "exact_title"
+    # Fallback heuristic unchanged for cases without the field.
+    no_field = {k: v for k, v in ambiguous.items() if k != "category"}
+    assert category_of(no_field) == "paraphrase"

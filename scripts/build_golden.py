@@ -140,11 +140,16 @@ def main() -> int:
     rng = random.Random(args.seed)
     cases: list[dict] = []
 
-    def add(query: str, relevant: list[str], negative: bool = False) -> None:
+    def add(query: str, relevant: list[str], category: str, negative: bool = False) -> None:
         missing = [r for r in relevant if r not in by_id]
         if missing:
             raise SystemExit(f"relevant ids missing from corpus: {missing}")
-        case = {"query": query, "corpus": "catalog", "relevant_docs": relevant}
+        case = {
+            "query": query,
+            "corpus": "catalog",
+            "relevant_docs": relevant,
+            "category": category,
+        }
         if negative:
             case["negative"] = True
         cases.append(case)
@@ -180,12 +185,27 @@ def main() -> int:
         code = doc["metadata"].get("catalog_code")
         if not code:
             raise SystemExit(f"doc {doc['id']} has no catalog_code")
-        add(code, [doc["id"]])
+        add(code, [doc["id"]], "catalog_code")
 
-    # 2. exact_title (8) — discriminative titles (rare tokens) first
-    title_docs = [d for d in pool[4:] if discriminative(d)]
-    for doc in title_docs[:8]:
-        add(doc["title"].strip(), [doc["id"]])
+    # 2. exact_title (8) — discriminative titles (rare tokens) first.
+    # Duplicated titles exist in the export, so the relevant set is EVERY doc
+    # carrying the title — pinning one twin makes the label ambiguous (a top-1
+    # hit on a same-title sibling would score as a miss).
+    title_ids: dict[str, list[str]] = {}
+    for doc in docs:
+        title_ids.setdefault(doc["title"].strip(), []).append(doc["id"])
+    used_titles: set[str] = set()
+    title_docs = []
+    for d in pool[4:]:
+        title = d["title"].strip()
+        # One case per title: a repeated title would score the same query twice.
+        if discriminative(d) and title not in used_titles:
+            used_titles.add(title)
+            title_docs.append(d)
+            if len(title_docs) == 8:
+                break
+    for doc in title_docs:
+        add(doc["title"].strip(), sorted(title_ids[doc["title"].strip()]), "exact_title")
     if not title_docs:
         raise SystemExit("no discriminative titles found for exact_title cases")
 
@@ -200,7 +220,11 @@ def main() -> int:
     people_docs = [d for d in pool[12:16] if author_name(d)]
     for doc in people_docs:
         name = author_name(doc)
-        add(f"papers by {name}", [d["id"] for d in docs if name_matches(d, name)])
+        add(
+            f"papers by {name}",
+            [d["id"] for d in docs if name_matches(d, name)],
+            "people",
+        )
 
     # 4. paraphrase (6) — combos with a 5-30 doc answer set
     used_filters: list[dict] = []
@@ -213,16 +237,16 @@ def main() -> int:
         if query in {c["query"] for c in cases} or filters in used_filters:
             continue
         used_filters.append(filters)
-        add(query, ids_for(docs, **filters))
+        add(query, ids_for(docs, **filters), "paraphrase")
     if len(used_filters) < 6:
         raise SystemExit("paraphrase generation under-produced")
 
     # 5. negative (5)
     for topic in NEGATIVES:
-        add(topic, [], negative=True)
+        add(topic, [], "negative", negative=True)
 
     dataset = {
-        "version": 3,
+        "version": 4,
         "generated_at": datetime.now(UTC).isoformat(),
         "seed": args.seed,
         "corpus": {"file": "corpus/catalog.json", "documents": len(docs)},
@@ -244,20 +268,7 @@ def main() -> int:
 
     from collections import Counter
 
-    kinds = Counter(
-        "negative"
-        if c.get("negative")
-        else (
-            "catalog_code"
-            if c["query"].lower().startswith("ceit-")
-            else (
-                "people"
-                if "paper" in c["query"].lower() and " by " in c["query"].lower()
-                else ("exact_title" if len(c["relevant_docs"]) == 1 else "paraphrase")
-            )
-        )
-        for c in cases
-    )
+    kinds = Counter(c["category"] for c in cases)
     print(f"wrote {args.out} — {len(cases)} cases: {dict(kinds)}")
     return 0
 

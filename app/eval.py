@@ -64,7 +64,7 @@ def evaluate_case(
             "query": case["query"],
             "negative": True,
             "passed": passed,
-            "retrieved": sorted(retrieved_ids),
+            "retrieved": [r["id"] for r in retrieved],
         }
 
     hits = len(relevant & retrieved_ids)
@@ -80,12 +80,14 @@ def evaluate_case(
         "f1": round(f1, 4),
         "hits": hits,
         "top1_hit": bool(top1_id and top1_id in relevant),
-        "retrieved": sorted(retrieved_ids),
+        "retrieved": [r["id"] for r in retrieved],
         "relevant": sorted(relevant),
     }
 
 
 def category_of(case: dict) -> str:
+    if case.get("category"):
+        return case["category"]
     q = case["query"].lower()
     if case.get("negative"):
         return "negative"
