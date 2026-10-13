@@ -117,5 +117,5 @@ Per the spec, "if any criterion fails, the report says which and the
 default backend stays SQLite": top-1 fails the frozen-baseline criterion
 for the documented duplicate-title reason, and latency/memory are
 incomplete pending the real host — so the default backend stays
-`sqlite` and the flip waits on steps 5–6 of `docs/rollout-pgvector.md`
+`sqlite` and the flip waits on step 5 of `docs/rollout-pgvector.md`
 plus the maintainer's call on the golden-set labels.
