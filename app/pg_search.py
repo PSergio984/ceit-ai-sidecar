@@ -129,6 +129,7 @@ class PgVectorSearch:
         self._state = sql.Identifier(schema, "index_state")
         self._bm25_index = sql.Identifier(schema, "documents_bm25").as_string()
         self._embed_query = embed_query_fn
+        self._connect_timeout = connect_timeout
         # Lazy open: constructing the engine must not need the database —
         # a sleeping Neon compute or a dead URL only fails on first use.
         self._pool = ConnectionPool(
@@ -149,7 +150,9 @@ class PgVectorSearch:
         if not self._pool_open:
             self._pool.open(wait=False)
             self._pool_open = True
-        return self._pool.connection()
+        # timeout also covers waiting for a conn when the DB is down — the
+        # pool default (30s) would otherwise outlive the request.
+        return self._pool.connection(timeout=self._connect_timeout)
 
     def _embed(self, query: str) -> np.ndarray:
         if self._embed_query is not None:
